@@ -43,6 +43,8 @@ CGO_ENABLED=0 go build -trimpath -ldflags="-s -w -X github.com/QuantumNous/new-a
 
 [SOURCE_ARCHIVES.json](SOURCE_ARCHIVES.json) 记录每个文件的下载地址、大小和 SHA-256；[SHA256SUMS](SHA256SUMS) 可用于验证下载。网站原有的版本化源码链接会跳转到对应的 GitHub 下载。
 
+后续发布请同步更新对应组件的源码目录，并将版本源码包上传到新的 GitHub Release，记录文件大小与 SHA-256。网站的源码入口应指向该版本，旧地址保留跳转；服务器仅保留索引和跳转配置，不再长期存放源码压缩包。
+
 ## 许可与来源
 
 基于 [QuantumNous/new-api](https://github.com/QuantumNous/new-api)，保留 New API contributors 的版权及组件声明。本站修改按原项目的 AGPL-3.0-or-later 条款提供；完整许可见 [LICENSE](LICENSE)。独立组件及第三方素材同时遵循各自文件中的许可声明。
