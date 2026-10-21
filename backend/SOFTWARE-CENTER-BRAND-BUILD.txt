@@ -1,0 +1,5 @@
+skymoni Software Center branding and rotation (2026-10-08).
+AGPL-3.0-or-later; upstream QuantumNous/new-api. See LICENSE and NOTICE.
+Build: cd web; bun install --frozen-lockfile; bun run build.
+Branded cloud mascot, soft gradients and six-second automatic recommendations. Rotation pauses for hover, focus, drag, hidden tabs and reduced motion. Search and filters read the existing public software API. Publication, upload, authentication, original App and shop behavior are unchanged.
+Recommendation order follows the administrator catalog order. No private credentials, configuration, software binaries or user data are included.

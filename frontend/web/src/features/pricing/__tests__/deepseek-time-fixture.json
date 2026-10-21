@@ -1,0 +1,65 @@
+[
+  {
+    "model_name": "deepseek-flash",
+    "description": "DeepSeek V4.1 Flash；moni计费，官方当前有效价格 0.2×。按官方高峰/非高峰及中国法定节假日规则计费；低价独立线路请选 deepseek-flash-low。 1站内额度=¥0.10；美元等值按每日参考汇率换算。官方资料：https://api-docs.deepseek.com/quick_start/pricing/",
+    "icon": "DeepSeek.Color",
+    "tags": "DeepSeek,文本推理,moni计费",
+    "vendor_id": 1,
+    "quota_type": 0,
+    "model_ratio": 37.5,
+    "model_price": 0,
+    "owner_by": "",
+    "completion_ratio": 1,
+    "enable_groups": [
+      "default",
+      "deepseek"
+    ],
+    "supported_endpoint_types": [
+      "openai"
+    ],
+    "billing_mode": "tiered_expr",
+    "billing_expr": "(weekday(\"Asia/Shanghai\") >= 1 && weekday(\"Asia/Shanghai\") <= 5 && ((hour(\"Asia/Shanghai\") >= 9 && hour(\"Asia/Shanghai\") < 12) || (hour(\"Asia/Shanghai\") >= 14 && hour(\"Asia/Shanghai\") < 18))) && !((month(\"Asia/Shanghai\") == 1 && day(\"Asia/Shanghai\") >= 1 && day(\"Asia/Shanghai\") <= 3) || (month(\"Asia/Shanghai\") == 2 && day(\"Asia/Shanghai\") >= 15 && day(\"Asia/Shanghai\") <= 23) || (month(\"Asia/Shanghai\") == 4 && day(\"Asia/Shanghai\") >= 4 && day(\"Asia/Shanghai\") <= 6) || (month(\"Asia/Shanghai\") == 5 && day(\"Asia/Shanghai\") >= 1 && day(\"Asia/Shanghai\") <= 5) || (month(\"Asia/Shanghai\") == 6 && day(\"Asia/Shanghai\") >= 19 && day(\"Asia/Shanghai\") <= 21) || (month(\"Asia/Shanghai\") == 9 && day(\"Asia/Shanghai\") >= 25 && day(\"Asia/Shanghai\") <= 27) || (month(\"Asia/Shanghai\") == 10 && day(\"Asia/Shanghai\") >= 1 && day(\"Asia/Shanghai\") <= 7)) ? tier(\"peak\", p * 3.011458147421 + c * 12.045832589684 + cr * 0.060229162948) : tier(\"off_peak\", p * 1.505729073711 + c * 6.022916294842 + cr * 0.030114581474)"
+  },
+  {
+    "model_name": "deepseek-flash-low",
+    "description": "DeepSeek V4.1 Flash 低价线路；moni计费，官方当前有效价格 0.1×。独立于 deepseek-flash，按官方高峰/非高峰及中国法定节假日规则计费。 1站内额度=¥0.10；美元等值按每日参考汇率换算。官方资料：https://api-docs.deepseek.com/quick_start/pricing/",
+    "icon": "DeepSeek.Color",
+    "tags": "DeepSeek,文本推理,moni计费",
+    "vendor_id": 1,
+    "quota_type": 0,
+    "model_ratio": 37.5,
+    "model_price": 0,
+    "owner_by": "",
+    "completion_ratio": 1,
+    "enable_groups": [
+      "deepseek",
+      "default"
+    ],
+    "supported_endpoint_types": [
+      "openai"
+    ],
+    "billing_mode": "tiered_expr",
+    "billing_expr": "(weekday(\"Asia/Shanghai\") >= 1 && weekday(\"Asia/Shanghai\") <= 5 && ((hour(\"Asia/Shanghai\") >= 9 && hour(\"Asia/Shanghai\") < 12) || (hour(\"Asia/Shanghai\") >= 14 && hour(\"Asia/Shanghai\") < 18))) && !((month(\"Asia/Shanghai\") == 1 && day(\"Asia/Shanghai\") >= 1 && day(\"Asia/Shanghai\") <= 3) || (month(\"Asia/Shanghai\") == 2 && day(\"Asia/Shanghai\") >= 15 && day(\"Asia/Shanghai\") <= 23) || (month(\"Asia/Shanghai\") == 4 && day(\"Asia/Shanghai\") >= 4 && day(\"Asia/Shanghai\") <= 6) || (month(\"Asia/Shanghai\") == 5 && day(\"Asia/Shanghai\") >= 1 && day(\"Asia/Shanghai\") <= 5) || (month(\"Asia/Shanghai\") == 6 && day(\"Asia/Shanghai\") >= 19 && day(\"Asia/Shanghai\") <= 21) || (month(\"Asia/Shanghai\") == 9 && day(\"Asia/Shanghai\") >= 25 && day(\"Asia/Shanghai\") <= 27) || (month(\"Asia/Shanghai\") == 10 && day(\"Asia/Shanghai\") >= 1 && day(\"Asia/Shanghai\") <= 7)) ? tier(\"peak\", p * 2.007638764947 + c * 8.030555059789 + cr * 0.040152775299) : tier(\"off_peak\", p * 1.003819382474 + c * 4.015277529895 + cr * 0.020076387649)"
+  },
+  {
+    "model_name": "deepseek-v4-pro",
+    "description": "DeepSeek V4 Pro；moni计费，官方当前有效价格 0.2×。按官方高峰/非高峰及中国法定节假日规则计费。 1站内额度=¥0.10；美元等值按每日参考汇率换算。官方资料：https://api-docs.deepseek.com/quick_start/pricing/",
+    "icon": "DeepSeek.Color",
+    "tags": "DeepSeek,文本推理,moni计费",
+    "vendor_id": 1,
+    "quota_type": 0,
+    "model_ratio": 37.5,
+    "model_price": 0,
+    "owner_by": "",
+    "completion_ratio": 1,
+    "enable_groups": [
+      "deepseek",
+      "default"
+    ],
+    "supported_endpoint_types": [
+      "openai"
+    ],
+    "billing_mode": "tiered_expr",
+    "billing_expr": "(weekday(\"Asia/Shanghai\") >= 1 && weekday(\"Asia/Shanghai\") <= 5 && ((hour(\"Asia/Shanghai\") >= 9 && hour(\"Asia/Shanghai\") < 12) || (hour(\"Asia/Shanghai\") >= 14 && hour(\"Asia/Shanghai\") < 18))) && !((month(\"Asia/Shanghai\") == 1 && day(\"Asia/Shanghai\") >= 1 && day(\"Asia/Shanghai\") <= 3) || (month(\"Asia/Shanghai\") == 2 && day(\"Asia/Shanghai\") >= 15 && day(\"Asia/Shanghai\") <= 23) || (month(\"Asia/Shanghai\") == 4 && day(\"Asia/Shanghai\") >= 4 && day(\"Asia/Shanghai\") <= 6) || (month(\"Asia/Shanghai\") == 5 && day(\"Asia/Shanghai\") >= 1 && day(\"Asia/Shanghai\") <= 5) || (month(\"Asia/Shanghai\") == 6 && day(\"Asia/Shanghai\") >= 19 && day(\"Asia/Shanghai\") <= 21) || (month(\"Asia/Shanghai\") == 9 && day(\"Asia/Shanghai\") >= 25 && day(\"Asia/Shanghai\") <= 27) || (month(\"Asia/Shanghai\") == 10 && day(\"Asia/Shanghai\") >= 1 && day(\"Asia/Shanghai\") <= 7)) ? tier(\"peak\", p * 13.250415848653 + c * 39.751247545958 + cr * 0.441680528288) : tier(\"off_peak\", p * 6.625207924326 + c * 19.875623772979 + cr * 0.220840264144)"
+  }
+]

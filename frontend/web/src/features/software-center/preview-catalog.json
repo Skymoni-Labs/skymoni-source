@@ -1,0 +1,3108 @@
+{
+  "items": [
+    {
+      "id": "drip",
+      "kind": "software",
+      "name": "Drip Browser",
+      "description": "A space for browsing, with subscriptions and proxy nodes in easy reach.",
+      "platform": "Windows 10 / 11 · x64",
+      "version": "0.3.28",
+      "downloadUrl": "/drip-releases/Drip-Setup-0.3.28-x64.exe",
+      "filename": "Drip-Setup-0.3.28-x64.exe",
+      "detailUrl": "#installation",
+      "imageUrl": "",
+      "appearance": "drip",
+      "sortOrder": 10,
+      "published": true,
+      "details": {
+        "overview": "Drip 是 Windows 桌面浏览器，内置代理中心，可管理订阅、切换节点和查看流量。新标签页支持搜索、常用站点和自定义壁纸，适合在独立的浏览空间中处理日常任务。\n浏览器可免费下载；使用 Drip 线路时，需另行兑换对应的线路套餐。",
+        "features": "管理订阅、切换代理节点\n查看线路流量与使用状态\n新标签页搜索与常用站点入口\n自定义壁纸，整理自己的浏览空间",
+        "requirements": "Windows 10 / 11，x64 架构。\n安装包尚未代码签名；如系统提示未知发布者，请确认下载来源为 skymoni.com。",
+        "publisher": "skymoni",
+        "category": "浏览器与工具",
+        "screenshots": [
+          "https://skymoni.com/api/shop/images/71e84d6ebe05d6079650fcdc4a0fc5f9447427013084b553e9bba24a9982b416.jpg",
+          "https://skymoni.com/api/shop/images/80175155c69093f5977eb4b6ed546c7092305ce7fd214b4596cf9fd2b7d94ce2.jpg",
+          "https://skymoni.com/api/shop/images/6dbec1d5fa0abaf45d51406885c7dbedf9f4b5e591b754bea415aaa1060cf631.jpg"
+        ],
+        "screenshotsEnabled": true,
+        "imageLayout": "landscape"
+      }
+    },
+    {
+      "id": "96b2ad63-7355-4fe9-b7e8-92a8ac85abd8",
+      "kind": "software",
+      "name": "Drip 浏览器 · Mac 版",
+      "description": "适用于 Apple 芯片的 Drip 桌面浏览器；0.3.25 临时签名版。",
+      "platform": "macOS 13+ · Apple Silicon (arm64)",
+      "version": "0.3.25",
+      "downloadUrl": "/drip-releases/Drip-Mac-arm64-adhoc.zip",
+      "filename": "",
+      "detailUrl": "/drip-releases/",
+      "imageUrl": "/static/software/drip-0.3.28.png",
+      "appearance": "generic",
+      "sortOrder": 11,
+      "published": true,
+      "details": {
+        "overview": "Drip 的 Mac arm64 版本，可在独立浏览空间中管理订阅、切换节点和查看流量。浏览器免费下载；Drip 授权线路仍需登录并兑换。下载包内含 DMG 与备用 ZIP，选择其中一种安装即可。图文安装指南及 SHA-256 请见下载页。",
+        "features": "独立桌面浏览与标签页\n管理个人订阅、切换代理节点\n查看线路流量与使用状态\n新标签页搜索、常用站点和自定义壁纸",
+        "changelog": "Mac Apple Silicon 0.3.25 测试包。版本早于 Windows 0.3.28。",
+        "requirements": "macOS 13 或更高版本；Apple 芯片 arm64，不支持 Intel Mac。此包为临时签名，尚未经过 Apple 公证；首次打开可能需要在“隐私与安全性”中手动确认。请从 skymoni.com 下载并核对下载页 SHA-256。",
+        "publisher": "skymoni",
+        "category": "浏览器与工具"
+      }
+    },
+    {
+      "id": "skymoni-mail",
+      "kind": "software",
+      "name": "skymoni Mail",
+      "description": "Your inbox on the go, with verification code copying and new mail notifications.",
+      "platform": "Android 7.0+",
+      "version": "1.4.1",
+      "downloadUrl": "/static/downloads/skymoni-mail/1.4.1/Skymoni-Mail-1.4.1.apk",
+      "filename": "Skymoni-Mail-1.4.1.apk",
+      "detailUrl": "https://mail.skymoni.com/login",
+      "imageUrl": "",
+      "appearance": "mail",
+      "sortOrder": 20,
+      "published": true,
+      "details": {
+        "overview": "skymoni Mail 是安卓专用邮箱应用，连接现有 skymoni 邮箱服务。登录自己的邮箱后，可查看收件箱、阅读邮件文字正文、识别和复制验证码，并在设置中开启新邮件提醒。\n应用聚焦收件，不提供发信和附件下载；附件可通过邮箱网站查看。",
+        "features": "查看收件箱与安全文字正文\n自动识别并复制邮件验证码\n复制邮箱地址、修改本人密码\n新邮件通知与自定义检查间隔",
+        "changelog": "开启新邮件通知并允许通知权限后，自动启用后台收信服务；关闭通知或退出登录时停止服务并清理通知。\n新邮件提醒使用独立通知通道，可在手机通知设置中调整横幅和声音。\n后台检查会受网络、休眠和厂商省电影响，不能保证即时通知。",
+        "requirements": "Android 7.0 或以上。\n下载 APK 后，按系统提示允许从当前下载来源安装。新邮件提醒需要通知权限；后台收信会受系统省电设置影响。",
+        "publisher": "skymoni",
+        "category": "邮件与效率"
+      }
+    },
+    {
+      "id": "operit",
+      "kind": "software",
+      "name": "Operit",
+      "description": "作者官方原版 Android 安装包，支持自定义模型 API。LGPL-3.0，源码和发布信息见详情。\n\n",
+      "platform": "Android 8.0+ · ARM64",
+      "version": "1.12.2",
+      "downloadUrl": "/api/software/files/69cfd7785bff0f1737c288ba5657300cef3fbcebff841e0ae5bfb9d618a2e443/operit-v1.12.2.apk",
+      "filename": "operit-v1.12.2.apk",
+      "detailUrl": "https://operit.app/#/v1",
+      "imageUrl": "/static/software/icons/operit.png",
+      "appearance": "generic",
+      "sortOrder": 21,
+      "published": true,
+      "details": {
+        "overview": "Operit（AI 智能助手）\n根据官方介绍与 GitHub 项目，Operit 是 Android 上最强大的 AI Agent 之一，特点包括：\n1.完整 Ubuntu 24 环境：可在手机上运行 Python、Node.js、vim 等工具。 \n2.强大的工具系统：40+ 内置工具、MCP/Skill 插件生态、自动化工作流。 \n3.本地 AI 模型支持：支持 MNN、llama.cpp（GGUF），可离线运行。 \n4.智能记忆系统：自动整理记忆、时间线查询、偏好学习。 \n5.语音交互：本地 STT、云/本地 TTS、语音唤醒。 \n6.角色卡与人设系统：可导入/导出角色卡，独立对话历史。 \n7.多模型支持：OpenAI、Claude、Gemini、DeepSeek、Zhipu 等。 ",
+        "category": "角色扮演"
+      }
+    },
+    {
+      "id": "operit2",
+      "kind": "software",
+      "name": "Operit2",
+      "description": "原仓库源码构建的二代 AI 助手（本地测试签名），支持自定义模型 API。AGPL-3.0，源码见详情。",
+      "platform": "Android 7.0+ · ARM64",
+      "version": "2.0.0 预览版",
+      "downloadUrl": "/api/software/files/90eaa922f8e106782e6c8f346176941671d01f76638b953a98a0940c2e890c80/Operit2-original-arm64.apk",
+      "filename": "Operit2-original-arm64.apk",
+      "detailUrl": "https://operit.app/",
+      "imageUrl": "/static/software/icons/operit2.png",
+      "appearance": "generic",
+      "sortOrder": 22,
+      "published": true,
+      "details": {}
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Android",
+          "label": "APK",
+          "url": "/static/downloads/yese-ai/3.0.5c/yese-ai-3.0.5c.apk",
+          "filename": "yese-ai-3.0.5c.apk",
+          "kind": "installer",
+          "version": "3.0.5c"
+        },
+        {
+          "platform": "iOS",
+          "label": "Official download entry",
+          "url": "https://ios-h5.tiankongshuyu.cn/ios/download?subChannelId=55259",
+          "filename": "",
+          "kind": "website"
+        }
+      ],
+      "id": "yese-ai",
+      "kind": "software",
+      "name": "夜色 AI",
+      "description": "围绕角色设定与持续对话展开的 AI 陪伴应用。",
+      "platform": "Android · iOS",
+      "version": "3.0.5c",
+      "downloadUrl": "https://pan.quark.cn/s/6b1b64af1949",
+      "filename": "",
+      "detailUrl": "https://www.yeseai.cn/",
+      "imageUrl": "/static/software/icons/yese-ai.png",
+      "appearance": "generic",
+      "sortOrder": 25,
+      "published": true,
+      "details": {
+        "overview": "围绕角色设定与持续对话展开的 AI 陪伴应用。",
+        "features": "AI 角色对话\n角色设定与沉浸互动\n保留官方下载与夸克网盘入口",
+        "requirements": "安卓收录安装包为 3.0.5c；iOS 请用 Safari 打开官方入口。网盘文件版本以实际下载为准。",
+        "category": "角色扮演"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Android",
+          "label": "APK",
+          "url": "https://jdai.art/downloads/jingdao-android-v2.6.apk",
+          "filename": "鲸岛-Android-v2.6.apk",
+          "kind": "installer",
+          "version": "2.6"
+        },
+        {
+          "platform": "iOS",
+          "label": "App Store",
+          "url": "https://apps.apple.com/cn/app/id6790736316",
+          "filename": "",
+          "kind": "website"
+        },
+        {
+          "platform": "Web",
+          "label": "Web app",
+          "url": "https://jd.weixingai.cn/",
+          "filename": "",
+          "kind": "website"
+        }
+      ],
+      "id": "jingdao-ai",
+      "kind": "software",
+      "name": "鲸岛 AI",
+      "description": "选择或创建 AI 角色，通过文字与语音互动，开启自己的陪伴故事。",
+      "platform": "Android · iOS · Web",
+      "version": "2.6",
+      "downloadUrl": "https://jdai.art/downloads/jingdao-android-v2.6.apk",
+      "filename": "鲸岛-Android-v2.6.apk",
+      "detailUrl": "https://jdai.art/#platforms",
+      "imageUrl": "/static/software/icons/jingdao-ai.png",
+      "appearance": "generic",
+      "sortOrder": 26,
+      "published": true,
+      "details": {
+        "overview": "选择或创建 AI 角色，通过文字与语音互动，开启自己的陪伴故事。",
+        "features": "自定义角色与互动方式\n文字与语音互动\n安卓、iOS 与网页版入口",
+        "requirements": "安卓收录版本为 2.6；iOS 版本以 App Store 为准；网页版无需安装。",
+        "category": "角色扮演"
+      }
+    },
+    {
+      "id": "gstory",
+      "kind": "software",
+      "name": "故事客栈",
+      "description": "以故事和角色互动为主题的 AI 聊天应用，进入自己喜欢的情节与世界。",
+      "platform": "Android",
+      "version": "2.8.7-1",
+      "downloadUrl": "https://storyapp.cn-nb1.rains3.com/%E6%95%85%E4%BA%8B%E5%AE%A2%E6%A0%88V2.8.7-1.apk",
+      "filename": "故事客栈V2.8.7-1.apk",
+      "detailUrl": "",
+      "imageUrl": "/static/software/icons/gstory.png",
+      "appearance": "generic",
+      "sortOrder": 27,
+      "published": true,
+      "details": {
+        "overview": "以故事和角色互动为主题的 AI 聊天应用，进入自己喜欢的情节与世界。",
+        "features": "AI 角色与故事互动\n沉浸式对话\n安卓安装包直下载",
+        "requirements": "收录安卓安装包 2.8.7-1，可直接下载。官方网站 www.gstory.online 当前 HTTPS 证书异常，官网入口待恢复。",
+        "category": "角色扮演"
+      }
+    },
+    {
+      "id": "lumiao",
+      "kind": "software",
+      "name": "噜喵 Lumeow",
+      "description": "在网页中探索 AI 角色互动，创造专属于自己的故事。",
+      "platform": "Web",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://www.lumiao.ai/home",
+      "imageUrl": "/static/software/icons/lumiao.png",
+      "appearance": "generic",
+      "sortOrder": 28,
+      "published": true,
+      "details": {
+        "overview": "在网页中探索 AI 角色互动，创造专属于自己的故事。",
+        "features": "网页版角色互动\n个性化故事创作\n通过浏览器使用，无需安装",
+        "requirements": "网页应用；账号与功能规则请查看官网。",
+        "category": "角色扮演"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Android",
+          "label": "ARM64 APK",
+          "url": "https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_android_1.3.1%2B80_arm64-v8a.apk",
+          "filename": "Kelivo_android_1.3.1+80_arm64-v8a.apk",
+          "kind": "installer",
+          "version": "1.3.1"
+        },
+        {
+          "platform": "Android",
+          "label": "ARMv7 APK",
+          "url": "https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_android_1.3.1%2B80_armeabi-v7a.apk",
+          "filename": "Kelivo_android_1.3.1+80_armeabi-v7a.apk",
+          "kind": "installer",
+          "version": "1.3.1"
+        },
+        {
+          "platform": "Android",
+          "label": "x86_64 APK",
+          "url": "https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_android_1.3.1%2B80_x86_64.apk",
+          "filename": "Kelivo_android_1.3.1+80_x86_64.apk",
+          "kind": "installer",
+          "version": "1.3.1"
+        },
+        {
+          "platform": "Windows",
+          "label": "Installer (.exe)",
+          "url": "https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_windows_1.3.1%2B80_setup.exe",
+          "filename": "Kelivo_windows_1.3.1+80_setup.exe",
+          "kind": "installer",
+          "version": "1.3.1"
+        },
+        {
+          "platform": "Windows",
+          "label": "Portable (.zip)",
+          "url": "https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_windows_1.3.1%2B80.zip",
+          "filename": "Kelivo_windows_1.3.1+80.zip",
+          "kind": "installer",
+          "version": "1.3.1"
+        },
+        {
+          "platform": "macOS",
+          "label": "Disk image (.dmg)",
+          "url": "https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_macos_1.3.1%2B80.dmg",
+          "filename": "Kelivo_macos_1.3.1+80.dmg",
+          "kind": "installer",
+          "version": "1.3.1"
+        },
+        {
+          "platform": "Linux",
+          "label": "AppImage",
+          "url": "https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo-1.3.1%2B80-x86_64.AppImage",
+          "filename": "Kelivo-1.3.1+80-x86_64.AppImage",
+          "kind": "installer",
+          "version": "1.3.1"
+        },
+        {
+          "platform": "Linux",
+          "label": "Debian / Ubuntu (.deb)",
+          "url": "https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_linux_1.3.1%2B80_amd64.deb",
+          "filename": "Kelivo_linux_1.3.1+80_amd64.deb",
+          "kind": "installer",
+          "version": "1.3.1"
+        },
+        {
+          "platform": "Linux",
+          "label": "Fedora / RHEL (.rpm)",
+          "url": "https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_linux_1.3.1%2B80.rpm",
+          "filename": "Kelivo_linux_1.3.1+80.rpm",
+          "kind": "installer",
+          "version": "1.3.1"
+        },
+        {
+          "platform": "Linux",
+          "label": "Tarball (.tar.gz)",
+          "url": "https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_linux_1.3.1%2B80.tar.gz",
+          "filename": "Kelivo_linux_1.3.1+80.tar.gz",
+          "kind": "installer",
+          "version": "1.3.1"
+        },
+        {
+          "platform": "iOS",
+          "label": "App Store",
+          "url": "https://apps.apple.com/us/app/kelivo/id6752122930",
+          "filename": "",
+          "kind": "website"
+        },
+        {
+          "platform": "iOS",
+          "label": "TestFlight",
+          "url": "https://testflight.apple.com/join/erbGGykR",
+          "filename": "",
+          "kind": "website"
+        },
+        {
+          "platform": "HarmonyOS",
+          "label": "Official project",
+          "url": "https://github.com/Chevey339/kelivo-ohos",
+          "filename": "",
+          "kind": "website"
+        }
+      ],
+      "id": "kelivo",
+      "kind": "software",
+      "name": "Kelivo",
+      "description": "开源 AI 助手与 Agent 客户端，连接自己的模型，在手机和桌面处理聊天与工作区任务。",
+      "platform": "Android · iOS · HarmonyOS · Windows · macOS · Linux",
+      "version": "1.3.1",
+      "downloadUrl": "https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_android_1.3.1%2B80_arm64-v8a.apk",
+      "filename": "Kelivo_android_1.3.1+80_arm64-v8a.apk",
+      "detailUrl": "https://kelivo.psycheas.top/",
+      "imageUrl": "/static/software/icons/kelivo.png",
+      "appearance": "generic",
+      "sortOrder": 29,
+      "published": true,
+      "details": {
+        "overview": "开源 AI 助手与 Agent 客户端，连接自己的模型，在手机和桌面处理聊天与工作区任务。",
+        "features": "连接多家模型供应商\n聊天、工作区与工具调用\nSkills、MCP 与任务功能\n手机和桌面多平台客户端",
+        "requirements": "收录桌面与安卓安装包为 1.3.1。iOS 使用 App Store 或 TestFlight；HarmonyOS 为单独的官方适配项目。需自行配置模型供应商。",
+        "publisher": "Chevey339",
+        "category": "聊天与智能体",
+        "license": "AGPL-3.0"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "ARM64 · 便携版",
+          "url": "https://github.com/CherryHQ/cherry-studio/releases/download/v2.1.5/Cherry-Studio-2.1.5-win-arm64-portable.exe",
+          "filename": "Cherry-Studio-2.1.5-win-arm64-portable.exe",
+          "kind": "installer",
+          "version": "2.1.5"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · 安装包",
+          "url": "https://github.com/CherryHQ/cherry-studio/releases/download/v2.1.5/Cherry-Studio-2.1.5-win-arm64-setup.exe",
+          "filename": "Cherry-Studio-2.1.5-win-arm64-setup.exe",
+          "kind": "installer",
+          "version": "2.1.5"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · 便携版",
+          "url": "https://github.com/CherryHQ/cherry-studio/releases/download/v2.1.5/Cherry-Studio-2.1.5-win-x64-portable.exe",
+          "filename": "Cherry-Studio-2.1.5-win-x64-portable.exe",
+          "kind": "installer",
+          "version": "2.1.5"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装包",
+          "url": "https://github.com/CherryHQ/cherry-studio/releases/download/v2.1.5/Cherry-Studio-2.1.5-win-x64-setup.exe",
+          "filename": "Cherry-Studio-2.1.5-win-x64-setup.exe",
+          "kind": "installer",
+          "version": "2.1.5"
+        },
+        {
+          "platform": "macOS",
+          "label": "ARM64 · DMG",
+          "url": "https://github.com/CherryHQ/cherry-studio/releases/download/v2.1.5/Cherry-Studio-2.1.5-mac-arm64.dmg",
+          "filename": "Cherry-Studio-2.1.5-mac-arm64.dmg",
+          "kind": "installer",
+          "version": "2.1.5"
+        },
+        {
+          "platform": "macOS",
+          "label": "x64 · DMG",
+          "url": "https://github.com/CherryHQ/cherry-studio/releases/download/v2.1.5/Cherry-Studio-2.1.5-mac-x64.dmg",
+          "filename": "Cherry-Studio-2.1.5-mac-x64.dmg",
+          "kind": "installer",
+          "version": "2.1.5"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · AppImage",
+          "url": "https://github.com/CherryHQ/cherry-studio/releases/download/v2.1.5/Cherry-Studio-2.1.5-linux-arm64.AppImage",
+          "filename": "Cherry-Studio-2.1.5-linux-arm64.AppImage",
+          "kind": "installer",
+          "version": "2.1.5"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://github.com/CherryHQ/cherry-studio/releases/download/v2.1.5/Cherry-Studio-2.1.5-linux-arm64.deb",
+          "filename": "Cherry-Studio-2.1.5-linux-arm64.deb",
+          "kind": "installer",
+          "version": "2.1.5"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://github.com/CherryHQ/cherry-studio/releases/download/v2.1.5/Cherry-Studio-2.1.5-linux-arm64.rpm",
+          "filename": "Cherry-Studio-2.1.5-linux-arm64.rpm",
+          "kind": "installer",
+          "version": "2.1.5"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · AppImage",
+          "url": "https://github.com/CherryHQ/cherry-studio/releases/download/v2.1.5/Cherry-Studio-2.1.5-linux-x64.AppImage",
+          "filename": "Cherry-Studio-2.1.5-linux-x64.AppImage",
+          "kind": "installer",
+          "version": "2.1.5"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/CherryHQ/cherry-studio/releases/download/v2.1.5/Cherry-Studio-2.1.5-linux-x64.deb",
+          "filename": "Cherry-Studio-2.1.5-linux-x64.deb",
+          "kind": "installer",
+          "version": "2.1.5"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://github.com/CherryHQ/cherry-studio/releases/download/v2.1.5/Cherry-Studio-2.1.5-linux-x64.rpm",
+          "filename": "Cherry-Studio-2.1.5-linux-x64.rpm",
+          "kind": "installer",
+          "version": "2.1.5"
+        }
+      ],
+      "id": "cherry-studio",
+      "kind": "tool",
+      "name": "Cherry Studio",
+      "description": "A desktop AI assistant for chatting with multiple models in one place.",
+      "platform": "Windows · macOS · Linux",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://cherry-ai.com",
+      "imageUrl": "",
+      "appearance": "cherry",
+      "sortOrder": 30,
+      "published": true,
+      "details": {
+        "overview": "桌面 AI 工作台，集中使用不同模型供应商，整理对话、助手和知识库。",
+        "features": "多供应商和多模型聊天\n助手与会话管理\n知识库与文档辅助",
+        "requirements": "在官方发布页选择 Windows、macOS 或 Linux 安装包；模型服务需自行配置。",
+        "category": "聊天与多模型"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "ARM64 · MSI",
+          "url": "https://github.com/farion1231/cc-switch/releases/download/v4.0.8/CC-Switch-v4.0.8-Windows-arm64.msi",
+          "filename": "CC-Switch-v4.0.8-Windows-arm64.msi",
+          "kind": "installer",
+          "version": "4.0.8"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · MSI",
+          "url": "https://github.com/farion1231/cc-switch/releases/download/v4.0.8/CC-Switch-v4.0.8-Windows.msi",
+          "filename": "CC-Switch-v4.0.8-Windows.msi",
+          "kind": "installer",
+          "version": "4.0.8"
+        },
+        {
+          "platform": "macOS",
+          "label": "x64 · DMG",
+          "url": "https://github.com/farion1231/cc-switch/releases/download/v4.0.8/CC-Switch-v4.0.8-macOS.dmg",
+          "filename": "CC-Switch-v4.0.8-macOS.dmg",
+          "kind": "installer",
+          "version": "4.0.8"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · AppImage",
+          "url": "https://github.com/farion1231/cc-switch/releases/download/v4.0.8/CC-Switch-v4.0.8-Linux-arm64.AppImage",
+          "filename": "CC-Switch-v4.0.8-Linux-arm64.AppImage",
+          "kind": "installer",
+          "version": "4.0.8"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://github.com/farion1231/cc-switch/releases/download/v4.0.8/CC-Switch-v4.0.8-Linux-arm64.deb",
+          "filename": "CC-Switch-v4.0.8-Linux-arm64.deb",
+          "kind": "installer",
+          "version": "4.0.8"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://github.com/farion1231/cc-switch/releases/download/v4.0.8/CC-Switch-v4.0.8-Linux-arm64.rpm",
+          "filename": "CC-Switch-v4.0.8-Linux-arm64.rpm",
+          "kind": "installer",
+          "version": "4.0.8"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · AppImage",
+          "url": "https://github.com/farion1231/cc-switch/releases/download/v4.0.8/CC-Switch-v4.0.8-Linux-x86_64.AppImage",
+          "filename": "CC-Switch-v4.0.8-Linux-x86_64.AppImage",
+          "kind": "installer",
+          "version": "4.0.8"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/farion1231/cc-switch/releases/download/v4.0.8/CC-Switch-v4.0.8-Linux-x86_64.deb",
+          "filename": "CC-Switch-v4.0.8-Linux-x86_64.deb",
+          "kind": "installer",
+          "version": "4.0.8"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://github.com/farion1231/cc-switch/releases/download/v4.0.8/CC-Switch-v4.0.8-Linux-x86_64.rpm",
+          "filename": "CC-Switch-v4.0.8-Linux-x86_64.rpm",
+          "kind": "installer",
+          "version": "4.0.8"
+        }
+      ],
+      "id": "cc-switch",
+      "kind": "tool",
+      "name": "CC Switch",
+      "description": "Manage API configurations for Claude Code, Codex and other AI coding tools.",
+      "platform": "Windows · macOS · Linux",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://ccswitch.io",
+      "imageUrl": "/static/software/icons/cc-switch.png",
+      "appearance": "cc",
+      "sortOrder": 40,
+      "published": true,
+      "details": {
+        "overview": "统一管理 Claude Code、Codex 等编程工具的供应商配置，减少手动修改配置文件的操作。",
+        "features": "切换模型供应商配置\n管理 MCP、Skills 与提示词\n查看用量和会话信息",
+        "requirements": "在官方发布页选择对应系统的安装包。具体支持的编程工具与配置方式以官方文档为准。",
+        "category": "AI 配置管理"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装包",
+          "url": "https://download.chatboxai.app/releases/Chatbox-1.23.5-Setup.exe",
+          "filename": "Chatbox-1.23.5-Setup.exe",
+          "kind": "installer",
+          "version": "1.23.5"
+        },
+        {
+          "platform": "Android",
+          "label": "x64 · APK",
+          "url": "https://download.chatboxai.app/releases/chatbox-1.23.4.apk",
+          "filename": "chatbox-1.23.4.apk",
+          "kind": "installer",
+          "version": "1.23.4"
+        },
+        {
+          "platform": "macOS",
+          "label": "x64 · DMG",
+          "url": "https://download.chatboxai.app/releases/Chatbox-1.23.5.dmg",
+          "filename": "Chatbox-1.23.5.dmg",
+          "kind": "installer",
+          "version": "1.23.5"
+        },
+        {
+          "platform": "macOS",
+          "label": "ARM64 · DMG",
+          "url": "https://download.chatboxai.app/releases/Chatbox-1.23.5-arm64.dmg",
+          "filename": "Chatbox-1.23.5-arm64.dmg",
+          "kind": "installer",
+          "version": "1.23.5"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · AppImage",
+          "url": "https://download.chatboxai.app/releases/Chatbox-1.23.5-x86_64.AppImage",
+          "filename": "Chatbox-1.23.5-x86_64.AppImage",
+          "kind": "installer",
+          "version": "1.23.5"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · AppImage",
+          "url": "https://download.chatboxai.app/releases/Chatbox-1.23.5-arm64.AppImage",
+          "filename": "Chatbox-1.23.5-arm64.AppImage",
+          "kind": "installer",
+          "version": "1.23.5"
+        },
+        {
+          "platform": "iOS",
+          "label": "App Store",
+          "url": "https://apps.apple.com/app/chatbox-ai/id6471368056",
+          "filename": "",
+          "kind": "website"
+        }
+      ],
+      "id": "chatbox",
+      "kind": "tool",
+      "name": "Chatbox",
+      "description": "跨平台 AI 聊天客户端，集中管理多模型对话，支持使用自己的 API 配置。",
+      "platform": "Windows · macOS · Linux · Android · iOS",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://chatboxai.app",
+      "imageUrl": "/static/software/icons/chatbox.png",
+      "appearance": "generic",
+      "sortOrder": 60,
+      "published": true,
+      "details": {
+        "overview": "跨平台 AI 聊天客户端，集中管理多模型对话，支持使用自己的 API 配置。",
+        "features": "多模型对话与会话管理\n自定义模型供应商\n桌面与移动端使用",
+        "requirements": "在官方下载页面选择对应系统。自定义 API 和官方订阅的使用方式以官方说明为准。",
+        "category": "聊天与多模型"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Android",
+          "label": "ARM64 · APK",
+          "url": "https://github.com/rikkahub/rikkahub/releases/download/2.5.6/rikkahub-2.5.6-arm64-v8a.apk",
+          "filename": "rikkahub-2.5.6-arm64-v8a.apk",
+          "kind": "installer",
+          "version": "2.5.6"
+        }
+      ],
+      "id": "rikkahub",
+      "kind": "tool",
+      "name": "RikkaHub",
+      "description": "原生 Android AI 聊天客户端，支持配置多个模型供应商并切换使用。",
+      "platform": "Android",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://rikka-ai.com",
+      "imageUrl": "/static/software/icons/rikkahub.svg",
+      "appearance": "generic",
+      "sortOrder": 70,
+      "published": true,
+      "details": {
+        "overview": "原生 Android AI 聊天客户端，支持配置多个模型供应商并切换使用。",
+        "features": "原生 Android 聊天体验\n多供应商配置与模型切换\n对话与助手管理",
+        "requirements": "Android 手机或平板；在官方页面查看当前版本要求。",
+        "category": "移动端 AI"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装包",
+          "url": "https://github.com/lobehub/lobehub/releases/download/v2.2.19/LobeHub-2.2.19-setup.exe",
+          "filename": "LobeHub-2.2.19-setup.exe",
+          "kind": "installer",
+          "version": "2.2.19"
+        },
+        {
+          "platform": "macOS",
+          "label": "ARM64 · DMG",
+          "url": "https://github.com/lobehub/lobehub/releases/download/v2.2.19/LobeHub-2.2.19-arm64.dmg",
+          "filename": "LobeHub-2.2.19-arm64.dmg",
+          "kind": "installer",
+          "version": "2.2.19"
+        },
+        {
+          "platform": "macOS",
+          "label": "x64 · DMG",
+          "url": "https://github.com/lobehub/lobehub/releases/download/v2.2.19/LobeHub-2.2.19-x64.dmg",
+          "filename": "LobeHub-2.2.19-x64.dmg",
+          "kind": "installer",
+          "version": "2.2.19"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · AppImage",
+          "url": "https://github.com/lobehub/lobehub/releases/download/v2.2.19/LobeHub-2.2.19.AppImage",
+          "filename": "LobeHub-2.2.19.AppImage",
+          "kind": "installer",
+          "version": "2.2.19"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://github.com/lobehub/lobehub/releases/download/v2.2.19/lobehub-desktop-2.2.19.x86_64.rpm",
+          "filename": "lobehub-desktop-2.2.19.x86_64.rpm",
+          "kind": "installer",
+          "version": "2.2.19"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/lobehub/lobehub/releases/download/v2.2.19/lobehub-desktop_2.2.19_amd64.deb",
+          "filename": "lobehub-desktop_2.2.19_amd64.deb",
+          "kind": "installer",
+          "version": "2.2.19"
+        },
+        {
+          "platform": "iOS",
+          "label": "App Store",
+          "url": "https://apps.apple.com/app/id6749615954",
+          "filename": "",
+          "kind": "website"
+        }
+      ],
+      "id": "lobehub",
+      "kind": "tool",
+      "name": "LobeHub",
+      "description": "多模型聊天与智能体工作空间，提供桌面和移动端入口。",
+      "platform": "Windows · macOS · Linux · Android · iOS",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://lobehub.com",
+      "imageUrl": "/static/software/icons/lobehub.png",
+      "appearance": "generic",
+      "sortOrder": 80,
+      "published": true,
+      "details": {
+        "overview": "多模型聊天与智能体工作空间，提供桌面和移动端入口。",
+        "features": "多模型聊天工作空间\n创建和管理智能体\n桌面与移动端使用",
+        "requirements": "在官方下载页面选择对应系统；账号、订阅和模型配置以官方说明为准。",
+        "category": "聊天与智能体"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Android",
+          "label": "ARM64（常用） · APK",
+          "url": "https://github.com/2dust/v2rayNG/releases/download/2.2.6/v2rayNG_2.2.6_arm64-v8a.apk",
+          "filename": "v2rayNG_2.2.6_arm64-v8a.apk",
+          "kind": "installer",
+          "version": "2.2.6"
+        },
+        {
+          "platform": "Android",
+          "label": "ARM32 · APK",
+          "url": "https://github.com/2dust/v2rayNG/releases/download/2.2.6/v2rayNG_2.2.6_armeabi-v7a.apk",
+          "filename": "v2rayNG_2.2.6_armeabi-v7a.apk",
+          "kind": "installer",
+          "version": "2.2.6"
+        },
+        {
+          "platform": "Android",
+          "label": "x86（32 位） · APK",
+          "url": "https://github.com/2dust/v2rayNG/releases/download/2.2.6/v2rayNG_2.2.6_x86.apk",
+          "filename": "v2rayNG_2.2.6_x86.apk",
+          "kind": "installer",
+          "version": "2.2.6"
+        },
+        {
+          "platform": "Android",
+          "label": "x64 · APK",
+          "url": "https://github.com/2dust/v2rayNG/releases/download/2.2.6/v2rayNG_2.2.6_x86_64.apk",
+          "filename": "v2rayNG_2.2.6_x86_64.apk",
+          "kind": "installer",
+          "version": "2.2.6"
+        }
+      ],
+      "id": "v2rayng",
+      "kind": "software",
+      "name": "v2rayNG",
+      "description": "安卓上的 V2Ray / Xray 客户端，支持订阅导入和节点管理。",
+      "platform": "Android",
+      "version": "2.2.6",
+      "downloadUrl": "https://github.com/2dust/v2rayNG/releases/download/2.2.6/v2rayNG_2.2.6_arm64-v8a.apk",
+      "filename": "v2rayNG_2.2.6_arm64-v8a.apk",
+      "detailUrl": "https://v2rayng.2dust.link",
+      "imageUrl": "/static/software/icons/v2rayng-b32c1809e5e4.png",
+      "appearance": "generic",
+      "sortOrder": 100,
+      "published": true,
+      "details": {
+        "overview": "安卓上的 V2Ray / Xray 客户端，支持订阅导入和节点管理。",
+        "features": "订阅导入与更新\n节点切换与测速\n支持 Xray 与 V2Fly 核心",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。安卓手机一般选择 ARM64，较旧机型可选择 ARM32。",
+        "publisher": "2dust",
+        "category": "网络与代理",
+        "license": "GPL-3.0",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Android",
+          "label": "ARM64（常用） · APK",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-android-arm64-v8a.apk",
+          "filename": "FlClash-0.8.99-android-arm64-v8a.apk",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "Android",
+          "label": "ARM32 · APK",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-android-armeabi-v7a.apk",
+          "filename": "FlClash-0.8.99-android-armeabi-v7a.apk",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "Android",
+          "label": "x64 · APK",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-android-x86_64.apk",
+          "filename": "FlClash-0.8.99-android-x86_64.apk",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装版",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-windows-amd64-setup.exe",
+          "filename": "FlClash-0.8.99-windows-amd64-setup.exe",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · ZIP 解压版",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-windows-amd64.zip",
+          "filename": "FlClash-0.8.99-windows-amd64.zip",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · 安装版",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-windows-arm64-setup.exe",
+          "filename": "FlClash-0.8.99-windows-arm64-setup.exe",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · ZIP 解压版",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-windows-arm64.zip",
+          "filename": "FlClash-0.8.99-windows-arm64.zip",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "macOS",
+          "label": "Intel · DMG",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-macos-amd64.dmg",
+          "filename": "FlClash-0.8.99-macos-amd64.dmg",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "macOS",
+          "label": "Apple 芯片 · DMG",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-macos-arm64.dmg",
+          "filename": "FlClash-0.8.99-macos-arm64.dmg",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · AppImage",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-linux-amd64.AppImage",
+          "filename": "FlClash-0.8.99-linux-amd64.AppImage",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-linux-amd64.deb",
+          "filename": "FlClash-0.8.99-linux-amd64.deb",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-linux-amd64.rpm",
+          "filename": "FlClash-0.8.99-linux-amd64.rpm",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · AppImage",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-linux-arm64.AppImage",
+          "filename": "FlClash-0.8.99-linux-arm64.AppImage",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-linux-arm64.deb",
+          "filename": "FlClash-0.8.99-linux-arm64.deb",
+          "kind": "installer",
+          "version": "0.8.99"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-linux-arm64.rpm",
+          "filename": "FlClash-0.8.99-linux-arm64.rpm",
+          "kind": "installer",
+          "version": "0.8.99"
+        }
+      ],
+      "id": "flclash",
+      "kind": "software",
+      "name": "FlClash",
+      "description": "覆盖手机和电脑的 Clash 客户端，统一管理订阅、规则与代理。",
+      "platform": "Android / Windows / macOS / Linux",
+      "version": "0.8.99",
+      "downloadUrl": "https://github.com/chen08209/FlClash/releases/download/v0.8.99/FlClash-0.8.99-android-arm64-v8a.apk",
+      "filename": "FlClash-0.8.99-android-arm64-v8a.apk",
+      "detailUrl": "https://chen08209.github.io/FlClash",
+      "imageUrl": "/static/software/icons/flclash-e9f6c8689483.png",
+      "appearance": "generic",
+      "sortOrder": 101,
+      "published": true,
+      "details": {
+        "overview": "覆盖手机和电脑的 Clash 客户端，统一管理订阅、规则与代理。",
+        "features": "跨平台界面\n订阅与规则管理\n系统代理与 TUN 模式",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。安卓手机一般选择 ARM64，较旧机型可选择 ARM32。 Linux 请按发行版选择 DEB、RPM、AppImage 或解压包。",
+        "publisher": "chen08209",
+        "category": "网络与代理",
+        "license": "GPL-3.0",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Android",
+          "label": "ARM64（常用） · APK",
+          "url": "https://github.com/MetaCubeX/ClashMetaForAndroid/releases/download/v2.11.35/cmfa-2.11.35-meta-arm64-v8a-release.apk",
+          "filename": "cmfa-2.11.35-meta-arm64-v8a-release.apk",
+          "kind": "installer",
+          "version": "2.11.35"
+        },
+        {
+          "platform": "Android",
+          "label": "ARM32 · APK",
+          "url": "https://github.com/MetaCubeX/ClashMetaForAndroid/releases/download/v2.11.35/cmfa-2.11.35-meta-armeabi-v7a-release.apk",
+          "filename": "cmfa-2.11.35-meta-armeabi-v7a-release.apk",
+          "kind": "installer",
+          "version": "2.11.35"
+        },
+        {
+          "platform": "Android",
+          "label": "通用 · APK",
+          "url": "https://github.com/MetaCubeX/ClashMetaForAndroid/releases/download/v2.11.35/cmfa-2.11.35-meta-universal-release.apk",
+          "filename": "cmfa-2.11.35-meta-universal-release.apk",
+          "kind": "installer",
+          "version": "2.11.35"
+        },
+        {
+          "platform": "Android",
+          "label": "x86（32 位） · APK",
+          "url": "https://github.com/MetaCubeX/ClashMetaForAndroid/releases/download/v2.11.35/cmfa-2.11.35-meta-x86-release.apk",
+          "filename": "cmfa-2.11.35-meta-x86-release.apk",
+          "kind": "installer",
+          "version": "2.11.35"
+        },
+        {
+          "platform": "Android",
+          "label": "x64 · APK",
+          "url": "https://github.com/MetaCubeX/ClashMetaForAndroid/releases/download/v2.11.35/cmfa-2.11.35-meta-x86_64-release.apk",
+          "filename": "cmfa-2.11.35-meta-x86_64-release.apk",
+          "kind": "installer",
+          "version": "2.11.35"
+        }
+      ],
+      "id": "clash-meta-android",
+      "kind": "software",
+      "name": "Clash Meta for Android",
+      "description": "安卓上的 Mihomo / Clash Meta 客户端，也称 CMFA。",
+      "platform": "Android",
+      "version": "2.11.35",
+      "downloadUrl": "https://github.com/MetaCubeX/ClashMetaForAndroid/releases/download/v2.11.35/cmfa-2.11.35-meta-arm64-v8a-release.apk",
+      "filename": "cmfa-2.11.35-meta-arm64-v8a-release.apk",
+      "detailUrl": "https://github.com/MetaCubeX/ClashMetaForAndroid",
+      "imageUrl": "/static/software/icons/clash-meta-android-90e0a3d72158.png",
+      "appearance": "generic",
+      "sortOrder": 102,
+      "published": true,
+      "details": {
+        "overview": "安卓上的 Mihomo / Clash Meta 客户端，也称 CMFA。",
+        "features": "Clash 配置与订阅导入\n代理组切换\n规则分流",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。安卓手机一般选择 ARM64，较旧机型可选择 ARM32。",
+        "publisher": "MetaCubeX",
+        "category": "网络与代理",
+        "license": "GPL-3.0",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Android",
+          "label": "ARM64（常用） · APK",
+          "url": "https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.4.2/NekoBox-1.4.2-arm64-v8a.apk",
+          "filename": "NekoBox-1.4.2-arm64-v8a.apk",
+          "kind": "installer",
+          "version": "1.4.2"
+        },
+        {
+          "platform": "Android",
+          "label": "ARM32 · APK",
+          "url": "https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.4.2/NekoBox-1.4.2-armeabi-v7a.apk",
+          "filename": "NekoBox-1.4.2-armeabi-v7a.apk",
+          "kind": "installer",
+          "version": "1.4.2"
+        },
+        {
+          "platform": "Android",
+          "label": "x86（32 位） · APK",
+          "url": "https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.4.2/NekoBox-1.4.2-x86.apk",
+          "filename": "NekoBox-1.4.2-x86.apk",
+          "kind": "installer",
+          "version": "1.4.2"
+        },
+        {
+          "platform": "Android",
+          "label": "x64 · APK",
+          "url": "https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.4.2/NekoBox-1.4.2-x86_64.apk",
+          "filename": "NekoBox-1.4.2-x86_64.apk",
+          "kind": "installer",
+          "version": "1.4.2"
+        }
+      ],
+      "id": "nekobox-android",
+      "kind": "software",
+      "name": "NekoBox for Android",
+      "description": "基于 sing-box 的安卓代理客户端，支持订阅和多种协议。",
+      "platform": "Android",
+      "version": "1.4.2",
+      "downloadUrl": "https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.4.2/NekoBox-1.4.2-arm64-v8a.apk",
+      "filename": "NekoBox-1.4.2-arm64-v8a.apk",
+      "detailUrl": "https://matsuridayo.github.io/",
+      "imageUrl": "/static/software/icons/nekobox-android-92e6f8f66a42.png",
+      "appearance": "generic",
+      "sortOrder": 103,
+      "published": true,
+      "details": {
+        "overview": "基于 sing-box 的安卓代理客户端，支持订阅和多种协议。",
+        "features": "订阅管理\n节点测试与切换\n多协议与路由配置",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。安卓手机一般选择 ARM64，较旧机型可选择 ARM32。",
+        "publisher": "MatsuriDayo",
+        "category": "网络与代理",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Android",
+          "label": "ARM64（常用） · APK",
+          "url": "https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Android-arm64.apk",
+          "filename": "Hiddify-Android-arm64.apk",
+          "kind": "installer",
+          "version": "4.1.1"
+        },
+        {
+          "platform": "Android",
+          "label": "ARM32 · APK",
+          "url": "https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Android-arm7.apk",
+          "filename": "Hiddify-Android-arm7.apk",
+          "kind": "installer",
+          "version": "4.1.1"
+        },
+        {
+          "platform": "Android",
+          "label": "通用 · APK",
+          "url": "https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Android-universal.apk",
+          "filename": "Hiddify-Android-universal.apk",
+          "kind": "installer",
+          "version": "4.1.1"
+        },
+        {
+          "platform": "Android",
+          "label": "x64 · APK",
+          "url": "https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Android-x86_64.apk",
+          "filename": "Hiddify-Android-x86_64.apk",
+          "kind": "installer",
+          "version": "4.1.1"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装版",
+          "url": "https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe",
+          "filename": "Hiddify-Windows-Setup-x64.exe",
+          "kind": "installer",
+          "version": "4.1.1"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · MSIX",
+          "url": "https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-x64.msix",
+          "filename": "Hiddify-Windows-x64.msix",
+          "kind": "installer",
+          "version": "4.1.1"
+        },
+        {
+          "platform": "macOS",
+          "label": "通用 · PKG",
+          "url": "https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-MacOS-Installer.pkg",
+          "filename": "Hiddify-MacOS-Installer.pkg",
+          "kind": "installer",
+          "version": "4.1.1"
+        },
+        {
+          "platform": "macOS",
+          "label": "通用 · DMG",
+          "url": "https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-MacOS.dmg",
+          "filename": "Hiddify-MacOS.dmg",
+          "kind": "installer",
+          "version": "4.1.1"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Debian-x64.deb",
+          "filename": "Hiddify-Debian-x64.deb",
+          "kind": "installer",
+          "version": "4.1.1"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · AppImage",
+          "url": "https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Linux-x64-AppImage.AppImage",
+          "filename": "Hiddify-Linux-x64-AppImage.AppImage",
+          "kind": "installer",
+          "version": "4.1.1"
+        },
+        {
+          "platform": "iOS",
+          "label": "App Store",
+          "url": "https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532?platform=iphone",
+          "filename": "",
+          "kind": "website"
+        }
+      ],
+      "id": "hiddify",
+      "kind": "software",
+      "name": "Hiddify",
+      "description": "面向手机和电脑的代理客户端，支持订阅导入与自动选择节点。",
+      "platform": "Android / Windows / macOS / Linux / iOS",
+      "version": "4.1.1",
+      "downloadUrl": "https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Android-arm64.apk",
+      "filename": "Hiddify-Android-arm64.apk",
+      "detailUrl": "https://hiddify.com",
+      "imageUrl": "/static/software/icons/hiddify-951bc804e781.png",
+      "appearance": "generic",
+      "sortOrder": 104,
+      "published": true,
+      "details": {
+        "overview": "面向手机和电脑的代理客户端，支持订阅导入与自动选择节点。",
+        "features": "订阅与配置导入\n节点测试与选择\n移动端和桌面端",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。安卓手机一般选择 ARM64，较旧机型可选择 ARM32。 Linux 请按发行版选择 DEB、RPM、AppImage 或解压包。 iOS 通过官方 App Store 安装，版本以商店为准。",
+        "publisher": "hiddify",
+        "category": "网络与代理",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Android",
+          "label": "ARM64（常用） · APK",
+          "url": "https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_android_arm64-v8a.apk",
+          "filename": "karing_1.2.25.2802_android_arm64-v8a.apk",
+          "kind": "installer",
+          "version": "1.2.25.2802"
+        },
+        {
+          "platform": "Android",
+          "label": "ARM 通用 · APK",
+          "url": "https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_android_arm.apk",
+          "filename": "karing_1.2.25.2802_android_arm.apk",
+          "kind": "installer",
+          "version": "1.2.25.2802"
+        },
+        {
+          "platform": "Android",
+          "label": "ARM32 · APK",
+          "url": "https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_android_armeabi-v7a.apk",
+          "filename": "karing_1.2.25.2802_android_armeabi-v7a.apk",
+          "kind": "installer",
+          "version": "1.2.25.2802"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装版",
+          "url": "https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_windows_x64.exe",
+          "filename": "karing_1.2.25.2802_windows_x64.exe",
+          "kind": "installer",
+          "version": "1.2.25.2802"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · ZIP 解压版",
+          "url": "https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_windows_x64.zip",
+          "filename": "karing_1.2.25.2802_windows_x64.zip",
+          "kind": "installer",
+          "version": "1.2.25.2802"
+        },
+        {
+          "platform": "macOS",
+          "label": "通用 · DMG",
+          "url": "https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_macos_universal.dmg",
+          "filename": "karing_1.2.25.2802_macos_universal.dmg",
+          "kind": "installer",
+          "version": "1.2.25.2802"
+        },
+        {
+          "platform": "macOS",
+          "label": "通用 · PKG",
+          "url": "https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_macos_universal.pkg",
+          "filename": "karing_1.2.25.2802_macos_universal.pkg",
+          "kind": "installer",
+          "version": "1.2.25.2802"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · AppImage",
+          "url": "https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_linux_amd64.AppImage",
+          "filename": "karing_1.2.25.2802_linux_amd64.AppImage",
+          "kind": "installer",
+          "version": "1.2.25.2802"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_linux_amd64.deb",
+          "filename": "karing_1.2.25.2802_linux_amd64.deb",
+          "kind": "installer",
+          "version": "1.2.25.2802"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_linux_amd64.rpm",
+          "filename": "karing_1.2.25.2802_linux_amd64.rpm",
+          "kind": "installer",
+          "version": "1.2.25.2802"
+        },
+        {
+          "platform": "iOS",
+          "label": "App Store",
+          "url": "https://apps.apple.com/us/app/karing/id6472431552",
+          "filename": "",
+          "kind": "website"
+        }
+      ],
+      "id": "karing",
+      "kind": "software",
+      "name": "Karing",
+      "description": "兼容 Clash 配置的跨平台代理客户端，手机和电脑均可使用。",
+      "platform": "Android / Windows / macOS / Linux / iOS",
+      "version": "1.2.25.2802",
+      "downloadUrl": "https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_android_arm64-v8a.apk",
+      "filename": "karing_1.2.25.2802_android_arm64-v8a.apk",
+      "detailUrl": "https://karing.app",
+      "imageUrl": "/static/software/icons/karing-774c4480942c.png",
+      "appearance": "generic",
+      "sortOrder": 105,
+      "published": true,
+      "details": {
+        "overview": "兼容 Clash 配置的跨平台代理客户端，手机和电脑均可使用。",
+        "features": "订阅与 Clash 配置支持\n代理组与规则管理\n多平台客户端",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。安卓手机一般选择 ARM64，较旧机型可选择 ARM32。 Linux 请按发行版选择 DEB、RPM、AppImage 或解压包。 iOS 通过官方 App Store 安装，版本以商店为准。",
+        "publisher": "KaringX",
+        "category": "网络与代理",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装版",
+          "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.8/Clash.Verge_2.5.8_x64-setup.exe",
+          "filename": "Clash.Verge_2.5.8_x64-setup.exe",
+          "kind": "installer",
+          "version": "2.5.8"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · 安装版",
+          "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.8/Clash.Verge_2.5.8_arm64-setup.exe",
+          "filename": "Clash.Verge_2.5.8_arm64-setup.exe",
+          "kind": "installer",
+          "version": "2.5.8"
+        },
+        {
+          "platform": "macOS",
+          "label": "Apple 芯片 · DMG",
+          "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.8/Clash.Verge_2.5.8_aarch64.dmg",
+          "filename": "Clash.Verge_2.5.8_aarch64.dmg",
+          "kind": "installer",
+          "version": "2.5.8"
+        },
+        {
+          "platform": "macOS",
+          "label": "Intel · DMG",
+          "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.8/Clash.Verge_2.5.8_x64.dmg",
+          "filename": "Clash.Verge_2.5.8_x64.dmg",
+          "kind": "installer",
+          "version": "2.5.8"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.8/Clash.Verge-2.5.8-1.aarch64.rpm",
+          "filename": "Clash.Verge-2.5.8-1.aarch64.rpm",
+          "kind": "installer",
+          "version": "2.5.8"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.8/Clash.Verge-2.5.8-1.x86_64.rpm",
+          "filename": "Clash.Verge-2.5.8-1.x86_64.rpm",
+          "kind": "installer",
+          "version": "2.5.8"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.8/Clash.Verge_2.5.8_amd64.deb",
+          "filename": "Clash.Verge_2.5.8_amd64.deb",
+          "kind": "installer",
+          "version": "2.5.8"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.8/Clash.Verge_2.5.8_arm64.deb",
+          "filename": "Clash.Verge_2.5.8_arm64.deb",
+          "kind": "installer",
+          "version": "2.5.8"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM32 · DEB",
+          "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.8/Clash.Verge_2.5.8_armhf.deb",
+          "filename": "Clash.Verge_2.5.8_armhf.deb",
+          "kind": "installer",
+          "version": "2.5.8"
+        }
+      ],
+      "id": "clash-verge-rev",
+      "kind": "software",
+      "name": "Clash Verge Rev",
+      "description": "适用于 Windows、macOS 和 Linux 的 Mihomo 图形客户端。",
+      "platform": "Windows / macOS / Linux",
+      "version": "2.5.8",
+      "downloadUrl": "https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.8/Clash.Verge_2.5.8_x64-setup.exe",
+      "filename": "Clash.Verge_2.5.8_x64-setup.exe",
+      "detailUrl": "https://www.clashverge.dev",
+      "imageUrl": "/static/software/icons/clash-verge-rev-0a612cf2db57.png",
+      "appearance": "generic",
+      "sortOrder": 106,
+      "published": true,
+      "details": {
+        "overview": "适用于 Windows、macOS 和 Linux 的 Mihomo 图形客户端。",
+        "features": "订阅与规则管理\n系统代理与 TUN 模式\n桌面端图形界面",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。 Linux 请按发行版选择 DEB、RPM、AppImage 或解压包。",
+        "publisher": "clash-verge-rev",
+        "category": "网络与代理",
+        "license": "GPL-3.0",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装版",
+          "url": "https://github.com/mihomo-party-org/clash-party/releases/download/v2.0.3/clash-party-windows-2.0.3-x64-setup.exe",
+          "filename": "clash-party-windows-2.0.3-x64-setup.exe",
+          "kind": "installer",
+          "version": "2.0.3"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · 7z 解压版",
+          "url": "https://github.com/mihomo-party-org/clash-party/releases/download/v2.0.3/clash-party-windows-2.0.3-arm64-portable.7z",
+          "filename": "clash-party-windows-2.0.3-arm64-portable.7z",
+          "kind": "installer",
+          "version": "2.0.3"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · 安装版",
+          "url": "https://github.com/mihomo-party-org/clash-party/releases/download/v2.0.3/clash-party-windows-2.0.3-arm64-setup.exe",
+          "filename": "clash-party-windows-2.0.3-arm64-setup.exe",
+          "kind": "installer",
+          "version": "2.0.3"
+        },
+        {
+          "platform": "Windows",
+          "label": "x86（32 位） · 安装版",
+          "url": "https://github.com/mihomo-party-org/clash-party/releases/download/v2.0.3/clash-party-windows-2.0.3-ia32-setup.exe",
+          "filename": "clash-party-windows-2.0.3-ia32-setup.exe",
+          "kind": "installer",
+          "version": "2.0.3"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · 7z 解压版",
+          "url": "https://github.com/mihomo-party-org/clash-party/releases/download/v2.0.3/clash-party-windows-2.0.3-x64-portable.7z",
+          "filename": "clash-party-windows-2.0.3-x64-portable.7z",
+          "kind": "installer",
+          "version": "2.0.3"
+        },
+        {
+          "platform": "macOS",
+          "label": "Apple 芯片 · PKG",
+          "url": "https://github.com/mihomo-party-org/clash-party/releases/download/v2.0.3/clash-party-macos-2.0.3-arm64.pkg",
+          "filename": "clash-party-macos-2.0.3-arm64.pkg",
+          "kind": "installer",
+          "version": "2.0.3"
+        },
+        {
+          "platform": "macOS",
+          "label": "Intel · PKG",
+          "url": "https://github.com/mihomo-party-org/clash-party/releases/download/v2.0.3/clash-party-macos-2.0.3-x64.pkg",
+          "filename": "clash-party-macos-2.0.3-x64.pkg",
+          "kind": "installer",
+          "version": "2.0.3"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://github.com/mihomo-party-org/clash-party/releases/download/v2.0.3/clash-party-linux-2.0.3-aarch64.rpm",
+          "filename": "clash-party-linux-2.0.3-aarch64.rpm",
+          "kind": "installer",
+          "version": "2.0.3"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/mihomo-party-org/clash-party/releases/download/v2.0.3/clash-party-linux-2.0.3-amd64.deb",
+          "filename": "clash-party-linux-2.0.3-amd64.deb",
+          "kind": "installer",
+          "version": "2.0.3"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://github.com/mihomo-party-org/clash-party/releases/download/v2.0.3/clash-party-linux-2.0.3-arm64.deb",
+          "filename": "clash-party-linux-2.0.3-arm64.deb",
+          "kind": "installer",
+          "version": "2.0.3"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://github.com/mihomo-party-org/clash-party/releases/download/v2.0.3/clash-party-linux-2.0.3-x86_64.rpm",
+          "filename": "clash-party-linux-2.0.3-x86_64.rpm",
+          "kind": "installer",
+          "version": "2.0.3"
+        }
+      ],
+      "id": "clash-party",
+      "kind": "software",
+      "name": "Clash Party",
+      "description": "原 Mihomo Party，提供桌面端订阅、代理与规则管理。",
+      "platform": "Windows / macOS / Linux",
+      "version": "2.0.3",
+      "downloadUrl": "https://github.com/mihomo-party-org/clash-party/releases/download/v2.0.3/clash-party-windows-2.0.3-x64-setup.exe",
+      "filename": "clash-party-windows-2.0.3-x64-setup.exe",
+      "detailUrl": "https://clashparty.org",
+      "imageUrl": "/static/software/icons/clash-party-a74710381213.png",
+      "appearance": "generic",
+      "sortOrder": 107,
+      "published": true,
+      "details": {
+        "overview": "原 Mihomo Party，提供桌面端订阅、代理与规则管理。",
+        "features": "Mihomo 图形界面\n订阅与代理组管理\nWindows、macOS 与 Linux",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。 Linux 请按发行版选择 DEB、RPM、AppImage 或解压包。",
+        "publisher": "mihomo-party-org",
+        "category": "网络与代理",
+        "license": "GPL-3.0",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x64 · ZIP 解压版",
+          "url": "https://github.com/2dust/v2rayN/releases/download/7.25.4/v2rayN-windows-64.zip",
+          "filename": "v2rayN-windows-64.zip",
+          "kind": "installer",
+          "version": "7.25.4"
+        },
+        {
+          "platform": "Windows",
+          "label": "x86（32 位） · ZIP 解压版",
+          "url": "https://github.com/2dust/v2rayN/releases/download/7.25.4/v2rayN-windows-86.zip",
+          "filename": "v2rayN-windows-86.zip",
+          "kind": "installer",
+          "version": "7.25.4"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · ZIP 解压版",
+          "url": "https://github.com/2dust/v2rayN/releases/download/7.25.4/v2rayN-windows-arm64.zip",
+          "filename": "v2rayN-windows-arm64.zip",
+          "kind": "installer",
+          "version": "7.25.4"
+        },
+        {
+          "platform": "macOS",
+          "label": "Intel · DMG",
+          "url": "https://github.com/2dust/v2rayN/releases/download/7.25.4/v2rayN-macos-64.dmg",
+          "filename": "v2rayN-macos-64.dmg",
+          "kind": "installer",
+          "version": "7.25.4"
+        },
+        {
+          "platform": "macOS",
+          "label": "Apple 芯片 · DMG",
+          "url": "https://github.com/2dust/v2rayN/releases/download/7.25.4/v2rayN-macos-arm64.dmg",
+          "filename": "v2rayN-macos-arm64.dmg",
+          "kind": "installer",
+          "version": "7.25.4"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/2dust/v2rayN/releases/download/7.25.4/v2rayN-linux-64.deb",
+          "filename": "v2rayN-linux-64.deb",
+          "kind": "installer",
+          "version": "7.25.4"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://github.com/2dust/v2rayN/releases/download/7.25.4/v2rayN-linux-arm64.deb",
+          "filename": "v2rayN-linux-arm64.deb",
+          "kind": "installer",
+          "version": "7.25.4"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://github.com/2dust/v2rayN/releases/download/7.25.4/v2rayN-linux-rhel-64.rpm",
+          "filename": "v2rayN-linux-rhel-64.rpm",
+          "kind": "installer",
+          "version": "7.25.4"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://github.com/2dust/v2rayN/releases/download/7.25.4/v2rayN-linux-rhel-arm64.rpm",
+          "filename": "v2rayN-linux-rhel-arm64.rpm",
+          "kind": "installer",
+          "version": "7.25.4"
+        }
+      ],
+      "id": "v2rayn",
+      "kind": "software",
+      "name": "v2rayN",
+      "description": "支持 Xray、sing-box 等核心的桌面代理客户端。",
+      "platform": "Windows / macOS / Linux",
+      "version": "7.25.4",
+      "downloadUrl": "https://github.com/2dust/v2rayN/releases/download/7.25.4/v2rayN-windows-64.zip",
+      "filename": "v2rayN-windows-64.zip",
+      "detailUrl": "https://v2rayn.2dust.link",
+      "imageUrl": "/static/software/icons/v2rayn-d508142d0f6c.png",
+      "appearance": "generic",
+      "sortOrder": 108,
+      "published": true,
+      "details": {
+        "overview": "支持 Xray、sing-box 等核心的桌面代理客户端。",
+        "features": "订阅与节点管理\n多核心支持\nWindows、macOS 与 Linux",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。 Linux 请按发行版选择 DEB、RPM、AppImage 或解压包。",
+        "publisher": "2dust",
+        "category": "网络与代理",
+        "license": "GPL-3.0",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装版",
+          "url": "https://github.com/libnyanpasu/clash-nyanpasu/releases/download/v1.6.1/Clash.Nyanpasu_1.6.1_x64-setup.exe",
+          "filename": "Clash.Nyanpasu_1.6.1_x64-setup.exe",
+          "kind": "installer",
+          "version": "1.6.1"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · ZIP 解压版",
+          "url": "https://github.com/libnyanpasu/clash-nyanpasu/releases/download/v1.6.1/Clash.Nyanpasu_1.6.1_x64_portable.zip",
+          "filename": "Clash.Nyanpasu_1.6.1_x64_portable.zip",
+          "kind": "installer",
+          "version": "1.6.1"
+        },
+        {
+          "platform": "macOS",
+          "label": "Apple 芯片 · DMG",
+          "url": "https://github.com/libnyanpasu/clash-nyanpasu/releases/download/v1.6.1/Clash.Nyanpasu_1.6.1_aarch64.dmg",
+          "filename": "Clash.Nyanpasu_1.6.1_aarch64.dmg",
+          "kind": "installer",
+          "version": "1.6.1"
+        },
+        {
+          "platform": "macOS",
+          "label": "Intel · DMG",
+          "url": "https://github.com/libnyanpasu/clash-nyanpasu/releases/download/v1.6.1/Clash.Nyanpasu_1.6.1_x64.dmg",
+          "filename": "Clash.Nyanpasu_1.6.1_x64.dmg",
+          "kind": "installer",
+          "version": "1.6.1"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://github.com/libnyanpasu/clash-nyanpasu/releases/download/v1.6.1/clash-nyanpasu-1.6.1-1.x86_64.rpm",
+          "filename": "clash-nyanpasu-1.6.1-1.x86_64.rpm",
+          "kind": "installer",
+          "version": "1.6.1"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · AppImage",
+          "url": "https://github.com/libnyanpasu/clash-nyanpasu/releases/download/v1.6.1/clash-nyanpasu_1.6.1_amd64.AppImage",
+          "filename": "clash-nyanpasu_1.6.1_amd64.AppImage",
+          "kind": "installer",
+          "version": "1.6.1"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/libnyanpasu/clash-nyanpasu/releases/download/v1.6.1/clash-nyanpasu_1.6.1_amd64.deb",
+          "filename": "clash-nyanpasu_1.6.1_amd64.deb",
+          "kind": "installer",
+          "version": "1.6.1"
+        }
+      ],
+      "id": "clash-nyanpasu",
+      "kind": "software",
+      "name": "Clash Nyanpasu",
+      "description": "Clash 桌面图形客户端，本次收录稳定版 1.6.1。",
+      "platform": "Windows / macOS / Linux",
+      "version": "1.6.1",
+      "downloadUrl": "https://github.com/libnyanpasu/clash-nyanpasu/releases/download/v1.6.1/Clash.Nyanpasu_1.6.1_x64-setup.exe",
+      "filename": "Clash.Nyanpasu_1.6.1_x64-setup.exe",
+      "detailUrl": "https://nyanpasu.org",
+      "imageUrl": "/static/software/icons/clash-nyanpasu-23050f4e13e2.png",
+      "appearance": "generic",
+      "sortOrder": 109,
+      "published": true,
+      "details": {
+        "overview": "Clash 桌面图形客户端，本次收录稳定版 1.6.1。",
+        "features": "桌面图形界面\n订阅与配置管理\n代理组切换",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。 Linux 请按发行版选择 DEB、RPM、AppImage 或解压包。 本次固定为稳定版 1.6.1；官网可能提供更新版本或候选版本。",
+        "publisher": "libnyanpasu",
+        "category": "网络与代理",
+        "license": "GPL-3.0",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装包",
+          "url": "https://github.com/cline/cline/releases/download/desktop-v0.0.45/Cline_0.0.45_x64-setup.exe",
+          "filename": "Cline_0.0.45_x64-setup.exe",
+          "kind": "installer",
+          "version": "0.0.45"
+        },
+        {
+          "platform": "macOS",
+          "label": "通用架构 · DMG",
+          "url": "https://github.com/cline/cline/releases/download/desktop-v0.0.45/Cline_0.0.45_universal.dmg",
+          "filename": "Cline_0.0.45_universal.dmg",
+          "kind": "installer",
+          "version": "0.0.45"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://github.com/cline/cline/releases/download/desktop-v0.0.45/Cline_0.0.45_aarch64.rpm",
+          "filename": "Cline_0.0.45_aarch64.rpm",
+          "kind": "installer",
+          "version": "0.0.45"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/cline/cline/releases/download/desktop-v0.0.45/Cline_0.0.45_amd64.deb",
+          "filename": "Cline_0.0.45_amd64.deb",
+          "kind": "installer",
+          "version": "0.0.45"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://github.com/cline/cline/releases/download/desktop-v0.0.45/Cline_0.0.45_arm64.deb",
+          "filename": "Cline_0.0.45_arm64.deb",
+          "kind": "installer",
+          "version": "0.0.45"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://github.com/cline/cline/releases/download/desktop-v0.0.45/Cline_0.0.45_x86_64.rpm",
+          "filename": "Cline_0.0.45_x86_64.rpm",
+          "kind": "installer",
+          "version": "0.0.45"
+        }
+      ],
+      "id": "cline",
+      "kind": "tool",
+      "name": "Cline",
+      "description": "可在编辑器或终端中使用的 AI 编程助手，支持自选模型供应商。",
+      "platform": "Windows · macOS · Linux · VS Code",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://cline.bot",
+      "imageUrl": "/static/software/icons/cline.png",
+      "appearance": "generic",
+      "sortOrder": 110,
+      "published": true,
+      "details": {
+        "overview": "可在编辑器或终端中使用的 AI 编程助手，支持自选模型供应商。",
+        "features": "理解项目并编辑代码\n运行命令与使用开发工具\n连接自选模型供应商\n编辑器与命令行工作流",
+        "requirements": "此入口打开官方扩展安装页；按指引安装到兼容编辑器，再配置模型供应商。",
+        "category": "AI 编程"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "ARM64 · ZIP 解压版",
+          "url": "https://github.com/throneproj/Throne/releases/download/1.3.2/Throne-1.3.2-windows-arm64.zip",
+          "filename": "Throne-1.3.2-windows-arm64.zip",
+          "kind": "installer",
+          "version": "1.3.2"
+        },
+        {
+          "platform": "Windows",
+          "label": "通用 · 安装版",
+          "url": "https://github.com/throneproj/Throne/releases/download/1.3.2/Throne-1.3.2-windows-universal-installer.exe",
+          "filename": "Throne-1.3.2-windows-universal-installer.exe",
+          "kind": "installer",
+          "version": "1.3.2"
+        },
+        {
+          "platform": "Windows",
+          "label": "x86（32 位） · ZIP 解压版",
+          "url": "https://github.com/throneproj/Throne/releases/download/1.3.2/Throne-1.3.2-windows32.zip",
+          "filename": "Throne-1.3.2-windows32.zip",
+          "kind": "installer",
+          "version": "1.3.2"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · ZIP 解压版",
+          "url": "https://github.com/throneproj/Throne/releases/download/1.3.2/Throne-1.3.2-windows64.zip",
+          "filename": "Throne-1.3.2-windows64.zip",
+          "kind": "installer",
+          "version": "1.3.2"
+        },
+        {
+          "platform": "macOS",
+          "label": "Intel · ZIP 解压版",
+          "url": "https://github.com/throneproj/Throne/releases/download/1.3.2/Throne-1.3.2-macos-amd64.zip",
+          "filename": "Throne-1.3.2-macos-amd64.zip",
+          "kind": "installer",
+          "version": "1.3.2"
+        },
+        {
+          "platform": "macOS",
+          "label": "Apple 芯片 · ZIP 解压版",
+          "url": "https://github.com/throneproj/Throne/releases/download/1.3.2/Throne-1.3.2-macos-arm64.zip",
+          "filename": "Throne-1.3.2-macos-arm64.zip",
+          "kind": "installer",
+          "version": "1.3.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/throneproj/Throne/releases/download/1.3.2/Throne-1.3.2-debian-amd64.deb",
+          "filename": "Throne-1.3.2-debian-amd64.deb",
+          "kind": "installer",
+          "version": "1.3.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://github.com/throneproj/Throne/releases/download/1.3.2/Throne-1.3.2-debian-arm64.deb",
+          "filename": "Throne-1.3.2-debian-arm64.deb",
+          "kind": "installer",
+          "version": "1.3.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://github.com/throneproj/Throne/releases/download/1.3.2/Throne-1.3.2-fedora-amd64.rpm",
+          "filename": "Throne-1.3.2-fedora-amd64.rpm",
+          "kind": "installer",
+          "version": "1.3.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://github.com/throneproj/Throne/releases/download/1.3.2/Throne-1.3.2-fedora-arm64.rpm",
+          "filename": "Throne-1.3.2-fedora-arm64.rpm",
+          "kind": "installer",
+          "version": "1.3.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · ZIP 解压版",
+          "url": "https://github.com/throneproj/Throne/releases/download/1.3.2/Throne-1.3.2-linux-amd64.zip",
+          "filename": "Throne-1.3.2-linux-amd64.zip",
+          "kind": "installer",
+          "version": "1.3.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · ZIP 解压版",
+          "url": "https://github.com/throneproj/Throne/releases/download/1.3.2/Throne-1.3.2-linux-arm64.zip",
+          "filename": "Throne-1.3.2-linux-arm64.zip",
+          "kind": "installer",
+          "version": "1.3.2"
+        }
+      ],
+      "id": "throne",
+      "kind": "software",
+      "name": "Throne",
+      "description": "Nekoray 的后继项目，基于 sing-box 的桌面代理客户端。",
+      "platform": "Windows / macOS / Linux",
+      "version": "1.3.2",
+      "downloadUrl": "https://github.com/throneproj/Throne/releases/download/1.3.2/Throne-1.3.2-windows-arm64.zip",
+      "filename": "Throne-1.3.2-windows-arm64.zip",
+      "detailUrl": "https://throneproj.github.io",
+      "imageUrl": "/static/software/icons/throne-e10b0eb635b4.png",
+      "appearance": "generic",
+      "sortOrder": 110,
+      "published": true,
+      "details": {
+        "overview": "Nekoray 的后继项目，基于 sing-box 的桌面代理客户端。",
+        "features": "多协议与订阅管理\n路由配置\nWindows、macOS 与 Linux",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。 Linux 请按发行版选择 DEB、RPM、AppImage 或解压包。",
+        "publisher": "throneproj",
+        "category": "网络与代理",
+        "license": "GPL-3.0",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x86（32 位） · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.SingBox/releases/download/v1.27.0/GUI.for.SingBox-windows-386.zip",
+          "filename": "GUI.for.SingBox-windows-386.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.SingBox/releases/download/v1.27.0/GUI.for.SingBox-windows-amd64.zip",
+          "filename": "GUI.for.SingBox-windows-amd64.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.SingBox/releases/download/v1.27.0/GUI.for.SingBox-windows-arm64.zip",
+          "filename": "GUI.for.SingBox-windows-arm64.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        },
+        {
+          "platform": "macOS",
+          "label": "Intel · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.SingBox/releases/download/v1.27.0/GUI.for.SingBox-darwin-amd64.zip",
+          "filename": "GUI.for.SingBox-darwin-amd64.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        },
+        {
+          "platform": "macOS",
+          "label": "Apple 芯片 · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.SingBox/releases/download/v1.27.0/GUI.for.SingBox-darwin-arm64.zip",
+          "filename": "GUI.for.SingBox-darwin-arm64.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.SingBox/releases/download/v1.27.0/GUI.for.SingBox-linux-amd64.zip",
+          "filename": "GUI.for.SingBox-linux-amd64.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.SingBox/releases/download/v1.27.0/GUI.for.SingBox-linux-arm64.zip",
+          "filename": "GUI.for.SingBox-linux-arm64.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        }
+      ],
+      "id": "gui-for-singbox",
+      "kind": "software",
+      "name": "GUI.for.SingBox",
+      "description": "sing-box 的跨平台桌面图形管理工具，提供订阅与规则配置。",
+      "platform": "Windows / macOS / Linux",
+      "version": "1.27.0",
+      "downloadUrl": "https://github.com/GUI-for-Cores/GUI.for.SingBox/releases/download/v1.27.0/GUI.for.SingBox-windows-386.zip",
+      "filename": "GUI.for.SingBox-windows-386.zip",
+      "detailUrl": "https://gui-for-cores.github.io/",
+      "imageUrl": "/static/software/icons/gui-for-singbox-59ffb625eb00.png",
+      "appearance": "generic",
+      "sortOrder": 111,
+      "published": true,
+      "details": {
+        "overview": "sing-box 的跨平台桌面图形管理工具，提供订阅与规则配置。",
+        "features": "可视化配置\n订阅与路由管理\n核心下载与更新",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。 Linux 请按发行版选择 DEB、RPM、AppImage 或解压包。 下载 ZIP 后解压使用；首次使用请在应用内下载和配置 sing-box 核心。",
+        "publisher": "GUI-for-Cores",
+        "category": "网络与代理",
+        "license": "GPL-3.0",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x86（32 位） · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.Clash/releases/download/v1.27.0/GUI.for.Clash-windows-386.zip",
+          "filename": "GUI.for.Clash-windows-386.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.Clash/releases/download/v1.27.0/GUI.for.Clash-windows-amd64.zip",
+          "filename": "GUI.for.Clash-windows-amd64.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.Clash/releases/download/v1.27.0/GUI.for.Clash-windows-arm64.zip",
+          "filename": "GUI.for.Clash-windows-arm64.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        },
+        {
+          "platform": "macOS",
+          "label": "Intel · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.Clash/releases/download/v1.27.0/GUI.for.Clash-darwin-amd64.zip",
+          "filename": "GUI.for.Clash-darwin-amd64.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        },
+        {
+          "platform": "macOS",
+          "label": "Apple 芯片 · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.Clash/releases/download/v1.27.0/GUI.for.Clash-darwin-arm64.zip",
+          "filename": "GUI.for.Clash-darwin-arm64.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.Clash/releases/download/v1.27.0/GUI.for.Clash-linux-amd64.zip",
+          "filename": "GUI.for.Clash-linux-amd64.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · ZIP 解压版",
+          "url": "https://github.com/GUI-for-Cores/GUI.for.Clash/releases/download/v1.27.0/GUI.for.Clash-linux-arm64.zip",
+          "filename": "GUI.for.Clash-linux-arm64.zip",
+          "kind": "installer",
+          "version": "1.27.0"
+        }
+      ],
+      "id": "gui-for-clash",
+      "kind": "software",
+      "name": "GUI.for.Clash",
+      "description": "Mihomo 的跨平台桌面图形管理工具，提供订阅与规则配置。",
+      "platform": "Windows / macOS / Linux",
+      "version": "1.27.0",
+      "downloadUrl": "https://github.com/GUI-for-Cores/GUI.for.Clash/releases/download/v1.27.0/GUI.for.Clash-windows-386.zip",
+      "filename": "GUI.for.Clash-windows-386.zip",
+      "detailUrl": "https://gui-for-cores.github.io/",
+      "imageUrl": "/static/software/icons/gui-for-clash-4a92fd1b48e5.png",
+      "appearance": "generic",
+      "sortOrder": 112,
+      "published": true,
+      "details": {
+        "overview": "Mihomo 的跨平台桌面图形管理工具，提供订阅与规则配置。",
+        "features": "可视化配置\n订阅与路由管理\n核心下载与更新",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。 Linux 请按发行版选择 DEB、RPM、AppImage 或解压包。 下载 ZIP 后解压使用；首次使用请在应用内下载和配置 Mihomo 核心。",
+        "publisher": "GUI-for-Cores",
+        "category": "网络与代理",
+        "license": "GPL-3.0",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Android",
+          "label": "ARM64（常用） · APK",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFA-1.14.3-arm64-v8a.apk",
+          "filename": "SFA-1.14.3-arm64-v8a.apk",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "Android",
+          "label": "ARM32 · APK",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFA-1.14.3-armeabi-v7a.apk",
+          "filename": "SFA-1.14.3-armeabi-v7a.apk",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "Android",
+          "label": "通用 · APK",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFA-1.14.3-universal.apk",
+          "filename": "SFA-1.14.3-universal.apk",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "Android",
+          "label": "x86（32 位） · APK",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFA-1.14.3-x86.apk",
+          "filename": "SFA-1.14.3-x86.apk",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "Android",
+          "label": "x64 · APK",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFA-1.14.3-x86_64.apk",
+          "filename": "SFA-1.14.3-x86_64.apk",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装版",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFW-1.14.3-x64.exe",
+          "filename": "SFW-1.14.3-x64.exe",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · 安装版",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFW-1.14.3-arm64.exe",
+          "filename": "SFW-1.14.3-arm64.exe",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "Windows",
+          "label": "x86（32 位） · 安装版",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFW-1.14.3-x86.exe",
+          "filename": "SFW-1.14.3-x86.exe",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "macOS",
+          "label": "Apple 芯片 · PKG",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFM-1.14.3-Apple.pkg",
+          "filename": "SFM-1.14.3-Apple.pkg",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "macOS",
+          "label": "Intel · PKG",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFM-1.14.3-Intel.pkg",
+          "filename": "SFM-1.14.3-Intel.pkg",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "macOS",
+          "label": "通用 · PKG",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFM-1.14.3-Universal.pkg",
+          "filename": "SFM-1.14.3-Universal.pkg",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFL-1.14.3-aarch64.rpm",
+          "filename": "SFL-1.14.3-aarch64.rpm",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFL-1.14.3-amd64.deb",
+          "filename": "SFL-1.14.3-amd64.deb",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFL-1.14.3-arm64.deb",
+          "filename": "SFL-1.14.3-arm64.deb",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFL-1.14.3-x86_64.rpm",
+          "filename": "SFL-1.14.3-x86_64.rpm",
+          "kind": "installer",
+          "version": "1.14.3"
+        },
+        {
+          "platform": "iOS",
+          "label": "App Store",
+          "url": "https://apps.apple.com/us/app/sing-box-mt/id6785326793",
+          "filename": "",
+          "kind": "website"
+        }
+      ],
+      "id": "sing-box",
+      "kind": "software",
+      "name": "sing-box 官方客户端",
+      "description": "sing-box 官方图形客户端，覆盖安卓、Windows、Linux 和 macOS。",
+      "platform": "Android / Windows / macOS / Linux / iOS",
+      "version": "1.14.3",
+      "downloadUrl": "https://github.com/SagerNet/sing-box/releases/download/v1.14.3/SFA-1.14.3-arm64-v8a.apk",
+      "filename": "SFA-1.14.3-arm64-v8a.apk",
+      "detailUrl": "https://sing-box.sagernet.org/clients/",
+      "imageUrl": "/static/software/icons/sing-box-e59b482bb479.svg",
+      "appearance": "generic",
+      "sortOrder": 113,
+      "published": true,
+      "details": {
+        "overview": "sing-box 官方图形客户端，覆盖安卓、Windows、Linux 和 macOS。",
+        "features": "本地与远程配置管理\n官方图形客户端\n按平台分别提供 SFA、SFW、SFL、SFM",
+        "requirements": "请按系统和芯片架构选择安装包；使用前需自行导入订阅或节点。安卓手机一般选择 ARM64，较旧机型可选择 ARM32。 Linux 请按发行版选择 DEB、RPM、AppImage 或解压包。 iOS 通过官方 App Store 安装，版本以商店为准。",
+        "publisher": "SagerNet",
+        "category": "网络与代理",
+        "updatedAt": "2026-10-11"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "ARM64 · 安装包",
+          "url": "https://github.com/anomalyco/opencode/releases/download/v1.18.35/opencode-desktop-win-arm64.exe",
+          "filename": "opencode-desktop-win-arm64.exe",
+          "kind": "installer",
+          "version": "1.18.35"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装包",
+          "url": "https://github.com/anomalyco/opencode/releases/download/v1.18.35/opencode-desktop-win-x64.exe",
+          "filename": "opencode-desktop-win-x64.exe",
+          "kind": "installer",
+          "version": "1.18.35"
+        },
+        {
+          "platform": "macOS",
+          "label": "ARM64 · DMG",
+          "url": "https://github.com/anomalyco/opencode/releases/download/v1.18.35/opencode-desktop-mac-arm64.dmg",
+          "filename": "opencode-desktop-mac-arm64.dmg",
+          "kind": "installer",
+          "version": "1.18.35"
+        },
+        {
+          "platform": "macOS",
+          "label": "x64 · DMG",
+          "url": "https://github.com/anomalyco/opencode/releases/download/v1.18.35/opencode-desktop-mac-x64.dmg",
+          "filename": "opencode-desktop-mac-x64.dmg",
+          "kind": "installer",
+          "version": "1.18.35"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://github.com/anomalyco/opencode/releases/download/v1.18.35/opencode-desktop-linux-aarch64.rpm",
+          "filename": "opencode-desktop-linux-aarch64.rpm",
+          "kind": "installer",
+          "version": "1.18.35"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://github.com/anomalyco/opencode/releases/download/v1.18.35/opencode-desktop-linux-amd64.deb",
+          "filename": "opencode-desktop-linux-amd64.deb",
+          "kind": "installer",
+          "version": "1.18.35"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · AppImage",
+          "url": "https://github.com/anomalyco/opencode/releases/download/v1.18.35/opencode-desktop-linux-arm64.AppImage",
+          "filename": "opencode-desktop-linux-arm64.AppImage",
+          "kind": "installer",
+          "version": "1.18.35"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://github.com/anomalyco/opencode/releases/download/v1.18.35/opencode-desktop-linux-arm64.deb",
+          "filename": "opencode-desktop-linux-arm64.deb",
+          "kind": "installer",
+          "version": "1.18.35"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · AppImage",
+          "url": "https://github.com/anomalyco/opencode/releases/download/v1.18.35/opencode-desktop-linux-x86_64.AppImage",
+          "filename": "opencode-desktop-linux-x86_64.AppImage",
+          "kind": "installer",
+          "version": "1.18.35"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://github.com/anomalyco/opencode/releases/download/v1.18.35/opencode-desktop-linux-x86_64.rpm",
+          "filename": "opencode-desktop-linux-x86_64.rpm",
+          "kind": "installer",
+          "version": "1.18.35"
+        }
+      ],
+      "id": "opencode",
+      "kind": "tool",
+      "name": "OpenCode",
+      "description": "面向终端、桌面和编辑器的 AI 编程助手，可连接不同模型供应商。",
+      "platform": "Windows · macOS · Linux · VS Code",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://opencode.ai",
+      "imageUrl": "/static/software/icons/opencode.png",
+      "appearance": "generic",
+      "sortOrder": 120,
+      "published": true,
+      "details": {
+        "overview": "面向终端、桌面和编辑器的 AI 编程助手，可连接不同模型供应商。",
+        "features": "终端与桌面编程工作流\n多模型供应商配置\n多会话项目协作\n编辑器扩展入口",
+        "requirements": "在官方下载页面选择桌面客户端、终端或编辑器扩展安装方式。",
+        "category": "AI 编程"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装包",
+          "url": "https://installers.lmstudio.ai/win32/x64/0.4.26-4/LM-Studio-0.4.26-4-x64.exe",
+          "filename": "LM-Studio-0.4.26-4-x64.exe",
+          "kind": "installer",
+          "version": "0.4.26-4"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · 安装包",
+          "url": "https://installers.lmstudio.ai/win32/arm64/0.4.26-4/LM-Studio-0.4.26-4-arm64.exe",
+          "filename": "LM-Studio-0.4.26-4-arm64.exe",
+          "kind": "installer",
+          "version": "0.4.26-4"
+        },
+        {
+          "platform": "macOS",
+          "label": "ARM64 · DMG",
+          "url": "https://installers.lmstudio.ai/darwin/arm64/0.4.26-4/LM-Studio-0.4.26-4-arm64.dmg",
+          "filename": "LM-Studio-0.4.26-4-arm64.dmg",
+          "kind": "installer",
+          "version": "0.4.26-4"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · AppImage",
+          "url": "https://installers.lmstudio.ai/linux/x64/0.4.26-4/LM-Studio-0.4.26-4-x64.AppImage",
+          "filename": "LM-Studio-0.4.26-4-x64.AppImage",
+          "kind": "installer",
+          "version": "0.4.26-4"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · AppImage",
+          "url": "https://installers.lmstudio.ai/linux/arm64/0.4.26-4/LM-Studio-0.4.26-4-arm64.AppImage",
+          "filename": "LM-Studio-0.4.26-4-arm64.AppImage",
+          "kind": "installer",
+          "version": "0.4.26-4"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://installers.lmstudio.ai/linux/x64/0.4.26-4/LM-Studio-0.4.26-4-x64.deb",
+          "filename": "LM-Studio-0.4.26-4-x64.deb",
+          "kind": "installer",
+          "version": "0.4.26-4"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://installers.lmstudio.ai/linux/arm64/0.4.26-4/LM-Studio-0.4.26-4-arm64.deb",
+          "filename": "LM-Studio-0.4.26-4-arm64.deb",
+          "kind": "installer",
+          "version": "0.4.26-4"
+        }
+      ],
+      "id": "lm-studio",
+      "kind": "tool",
+      "name": "LM Studio",
+      "description": "在桌面上下载和运行本地语言模型，适合聊天、测试模型与搭建本地接口。",
+      "platform": "Windows · macOS · Linux",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://lmstudio.ai",
+      "imageUrl": "/static/software/icons/lm-studio.png",
+      "appearance": "generic",
+      "sortOrder": 150,
+      "published": true,
+      "details": {
+        "overview": "在桌面上下载和运行本地语言模型，适合聊天、测试模型与搭建本地接口。",
+        "features": "查找与下载本地模型\n桌面对话与模型测试\n提供本地模型 API",
+        "requirements": "请核对官方下载页的处理器、内存和系统要求；设备资源需求取决于所用模型。",
+        "category": "本地 AI"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "CLI 命令行 · ARM64 · 安装包",
+          "url": "https://github.com/openai/codex/releases/download/rust-v0.162.1/codex-aarch64-pc-windows-msvc.exe",
+          "filename": "codex-aarch64-pc-windows-msvc.exe",
+          "kind": "installer",
+          "version": "0.162.1"
+        },
+        {
+          "platform": "Windows",
+          "label": "CLI 命令行 · x64 · 安装包",
+          "url": "https://github.com/openai/codex/releases/download/rust-v0.162.1/codex-x86_64-pc-windows-msvc.exe",
+          "filename": "codex-x86_64-pc-windows-msvc.exe",
+          "kind": "installer",
+          "version": "0.162.1"
+        },
+        {
+          "platform": "macOS",
+          "label": "CLI 命令行 · ARM64 · tar.gz",
+          "url": "https://github.com/openai/codex/releases/download/rust-v0.162.1/codex-aarch64-apple-darwin.tar.gz",
+          "filename": "codex-aarch64-apple-darwin.tar.gz",
+          "kind": "installer",
+          "version": "0.162.1"
+        },
+        {
+          "platform": "macOS",
+          "label": "CLI 命令行 · x64 · tar.gz",
+          "url": "https://github.com/openai/codex/releases/download/rust-v0.162.1/codex-x86_64-apple-darwin.tar.gz",
+          "filename": "codex-x86_64-apple-darwin.tar.gz",
+          "kind": "installer",
+          "version": "0.162.1"
+        },
+        {
+          "platform": "macOS",
+          "label": "桌面版 · Apple Silicon（版本以官方文件为准）",
+          "url": "https://persistent.oaistatic.com/codex-app-prod/Codex.dmg",
+          "filename": "Codex.dmg",
+          "kind": "installer"
+        },
+        {
+          "platform": "Linux",
+          "label": "CLI 命令行 · ARM64 · tar.gz",
+          "url": "https://github.com/openai/codex/releases/download/rust-v0.162.1/codex-aarch64-unknown-linux-musl.tar.gz",
+          "filename": "codex-aarch64-unknown-linux-musl.tar.gz",
+          "kind": "installer",
+          "version": "0.162.1"
+        },
+        {
+          "platform": "Linux",
+          "label": "CLI 命令行 · x64 · tar.gz",
+          "url": "https://github.com/openai/codex/releases/download/rust-v0.162.1/codex-x86_64-unknown-linux-musl.tar.gz",
+          "filename": "codex-x86_64-unknown-linux-musl.tar.gz",
+          "kind": "installer",
+          "version": "0.162.1"
+        }
+      ],
+      "id": "codex",
+      "kind": "tool",
+      "name": "Codex",
+      "description": "OpenAI 编程助手，在桌面、终端或编辑器中理解项目、修改代码与处理开发任务。",
+      "platform": "Windows · macOS · Linux",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://learn.chatgpt.com/docs/app",
+      "imageUrl": "/static/software/icons/codex.png",
+      "appearance": "generic",
+      "sortOrder": 170,
+      "published": true,
+      "details": {
+        "overview": "提供桌面、CLI 与 IDE 扩展等使用方式。请从 OpenAI 官方页面选择适合自己系统的版本；不同方式支持的功能与登录要求请以官方说明为准。",
+        "features": "理解现有项目与代码\n协助实现功能、修复问题和审查改动\n桌面、终端与编辑器工作流",
+        "requirements": "桌面端按官网选择系统版本；CLI 与 IDE 扩展请按官方文档安装。\n下载菜单已区分桌面版和 CLI 命令行版；CLI 文件需要按官方说明完成安装或配置 PATH。",
+        "publisher": "OpenAI",
+        "category": "AI 编程"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装包",
+          "url": "https://api2.cursor.sh/updates/download/golden/win32-x64/cursor/3.24",
+          "filename": "Cursor-3.24-win32-x64.exe",
+          "kind": "installer",
+          "version": "3.24"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装包 · 用户安装",
+          "url": "https://api2.cursor.sh/updates/download/golden/win32-x64-user/cursor/3.24",
+          "filename": "Cursor-3.24-win32-x64-user.exe",
+          "kind": "installer",
+          "version": "3.24"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · 安装包",
+          "url": "https://api2.cursor.sh/updates/download/golden/win32-arm64/cursor/3.24",
+          "filename": "Cursor-3.24-win32-arm64.exe",
+          "kind": "installer",
+          "version": "3.24"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · 安装包 · 用户安装",
+          "url": "https://api2.cursor.sh/updates/download/golden/win32-arm64-user/cursor/3.24",
+          "filename": "Cursor-3.24-win32-arm64-user.exe",
+          "kind": "installer",
+          "version": "3.24"
+        },
+        {
+          "platform": "macOS",
+          "label": "ARM64 · DMG",
+          "url": "https://api2.cursor.sh/updates/download/golden/darwin-arm64/cursor/3.24",
+          "filename": "Cursor-3.24-darwin-arm64.dmg",
+          "kind": "installer",
+          "version": "3.24"
+        },
+        {
+          "platform": "macOS",
+          "label": "x64 · DMG",
+          "url": "https://api2.cursor.sh/updates/download/golden/darwin-x64/cursor/3.24",
+          "filename": "Cursor-3.24-darwin-x64.dmg",
+          "kind": "installer",
+          "version": "3.24"
+        },
+        {
+          "platform": "macOS",
+          "label": "通用架构 · DMG",
+          "url": "https://api2.cursor.sh/updates/download/golden/darwin-universal/cursor/3.24",
+          "filename": "Cursor-3.24-darwin-universal.dmg",
+          "kind": "installer",
+          "version": "3.24"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://api2.cursor.sh/updates/download/golden/linux-arm64-deb/cursor/3.24",
+          "filename": "Cursor-3.24-linux-arm64-deb.deb",
+          "kind": "installer",
+          "version": "3.24"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://api2.cursor.sh/updates/download/golden/linux-x64-deb/cursor/3.24",
+          "filename": "Cursor-3.24-linux-x64-deb.deb",
+          "kind": "installer",
+          "version": "3.24"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://api2.cursor.sh/updates/download/golden/linux-arm64-rpm/cursor/3.24",
+          "filename": "Cursor-3.24-linux-arm64-rpm.rpm",
+          "kind": "installer",
+          "version": "3.24"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://api2.cursor.sh/updates/download/golden/linux-x64-rpm/cursor/3.24",
+          "filename": "Cursor-3.24-linux-x64-rpm.rpm",
+          "kind": "installer",
+          "version": "3.24"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · AppImage",
+          "url": "https://api2.cursor.sh/updates/download/golden/linux-arm64/cursor/3.24",
+          "filename": "Cursor-3.24-linux-arm64.AppImage",
+          "kind": "installer",
+          "version": "3.24"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · AppImage",
+          "url": "https://api2.cursor.sh/updates/download/golden/linux-x64/cursor/3.24",
+          "filename": "Cursor-3.24-linux-x64.AppImage",
+          "kind": "installer",
+          "version": "3.24"
+        }
+      ],
+      "id": "cursor",
+      "kind": "tool",
+      "name": "Cursor",
+      "description": "结合代码编辑、项目上下文与 AI Agent 的开发环境。",
+      "platform": "Windows · macOS · Linux",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://cursor.com/download",
+      "imageUrl": "/static/software/icons/cursor.png",
+      "appearance": "generic",
+      "sortOrder": 180,
+      "published": true,
+      "details": {
+        "overview": "在代码编辑器中结合项目上下文处理开发任务。官网提供不同操作系统与架构的下载版本。",
+        "features": "AI 代码编辑与补全\n项目上下文与开发任务\n多平台客户端",
+        "requirements": "Windows、macOS 或 Linux；系统版本与架构以官方下载页为准。",
+        "publisher": "Cursor",
+        "category": "AI 编程"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装包",
+          "url": "https://lf-cdn.trae.ai/obj/trae-ai-sg/pkg/app/releases/stable/2.3.91093/win32/TRAE-Setup-x64.exe",
+          "filename": "TRAE-Setup-x64.exe",
+          "kind": "installer",
+          "version": "3.6.2"
+        },
+        {
+          "platform": "macOS",
+          "label": "ARM64 · DMG",
+          "url": "https://lf-cdn.trae.ai/obj/trae-ai-sg/pkg/app/releases/stable/2.3.91093/darwin/TRAE-darwin-arm64.dmg",
+          "filename": "TRAE-darwin-arm64.dmg",
+          "kind": "installer",
+          "version": "3.6.2"
+        },
+        {
+          "platform": "macOS",
+          "label": "x64 · DMG",
+          "url": "https://lf-cdn.trae.ai/obj/trae-ai-sg/pkg/app/releases/stable/2.3.91093/darwin/TRAE-darwin-x64.dmg",
+          "filename": "TRAE-darwin-x64.dmg",
+          "kind": "installer",
+          "version": "3.6.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://lf-cdn.trae.ai/obj/trae-ai-sg/pkg/app/releases/stable/2.3.91093/linux/TRAE-linux-arm64.deb",
+          "filename": "TRAE-linux-arm64.deb",
+          "kind": "installer",
+          "version": "3.6.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://lf-cdn.trae.ai/obj/trae-ai-sg/pkg/app/releases/stable/2.3.91093/linux/TRAE-linux-arm64.rpm",
+          "filename": "TRAE-linux-arm64.rpm",
+          "kind": "installer",
+          "version": "3.6.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · tar.gz",
+          "url": "https://lf-cdn.trae.ai/obj/trae-ai-sg/pkg/app/releases/stable/2.3.91093/linux/TRAE-linux-arm64.tar.gz",
+          "filename": "TRAE-linux-arm64.tar.gz",
+          "kind": "installer",
+          "version": "3.6.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://lf-cdn.trae.ai/obj/trae-ai-sg/pkg/app/releases/stable/2.3.91093/linux/TRAE-linux-x64.deb",
+          "filename": "TRAE-linux-x64.deb",
+          "kind": "installer",
+          "version": "3.6.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://lf-cdn.trae.ai/obj/trae-ai-sg/pkg/app/releases/stable/2.3.91093/linux/TRAE-linux-x64.rpm",
+          "filename": "TRAE-linux-x64.rpm",
+          "kind": "installer",
+          "version": "3.6.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · tar.gz",
+          "url": "https://lf-cdn.trae.ai/obj/trae-ai-sg/pkg/app/releases/stable/2.3.91093/linux/TRAE-linux-x64.tar.gz",
+          "filename": "TRAE-linux-x64.tar.gz",
+          "kind": "installer",
+          "version": "3.6.2"
+        }
+      ],
+      "id": "trae",
+      "kind": "tool",
+      "name": "TRAE",
+      "description": "面向开发任务的 AI 编程工具，结合编辑器与智能协作体验。",
+      "platform": "Windows · macOS · Linux",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://www.trae.ai/",
+      "imageUrl": "/static/software/icons/trae.png",
+      "appearance": "generic",
+      "sortOrder": 190,
+      "published": true,
+      "details": {
+        "overview": "从 TRAE 官网获取客户端，使用 AI 辅助代码编写与开发任务。中国大陆版官网为 https://www.trae.cn/，可按需要选择。",
+        "features": "AI 辅助开发\n编辑器与项目工作流\n按官网选择客户端版本",
+        "requirements": "请按 TRAE 官方下载中心选择适合系统的版本。",
+        "publisher": "TRAE",
+        "category": "AI 编程"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装包",
+          "url": "https://download.codebuddy.cn/workbuddy/saas/win32-x64-user/WorkBuddy-win32-x64-user-5.7.7.40774747-2e8619da.exe",
+          "filename": "WorkBuddy-win32-x64-user-5.7.7.40774747-2e8619da.exe",
+          "kind": "installer",
+          "version": "5.7.7.40774747"
+        },
+        {
+          "platform": "Android",
+          "label": "官方 APK（版本以下载文件为准）",
+          "url": "https://download.codebuddy.cn/web/workbuddy/workbuddy-latest.apk",
+          "filename": "workbuddy-latest.apk",
+          "kind": "installer"
+        },
+        {
+          "platform": "macOS",
+          "label": "x64 · ZIP",
+          "url": "https://download.codebuddy.cn/workbuddy/saas/darwin-x64/WorkBuddy-darwin-x64-5.7.7.40774747-2e8619da.zip",
+          "filename": "WorkBuddy-darwin-x64-5.7.7.40774747-2e8619da.zip",
+          "kind": "installer",
+          "version": "5.7.7.40774747"
+        },
+        {
+          "platform": "macOS",
+          "label": "ARM64 · ZIP",
+          "url": "https://download.codebuddy.cn/workbuddy/saas/darwin-arm64/WorkBuddy-darwin-arm64-5.7.7.40774747-2e8619da.zip",
+          "filename": "WorkBuddy-darwin-arm64-5.7.7.40774747-2e8619da.zip",
+          "kind": "installer",
+          "version": "5.7.7.40774747"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://download.codebuddy.cn/workbuddy/saas/linux-x64-deb/WorkBuddy-linux-x64-deb-5.5.6.38337834-5f969292.deb",
+          "filename": "WorkBuddy-linux-x64-deb-5.5.6.38337834-5f969292.deb",
+          "kind": "installer",
+          "version": "5.5.6.38337834"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://download.codebuddy.cn/workbuddy/saas/linux-x64-rpm/WorkBuddy-linux-x64-rpm-5.5.6.38337834-5f969292.rpm",
+          "filename": "WorkBuddy-linux-x64-rpm-5.5.6.38337834-5f969292.rpm",
+          "kind": "installer",
+          "version": "5.5.6.38337834"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://download.codebuddy.cn/workbuddy/saas/linux-arm64-deb/WorkBuddy-linux-arm64-deb-5.5.6.38337834-5f969292.deb",
+          "filename": "WorkBuddy-linux-arm64-deb-5.5.6.38337834-5f969292.deb",
+          "kind": "installer",
+          "version": "5.5.6.38337834"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://download.codebuddy.cn/workbuddy/saas/linux-arm64-rpm/WorkBuddy-linux-arm64-rpm-5.5.6.38337834-5f969292.rpm",
+          "filename": "WorkBuddy-linux-arm64-rpm-5.5.6.38337834-5f969292.rpm",
+          "kind": "installer",
+          "version": "5.5.6.38337834"
+        },
+        {
+          "platform": "iOS",
+          "label": "App Store",
+          "url": "https://apps.apple.com/cn/app/workbuddy/id6761374913",
+          "filename": "",
+          "kind": "website"
+        }
+      ],
+      "id": "workbuddy",
+      "kind": "tool",
+      "name": "WorkBuddy",
+      "description": "腾讯桌面 AI 智能体，用自然语言处理文件、办公与开发任务。",
+      "platform": "Windows · macOS · Android · Linux · iOS",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://www.workbuddy.cn/",
+      "imageUrl": "/static/software/icons/workbuddy.svg",
+      "appearance": "generic",
+      "sortOrder": 200,
+      "published": true,
+      "details": {
+        "overview": "腾讯推出的 AI 工作台，覆盖日常办公、代码开发与内容创作。可在用户授权范围内处理本地文件，具体功能与套餐请查看官网。",
+        "features": "自然语言任务规划\n本地文件与办公任务\n开发与创作工作流",
+        "requirements": "使用官网提供的 Windows 或 macOS 客户端；以当前下载说明为准。",
+        "publisher": "腾讯",
+        "category": "AI 工作台"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "桌面版 · x64（版本以官方文件为准）",
+          "url": "https://download.deepseek.com/desktop/dsh-latest-windows-x64.exe",
+          "filename": "dsh-latest-windows-x64.exe",
+          "kind": "installer"
+        },
+        {
+          "platform": "macOS",
+          "label": "桌面版 · Apple Silicon（版本以官方文件为准）",
+          "url": "https://download.deepseek.com/desktop/dsh-latest-macos-arm64.dmg",
+          "filename": "dsh-latest-macos-arm64.dmg",
+          "kind": "installer"
+        }
+      ],
+      "id": "deepseek-harness",
+      "kind": "tool",
+      "name": "DeepSeek Harness",
+      "description": "DeepSeek 官方开源 Agent 框架，以插件方式组织工具、模型和工作流。",
+      "platform": "Windows · macOS · Linux",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://www.deepseek.com/harness/",
+      "imageUrl": "/static/software/icons/deepseek-harness.png",
+      "appearance": "generic",
+      "sortOrder": 210,
+      "published": true,
+      "details": {
+        "overview": "DeepSeek 官方开源 Agent Harness（dsh），目前处于开发者预览阶段。它提供 Windows / macOS 桌面客户端，也支持 Node.js / npm 启动方式。请从官方仓库了解安装、使用与版本变化。",
+        "features": "插件化 Agent 运行环境\n本地 Web UI\n工具、模型适配与工作流扩展",
+        "requirements": "需要 Node.js。官方启动方式：npx @deepseek-ai/dsh web。开发者预览阶段可能有兼容性变动。\n新增官方 Windows x64、macOS Apple Silicon 桌面客户端，桌面版可直接安装；Node.js / npm 要求适用于 CLI 启动方式。",
+        "publisher": "DeepSeek AI",
+        "category": "Agent 开发",
+        "license": "MIT"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装包",
+          "url": "https://vscode.download.prss.microsoft.com/dbazure/download/stable/2a59476c9bfcb90b3ddc372c36762471b7dfad1c/VSCodeUserSetup-x64-1.141.0.exe",
+          "filename": "VSCodeUserSetup-x64-1.141.0.exe",
+          "kind": "installer",
+          "version": "1.141.0"
+        },
+        {
+          "platform": "Windows",
+          "label": "ARM64 · 安装包",
+          "url": "https://vscode.download.prss.microsoft.com/dbazure/download/stable/2a59476c9bfcb90b3ddc372c36762471b7dfad1c/VSCodeUserSetup-arm64-1.141.0.exe",
+          "filename": "VSCodeUserSetup-arm64-1.141.0.exe",
+          "kind": "installer",
+          "version": "1.141.0"
+        },
+        {
+          "platform": "macOS",
+          "label": "通用架构 · ZIP",
+          "url": "https://vscode.download.prss.microsoft.com/dbazure/download/stable/2a59476c9bfcb90b3ddc372c36762471b7dfad1c/VSCode-darwin-universal.zip",
+          "filename": "VSCode-darwin-universal.zip",
+          "kind": "installer",
+          "version": "1.141.0"
+        },
+        {
+          "platform": "macOS",
+          "label": "x64 · ZIP",
+          "url": "https://vscode.download.prss.microsoft.com/dbazure/download/stable/2a59476c9bfcb90b3ddc372c36762471b7dfad1c/VSCode-darwin.zip",
+          "filename": "VSCode-darwin.zip",
+          "kind": "installer",
+          "version": "1.141.0"
+        },
+        {
+          "platform": "macOS",
+          "label": "ARM64 · ZIP",
+          "url": "https://vscode.download.prss.microsoft.com/dbazure/download/stable/2a59476c9bfcb90b3ddc372c36762471b7dfad1c/VSCode-darwin-arm64.zip",
+          "filename": "VSCode-darwin-arm64.zip",
+          "kind": "installer",
+          "version": "1.141.0"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · DEB",
+          "url": "https://vscode.download.prss.microsoft.com/dbazure/download/stable/2a59476c9bfcb90b3ddc372c36762471b7dfad1c/code_1.141.0-1791276758_amd64.deb",
+          "filename": "code_1.141.0-1791276758_amd64.deb",
+          "kind": "installer",
+          "version": "1.141.0"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · DEB",
+          "url": "https://vscode.download.prss.microsoft.com/dbazure/download/stable/2a59476c9bfcb90b3ddc372c36762471b7dfad1c/code_1.141.0-1791276699_arm64.deb",
+          "filename": "code_1.141.0-1791276699_arm64.deb",
+          "kind": "installer",
+          "version": "1.141.0"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · RPM",
+          "url": "https://vscode.download.prss.microsoft.com/dbazure/download/stable/2a59476c9bfcb90b3ddc372c36762471b7dfad1c/code-1.141.0-1791276813.el8.x86_64.rpm",
+          "filename": "code-1.141.0-1791276813.el8.x86_64.rpm",
+          "kind": "installer",
+          "version": "1.141.0"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · RPM",
+          "url": "https://vscode.download.prss.microsoft.com/dbazure/download/stable/2a59476c9bfcb90b3ddc372c36762471b7dfad1c/code-1.141.0-1791276751.el8.aarch64.rpm",
+          "filename": "code-1.141.0-1791276751.el8.aarch64.rpm",
+          "kind": "installer",
+          "version": "1.141.0"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · tar.gz",
+          "url": "https://vscode.download.prss.microsoft.com/dbazure/download/stable/2a59476c9bfcb90b3ddc372c36762471b7dfad1c/code-stable-x64-1791276637.tar.gz",
+          "filename": "code-stable-x64-1791276637.tar.gz",
+          "kind": "installer",
+          "version": "1.141.0"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · tar.gz",
+          "url": "https://vscode.download.prss.microsoft.com/dbazure/download/stable/2a59476c9bfcb90b3ddc372c36762471b7dfad1c/code-stable-arm64-1791276594.tar.gz",
+          "filename": "code-stable-arm64-1791276594.tar.gz",
+          "kind": "installer",
+          "version": "1.141.0"
+        }
+      ],
+      "id": "vscode",
+      "kind": "tool",
+      "name": "Visual Studio Code",
+      "description": "轻量的代码编辑器，通过扩展构建适合自己的开发环境。",
+      "platform": "Windows · macOS · Linux",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://code.visualstudio.com/download",
+      "imageUrl": "/static/software/icons/vscode.png",
+      "appearance": "generic",
+      "sortOrder": 220,
+      "published": true,
+      "details": {
+        "overview": "微软提供的代码编辑器，支持语言扩展、调试与版本控制，可根据自己的工作习惯配置开发环境。",
+        "features": "代码编辑与语言扩展\n调试与版本控制\n终端与开发工具集成",
+        "requirements": "Windows、macOS 或 Linux；具体系统版本以官方下载页为准。",
+        "publisher": "Microsoft",
+        "category": "代码编辑器"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "ARM64 · 安装包",
+          "url": "https://github.com/zed-industries/zed/releases/download/v1.23.2/Zed-aarch64.exe",
+          "filename": "Zed-aarch64.exe",
+          "kind": "installer",
+          "version": "1.23.2"
+        },
+        {
+          "platform": "Windows",
+          "label": "x64 · 安装包",
+          "url": "https://github.com/zed-industries/zed/releases/download/v1.23.2/Zed-x86_64.exe",
+          "filename": "Zed-x86_64.exe",
+          "kind": "installer",
+          "version": "1.23.2"
+        },
+        {
+          "platform": "macOS",
+          "label": "ARM64 · DMG",
+          "url": "https://github.com/zed-industries/zed/releases/download/v1.23.2/Zed-aarch64.dmg",
+          "filename": "Zed-aarch64.dmg",
+          "kind": "installer",
+          "version": "1.23.2"
+        },
+        {
+          "platform": "macOS",
+          "label": "x64 · DMG",
+          "url": "https://github.com/zed-industries/zed/releases/download/v1.23.2/Zed-x86_64.dmg",
+          "filename": "Zed-x86_64.dmg",
+          "kind": "installer",
+          "version": "1.23.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "ARM64 · tar.gz",
+          "url": "https://github.com/zed-industries/zed/releases/download/v1.23.2/zed-linux-aarch64.tar.gz",
+          "filename": "zed-linux-aarch64.tar.gz",
+          "kind": "installer",
+          "version": "1.23.2"
+        },
+        {
+          "platform": "Linux",
+          "label": "x64 · tar.gz",
+          "url": "https://github.com/zed-industries/zed/releases/download/v1.23.2/zed-linux-x86_64.tar.gz",
+          "filename": "zed-linux-x86_64.tar.gz",
+          "kind": "installer",
+          "version": "1.23.2"
+        }
+      ],
+      "id": "zed",
+      "kind": "tool",
+      "name": "Zed",
+      "description": "注重响应速度与协作体验的代码编辑器，提供 AI 辅助开发能力。",
+      "platform": "Windows · macOS · Linux",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://zed.dev/download",
+      "imageUrl": "/static/software/icons/zed.png",
+      "appearance": "generic",
+      "sortOrder": 230,
+      "published": true,
+      "details": {
+        "overview": "面向开发工作的代码编辑器，结合编辑、协作与 AI 工作流。请从官网下载适合平台的版本。",
+        "features": "代码编辑\n协作开发体验\nAI 辅助工作流",
+        "requirements": "按 Zed 官方下载页选择系统版本与安装方式。",
+        "publisher": "Zed Industries",
+        "category": "代码编辑器"
+      }
+    },
+    {
+      "downloads": [
+        {
+          "platform": "Windows",
+          "label": "CLI 命令行 · win32-x64",
+          "url": "https://downloads.claude.ai/claude-code-releases/2.1.287/win32-x64/claude.exe",
+          "filename": "claude-code-2.1.287-win32-x64.exe",
+          "kind": "installer",
+          "version": "2.1.287"
+        },
+        {
+          "platform": "Windows",
+          "label": "CLI 命令行 · win32-arm64",
+          "url": "https://downloads.claude.ai/claude-code-releases/2.1.287/win32-arm64/claude.exe",
+          "filename": "claude-code-2.1.287-win32-arm64.exe",
+          "kind": "installer",
+          "version": "2.1.287"
+        },
+        {
+          "platform": "macOS",
+          "label": "CLI 命令行 · darwin-arm64",
+          "url": "https://downloads.claude.ai/claude-code-releases/2.1.287/darwin-arm64/claude",
+          "filename": "claude-code-2.1.287-darwin-arm64",
+          "kind": "installer",
+          "version": "2.1.287"
+        },
+        {
+          "platform": "macOS",
+          "label": "CLI 命令行 · darwin-x64",
+          "url": "https://downloads.claude.ai/claude-code-releases/2.1.287/darwin-x64/claude",
+          "filename": "claude-code-2.1.287-darwin-x64",
+          "kind": "installer",
+          "version": "2.1.287"
+        },
+        {
+          "platform": "Linux",
+          "label": "CLI 命令行 · linux-arm64",
+          "url": "https://downloads.claude.ai/claude-code-releases/2.1.287/linux-arm64/claude",
+          "filename": "claude-code-2.1.287-linux-arm64",
+          "kind": "installer",
+          "version": "2.1.287"
+        },
+        {
+          "platform": "Linux",
+          "label": "CLI 命令行 · linux-x64",
+          "url": "https://downloads.claude.ai/claude-code-releases/2.1.287/linux-x64/claude",
+          "filename": "claude-code-2.1.287-linux-x64",
+          "kind": "installer",
+          "version": "2.1.287"
+        },
+        {
+          "platform": "Linux",
+          "label": "CLI 命令行 · linux-arm64-musl",
+          "url": "https://downloads.claude.ai/claude-code-releases/2.1.287/linux-arm64-musl/claude",
+          "filename": "claude-code-2.1.287-linux-arm64-musl",
+          "kind": "installer",
+          "version": "2.1.287"
+        },
+        {
+          "platform": "Linux",
+          "label": "CLI 命令行 · linux-x64-musl",
+          "url": "https://downloads.claude.ai/claude-code-releases/2.1.287/linux-x64-musl/claude",
+          "filename": "claude-code-2.1.287-linux-x64-musl",
+          "kind": "installer",
+          "version": "2.1.287"
+        }
+      ],
+      "id": "claude-code",
+      "kind": "tool",
+      "name": "Claude Code",
+      "description": "Anthropic 编程 Agent，在终端与开发工具中协助处理代码任务。",
+      "platform": "Windows · macOS · Linux",
+      "version": "",
+      "downloadUrl": "",
+      "filename": "",
+      "detailUrl": "https://claude.com/product/claude-code",
+      "imageUrl": "/static/software/icons/claude-code.png",
+      "appearance": "generic",
+      "sortOrder": 240,
+      "published": true,
+      "details": {
+        "overview": "面向代码项目的 Agent，支持终端与 IDE 等开发工作流。请从 Anthropic 官网进入官方安装说明，账号、功能与计费以其官方规则为准。",
+        "features": "项目理解与代码修改\n终端和 IDE 工作流\n开发任务与代码审查",
+        "requirements": "按官方说明安装；不同平台和使用方式的系统要求以官网为准。\n下载菜单提供 CLI 命令行可执行文件，并非桌面安装器；下载后请按官方说明完成安装或配置 PATH。",
+        "publisher": "Anthropic",
+        "category": "AI 编程"
+      }
+    }
+  ]
+}

@@ -1,0 +1,521 @@
+{
+  "sales": [
+    {
+      "id": "80caf9e6e3f54bc3b3c5d1f5f7dec945",
+      "title": "GPT / Grok Token 七天限时降价",
+      "status": "active",
+      "start_at": 1791770400,
+      "end_at": 1792375200,
+      "countdown_mode": "end",
+      "models": [
+        "gpt-5.5-token",
+        "gpt-5.6-terra-token",
+        "gpt-6-astra-token",
+        "gpt-6-sol-token",
+        "gpt-6.1-sol-token",
+        "grok-4.5-token",
+        "grok-4.6-token",
+        "grok-4.7-token"
+      ],
+      "discount_percent": 0,
+      "model_multipliers": {
+        "gpt-5.5-token": 0.14,
+        "gpt-5.6-terra-token": 0.14,
+        "gpt-6-astra-token": 0.14,
+        "gpt-6-sol-token": 0.14,
+        "gpt-6.1-sol-token": 0.14,
+        "grok-4.5-token": 0.14,
+        "grok-4.6-token": 0.14,
+        "grok-4.7-token": 0.14
+      },
+      "announcement_only": false,
+      "announcement_at": 1791770400
+    },
+    {
+      "id": "cbe8dc69ae4f4adf8c4e5c3c94533246",
+      "title": "DeepSeek Flash Low 七天分时降价",
+      "status": "active",
+      "start_at": 1791770400,
+      "end_at": 1792375200,
+      "countdown_mode": "end",
+      "models": [
+        "deepseek-v4.1-flash-low"
+      ],
+      "discount_percent": 0,
+      "model_multipliers": {
+        "deepseek-v4.1-flash-low": 0.09
+      },
+      "announcement_only": false,
+      "announcement_at": 1791770400
+    },
+    {
+      "id": "4a5e4208873e44a7b6b98b85e0913a5d",
+      "title": "DeepSeek Pro 七天分时降价",
+      "status": "active",
+      "start_at": 1791770400,
+      "end_at": 1792375200,
+      "countdown_mode": "end",
+      "models": [
+        "deepseek-v4-pro"
+      ],
+      "discount_percent": 0,
+      "model_multipliers": {
+        "deepseek-v4-pro": 0.1
+      },
+      "announcement_only": false,
+      "announcement_at": 1791770400
+    },
+    {
+      "id": "cc7f26731b69404aa7a9dfed83cbfb9a",
+      "title": "DeepSeek Flash 七天分时降价",
+      "status": "active",
+      "start_at": 1791770400,
+      "end_at": 1792375200,
+      "countdown_mode": "end",
+      "models": [
+        "deepseek-v4.1-flash",
+        "deepseek-flash"
+      ],
+      "discount_percent": 0,
+      "model_multipliers": {
+        "deepseek-flash": 0.14,
+        "deepseek-v4.1-flash": 0.14
+      },
+      "announcement_only": false,
+      "announcement_at": 1791770400
+    }
+  ],
+  "models": [
+    {
+      "promotion": {
+        "pricing_basis": "official",
+        "id": "80caf9e6e3f54bc3b3c5d1f5f7dec945",
+        "title": "GPT / Grok Token 七天限时降价",
+        "start_at": 1791770400,
+        "end_at": 1792375200,
+        "discount_percent": 86,
+        "multiplier": 0.14,
+        "original": {
+          "billing_setting.billing_expr": "len <= 199999 ? tier(\"standard\", p * 20.076388 + c * 60.229163 + cr * 5.019097) : tier(\"long_context\", p * 40.152776 + c * 120.458326 + cr * 10.038194)",
+          "billing_setting.billing_mode": "tiered_expr"
+        }
+      },
+      "model_name": "grok-4.6-token",
+      "description": "xAI · 文本推理模型系列。 moni-token；本站模型标识：grok-4.6-token。接口能力以本站说明为准。官方资料：https://docs.x.ai/developers/models",
+      "icon": "Grok",
+      "tags": "xAI,文本推理,moni-token",
+      "vendor_id": 6,
+      "quota_type": 0,
+      "model_ratio": 37.5,
+      "model_price": 0,
+      "owner_by": "",
+      "completion_ratio": 1,
+      "enable_groups": [
+        "metered",
+        "default"
+      ],
+      "supported_endpoint_types": [
+        "openai",
+        "openai-response",
+        "openai-response-compact",
+        "anthropic",
+        "gemini",
+        "openai-alpha-search"
+      ],
+      "billing_mode": "tiered_expr",
+      "billing_expr": "len <= 199999 ? tier(\"standard\", p * 18.73796180617526 + c * 56.21388541852579 + cr * 4.684490451543815) : tier(\"long_context\", p * 37.47592361235052 + c * 112.42777083705158 + cr * 9.36898090308763)",
+      "id": 1
+    },
+    {
+      "promotion": {
+        "pricing_basis": "official",
+        "id": "80caf9e6e3f54bc3b3c5d1f5f7dec945",
+        "title": "GPT / Grok Token 七天限时降价",
+        "start_at": 1791770400,
+        "end_at": 1792375200,
+        "discount_percent": 86,
+        "multiplier": 0.14,
+        "original": {
+          "billing_setting.billing_expr": "len <= 272000 ? tier(\"standard\", p * 22.753240 + c * 113.766197 + cr * 2.275324 + cc * 28.441550 + cc1h * 28.441550) : tier(\"long_context\", p * 45.506479 + c * 170.649296 + cr * 4.550648 + cc * 56.883099 + cc1h * 56.883099)",
+          "billing_setting.billing_mode": "tiered_expr"
+        }
+      },
+      "model_name": "gpt-6-sol-token",
+      "description": "OpenAI · 兼顾响应速度、成本与任务能力。 moni-token；本站模型标识：gpt-6-sol-token。接口能力以本站说明为准。官方资料：https://developers.openai.com/api/docs/models",
+      "icon": "OpenAI",
+      "tags": "OpenAI,编程推理,moni-token",
+      "vendor_id": 3,
+      "quota_type": 0,
+      "model_ratio": 37.5,
+      "model_price": 0,
+      "owner_by": "",
+      "completion_ratio": 2,
+      "enable_groups": [
+        "metered",
+        "default",
+        "moni-gpt-017"
+      ],
+      "supported_endpoint_types": [
+        "openai",
+        "openai-response",
+        "openai-response-compact",
+        "anthropic",
+        "gemini",
+        "openai-alpha-search"
+      ],
+      "billing_mode": "tiered_expr",
+      "billing_expr": "len <= 272000 ? tier(\"standard\", p * 18.73796180617526 + c * 93.68980903087632 + cr * 1.8737961806175263 + cc * 23.42245225771908 + cc1h * 23.42245225771908) : tier(\"long_context\", p * 37.47592361235052 + c * 140.53471354631446 + cr * 3.7475923612350526 + cc * 46.84490451543816 + cc1h * 46.84490451543816)",
+      "id": 4
+    },
+    {
+      "promotion": {
+        "pricing_basis": "official",
+        "id": "80caf9e6e3f54bc3b3c5d1f5f7dec945",
+        "title": "GPT / Grok Token 七天限时降价",
+        "start_at": 1791770400,
+        "end_at": 1792375200,
+        "discount_percent": 86,
+        "multiplier": 0.14,
+        "original": {
+          "billing_setting.billing_expr": "len <= 199999 ? tier(\"standard\", p * 20.076388 + c * 60.229163 + cr * 3.011459) : tier(\"long_context\", p * 40.152776 + c * 120.458326 + cr * 6.022917)",
+          "billing_setting.billing_mode": "tiered_expr"
+        }
+      },
+      "model_name": "grok-4.5-token",
+      "description": "xAI · 文本推理模型系列。 moni-token；本站模型标识：grok-4.5-token。接口能力以本站说明为准。官方资料：https://docs.x.ai/developers/models",
+      "icon": "Grok",
+      "tags": "xAI,文本推理,moni-token",
+      "vendor_id": 6,
+      "quota_type": 0,
+      "model_ratio": 37.5,
+      "model_price": 0,
+      "owner_by": "",
+      "completion_ratio": 1,
+      "enable_groups": [
+        "metered",
+        "default"
+      ],
+      "supported_endpoint_types": [
+        "openai",
+        "openai-response",
+        "openai-response-compact",
+        "anthropic",
+        "gemini",
+        "openai-alpha-search"
+      ],
+      "billing_mode": "tiered_expr",
+      "billing_expr": "len <= 199999 ? tier(\"standard\", p * 18.73796180617526 + c * 56.21388541852579 + cr * 2.810694270926289) : tier(\"long_context\", p * 37.47592361235052 + c * 112.42777083705158 + cr * 5.621388541852578)",
+      "id": 10
+    },
+    {
+      "promotion": {
+        "pricing_basis": "official",
+        "id": "80caf9e6e3f54bc3b3c5d1f5f7dec945",
+        "title": "GPT / Grok Token 七天限时降价",
+        "start_at": 1791770400,
+        "end_at": 1792375200,
+        "discount_percent": 86,
+        "multiplier": 0.14,
+        "original": {
+          "billing_setting.billing_expr": "len <= 272000 ? tier(\"standard\", p * 113.766197 + c * 568.830984 + cr * 11.376620 + cc * 142.207746 + cc1h * 142.207746) : tier(\"long_context\", p * 227.532394 + c * 853.246476 + cr * 22.753240 + cc * 284.415492 + cc1h * 284.415492)",
+          "billing_setting.billing_mode": "tiered_expr"
+        }
+      },
+      "model_name": "gpt-6-astra-token",
+      "description": "OpenAI · 面向复杂推理、编程与长任务。 moni-token；本站模型标识：gpt-6-astra-token。接口能力以本站说明为准。官方资料：https://developers.openai.com/api/docs/models",
+      "icon": "OpenAI",
+      "tags": "OpenAI,编程推理,moni-token",
+      "vendor_id": 3,
+      "quota_type": 0,
+      "model_ratio": 37.5,
+      "model_price": 0,
+      "owner_by": "",
+      "completion_ratio": 2,
+      "enable_groups": [
+        "metered",
+        "default",
+        "moni-gpt-017"
+      ],
+      "supported_endpoint_types": [
+        "openai",
+        "openai-response",
+        "openai-response-compact",
+        "anthropic",
+        "gemini",
+        "openai-alpha-search"
+      ],
+      "billing_mode": "tiered_expr",
+      "billing_expr": "len <= 272000 ? tier(\"standard\", p * 93.68980903087632 + c * 468.44904515438157 + cr * 9.36898090308763 + cc * 117.11226128859539 + cc1h * 117.11226128859539) : tier(\"long_context\", p * 187.37961806175264 + c * 702.6735677315725 + cr * 18.73796180617526 + cc * 234.22452257719078 + cc1h * 234.22452257719078)",
+      "id": 12
+    },
+    {
+      "promotion": {
+        "pricing_basis": "official",
+        "id": "80caf9e6e3f54bc3b3c5d1f5f7dec945",
+        "title": "GPT / Grok Token 七天限时降价",
+        "start_at": 1791770400,
+        "end_at": 1792375200,
+        "discount_percent": 86,
+        "multiplier": 0.14,
+        "original": {
+          "billing_setting.billing_expr": "len <= 199999 ? tier(\"standard\", p * 20.076388 + c * 60.229163 + cr * 5.019097) : tier(\"long_context\", p * 40.152776 + c * 120.458326 + cr * 10.038194)",
+          "billing_setting.billing_mode": "tiered_expr"
+        }
+      },
+      "model_name": "grok-4.7-token",
+      "description": "xAI · 文本推理模型系列。 moni-token；本站模型标识：grok-4.7-token。接口能力以本站说明为准。官方资料：https://docs.x.ai/developers/models",
+      "icon": "Grok",
+      "tags": "xAI,文本推理,moni-token",
+      "vendor_id": 6,
+      "quota_type": 0,
+      "model_ratio": 37.5,
+      "model_price": 0,
+      "owner_by": "",
+      "completion_ratio": 1,
+      "enable_groups": [
+        "metered",
+        "default"
+      ],
+      "supported_endpoint_types": [
+        "openai",
+        "openai-response",
+        "openai-response-compact",
+        "anthropic",
+        "gemini",
+        "openai-alpha-search"
+      ],
+      "billing_mode": "tiered_expr",
+      "billing_expr": "len <= 199999 ? tier(\"standard\", p * 18.73796180617526 + c * 56.21388541852579 + cr * 4.684490451543815) : tier(\"long_context\", p * 37.47592361235052 + c * 112.42777083705158 + cr * 9.36898090308763)",
+      "id": 19
+    },
+    {
+      "promotion": {
+        "pricing_basis": "official",
+        "id": "cc7f26731b69404aa7a9dfed83cbfb9a",
+        "title": "DeepSeek Flash 七天分时降价",
+        "start_at": 1791770400,
+        "end_at": 1792375200,
+        "discount_percent": 86,
+        "multiplier": 0.14,
+        "original": {
+          "billing_setting.billing_expr": "(hour(\"Asia/Shanghai\") >= 9 && hour(\"Asia/Shanghai\") < 12) || (hour(\"Asia/Shanghai\") >= 14 && hour(\"Asia/Shanghai\") < 18) ? tier(\"peak\", p * 3.011458147421 + c * 12.045832589684 + cr * 0.060229162948) : tier(\"off_peak\", p * 1.505729073711 + c * 6.022916294842 + cr * 0.030114581474)",
+          "billing_setting.billing_mode": "tiered_expr"
+        }
+      },
+      "model_name": "deepseek-v4.1-flash",
+      "description": "DeepSeek V4.1 Flash；按 Token 分时计费。北京时间每日 09:00–12:00、14:00–18:00 为高峰，其余时间为普通价；当前价格与官方倍率见下方。低价独立线路请选 deepseek-v4.1-flash-low。旧模型 ID deepseek-flash 仍兼容。 1 站内额度=¥0.10，美元等值按每日参考汇率换算。官方资料：https://api-docs.deepseek.com/quick_start/pricing/",
+      "icon": "DeepSeek.Color",
+      "tags": "DeepSeek,文本推理,moni计费",
+      "vendor_id": 1,
+      "quota_type": 0,
+      "model_ratio": 37.5,
+      "model_price": 0,
+      "owner_by": "",
+      "completion_ratio": 1,
+      "enable_groups": [
+        "default",
+        "deepseek"
+      ],
+      "supported_endpoint_types": [
+        "openai"
+      ],
+      "billing_mode": "tiered_expr",
+      "billing_expr": "(hour(\"Asia/Shanghai\") >= 9 && hour(\"Asia/Shanghai\") < 12) || (hour(\"Asia/Shanghai\") >= 14 && hour(\"Asia/Shanghai\") < 18) ? tier(\"peak\", p * 2.810694270926289 + c * 11.242777083705157 + cr * 0.056213885418525796) : tier(\"off_peak\", p * 1.4053471354631446 + c * 5.621388541852578 + cr * 0.028106942709262898)",
+      "id": 23
+    },
+    {
+      "promotion": {
+        "pricing_basis": "official",
+        "id": "80caf9e6e3f54bc3b3c5d1f5f7dec945",
+        "title": "GPT / Grok Token 七天限时降价",
+        "start_at": 1791770400,
+        "end_at": 1792375200,
+        "discount_percent": 86,
+        "multiplier": 0.14,
+        "original": {
+          "billing_setting.billing_expr": "len <= 272000 ? tier(\"standard\", p * 22.753240 + c * 136.519437 + cr * 2.275324 + cc * 28.441550 + cc1h * 28.441550) : tier(\"long_context\", p * 45.506479 + c * 204.779155 + cr * 4.550648 + cc * 56.883099 + cc1h * 56.883099)",
+          "billing_setting.billing_mode": "tiered_expr"
+        }
+      },
+      "model_name": "gpt-5.6-terra-token",
+      "description": "OpenAI · 编程推理模型系列。 moni-token；本站模型标识：gpt-5.6-terra-token。接口能力以本站说明为准。官方资料：https://developers.openai.com/api/docs/models",
+      "icon": "OpenAI",
+      "tags": "OpenAI,编程推理,moni-token",
+      "vendor_id": 3,
+      "quota_type": 0,
+      "model_ratio": 37.5,
+      "model_price": 0,
+      "owner_by": "",
+      "completion_ratio": 6,
+      "enable_groups": [
+        "metered",
+        "default",
+        "moni-gpt-017"
+      ],
+      "supported_endpoint_types": [
+        "openai",
+        "openai-response",
+        "openai-response-compact",
+        "anthropic",
+        "gemini",
+        "openai-alpha-search"
+      ],
+      "billing_mode": "tiered_expr",
+      "billing_expr": "len <= 272000 ? tier(\"standard\", p * 18.73796180617526 + c * 112.42777083705158 + cr * 1.8737961806175263 + cc * 23.42245225771908 + cc1h * 23.42245225771908) : tier(\"long_context\", p * 37.47592361235052 + c * 168.64165625557737 + cr * 3.7475923612350526 + cc * 46.84490451543816 + cc1h * 46.84490451543816)",
+      "id": 24
+    },
+    {
+      "promotion": {
+        "pricing_basis": "official",
+        "id": "80caf9e6e3f54bc3b3c5d1f5f7dec945",
+        "title": "GPT / Grok Token 七天限时降价",
+        "start_at": 1791770400,
+        "end_at": 1792375200,
+        "discount_percent": 86,
+        "multiplier": 0.14,
+        "original": {
+          "billing_setting.billing_expr": "len <= 272000 ? tier(\"standard\", p * 56.883099 + c * 341.298591 + cr * 5.688310) : tier(\"long_context\", p * 113.766197 + c * 511.947886 + cr * 11.376620)",
+          "billing_setting.billing_mode": "tiered_expr"
+        }
+      },
+      "model_name": "gpt-5.5-token",
+      "description": "OpenAI · 编程推理模型系列。 moni-token；本站模型标识：gpt-5.5-token。接口能力以本站说明为准。官方资料：https://developers.openai.com/api/docs/models",
+      "icon": "OpenAI",
+      "tags": "OpenAI,编程推理,moni-token",
+      "vendor_id": 3,
+      "quota_type": 0,
+      "model_ratio": 37.5,
+      "model_price": 0,
+      "owner_by": "",
+      "completion_ratio": 6,
+      "enable_groups": [
+        "metered",
+        "default",
+        "moni-gpt-017"
+      ],
+      "supported_endpoint_types": [
+        "openai",
+        "openai-response",
+        "openai-response-compact",
+        "anthropic",
+        "gemini",
+        "openai-alpha-search"
+      ],
+      "billing_mode": "tiered_expr",
+      "billing_expr": "len <= 272000 ? tier(\"standard\", p * 46.84490451543816 + c * 281.0694270926289 + cr * 4.684490451543815) : tier(\"long_context\", p * 93.68980903087632 + c * 421.6041406389434 + cr * 9.36898090308763)",
+      "id": 25
+    },
+    {
+      "promotion": {
+        "pricing_basis": "official",
+        "id": "80caf9e6e3f54bc3b3c5d1f5f7dec945",
+        "title": "GPT / Grok Token 七天限时降价",
+        "start_at": 1791770400,
+        "end_at": 1792375200,
+        "discount_percent": 86,
+        "multiplier": 0.14,
+        "original": {
+          "billing_setting.billing_expr": "len <= 272000 ? tier(\"standard\", p * 22.753240 + c * 113.766197 + cr * 1.137662 + cc * 28.441550 + cc1h * 28.441550) : tier(\"long_context\", p * 45.506479 + c * 170.649296 + cr * 2.275324 + cc * 56.883099 + cc1h * 56.883099)",
+          "billing_setting.billing_mode": "tiered_expr"
+        }
+      },
+      "model_name": "gpt-6.1-sol-token",
+      "description": "OpenAI 模型 · moni-token；模型标识：gpt-6.1-sol-token。价格与计费方式以模型广场为准。",
+      "icon": "OpenAI",
+      "tags": "moni-token,token",
+      "vendor_id": 3,
+      "quota_type": 0,
+      "model_ratio": 37.5,
+      "model_price": 0,
+      "owner_by": "",
+      "completion_ratio": 2,
+      "enable_groups": [
+        "default",
+        "moni-gpt-017",
+        "metered"
+      ],
+      "supported_endpoint_types": [
+        "openai",
+        "openai-response",
+        "openai-response-compact",
+        "anthropic",
+        "gemini",
+        "openai-alpha-search"
+      ],
+      "billing_mode": "tiered_expr",
+      "billing_expr": "len <= 272000 ? tier(\"standard\", p * 18.73796180617526 + c * 93.68980903087632 + cr * 0.9368980903087631 + cc * 23.42245225771908 + cc1h * 23.42245225771908) : tier(\"long_context\", p * 37.47592361235052 + c * 140.53471354631446 + cr * 1.8737961806175263 + cc * 46.84490451543816 + cc1h * 46.84490451543816)",
+      "id": 33
+    },
+    {
+      "promotion": {
+        "pricing_basis": "official",
+        "id": "4a5e4208873e44a7b6b98b85e0913a5d",
+        "title": "DeepSeek Pro 七天分时降价",
+        "start_at": 1791770400,
+        "end_at": 1792375200,
+        "discount_percent": 90,
+        "multiplier": 0.1,
+        "original": {
+          "billing_setting.billing_expr": "(hour(\"Asia/Shanghai\") >= 9 && hour(\"Asia/Shanghai\") < 12) || (hour(\"Asia/Shanghai\") >= 14 && hour(\"Asia/Shanghai\") < 18) ? tier(\"peak\", p * 13.250415848653 + c * 39.751247545958 + cr * 0.441680528288) : tier(\"off_peak\", p * 6.625207924326 + c * 19.875623772979 + cr * 0.220840264144)",
+          "billing_setting.billing_mode": "tiered_expr"
+        }
+      },
+      "model_name": "deepseek-v4-pro",
+      "description": "DeepSeek V4 Pro；按 Token 分时计费。北京时间每日 09:00–12:00、14:00–18:00 为高峰，其余时间为普通价；当前价格与官方倍率见下方。 1 站内额度=¥0.10，美元等值按每日参考汇率换算。官方资料：https://api-docs.deepseek.com/quick_start/pricing/",
+      "icon": "DeepSeek.Color",
+      "tags": "DeepSeek,文本推理,moni计费",
+      "vendor_id": 1,
+      "quota_type": 0,
+      "model_ratio": 37.5,
+      "model_price": 0,
+      "owner_by": "",
+      "completion_ratio": 1,
+      "enable_groups": [
+        "default",
+        "deepseek"
+      ],
+      "supported_endpoint_types": [
+        "openai"
+      ],
+      "billing_mode": "tiered_expr",
+      "billing_expr": "(hour(\"Asia/Shanghai\") >= 9 && hour(\"Asia/Shanghai\") < 12) || (hour(\"Asia/Shanghai\") >= 14 && hour(\"Asia/Shanghai\") < 18) ? tier(\"peak\", p * 8.833610565768339 + c * 26.500831697305014 + cr * 0.29445368552561124) : tier(\"off_peak\", p * 4.4168052828841695 + c * 13.250415848652507 + cr * 0.14722684276280562)",
+      "id": 34
+    },
+    {
+      "promotion": {
+        "pricing_basis": "official",
+        "id": "cbe8dc69ae4f4adf8c4e5c3c94533246",
+        "title": "DeepSeek Flash Low 七天分时降价",
+        "start_at": 1791770400,
+        "end_at": 1792375200,
+        "discount_percent": 91,
+        "multiplier": 0.09,
+        "original": {
+          "billing_setting.billing_expr": "weekday(\"Asia/Shanghai\") >= 1 && weekday(\"Asia/Shanghai\") <= 5 && ((hour(\"Asia/Shanghai\") >= 9 && hour(\"Asia/Shanghai\") < 12) || (hour(\"Asia/Shanghai\") >= 14 && hour(\"Asia/Shanghai\") < 18)) ? tier(\"peak\", p * 2.007638764947 + c * 8.030555059789 + cr * 0.040152775299) : tier(\"off_peak\", p * 1.003819382474 + c * 4.015277529895 + cr * 0.020076387649)",
+          "billing_setting.billing_mode": "tiered_expr"
+        }
+      },
+      "model_name": "deepseek-v4.1-flash-low",
+      "description": "DeepSeek V4.1 Flash 低价线路；按 Token 分时计费。北京时间周一至周五 09:00–12:00、14:00–18:00 为高峰，其余时间为普通价；当前价格与官方倍率见下方。独立于 deepseek-v4.1-flash。 1 站内额度=¥0.10，美元等值按每日参考汇率换算。官方资料：https://api-docs.deepseek.com/quick_start/pricing/",
+      "icon": "DeepSeek.Color",
+      "tags": "DeepSeek,文本推理,moni计费",
+      "vendor_id": 1,
+      "quota_type": 0,
+      "model_ratio": 37.5,
+      "model_price": 0,
+      "owner_by": "",
+      "completion_ratio": 1,
+      "enable_groups": [
+        "default",
+        "deepseek"
+      ],
+      "supported_endpoint_types": [
+        "openai"
+      ],
+      "billing_mode": "tiered_expr",
+      "billing_expr": "weekday(\"Asia/Shanghai\") >= 1 && weekday(\"Asia/Shanghai\") <= 5 && ((hour(\"Asia/Shanghai\") >= 9 && hour(\"Asia/Shanghai\") < 12) || (hour(\"Asia/Shanghai\") >= 14 && hour(\"Asia/Shanghai\") < 18)) ? tier(\"peak\", p * 1.8068748884526145 + c * 7.227499553810458 + cr * 0.03613749776905229) : tier(\"off_peak\", p * 0.9034374442263072 + c * 3.613749776905229 + cr * 0.018068748884526146)",
+      "id": 36
+    }
+  ],
+  "rate": 6.692129216491165
+}

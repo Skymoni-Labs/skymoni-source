@@ -1,0 +1,28 @@
+[Unit]
+Description=skymoni Community API
+After=network.target docker.service
+
+[Service]
+Type=simple
+DynamicUser=yes
+StateDirectory=skymoni-community
+StateDirectoryMode=0700
+WorkingDirectory=/opt/skymoni-community/current
+ExecStart=/usr/bin/python3 /opt/skymoni-community/current/community.py
+Environment=COMMUNITY_DATA_DIR=/var/lib/skymoni-community
+Environment=COMMUNITY_RELAY_URL=http://127.0.0.1:8081
+Environment=COMMUNITY_PORT=18885
+Environment=PYTHONDONTWRITEBYTECODE=1
+Restart=on-failure
+RestartSec=3
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+MemoryMax=192M
+TasksMax=96
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,138 @@
+/* The reviewed neutral glass is scoped to login/registration. No global tokens. */
+.dark #root .sky-auth {
+  --foreground: #f0f1f5;
+  --card-foreground: #f0f1f5;
+  --primary: #8edaff;
+  --primary-foreground: #102638;
+  --accent: rgb(142 218 255 / 0.13);
+  --accent-foreground: #eef5ff;
+  --ring: #8edaff;
+  --background: rgb(24 25 31 / 0.4);
+  --secondary: rgb(255 255 255 / 0.065);
+  --secondary-foreground: #e8e9ee;
+  --muted: rgb(235 237 244 / 0.06);
+  --muted-foreground: #c6c8d0;
+  --border: rgb(235 238 245 / 0.2);
+  --input: rgb(238 240 247 / 0.25);
+  --site-glass-base: rgb(76 78 86 / 0.28);
+  --site-glass-field: rgb(6 8 12 / 0.28);
+  --site-glass-border: rgb(238 240 247 / 0.25);
+  --site-glass-filter: blur(10px) saturate(85%);
+  --site-glass-material:
+    radial-gradient(
+      ellipse at 100% 0%,
+      rgb(245 247 255 / 0.035),
+      transparent 52%
+    ),
+    linear-gradient(
+      132deg,
+      rgb(250 250 252 / 0.12),
+      transparent 43%,
+      rgb(242 241 249 / 0.025)
+    ),
+    var(--site-glass-base);
+}
+
+.dark #root .sky-auth .sky-auth-card {
+  background: var(--site-glass-material);
+  border-color: var(--site-glass-border);
+  -webkit-backdrop-filter: var(--site-glass-filter);
+  backdrop-filter: var(--site-glass-filter);
+  box-shadow:
+    inset 0 1px 0 rgb(250 250 252 / 0.25),
+    inset 1px 0 0 rgb(245 246 250 / 0.07),
+    inset -1px -1px 0 rgb(235 234 243 / 0.1),
+    0 16px 38px rgb(0 3 14 / 0.22);
+}
+.dark
+  #root
+  .sky-auth
+  .sky-auth-card
+  input:not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='hidden']
+  ) {
+  background: var(--site-glass-field);
+  border-color: var(--input);
+  color: var(--foreground);
+}
+.dark #root .sky-auth .sky-auth-card :is(h2, label) {
+  color: var(--foreground);
+}
+.dark #root .sky-auth .sky-auth-card .text-muted-foreground {
+  color: var(--muted-foreground);
+}
+.dark #root .sky-auth .sky-auth-card button[type='submit'] {
+  background: linear-gradient(112deg, #8edaff, #a6befb);
+  color: #102638;
+  border-color: rgb(174 224 255 / 0.6);
+  box-shadow:
+    inset 0 1px 0 rgb(239 249 255 / 0.45),
+    0 5px 18px rgb(70 151 211 / 0.15);
+}
+.dark #root .sky-auth .sky-auth-card button[type='submit']:hover {
+  background: linear-gradient(112deg, #a5e2ff, #b6c9ff);
+}
+
+.auth-glass-filter-definitions {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  left: -2px;
+  top: -2px;
+  pointer-events: none;
+  overflow: hidden;
+}
+.dark #root .sky-auth [data-auth-glass-positioned] {
+  position: relative;
+}
+.dark #root .sky-auth [data-auth-glass-rim] {
+  isolation: isolate;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.dark #root .sky-auth [data-auth-glass-rim]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgb(248 249 252 / 0.035),
+    transparent 35%,
+    rgb(242 241 249 / 0.02)
+  );
+  -webkit-backdrop-filter: var(--auth-glass-rim-filter) blur(2px) saturate(80%);
+  backdrop-filter: var(--auth-glass-rim-filter) blur(2px) saturate(80%);
+}
+
+@media (max-width: 640px) {
+  .dark #root .sky-auth {
+    --site-glass-filter: blur(8px) saturate(85%);
+  }
+  .dark #root .sky-auth [data-auth-glass-rim]::after {
+    display: none;
+  }
+}
+@supports not
+((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .dark #root .sky-auth {
+    --site-glass-base: rgb(43 45 52 / 0.96);
+  }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .dark #root .sky-auth {
+    --site-glass-base: rgb(43 45 52 / 0.97);
+    --site-glass-field: rgb(12 14 20 / 0.97);
+    --site-glass-border: rgb(238 240 247 / 0.55);
+    --input: rgb(238 240 247 / 0.55);
+    --site-glass-filter: none;
+  }
+  .dark #root .sky-auth [data-auth-glass-rim]::after {
+    display: none;
+  }
+}

@@ -1,0 +1,47 @@
+.dark .hn-page {
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  --hp-paper: #090f1c;
+  --hp-panel: #0f192a;
+  --hp-muted: #a5b6cf;
+  --hn-border: #acc6f022;
+}
+.dark .hn-page .hn-hero-wash,
+.dark .hn-page .hp-hero-wash,
+.dark .hn-page .hp-hero-wash::after,
+.dark .hn-page .hn-software-wrap,
+.dark .hn-page .hn-more-wrap,
+.dark .hn-page .hp-site-footer,
+.dark .hn-page .hn-creators {
+  background: transparent;
+}
+.dark .hn-page .hn-more-wrap {
+  border-top-color: transparent;
+}
+.dark .hn-page .hp-floating-card {
+  background: transparent;
+}
+.dark .hn-page .hp-floating-card::before {
+  background: rgb(12 22 38 / 0.68);
+  border-color: #a9c5ec25;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.dark .hn-page .hn-drip-feature,
+.dark .hn-page .hn-terminal,
+.dark .hn-page .hn-app-card {
+  background: linear-gradient(135deg, #172b429c, #211f3994);
+  border-color: #9bb8e22b;
+}
+.dark .hn-page .ad-showcase {
+  background: linear-gradient(112deg, #102437c2, #19365099);
+  border-color: #9ac8ef24;
+}
+.dark .hn-page .hn-resource-card {
+  background: #101b2a9c;
+  border-color: #a9c5ec24;
+}
+.dark .hn-page .hn-gallery-stage::before {
+  opacity: 0.4;
+}

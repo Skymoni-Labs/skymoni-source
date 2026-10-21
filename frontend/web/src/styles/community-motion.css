@@ -1,0 +1,88 @@
+/* Only the community content folds; the navigation and sky stay in place. */
+.community-shell .sf-content-scene {
+  min-width: 0;
+  transform-origin: center top;
+  view-transition-name: skymoni-community-content;
+}
+
+html:active-view-transition-type(skymoni-community)::view-transition-old(root),
+html:active-view-transition-type(skymoni-community)::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html:active-view-transition-type(
+  skymoni-community
+)::view-transition-group(skymoni-community-content) {
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html:active-view-transition-type(
+  skymoni-community
+)::view-transition-image-pair(skymoni-community-content) {
+  overflow: clip;
+  isolation: isolate;
+}
+
+html:active-view-transition-type(
+  skymoni-community
+)::view-transition-old(skymoni-community-content),
+html:active-view-transition-type(
+  skymoni-community
+)::view-transition-new(skymoni-community-content) {
+  height: 100%;
+  object-fit: none;
+  object-position: center top;
+  transform-origin: center top;
+  mix-blend-mode: normal;
+}
+
+html:active-view-transition-type(
+  skymoni-community
+)::view-transition-old(skymoni-community-content) {
+  animation: sf-community-fold 140ms cubic-bezier(0.4, 0, 0.8, 0.2) both;
+}
+
+html:active-view-transition-type(
+  skymoni-community
+)::view-transition-new(skymoni-community-content) {
+  animation: sf-community-unfold 300ms 100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes sf-community-fold {
+  from {
+    opacity: 1;
+    clip-path: inset(0);
+    transform: translateY(0) scaleY(1);
+  }
+  to {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-6px) scaleY(0.98);
+  }
+}
+
+@keyframes sf-community-unfold {
+  from {
+    opacity: 0.2;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-6px) scaleY(0.98);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0);
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-shell .sf-content-scene {
+    view-transition-name: none;
+  }
+  html:active-view-transition-type(skymoni-community)::view-transition-group(*),
+  html:active-view-transition-type(skymoni-community)::view-transition-old(*),
+  html:active-view-transition-type(skymoni-community)::view-transition-new(*) {
+    animation: none;
+  }
+}

@@ -1,0 +1,205 @@
+.sf-article-editor {
+  min-width: 0;
+  margin-top: 22px;
+}
+.sf-article-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 12px;
+  border: 1px solid var(--sf-border);
+  border-bottom: 0;
+  border-radius: 14px 14px 0 0;
+  background: var(--sf-field);
+}
+.sf-article-toolbar select {
+  width: 126px;
+  height: 32px;
+  margin-right: 6px;
+  font-size: 12px;
+  background: var(--sf-panel);
+}
+.sf-article-toolbar button {
+  color: var(--sf-ink);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+.sf-article-toolbar button:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--sf-accent) 12%, transparent);
+  color: var(--sf-accent);
+}
+.sf-editor-tool-divider {
+  height: 20px;
+  width: 1px;
+  margin: 0 6px;
+  background: var(--sf-border);
+}
+.sf-article-panes {
+  border: 1px solid var(--sf-border);
+  border-radius: 0 0 14px 14px;
+  overflow: hidden;
+  background: var(--sf-panel);
+}
+.sf-article-mode-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.sf-article-source,
+.sf-article-preview {
+  min-width: 0;
+}
+.sf-article-mode-split .sf-article-preview {
+  border-left: 1px solid var(--sf-border);
+}
+.sf-article-pane-label {
+  display: block;
+  padding: 11px 18px;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--sf-muted);
+  border-bottom: 1px solid var(--sf-border);
+  background: color-mix(in srgb, var(--sf-field) 60%, transparent);
+}
+#root .community-shell .sf-article-source textarea {
+  display: block;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  width: 100%;
+  min-height: 450px;
+  max-height: 70vh;
+  padding: 20px;
+  line-height: 1.9;
+  resize: vertical;
+  font-size: 14px;
+  background: transparent;
+}
+#root .community-shell .sf-article-source textarea:focus-visible {
+  box-shadow: inset 0 0 0 2px
+    color-mix(in srgb, var(--sf-accent) 30%, transparent);
+}
+#root .community-shell .sf-article-preview .sf-markdown-preview {
+  border: 0;
+  border-radius: 0;
+  min-height: 450px;
+  max-height: 70vh;
+  overflow: auto;
+  padding: 20px 24px;
+  margin: 0;
+  background: transparent;
+  overflow-wrap: anywhere;
+}
+.sf-article-mode-preview {
+  border-radius: 14px;
+}
+.sf-article-content .sf-text-left {
+  text-align: left;
+}
+.sf-article-content .sf-text-center {
+  text-align: center;
+}
+.sf-article-content .sf-text-right {
+  text-align: right;
+}
+.sf-article-content .sf-text-center img {
+  margin-left: auto;
+  margin-right: auto;
+}
+.sf-article-content .sf-text-right img {
+  margin-left: auto;
+  margin-right: 0;
+}
+.sf-article-content .sf-text-left img {
+  margin-left: 0;
+  margin-right: auto;
+}
+.sf-article-content
+  :is(.sf-text-left, .sf-text-center, .sf-text-right)
+  > :first-child {
+  margin-top: 0;
+}
+.sf-article-content
+  :is(.sf-text-left, .sf-text-center, .sf-text-right)
+  > :last-child {
+  margin-bottom: 0;
+}
+.sf-article-content .sf-text-center :is(ul, ol),
+.sf-article-content .sf-text-right :is(ul, ol) {
+  list-style-position: inside;
+}
+.sf-article-link-form {
+  display: grid;
+  gap: 12px;
+}
+.sf-editor-upload-list li > span {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.sf-editor-upload-list li {
+  gap: 8px;
+}
+.sf-editor-upload-list li > button {
+  flex-shrink: 0;
+}
+.sf-editor-modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+.sf-editor-modes svg {
+  width: 14px;
+  height: 14px;
+}
+@media (min-width: 1450px) {
+  #root .community-shell .sf-composer-page {
+    max-width: 1400px;
+  }
+}
+@media (max-width: 900px) {
+  .sf-article-mode-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sf-article-mode-split .sf-article-preview {
+    border-left: 0;
+    border-top: 1px solid var(--sf-border);
+  }
+  #root .community-shell .sf-article-source textarea {
+    min-height: 300px;
+  }
+  #root .community-shell .sf-article-preview .sf-markdown-preview {
+    min-height: 180px;
+    max-height: 380px;
+  }
+}
+@media (max-width: 520px) {
+  .sf-article-toolbar {
+    gap: 2px;
+    padding: 8px;
+  }
+  .sf-article-toolbar button {
+    width: 30px;
+    height: 30px;
+  }
+  .sf-article-toolbar select {
+    width: 112px;
+  }
+  .sf-editor-heading {
+    align-items: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .sf-editor-modes button {
+    padding: 6px 9px;
+    font-size: 12px;
+  }
+  .sf-editor-upload-list li {
+    flex-wrap: wrap;
+  }
+  .sf-editor-upload-list li > span {
+    flex-basis: 100%;
+  }
+}

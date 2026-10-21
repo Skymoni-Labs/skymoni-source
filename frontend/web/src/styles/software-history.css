@@ -1,0 +1,49 @@
+.sc-get.sh-history-trigger[data-slot='button'] { max-width: 100%; min-width: 0; height: auto; min-height: 30px; white-space: normal; padding: 7px 12px; gap: 6px; }
+.sh-history-trigger > svg { flex-shrink: 0; }
+.sh-history-trigger > span { min-width: 0; overflow-wrap: anywhere; line-height: 1.4; }
+.sh-dialog { width: min(960px, calc(100vw - 32px)); max-width: min(960px, calc(100vw - 32px)); padding: 24px; gap: 14px; }
+.sh-title { overflow-wrap: anywhere; padding-right: 24px; line-height: 1.5; font-size: 18px; }
+.sh-filters { display: flex; gap: 10px; flex-wrap: wrap; }
+.sh-search { position: relative; flex: 1 1 220px; }
+.sh-search > svg { position: absolute; left: 10px; top: 10px; width: 16px; height: 16px; color: var(--muted-foreground); }
+.sh-search input { padding-left: 34px; }
+.sh-filters select, .sh-architecture { border: 1px solid var(--border); background: var(--background); border-radius: 8px; padding: 6px 10px; color: var(--foreground); min-height: 36px; max-width: 100%; }
+.sh-architecture { margin-bottom: 10px; }
+.sh-note { color: var(--muted-foreground); font-size: 12px; line-height: 1.7; }
+.sh-note span { display: block; }
+.sh-browser { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 18px; min-height: 280px; }
+.sh-version-list, .sh-files { max-height: min(460px, 48dvh); overflow-y: auto; overscroll-behavior: contain; }
+.sh-version-list { display: flex; flex-direction: column; gap: 6px; padding-right: 4px; }
+.sh-version { display: flex; flex-direction: column; gap: 4px; text-align: left; padding: 10px; border: 1px solid transparent; border-radius: 9px; cursor: pointer; background: transparent; }
+.sh-version strong { overflow-wrap: anywhere; }
+.sh-version span { color: var(--muted-foreground); font-size: 11px; }
+.sh-version:hover { background: var(--muted); }
+.sh-version[aria-pressed=true] { background: color-mix(in oklab, var(--primary) 12%, transparent); border-color: color-mix(in oklab, var(--primary) 45%, transparent); }
+.sh-release-heading { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.sh-release-heading h3 { font-weight: 650; overflow-wrap: anywhere; }
+.sh-release-heading p { color: var(--muted-foreground); font-size: 12px; overflow-wrap: anywhere; }
+.sh-release-heading a, .sh-sources a { display: inline-flex; align-items: center; gap: 4px; color: var(--primary); font-size: 12px; flex-shrink: 0; }
+.sh-release-heading svg, .sh-file-actions svg, .sh-sources svg { width: 14px; height: 14px; }
+.sh-other-files { display: flex; align-items: center; gap: 6px; color: var(--muted-foreground); font-size: 12px; margin-bottom: 10px; }
+.sh-file { display: flex; justify-content: space-between; align-items: center; gap: 12px; border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 8px; background: color-mix(in oklab, var(--muted) 25%, transparent); }
+.sh-file-info { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.sh-file-info strong { font-size: 13px; overflow-wrap: anywhere; }
+.sh-file-info span { overflow-wrap: anywhere; color: var(--muted-foreground); font-size: 12px; }
+.sh-file-info small, .sh-file-info details { color: var(--muted-foreground); font-size: 11px; }
+.sh-file-info summary { cursor: pointer; }
+.sh-file-info code { overflow-wrap: anywhere; }
+.sh-file-actions { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; align-items: flex-end; }
+.sh-file-actions a { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--primary); }
+.sh-file-actions a:first-child { padding: 7px 9px; border-radius: 7px; background: color-mix(in oklab, var(--primary) 15%, transparent); }
+.sh-pagination { display: flex; justify-content: center; align-items: center; gap: 16px; }
+.sh-pagination span, .sh-disclaimer { font-size: 12px; color: var(--muted-foreground); }
+.sh-sources { display: flex; flex-wrap: wrap; gap: 12px; }
+.sh-empty { padding: 18px 0; color: var(--muted-foreground); line-height: 1.7; }
+@media (max-width: 640px) {
+  .sh-dialog { padding: 16px; }
+  .sh-browser { grid-template-columns: 1fr; gap: 12px; min-height: 0; }
+  .sh-version-list { flex-direction: row; max-height: 90px; padding-bottom: 5px; }
+  .sh-version { flex-shrink: 0; width: 170px; }
+  .sh-files { max-height: 42dvh; }
+  .sh-file { gap: 8px; padding: 10px; }
+}

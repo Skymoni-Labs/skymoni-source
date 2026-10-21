@@ -1,0 +1,2 @@
+2026-10-14 frontend update. Adds Reuse template in mailing history and details for every status, including completed mail. Reuses subject, original content, content format, recipient mode and paginated frozen delivery recipients. Loading is read-only; saving creates a draft with a fresh request identifier. Draft editing still updates only draft campaigns. No backend or schema changes.
+Build: npm run build. Regression checks: admin-mail authoring, draft-input and validation (23 tests).

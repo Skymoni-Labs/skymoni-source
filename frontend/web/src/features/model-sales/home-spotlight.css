@@ -1,0 +1,24 @@
+.hp-sale-section { margin-top: -6px; margin-bottom: 30px; }
+.hp-sale-flight { position: relative; display: flex; align-items: center; gap: 22px; padding: 23px 26px; margin-bottom: 12px; overflow: hidden; border: 1px solid rgba(78,156,217,.25); border-radius: 22px; color: #173653; background: radial-gradient(ellipse at 4% 50%,#daf2ff,transparent 55%),linear-gradient(120deg,#f5fbff,#eef1ff); text-decoration: none; transition: border-color .2s,box-shadow .2s; }
+.dark .hp-sale-flight { color: #eaf4ff; border-color: #2b4965; background: radial-gradient(ellipse at 7% 50%,#164b6a66,transparent 55%),radial-gradient(ellipse at 95% 30%,#51378144,transparent 60%),#101b30; }
+.hp-sale-flight:hover { border-color: #56a5da; box-shadow: 0 6px 24px #1c7dbe18; }
+.hp-sale-orbit { flex-shrink: 0; position: relative; display: grid; place-items: center; width: 66px; height: 66px; border: 1px solid #79b7d666; border-radius: 50%; color: #239dd5; }
+.hp-sale-orbit:before { content: ''; position: absolute; inset: -8px 6px; border: 1px solid #79b7d655; border-radius: 50%; transform: rotate(-35deg); }
+.hp-sale-orbit span { position: absolute; top: -5px; right: 1px; font-size: 12px; color: #9b78d5; }
+.hp-sale-copy { flex: 1; min-width: 0; }
+.hp-sale-kicker { color: #247cad; font-size: 11px; font-weight: 700; letter-spacing: .5px; margin: 0 0 5px; }
+.dark .hp-sale-kicker { color: #87d9ff; }
+.hp-sale-copy h2 { font-size: 19px; line-height: 1.4; margin: 0 0 5px; font-weight: 700; }
+.hp-sale-copy > p:last-child { color: #63778e; font-size: 12px; margin: 0; }
+.dark .hp-sale-copy > p:last-child { color: #a4b9d2; }
+.hp-sale-clock { flex-shrink: 0; border-left: 1px dashed #6c94b955; padding-left: 24px; }
+.hp-sale-clock > p { font-size: 10px; color: #63778e; text-align: center; margin: 0 0 4px; }
+.dark .hp-sale-clock > p { color: #a4b9d2; }
+.hp-sale-clock .sale-countdown { gap: 7px; margin: 0; }
+.hp-sale-clock .sale-digit { width: 20px; height: 30px; font-size: 20px; line-height: 30px; }
+.hp-sale-clock .sale-digit-value { font-size: 20px; line-height: 30px; }
+.hp-sale-clock .sale-time-label { font-size: 9px; }
+.hp-sale-link { display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; font-size: 12px; color: #2586bd; font-weight: 600; }
+.dark .hp-sale-link { color: #87d9ff; }
+@media(max-width:900px) { .hp-sale-link { display: none; } .hp-sale-flight { gap: 18px; } }
+@media(max-width:600px) { .hp-sale-section { margin-top: 2px; margin-bottom: 20px; } .hp-sale-flight { display: grid; grid-template-columns: 42px minmax(0,1fr); gap: 15px; padding: 20px; border-radius: 18px; } .hp-sale-orbit { width: 40px; height: 40px; } .hp-sale-copy h2 { font-size: 16px; } .hp-sale-clock { grid-column: 1/-1; display: flex; align-items: center; justify-content: space-between; padding: 12px 0 0; border-left: 0; border-top: 1px dashed #6c94b955; } .hp-sale-clock > p { margin: 0; font-size: 11px; } }

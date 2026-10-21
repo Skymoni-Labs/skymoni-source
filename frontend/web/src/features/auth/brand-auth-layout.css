@@ -1,0 +1,371 @@
+.sky-auth {
+  min-height: 100svh;
+  color: #284c65;
+  background:
+    radial-gradient(ellipse at 7% 70%, #e6f4fc 0, transparent 48%),
+    radial-gradient(ellipse at 91% 12%, #fff5d8 0, transparent 40%), #fbfcfa;
+  padding: 28px 5vw 40px;
+}
+.sky-auth-header {
+  max-width: 1280px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.sky-auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+}
+.sky-auth-brand img {
+  object-fit: contain;
+}
+.sky-auth-header-note {
+  font-size: 13px;
+  color: #657f8e;
+}
+.sky-auth-main {
+  max-width: 1100px;
+  margin: 38px auto 0;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 76px;
+  align-items: center;
+}
+.sky-auth-story {
+  text-align: center;
+  min-width: 0;
+  padding: 16px 0;
+}
+.sky-auth-eyebrow {
+  display: inline-block;
+  background: #fff3d2;
+  border: 1px solid #f4e3b9;
+  color: #836524;
+  border-radius: 24px;
+  padding: 7px 16px;
+  font-size: 12px;
+  letter-spacing: 0.6px;
+}
+.sky-auth-story h1 {
+  font-size: clamp(26px, 2.7vw, 37px);
+  font-weight: 650;
+  line-height: 1.45;
+  letter-spacing: -0.9px;
+  margin: 20px 0 12px;
+  text-wrap: balance;
+}
+.sky-auth-story p {
+  color: #637e8d;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.sky-auth-art {
+  width: min(100%, 405px);
+  margin: 12px auto 0;
+  border-radius: 46%;
+  overflow: hidden;
+}
+.sky-auth-art img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.sky-auth-story-footer {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #688494;
+}
+.sky-auth-story-footer span {
+  margin: 0 10px;
+  color: #a3becb;
+}
+.sky-auth-card {
+  min-width: 0;
+  background: #ffffffed;
+  border: 1px solid #dfedf4;
+  border-radius: 30px;
+  padding: 34px 38px 38px;
+  box-shadow:
+    0 16px 64px #5597b610,
+    0 3px 10px #5597b605;
+}
+.sky-auth-card-cloud {
+  display: block;
+  object-fit: contain;
+  margin: 0 0 12px;
+}
+.sky-auth-card h2 {
+  color: #284c65;
+  text-align: left;
+  font-size: 25px;
+}
+.sky-auth-card input {
+  min-height: 46px;
+  border-radius: 13px;
+  background: #f9fcfe;
+  border-color: #dbe7ef;
+  color: #284c65;
+  padding-inline: 14px;
+}
+.sky-auth-card input[type='password'] {
+  padding-right: 40px;
+}
+.sky-auth-card input:focus-visible {
+  border-color: #60acd4;
+  outline-color: #60acd4;
+}
+.sky-auth-card input::placeholder {
+  color: #7c8d9b;
+}
+.sky-auth-card label {
+  color: #3b596d;
+}
+.sky-auth-card button[type='submit'] {
+  min-height: 46px;
+  border-radius: 13px;
+  background: #339bc9;
+  color: white;
+  box-shadow: 0 5px 14px #339bc922;
+}
+.sky-auth-card button[type='submit']:hover {
+  background: #2688b4;
+}
+.sky-auth-card .text-muted-foreground {
+  color: #6b7f8d;
+}
+.sky-auth-card a {
+  color: #217ca7;
+}
+.dark .sky-auth {
+  background:
+    radial-gradient(ellipse at 8% 60%, #203d50, transparent 60%), #152530;
+  color: #e3f1f8;
+}
+.dark .sky-auth-card {
+  background: #203440;
+  border-color: #365263;
+}
+.dark .sky-auth-card h2,
+.dark .sky-auth-card label {
+  color: #e3f1f8;
+}
+.dark .sky-auth-card input {
+  background: #182b38;
+  border-color: #456073;
+  color: #e3f1f8;
+}
+.dark .sky-auth-card a {
+  color: #89ccee;
+}
+.dark .sky-auth-card .text-muted-foreground,
+.dark .sky-auth-story p,
+.dark .sky-auth-header-note,
+.dark .sky-auth-story-footer {
+  color: #adc4d0;
+}
+@media (max-width: 850px) {
+  .sky-auth {
+    padding: 20px 22px 36px;
+  }
+  .sky-auth-main {
+    gap: 30px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .sky-auth-card {
+    padding: 28px 24px;
+  }
+}
+@media (max-width: 640px) {
+  .sky-auth {
+    padding: 16px 18px 30px;
+  }
+  .sky-auth-header-note {
+    display: none;
+  }
+  .sky-auth-brand {
+    font-size: 22px;
+  }
+  .sky-auth-main {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 24px;
+  }
+  .sky-auth-story {
+    padding: 0;
+  }
+  .sky-auth-story h1 {
+    font-size: 25px;
+    margin: 10px 0 4px;
+  }
+  .sky-auth-story p {
+    font-size: 12px;
+  }
+  .sky-auth-eyebrow,
+  .sky-auth-art,
+  .sky-auth-story-footer {
+    display: none;
+  }
+  .sky-auth-card {
+    width: 100%;
+    max-width: 460px;
+    padding: 24px;
+    border-radius: 24px;
+  }
+  .sky-auth-card-cloud {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+  }
+}
+
+/* Registration has more fields; use width instead of a tall single column. */
+.sky-auth-signup {
+  padding: 18px 4vw 20px;
+}
+.sky-auth-signup .sky-auth-main {
+  max-width: 1180px;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 44px;
+  margin-top: 16px;
+}
+.sky-auth-signup .sky-auth-card {
+  padding: 22px 28px;
+}
+.sky-auth-signup .sky-auth-card-cloud {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 4px;
+}
+.sky-auth-signup .sky-auth-card input,
+.sky-auth-signup .sky-auth-card button[type='submit'] {
+  min-height: 40px;
+}
+.sky-auth-signup .sky-auth-art {
+  width: min(100%, 330px);
+}
+.sky-signup-form > * {
+  min-width: 0;
+  grid-column: 1 / -1;
+}
+@media (min-width: 640px) {
+  .sky-signup-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 16px;
+  }
+  .sky-signup-form > .sky-signup-field {
+    grid-column: auto;
+  }
+}
+@media (max-width: 1000px) {
+  .sky-auth-signup .sky-auth-main {
+    display: block;
+    max-width: 640px;
+  }
+  .sky-auth-signup .sky-auth-story {
+    display: none;
+  }
+}
+@media (max-width: 639px) {
+  .sky-auth-signup {
+    padding: 12px 14px 20px;
+  }
+  .sky-auth-signup .sky-auth-card {
+    max-width: none;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 639px) {
+  .sky-auth-signup .sky-auth-main {
+    margin-top: 8px;
+  }
+  .sky-auth-signup .sky-auth-card-cloud {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0;
+  }
+}
+
+/* Center the registration content in the space below the brand header. */
+.sky-auth-signup {
+  display: flex;
+  flex-direction: column;
+}
+.sky-auth-signup .sky-auth-header {
+  width: 100%;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+.sky-auth-signup .sky-auth-main {
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+@media (max-width: 639px) {
+  .sky-auth-signup .sky-auth-main {
+    padding-top: 8px;
+    padding-bottom: 0;
+  }
+}
+
+@media (min-width: 640px) and (min-height: 720px) {
+  .sky-auth-signup .sky-auth-main {
+    transform: translateY(-12px);
+  }
+}
+
+.sky-auth-relay-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid #c8e4f1;
+  border-radius: 14px;
+  background: #f4faff;
+  color: #285d7c;
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    background-color 0.18s,
+    border-color 0.18s;
+}
+.sky-auth-relay-login:hover {
+  background: #e9f6ff;
+  border-color: #83c7e7;
+}
+.sky-auth-relay-login:focus-visible {
+  outline: 3px solid #8ad0f1;
+  outline-offset: 3px;
+}
+.sky-auth-relay-login svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+.sky-auth-relay-login svg:last-child {
+  margin-left: auto;
+}
+.sky-auth-relay-login span {
+  flex: 1;
+  text-align: center;
+}
+.dark .sky-auth-relay-login {
+  background: #173247;
+  border-color: #35556c;
+}
+.dark .sky-auth-relay-login:hover {
+  background: #204057;
+  border-color: #6bb8dc;
+}

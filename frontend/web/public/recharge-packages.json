@@ -1,0 +1,60 @@
+{
+  "plans": [
+    {
+      "id": "01",
+      "price_cny": 9.9,
+      "credit_usd": 99,
+      "url": "https://catfk.com/item/pcalzx",
+      "status": "available",
+      "base_credit": 99
+    },
+    {
+      "id": "02",
+      "price_cny": 49.0,
+      "credit_usd": 500,
+      "url": "https://catfk.com/item/zvucs2",
+      "status": "available",
+      "base_credit": 490
+    },
+    {
+      "id": "03",
+      "price_cny": 99.0,
+      "credit_usd": 1020,
+      "url": "https://catfk.com/item/92q3ny",
+      "status": "available",
+      "base_credit": 990
+    },
+    {
+      "id": "04",
+      "price_cny": 199.0,
+      "credit_usd": 2100,
+      "url": "https://catfk.com/item/b3oura",
+      "status": "available",
+      "base_credit": 1990
+    },
+    {
+      "id": "05",
+      "price_cny": 299.0,
+      "credit_usd": 3200,
+      "url": "https://catfk.com/item/fyifmf",
+      "status": "available",
+      "base_credit": 2990
+    },
+    {
+      "id": "06",
+      "price_cny": 599.0,
+      "credit_usd": 6480,
+      "url": "https://catfk.com/item/a3x4ta",
+      "status": "available",
+      "base_credit": 5990
+    },
+    {
+      "id": "07",
+      "price_cny": 999.0,
+      "credit_usd": 11000,
+      "url": "https://catfk.com/item/vnin4j",
+      "status": "available",
+      "base_credit": 9990
+    }
+  ]
+}

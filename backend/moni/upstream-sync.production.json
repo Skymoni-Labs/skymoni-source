@@ -1,0 +1,1974 @@
+{
+  "enabled": true,
+  "dry_run": false,
+  "net_cny_per_dollar": 0.08918345454545454,
+  "costs": {
+    "yylx": 6.72,
+    "2000run": 0.1
+  },
+  "margins": {
+    "yylx": 0.05,
+    "2000run": 0.1
+  },
+  "bindings": [
+    {
+      "channel_id": 110,
+      "provider": "yylx",
+      "group": "6",
+      "suffix": "-token",
+      "image_suffix": "",
+      "excluded_models": [
+        "claude-opus-4-5-20251101",
+        "claude-opus-4-5"
+      ]
+    },
+    {
+      "channel_id": 111,
+      "provider": "yylx",
+      "group": "8",
+      "suffix": "-token",
+      "image_suffix": "-moni-codex",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 112,
+      "provider": "yylx",
+      "group": "10",
+      "suffix": "-token",
+      "image_suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 113,
+      "provider": "yylx",
+      "group": "29",
+      "suffix": "-token",
+      "image_suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 115,
+      "provider": "yylx",
+      "group": "7",
+      "suffix": "-token-pro",
+      "image_suffix": "",
+      "excluded_models": [
+        "claude-opus-4-5-20251101"
+      ]
+    },
+    {
+      "channel_id": 116,
+      "provider": "yylx",
+      "group": "9",
+      "suffix": "-token-pro",
+      "image_suffix": "-moni-codex-pro",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 117,
+      "provider": "yylx",
+      "group": "12",
+      "suffix": "-moni",
+      "image_suffix": "-moni",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 118,
+      "provider": "yylx",
+      "group": "34",
+      "suffix": "-moni",
+      "image_suffix": "-moni",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 119,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 120,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 121,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 122,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 123,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 124,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 125,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 126,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 127,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 128,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 129,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 130,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 131,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 132,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 133,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 134,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 135,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 136,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 137,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 138,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 139,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 140,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 141,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 142,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 143,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 144,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 145,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 146,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 147,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 148,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 149,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "excluded_models": []
+    },
+    {
+      "channel_id": 179,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 352,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 353,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 354,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 355,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 180,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 356,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 357,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 358,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 359,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 181,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 360,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 361,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 362,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 363,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 182,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 364,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 365,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 366,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 367,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 183,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 368,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 369,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 370,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 371,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 184,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 372,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 373,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 374,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 375,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 174,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 376,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 377,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 378,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 379,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 176,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 380,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 381,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 382,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 383,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 178,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 384,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 385,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 386,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 387,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 175,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 388,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 389,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 390,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 391,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 489,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 490,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 491,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 492,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 493,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 494,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 495,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 496,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 497,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 498,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 499,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 500,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 501,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 502,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 503,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 504,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 505,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 506,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 507,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 508,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 509,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 510,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 511,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 512,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 513,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 514,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 515,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 516,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 517,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 518,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 519,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 520,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 521,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 522,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 523,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 524,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 525,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 526,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 527,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 528,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 529,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 530,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 531,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 532,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 533,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 534,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 535,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 536,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 537,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 538,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 539,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 540,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 541,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 542,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 543,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.5"
+      ]
+    },
+    {
+      "channel_id": 544,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 545,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 546,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 547,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 548,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6"
+      ]
+    },
+    {
+      "channel_id": 549,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 550,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 551,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 552,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 553,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-luna"
+      ]
+    },
+    {
+      "channel_id": 554,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 555,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 556,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 557,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 558,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "channel_id": 559,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 560,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 561,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 562,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 563,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "channel_id": 564,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 565,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 566,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 567,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 568,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "channel_id": 569,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 570,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 571,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 572,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 573,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-luna"
+      ]
+    },
+    {
+      "channel_id": 574,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 575,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 576,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 577,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 578,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "channel_id": 579,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 580,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 581,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 582,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 583,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6-terra"
+      ]
+    },
+    {
+      "channel_id": 584,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 585,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 586,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 587,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    },
+    {
+      "channel_id": 588,
+      "provider": "2000run",
+      "group": "default",
+      "suffix": "",
+      "image_suffix": "",
+      "excluded_models": [],
+      "allowed_models": [
+        "gpt-6.1-sol"
+      ]
+    }
+  ],
+  "fx_override_basis_cny_per_usd": 7.3,
+  "fx_adjusted_overrides": [
+    "gpt-6-astra-token",
+    "gpt-6.1-sol-token",
+    "gpt-5.6-sol-token",
+    "gpt-5.5-token",
+    "gpt-5.6-terra-token",
+    "gpt-6-sol-token",
+    "jev-latest",
+    "jev-preview",
+    "jev-1.13.0"
+  ],
+  "pricing_overrides": {
+    "gpt-6-astra-token": "len <= 272000 ? tier(\"standard\", p * 124.1 + c * 620.5 + cr * 12.41 + cc * 155.125 + cc1h * 155.125) : tier(\"long_context\", p * 248.2 + c * 930.75 + cr * 24.82 + cc * 310.25 + cc1h * 310.25)",
+    "gpt-6.1-sol-token": "len <= 272000 ? tier(\"standard\", p * 24.82 + c * 124.1 + cr * 1.241 + cc * 31.025 + cc1h * 31.025) : tier(\"long_context\", p * 49.64 + c * 186.15 + cr * 2.482 + cc * 62.05 + cc1h * 62.05)",
+    "gpt-5.6-sol-token": "len <= 272000 ? tier(\"standard\", p * 49.64 + c * 248.2 + cr * 4.964 + cc * 62.05 + cc1h * 62.05) : tier(\"long_context\", p * 99.28 + c * 372.3 + cr * 9.928 + cc * 124.1 + cc1h * 124.1)",
+    "gpt-5.5-token": "len <= 272000 ? tier(\"standard\", p * 62.05 + c * 372.3 + cr * 6.205) : tier(\"long_context\", p * 124.1 + c * 558.45 + cr * 12.41)",
+    "gpt-5.6-terra-token": "len <= 272000 ? tier(\"standard\", p * 24.82 + c * 148.92 + cr * 2.482 + cc * 31.025 + cc1h * 31.025) : tier(\"long_context\", p * 49.64 + c * 223.38 + cr * 4.964 + cc * 62.05 + cc1h * 62.05)",
+    "gpt-6-sol-token": "len <= 272000 ? tier(\"standard\", p * 24.82 + c * 124.1 + cr * 2.482 + cc * 31.025 + cc1h * 31.025) : tier(\"long_context\", p * 49.64 + c * 186.15 + cr * 4.964 + cc * 62.05 + cc1h * 62.05)",
+    "jev-latest": "tier(\"base\", u(\"input_tokens\") * 3.066 / 1000000 + u(\"output_tokens\") * 0 / 1000000)",
+    "jev-preview": "tier(\"base\", u(\"input_tokens\") * 3.066 / 1000000 + u(\"output_tokens\") * 0 / 1000000)",
+    "jev-1.13.0": "tier(\"base\", u(\"input_tokens\") * 3.066 / 1000000 + u(\"output_tokens\") * 0 / 1000000)"
+  }
+}

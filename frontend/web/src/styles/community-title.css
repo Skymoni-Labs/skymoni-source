@@ -1,0 +1,21 @@
+/* Segoe Print for Latin, a self-hosted Chinese handwriting subset for this title. */
+@font-face {
+  font-family: 'Skymoni Community Hand';
+  src: url('../../public/fonts/community-title/community-title-hand.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+#root .community-shell .sf-welcome .sf-welcome-copy h1 {
+  font-family:
+    'Segoe Print', 'Bradley Hand', 'Skymoni Community Hand', KaiTi, STKaiti,
+    cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  letter-spacing: 0.015em;
+  line-height: 1.6;
+  text-wrap: balance;
+}

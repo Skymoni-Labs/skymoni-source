@@ -1,0 +1,150 @@
+/* Drawn shop window: striped semicircular awning, paired posts and a sill. */
+html #root .community-shell.cp-platform .sf-topic-window {
+  --sf-window-paper: #fffdf7;
+  --sf-window-line: #87a8c7;
+  --sf-window-blue: #d8eaf3;
+  --sf-window-cream: #f8edcf;
+  --sf-window-shade: #7599b52b;
+  --sf-window-awning-height: 54px;
+  --sf-window-awning-pitch: 80px;
+  position: relative;
+  isolation: isolate;
+  margin-top: 20px;
+  padding: 62px 12px 20px;
+  border: 0;
+  border-radius: 12px 12px 8px 8px;
+  background: var(--sf-window-paper);
+  box-shadow: 0 12px 28px #5779a016;
+  overflow: hidden;
+}
+
+html.dark #root .community-shell.cp-platform .sf-topic-window {
+  --sf-window-paper: #101b2d;
+  --sf-window-line: #6286ac;
+  --sf-window-blue: #283f5c;
+  --sf-window-cream: #384657;
+  --sf-window-shade: #00000045;
+  box-shadow: 0 12px 30px #00000025;
+}
+
+.community-shell .sf-window-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.community-shell .sf-window-awning {
+  position: absolute;
+  inset: 0 0 auto;
+  height: var(--sf-window-awning-height);
+  background-color: var(--sf-window-cream);
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--sf-window-blue) 0 calc(var(--sf-window-awning-pitch) / 2),
+    var(--sf-window-cream) calc(var(--sf-window-awning-pitch) / 2)
+      var(--sf-window-awning-pitch)
+  );
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='54' viewBox='0 0 80 54'%3E%3Cpath d='M0 0H80V34a20 20 0 0 1-40 0 20 20 0 0 1-40 0Z' fill='white'/%3E%3C/svg%3E");
+  mask-size: var(--sf-window-awning-pitch) var(--sf-window-awning-height);
+  mask-repeat: repeat-x;
+  filter: drop-shadow(0 3px 0 var(--sf-window-line));
+}
+
+.community-shell .sf-window-awning::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 8px;
+  border-block: 2px solid var(--sf-window-line);
+  background: var(--sf-window-blue);
+}
+
+.community-shell .sf-window-awning::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--sf-window-line);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='54' viewBox='0 0 80 54'%3E%3Cpath d='M0 33a20 20 0 0 0 40 0 20 20 0 0 0 40 0M40 8v25M0 8v25' fill='none' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E");
+  mask-size: var(--sf-window-awning-pitch) var(--sf-window-awning-height);
+  mask-repeat: repeat-x;
+}
+
+.community-shell .sf-window-post {
+  position: absolute;
+  top: 34px;
+  bottom: 10px;
+  width: 10px;
+  border: 1.5px solid var(--sf-window-line);
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--sf-window-paper),
+    var(--sf-window-blue)
+  );
+  box-shadow: 2px 0 5px var(--sf-window-shade);
+  z-index: -1;
+}
+
+.community-shell .sf-window-post-left {
+  left: 0;
+}
+.community-shell .sf-window-post-right {
+  right: 0;
+}
+
+.community-shell .sf-window-sill {
+  position: absolute;
+  inset: auto 0 0;
+  height: 14px;
+  border: 1.5px solid var(--sf-window-line);
+  border-radius: 4px 4px 7px 7px;
+  background: linear-gradient(
+    var(--sf-window-paper) 0 4px,
+    var(--sf-window-blue) 4px
+  );
+  box-shadow: 0 -3px 8px var(--sf-window-shade);
+}
+
+html #root .community-shell .sf-topic-window .sf-topic-table th {
+  background: color-mix(
+    in srgb,
+    var(--sf-window-paper) 78%,
+    var(--sf-window-blue)
+  );
+}
+
+html #root .community-shell .sf-state.sf-topic-window {
+  padding: 86px 24px 48px;
+}
+
+@media (max-width: 700px) {
+  html #root .community-shell.cp-platform .sf-topic-window {
+    --sf-window-awning-height: 40.5px;
+    --sf-window-awning-pitch: 60px;
+    margin-top: 16px;
+    padding: 48px 9px 17px;
+  }
+  .community-shell .sf-window-post {
+    top: 26px;
+    width: 7px;
+  }
+  .community-shell .sf-window-sill {
+    height: 12px;
+  }
+  html #root .community-shell .sf-state.sf-topic-window {
+    padding: 70px 18px 40px;
+  }
+}
+
+@media (forced-colors: active) {
+  html #root .community-shell.cp-platform .sf-topic-window {
+    padding: 12px;
+    border: 2px solid CanvasText;
+    background: Canvas;
+  }
+  .community-shell .sf-window-frame {
+    display: none;
+  }
+}

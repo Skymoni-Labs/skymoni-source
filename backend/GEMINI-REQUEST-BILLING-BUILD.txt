@@ -1,0 +1,5 @@
+Corresponding source for v1.0.0-rc.39-skymoni.100-gemini-request (2026-10-09).
+Upstream: QuantumNous/new-api, https://github.com/QuantumNous/new-api . AGPL-3.0-or-later; retain LICENSE and NOTICE.
+Changes: optional ModelRequestTokenLimits administrator option, input admission before reservation even when billing token estimation is disabled, one completion/request, final outbound output cap after protocol conversion/overrides/passthrough. Other models and channel configurations unchanged. No SQL schema or migration changes.
+Configured Gemini request policy: 16,384 estimated input tokens, 4,096 output tokens, tier("request", fixed(0.5)) in site credit units (one site credit is nominally CNY 0.10). Pricing is administrator configuration, not a built-in USD provider price.
+Build: combine current frontend dist as web/dist, CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -buildvcs=false -ldflags="-s -w -X github.com/QuantumNous/new-api/common.Version=v1.0.0-rc.39-skymoni.100-gemini-request" -o new-api .

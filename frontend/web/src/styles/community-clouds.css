@@ -1,0 +1,91 @@
+#root .community-shell {
+  position: relative;
+  isolation: isolate;
+}
+.sky-cloud-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+.sky-soft-cloud {
+  position: absolute;
+  top: 14%;
+  left: 0;
+  width: clamp(320px, 43vw, 680px);
+  opacity: 0.78;
+  transform: translate3d(8vw, 0, 0);
+  animation: sky-soft-cloud-drift 150s linear infinite;
+  animation-delay: -38s;
+}
+.sky-soft-cloud:nth-child(2) {
+  top: 39%;
+  width: clamp(370px, 50vw, 780px);
+  opacity: 0.57;
+  transform: translate3d(55vw, 0, 0);
+  animation-duration: 190s;
+  animation-delay: -137s;
+}
+.sky-soft-cloud:nth-child(3) {
+  top: 65%;
+  width: clamp(280px, 34vw, 530px);
+  opacity: 0.7;
+  transform: translate3d(-6vw, 0, 0);
+  animation-duration: 130s;
+  animation-delay: -28s;
+}
+.sky-soft-cloud:nth-child(4) {
+  top: 81%;
+  opacity: 0.5;
+  transform: translate3d(42vw, 0, 0);
+  animation-duration: 180s;
+  animation-delay: -94s;
+}
+.sky-soft-cloud-body {
+  fill: #fff;
+  stroke: #d7e5ee80;
+  stroke-width: 1;
+}
+.sky-soft-cloud-shade {
+  fill: #dfeaf36b;
+}
+.sky-soft-cloud-rim {
+  stroke: #fffdf3;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.dark .sky-cloud-background {
+  display: none;
+}
+html[data-sky-paused='true'] .sky-soft-cloud {
+  animation-play-state: paused;
+}
+@keyframes sky-soft-cloud-drift {
+  from {
+    transform: translate3d(-110%, 0, 0);
+  }
+  to {
+    transform: translate3d(calc(100vw + 10%), 0, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sky-soft-cloud {
+    animation: none;
+  }
+}
+@media (max-width: 720px) {
+  .sky-soft-cloud {
+    width: 340px;
+    opacity: 0.58;
+  }
+  .sky-soft-cloud:nth-child(2) {
+    top: 64%;
+    width: 410px;
+    opacity: 0.5;
+  }
+  .sky-soft-cloud:nth-child(n + 3) {
+    display: none;
+  }
+}

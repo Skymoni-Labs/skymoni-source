@@ -1,0 +1,139 @@
+.cc-subnav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+.cguide-trigger {
+  color: #6382a6;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.cg-guide-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid #dce9fa;
+  border-radius: 12px;
+  background: #f1f7ff;
+}
+.cg-guide-hint > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-size: 12px;
+}
+.cg-guide-hint strong {
+  color: #3678be;
+  font-weight: 600;
+}
+.cg-guide-hint span {
+  color: #7188a3;
+}
+.cguide-dialog {
+  border-radius: 22px;
+}
+.cguide-intro {
+  padding: 18px 20px;
+  border: 1px solid #dce9fa;
+  border-radius: 14px;
+  background: linear-gradient(120deg, #edf7ff, #f5f2ff);
+  color: #254f7b;
+}
+.cguide-intro > span {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #5b8fcb;
+}
+.cguide-intro p {
+  margin: 5px 0 6px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.cguide-intro small {
+  font-size: 12px;
+  color: #7183a0;
+  line-height: 1.7;
+}
+.cguide-steps {
+  margin-top: 12px;
+}
+.cguide-step-heading {
+  align-items: center;
+  gap: 12px;
+  padding-block: 16px;
+}
+.cguide-number {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: #edf5ff;
+  color: #4588d6;
+  font-size: 12px;
+}
+.cguide-step-copy {
+  display: grid;
+  gap: 5px;
+}
+.cguide-step-copy strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+.cguide-step-copy small {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  font-weight: 400;
+}
+.cguide-step-body {
+  padding: 0 12px 16px 42px;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.dark .cg-guide-hint,
+.dark .cguide-intro {
+  background: #172538;
+  border-color: #2e4563;
+  color: #d7e7fa;
+}
+.dark .cguide-number {
+  background: #213951;
+  color: #8fc6ff;
+}
+.dark .cguide-trigger,
+.dark .cg-guide-hint strong,
+.dark .cguide-intro > span {
+  color: #94c5f5;
+}
+.dark .cg-guide-hint span,
+.dark .cguide-intro small {
+  color: #9fb2c9;
+}
+@media (max-width: 640px) {
+  .cc-subnav-actions {
+    gap: 4px;
+  }
+  .cc-subnav-actions > .cc-primary,
+  .cc-subnav-actions > .cguide-trigger {
+    height: 34px;
+    padding-inline: 9px;
+    font-size: 11px;
+  }
+  .cguide-step-body {
+    padding-left: 0;
+  }
+  .cguide-intro {
+    padding: 14px;
+  }
+  .cguide-intro p {
+    font-size: 14px;
+  }
+}

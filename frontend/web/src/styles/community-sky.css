@@ -1,0 +1,519 @@
+/* Original skymoni cloud observatory. Decorative layers never own pointer events. */
+.sky-decoration-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+  overflow: hidden;
+}
+.sky-ambient-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.sky-drift {
+  position: absolute;
+  display: block;
+  border: 1px solid #8ebedb60;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 25%,
+    #fff9,
+    #d6ecf31a 55%,
+    transparent
+  );
+  box-shadow: inset 0 0 6px #a6cddd20;
+  opacity: 0.55;
+  animation: sky-air-drift 24s ease-in-out infinite;
+}
+.sky-drift-1 {
+  border-radius: 1px;
+  border: 0;
+  background: #8faad366;
+  clip-path: polygon(
+    50% 0,
+    60% 37%,
+    100% 50%,
+    60% 60%,
+    50% 100%,
+    40% 60%,
+    0 50%,
+    40% 37%
+  );
+}
+.sky-drift-2 {
+  opacity: 0.3;
+}
+.dark .sky-drift {
+  width: 3px !important;
+  height: 3px !important;
+  border: 0;
+  background: #b8d7ff;
+  box-shadow: 0 0 8px #a4caff88;
+  opacity: 0.65;
+}
+.dark .sky-drift-1 {
+  width: 9px !important;
+  height: 9px !important;
+  background: #b8d7ff88;
+}
+.sky-horizon-cloud {
+  position: absolute;
+  right: -60px;
+  bottom: 55px;
+  width: 370px;
+  stroke: #8aacc52b;
+  stroke-width: 1;
+  animation: sky-cloud-sail 26s ease-in-out infinite alternate;
+}
+.dark .sky-horizon-cloud {
+  stroke: #81a6cf1c;
+}
+.sky-shooting-star {
+  display: none;
+  position: absolute;
+  left: 65%;
+  top: 14%;
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #cee5ff);
+  transform: rotate(-28deg);
+  opacity: 0;
+  animation: sky-meteor 17s linear infinite;
+}
+.dark .sky-shooting-star {
+  display: block;
+}
+.sky-shooting-star-second {
+  top: 38%;
+  left: 86%;
+  animation-delay: -8s;
+  animation-duration: 23s;
+}
+.sky-cloud-companion {
+  position: relative;
+  flex-shrink: 0;
+  margin: 16px auto 12px;
+  width: 174px;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+}
+#root .community-shell .sf-sidebar {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: calc(100dvh - 185px);
+}
+#root .community-shell .sf-sidebar > .sf-sidebar-nav {
+  overflow-y: auto;
+  min-height: 0;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--sf-border) transparent;
+}
+.sky-cloud-message {
+  max-width: 174px;
+  padding: 9px 12px;
+  border: 1px solid #c7d9e2;
+  border-radius: 14px 14px 14px 3px;
+  background: #fffef9f0;
+  color: #536f8d;
+  font-size: 11px;
+  line-height: 1.6;
+  box-shadow: 0 5px 16px #5c80a00b;
+}
+.sky-cloud-dismiss {
+  position: absolute;
+  top: -7px;
+  right: -5px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid #afc6d577;
+  border-radius: 50%;
+  background: #f6fbff;
+  color: #5d7c9e;
+  pointer-events: auto;
+}
+.sky-cloud-companion[data-open='false'] .sky-cloud-greet,
+.sky-cloud-companion[data-open='false'] .sky-cloud-greet svg {
+  width: 70px;
+}
+body:has(
+    :is(
+      input:focus,
+      textarea:focus,
+      [contenteditable='true']:focus,
+      [data-slot='dialog-content'],
+      [data-slot='alert-dialog-content']
+    )
+  )
+  .sky-cloud-companion {
+  display: none;
+}
+.sky-cloud-greet {
+  pointer-events: auto;
+  background: none;
+  border: 0;
+  padding: 0;
+  width: 112px;
+  color: #6d88a1;
+  border-radius: 30px;
+  touch-action: manipulation;
+}
+.sky-cloud-greet svg {
+  width: 112px;
+  display: block;
+  overflow: visible;
+}
+.sky-cloud-greet > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+.sky-cloud-greet:focus-visible {
+  outline: 2px solid #83abd0;
+  outline-offset: 5px;
+}
+.sky-companion-shadow {
+  fill: #7a9ab91a;
+}
+.sky-companion-body {
+  transform-origin: center;
+  animation: sky-cloud-float 5s ease-in-out infinite;
+}
+.sky-companion-cloud {
+  fill: #fcffff;
+  stroke: #a9c7d9;
+  stroke-width: 1.7;
+  filter: drop-shadow(0 6px 4px #85aec92b);
+}
+.sky-companion-face {
+  stroke: #5d7c9e;
+  stroke-width: 3;
+  stroke-linecap: round;
+  fill: none;
+}
+.sky-companion-blush {
+  fill: #f0c7d59e;
+}
+.sky-companion-star {
+  fill: #f4dca1;
+  stroke: #d8bc7d;
+  stroke-width: 1;
+}
+.sky-cloud-greet:hover .sky-companion-body {
+  animation: sky-cloud-hello 0.7s ease-in-out 2;
+}
+.dark .sky-cloud-message {
+  background: #101e31ed;
+  border-color: #7197bd40;
+  color: #b3cbe4;
+}
+.dark .sky-cloud-greet {
+  color: #9dbbd9;
+}
+.dark .sky-companion-cloud {
+  fill: #dbeafa;
+  stroke: #7fa7cf;
+  filter: drop-shadow(0 0 10px #9acaff2e);
+}
+.dark .sky-companion-shadow {
+  fill: #a1c4e81c;
+}
+.sky-observatory {
+  width: 240px;
+  max-width: 100%;
+  color: #7895b0;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+}
+.sky-observatory svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+.sky-observatory > span {
+  display: block;
+  margin-top: -2px;
+  font-size: 8px;
+  letter-spacing: 0.17em;
+  opacity: 0.7;
+}
+.sky-scene-shadow {
+  fill: #8ba9c31c;
+}
+.sky-scene-cloud {
+  stroke: #c0d6e3;
+  stroke-width: 1;
+}
+.sky-scene-cloud-back {
+  fill: #e2edf5b3;
+  animation: sky-scene-sail 12s ease-in-out infinite alternate;
+}
+.sky-scene-cloud-front {
+  fill: #ffffffed;
+  animation: sky-scene-sail 9s ease-in-out infinite alternate-reverse;
+}
+.sky-window-frame {
+  fill: #d7e4f0;
+  stroke: #8ba8c3;
+  stroke-width: 1.5;
+}
+.sky-window-glass {
+  fill: #accce1;
+}
+.sky-window-sun {
+  fill: #fff0b8;
+}
+.sky-window-moon,
+.sky-window-stars {
+  display: none;
+}
+.sky-window-hill {
+  fill: #d2e7ec;
+}
+.sky-window-bar {
+  stroke: #f5f8f8;
+  stroke-width: 5;
+}
+.sky-window-sill {
+  stroke: #9eb7cd;
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+.sky-scene-plane {
+  animation: sky-plane-float 8s ease-in-out infinite;
+}
+.sky-plane-paper {
+  fill: #fefdf9;
+  stroke: #87a9ca;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+.sky-plane-fold {
+  stroke: #87a9ca;
+  stroke-width: 1;
+}
+.sky-plane-trail {
+  stroke: #99b9d077;
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+}
+.sky-hanging-star {
+  transform-origin: 236px 22px;
+  animation: sky-star-sway 7s ease-in-out infinite;
+}
+.sky-star-string {
+  stroke: #b4bbc6;
+  stroke-width: 1;
+}
+.sky-star-charm {
+  fill: #f7e2b4;
+  stroke: #c8b383;
+  stroke-width: 1;
+}
+.sky-scene-sparkle {
+  fill: #85aecb;
+  animation: sky-twinkle 5s ease-in-out infinite;
+}
+.dark .sky-scene-cloud-back {
+  fill: #294564b3;
+  stroke: #6789b155;
+}
+.dark .sky-scene-cloud-front {
+  fill: #3c5873;
+  stroke: #9dbbdb77;
+}
+.dark .sky-window-frame {
+  fill: #435675;
+  stroke: #829fc4;
+}
+.dark .sky-window-glass {
+  fill: #12233f;
+}
+.dark .sky-window-sun {
+  display: none;
+}
+.dark .sky-window-moon,
+.dark .sky-window-stars {
+  display: block;
+  fill: #f6e4b9;
+}
+.dark .sky-window-hill {
+  fill: #2c3e61;
+}
+.dark .sky-window-bar {
+  stroke: #7f9abc;
+}
+.dark .sky-window-sill {
+  stroke: #7e9dbf;
+}
+.dark .sky-plane-paper {
+  fill: #b3cbe4;
+  stroke: #809fc1;
+}
+.dark .sky-plane-fold {
+  stroke: #577395;
+}
+.dark .sky-scene-sparkle {
+  fill: #d8c4f0;
+}
+#root .community-shell .cs-discover-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  align-items: center;
+  gap: 14px 28px;
+}
+#root .community-shell .cs-discover-header > .sky-observatory {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+}
+#root .community-shell .cs-discover-header:not(:has(> .sky-observatory)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+#root .community-shell .cs-discover-header .cs-discover-search {
+  grid-column: 1/-1;
+  width: min(100%, 640px);
+  margin-top: 0;
+}
+#root .community-shell .sf-community-card > .sky-observatory {
+  width: 200px;
+  margin: -8px auto 20px;
+}
+#root .community-shell .sf-module-nav {
+  box-shadow: 0 4px 10px #748fb609;
+}
+@keyframes sky-air-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 12px, 0);
+  }
+  50% {
+    transform: translate3d(20px, -30px, 0);
+  }
+}
+@keyframes sky-cloud-sail {
+  to {
+    transform: translate3d(-38px, -8px, 0);
+  }
+}
+@keyframes sky-cloud-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@keyframes sky-cloud-hello {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-8deg) translateY(-3px);
+  }
+  75% {
+    transform: rotate(8deg) translateY(-3px);
+  }
+}
+@keyframes sky-scene-sail {
+  to {
+    transform: translateX(8px);
+  }
+}
+@keyframes sky-plane-float {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  50% {
+    transform: translate(5px, -7px) rotate(4deg);
+  }
+}
+@keyframes sky-star-sway {
+  0%,
+  100% {
+    transform: rotate(-9deg);
+  }
+  50% {
+    transform: rotate(9deg);
+  }
+}
+@keyframes sky-twinkle {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes sky-meteor {
+  0%,
+  87%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(-28deg);
+  }
+  89% {
+    opacity: 0.65;
+  }
+  94% {
+    opacity: 0;
+    transform: translate(-240px, 125px) rotate(-28deg);
+  }
+}
+html[data-sky-paused='true'] :is(.sky-decoration-layer, .sky-observatory) *,
+.sky-decoration-layer[data-paused='true'] * {
+  animation-play-state: paused !important;
+}
+html[data-sky-paused='true'] .sky-cloud-companion * {
+  animation-play-state: paused !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sky-cloud-companion * {
+    animation: none !important;
+  }
+  :is(.sky-decoration-layer, .sky-observatory) * {
+    animation: none !important;
+  }
+  .sky-shooting-star {
+    display: none !important;
+  }
+}
+@media (max-width: 1100px) {
+  .sky-cloud-companion {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  #root .community-shell .cs-discover-header {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #root .community-shell .cs-discover-header > .sky-observatory {
+    display: none;
+  }
+  .sky-drift:nth-child(n + 9) {
+    display: none;
+  }
+  .sky-horizon-cloud {
+    width: 220px;
+    opacity: 0.5;
+  }
+}
+@media (max-width: 720px) {
+  #root .community-shell .sf-sidebar {
+    display: none;
+  }
+}

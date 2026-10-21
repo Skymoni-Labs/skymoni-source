@@ -1,0 +1,16 @@
+{
+  "basis": {
+    "official_multiplier": 0.17,
+    "cny_per_real_usd": 7.3,
+    "package_cny": 9.9,
+    "package_credits": 99
+  },
+  "expressions": {
+    "gpt-6-astra-token": "len <= 272000 ? tier(\"standard\", p * 124.1 + c * 620.5 + cr * 12.41 + cc * 155.125 + cc1h * 155.125) : tier(\"long_context\", p * 248.2 + c * 930.75 + cr * 24.82 + cc * 310.25 + cc1h * 310.25)",
+    "gpt-6.1-sol-token": "len <= 272000 ? tier(\"standard\", p * 24.82 + c * 124.1 + cr * 1.241 + cc * 31.025 + cc1h * 31.025) : tier(\"long_context\", p * 49.64 + c * 186.15 + cr * 2.482 + cc * 62.05 + cc1h * 62.05)",
+    "gpt-5.6-sol-token": "len <= 272000 ? tier(\"standard\", p * 49.64 + c * 248.2 + cr * 4.964 + cc * 62.05 + cc1h * 62.05) : tier(\"long_context\", p * 99.28 + c * 372.3 + cr * 9.928 + cc * 124.1 + cc1h * 124.1)",
+    "gpt-5.5-token": "len <= 272000 ? tier(\"standard\", p * 62.05 + c * 372.3 + cr * 6.205) : tier(\"long_context\", p * 124.1 + c * 558.45 + cr * 12.41)",
+    "gpt-5.6-terra-token": "len <= 272000 ? tier(\"standard\", p * 24.82 + c * 148.92 + cr * 2.482 + cc * 31.025 + cc1h * 31.025) : tier(\"long_context\", p * 49.64 + c * 223.38 + cr * 4.964 + cc * 62.05 + cc1h * 62.05)",
+    "gpt-6-sol-token": "len <= 272000 ? tier(\"standard\", p * 24.82 + c * 124.1 + cr * 2.482 + cc * 31.025 + cc1h * 31.025) : tier(\"long_context\", p * 49.64 + c * 186.15 + cr * 4.964 + cc * 62.05 + cc1h * 62.05)"
+  }
+}

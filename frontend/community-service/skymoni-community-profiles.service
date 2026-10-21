@@ -1,0 +1,15 @@
+[Unit]
+Description=Synchronize public skymoni account identity
+After=docker.service skymoni-community.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/skymoni-community/current/export_profiles.py
+Environment=PYTHONDONTWRITEBYTECODE=1
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/skymoni-community
+TimeoutStartSec=45

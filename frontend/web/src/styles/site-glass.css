@@ -1,0 +1,340 @@
+/* Shared stationary glass surfaces. Blur the scene behind the panel, never
+   its contents; animated artwork and floating service cards keep their material. */
+.dark {
+  /* Neutral tokens also reach portals outside #root. Keep semantic colors. */
+  --background: rgb(9 19 34 / 0.55);
+  --card: rgb(15 28 47 / 0.38);
+  --popover: rgb(12 23 40 / 0.9);
+  --secondary: rgb(42 69 101 / 0.58);
+  --muted: rgb(133 179 223 / 0.085);
+  --muted-foreground: #adbed3;
+  --border: rgb(153 193 230 / 0.17);
+  --input: rgb(152 192 222 / 0.28);
+  --table-row: rgb(13 24 42 / 0.32);
+  /* Sticky cells must cover the rows that scroll underneath them. */
+  --table-header: #142239;
+  --table-header-hover: #1c304b;
+  --table-disabled: rgb(134 164 197 / 0.08);
+  --table-disabled-hover: rgb(134 164 197 / 0.13);
+  --table-disabled-border: rgb(153 193 230 / 0.22);
+  --site-glass-base: rgb(13 24 42 / 0.38);
+  --site-glass-popup-base: rgb(12 23 40 / 0.88);
+  --site-glass-inset: rgb(12 26 46 / 0.28);
+  --site-glass-field: rgb(8 19 32 / 0.45);
+  --site-glass-border: rgb(159 201 235 / 0.22);
+  --site-glass-filter: blur(18px) saturate(115%);
+  --site-glass-material:
+    linear-gradient(
+      135deg,
+      rgb(197 227 255 / 0.075),
+      transparent 42%,
+      rgb(127 149 224 / 0.025)
+    ),
+    var(--site-glass-base);
+}
+
+.dark
+  #root
+  :is(
+    .sky-auth-card,
+    .site-glass-panel,
+    .site-glass-surface,
+    .site-glass-settings-section,
+    [data-slot='card'],
+    .bg-card,
+    [data-slot='data-table-panel'],
+    [data-slot='data-table-card'],
+    [data-slot='sidebar-inner'],
+    .cc-work-card,
+    .cc-content-box,
+    .cc-author-panel,
+    .cc-editor-block,
+    .cc-preview-dialog,
+    .cg-panel,
+    .cs-spotlight,
+    .cs-access-panel,
+    .ch-panel,
+    .ch-project-rows,
+    .ch-profile-readme,
+    .ch-release-record,
+    .ch-home-box,
+    .ch-home-feedback,
+    .ch-create-panel,
+    .ch-discover-tip,
+    .ch-profile-nudge,
+    .sc-browse-filters,
+    .sd-panel,
+    .sd-hero,
+    .sd-download,
+    .ad-hero-entry,
+    .ab-service,
+    .ab-endpoint,
+    .hn-resource-card,
+    .hn-terminal,
+    .hn-drip-feature
+  ) {
+  background: var(--site-glass-material);
+  border-color: var(--site-glass-border);
+  -webkit-backdrop-filter: var(--site-glass-filter);
+  backdrop-filter: var(--site-glass-filter);
+  box-shadow:
+    inset 0 1px 0 rgb(223 241 255 / 0.11),
+    inset 0 -1px 0 rgb(150 187 226 / 0.035),
+    0 14px 40px rgb(0 3 14 / 0.2);
+}
+
+/* Popup glass is denser so underlying page text cannot compete with controls. */
+.dark
+  :is(
+    [data-slot='dialog-content'],
+    [data-slot='alert-dialog-content'],
+    [data-slot='sheet-content'],
+    [data-slot='drawer-content'],
+    [data-slot='sidebar'][data-sidebar='sidebar'],
+    [data-slot='popover-content'],
+    [data-slot='dropdown-menu-content'],
+    [data-slot='dropdown-menu-sub-content'],
+    [data-slot='select-content'],
+    [data-slot='combobox-content'],
+    [data-slot='hover-card-content'],
+    [data-slot='chart-tooltip'],
+    [data-slot='tooltip-content']
+  ) {
+  background:
+    linear-gradient(135deg, rgb(197 227 255 / 0.06), transparent 50%),
+    var(--site-glass-popup-base);
+  color: var(--foreground);
+  border-color: var(--site-glass-border);
+  -webkit-backdrop-filter: var(--site-glass-filter);
+  backdrop-filter: var(--site-glass-filter);
+  box-shadow:
+    inset 0 1px 0 rgb(223 241 255 / 0.1),
+    0 16px 48px rgb(0 3 14 / 0.35);
+}
+
+/* One scene blur per panel; nested cards and controls use lighter insets. */
+.dark
+  #root
+  :is(
+    [data-slot='card'],
+    .bg-card,
+    .site-glass-surface,
+    .site-glass-settings-section
+  )
+  :is(
+    [data-slot='card'],
+    .bg-card,
+    [data-slot='data-table-panel'],
+    .site-glass-settings-section
+  ),
+.dark
+  :is(
+    [data-slot='dialog-content'],
+    [data-slot='sheet-content'],
+    [data-slot='drawer-content']
+  )
+  :is([data-slot='card'], [data-slot='data-table-panel'], .site-glass-surface),
+.dark :is(.site-glass-inset, .ch-profile-readme > section) {
+  background: var(--site-glass-inset);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: inset 0 1px 0 rgb(223 241 255 / 0.035);
+}
+.dark #root .site-glass-settings-section {
+  border: 1px solid var(--site-glass-border);
+  border-radius: 20px;
+  padding: clamp(16px, 2vw, 24px);
+}
+.dark #root [data-slot='data-table-panel'].border-0 {
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.dark #root [data-slot='data-table-card'][data-state='selected'] {
+  background: rgb(39 88 135 / 0.45);
+  border-color: rgb(111 183 240 / 0.6);
+}
+.dark #root [data-slot='table-cell'].site-table-pinned {
+  background: #0e1c30;
+}
+.dark #root [data-slot='table-row']:hover > .site-table-pinned {
+  background: #172a42;
+}
+.dark
+  #root
+  [data-slot='table-row'][data-state='selected']
+  > .site-table-pinned {
+  background: #1c3653;
+}
+.dark #root .site-glass-mobile-nav {
+  background: var(--site-glass-popup-base);
+}
+.dark #root .site-glass-bar {
+  background: rgb(9 19 34 / 0.8);
+  border-color: var(--site-glass-border);
+  -webkit-backdrop-filter: var(--site-glass-filter);
+  backdrop-filter: var(--site-glass-filter);
+}
+
+.dark #root .cc-page {
+  --cc-surface: rgb(18 32 52 / 0.58);
+  --cc-line: rgb(153 193 230 / 0.2);
+  --cc-sub: #adbed3;
+}
+.dark #root .sc-main {
+  --sc-card: rgb(18 32 52 / 0.58);
+  --sc-border: rgb(153 193 230 / 0.2);
+  --sc-selection: rgb(49 91 138 / 0.35);
+}
+
+.dark
+  :is(
+    [data-slot='dialog-content'],
+    [data-slot='popover-content'],
+    [data-slot='combobox-content']
+  )
+  [data-slot='command'] {
+  background: transparent;
+}
+.dark [data-slot='tooltip-content'] {
+  border: 1px solid var(--site-glass-border);
+}
+.dark [data-slot='tooltip-content'] > svg {
+  background: var(--site-glass-popup-base);
+  fill: var(--site-glass-popup-base);
+}
+.dark [data-sonner-toast] {
+  -webkit-backdrop-filter: var(--site-glass-filter);
+  backdrop-filter: var(--site-glass-filter);
+}
+
+/* Controls keep their focus, invalid and disabled indicators. No per-field blur. */
+.dark
+  :is(
+    #root,
+    [data-slot='dialog-content'],
+    [data-slot='sheet-content'],
+    [data-slot='drawer-content'],
+    [data-slot='popover-content']
+  )
+  :is(
+    [data-slot='input'],
+    [data-slot='textarea'],
+    [data-slot='select-trigger'],
+    [data-slot='input-group'],
+    input:not(
+      [type='checkbox'],
+      [type='radio'],
+      [type='range'],
+      [type='hidden']
+    ),
+    textarea,
+    select,
+    [data-slot='form-control'][role='combobox'],
+    [data-slot='form-control']:has(> [data-slot='input-group-control'])
+  ):not(.site-glass-surface) {
+  background: var(--site-glass-field);
+}
+.dark
+  :is(#root, [data-slot='dialog-content'], [data-slot='sheet-content'])
+  [data-slot='input-group']
+  > [data-slot='input-group-control'] {
+  background: transparent;
+}
+.dark [data-slot='tabs-list'][data-variant='default'] {
+  background: var(--site-glass-inset);
+  box-shadow: inset 0 0 0 1px rgb(153 193 230 / 0.12);
+}
+.dark
+  [data-slot='tabs-list'][data-variant='default']
+  > [data-slot='tabs-trigger'][data-active] {
+  background: rgb(58 105 155 / 0.27);
+  border-color: rgb(153 193 230 / 0.25);
+  box-shadow: inset 0 1px 0 rgb(223 241 255 / 0.08);
+}
+
+/* Console surfaces use a blue-black palette rather than stacked gray slabs.
+   These tokens also cover the smaller settings, statistics and table controls. */
+.dark #root [data-slot='sidebar-wrapper'] {
+  --background: rgb(9 19 34 / 0.55);
+  --card: rgb(15 28 47 / 0.38);
+  --muted: rgb(133 179 223 / 0.085);
+  --muted-foreground: #adbed3;
+  --border: rgb(153 193 230 / 0.17);
+  --sidebar: rgb(10 20 36 / 0.42);
+  --sidebar-accent: rgb(70 139 204 / 0.16);
+  --sidebar-border: rgb(153 193 230 / 0.14);
+}
+
+.dark #root [data-slot='sidebar-wrapper'] > header {
+  background: rgb(7 15 29 / 0.4);
+  border-bottom: 1px solid rgb(153 193 230 / 0.1);
+  -webkit-backdrop-filter: var(--site-glass-filter);
+  backdrop-filter: var(--site-glass-filter);
+}
+
+.dark #root .site-console-wash {
+  background: radial-gradient(
+    ellipse at 75% 0%,
+    rgb(70 135 212 / 0.1),
+    transparent 65%
+  );
+  opacity: 0.65;
+}
+
+.dark #root .site-console-inset {
+  background: rgb(12 26 46 / 0.28);
+  border-color: rgb(153 193 230 / 0.14);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: inset 0 1px 0 rgb(223 241 255 / 0.035);
+}
+.dark #root :is(a, button).site-console-inset:hover {
+  background: rgb(66 112 167 / 0.16);
+}
+
+.dark #root .site-glass-panel {
+  border: 1px solid var(--site-glass-border);
+  border-radius: 24px;
+}
+
+.dark
+  #root
+  :is(.sky-auth-card, .site-glass-panel)
+  input:not([type='checkbox'], [type='radio']) {
+  background: rgb(8 19 32 / 0.45);
+  border-color: rgb(152 192 222 / 0.28);
+}
+.dark #root :is(.sky-auth-card, .site-glass-panel) input:focus-visible {
+  border-color: rgb(107 193 235 / 0.75);
+  box-shadow: 0 0 0 3px rgb(69 163 223 / 0.14);
+}
+
+@media (max-width: 640px) {
+  .dark {
+    --site-glass-filter: blur(14px) saturate(110%);
+  }
+}
+
+@supports not
+((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .dark {
+    --site-glass-base: rgb(13 24 42 / 0.95);
+    --site-glass-popup-base: rgb(12 23 40 / 0.97);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .dark {
+    --site-glass-base: rgb(13 24 42 / 0.96);
+    --site-glass-popup-base: rgb(12 23 40 / 0.98);
+    --site-glass-inset: rgb(17 31 50 / 0.96);
+    --site-glass-field: rgb(8 19 32 / 0.96);
+    --site-glass-border: rgb(159 201 235 / 0.4);
+    --site-glass-filter: none;
+  }
+  .dark #root .site-glass-bar {
+    background: #091322;
+  }
+}

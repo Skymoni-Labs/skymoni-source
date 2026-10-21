@@ -1,0 +1,141 @@
+/* Preserve the original continuous float. A native-size layout copy provides
+   intrinsic sizing and accessibility; its visual sibling paints at 2x before
+   being reduced. This avoids rounding animated positions to whole pixels. */
+.hp-floating-card.hp-floating-sharp {
+  --hp-card-padding: 15px;
+  --hp-card-gap: 10px;
+  --hp-card-radius: 13px;
+  --hp-card-title: 14px;
+  --hp-card-detail: 11px;
+  --hp-card-detail-gap: 5px;
+  --hp-card-icon: 38px;
+  --hp-card-icon-radius: 9px;
+  --hp-card-model-gap: 11px;
+  --hp-card-model-top: 11px;
+  display: block;
+  padding: 0;
+}
+.hp-floating-sharp::before {
+  /* Backdrop blur must remain outside the filtered content paint surface. */
+  border-style: none;
+}
+.hp-floating-sharp .hp-floating-content {
+  --hp-render-scale: 1;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--hp-card-gap) * var(--hp-render-scale));
+  padding: calc(var(--hp-card-padding) * var(--hp-render-scale));
+  border-radius: calc(var(--hp-card-radius) * var(--hp-render-scale));
+}
+.hp-floating-api .hp-floating-content {
+  align-items: flex-start;
+}
+.hp-floating-layout {
+  opacity: 0;
+  pointer-events: none;
+}
+.hp-floating-sharp .hp-floating-hires {
+  --hp-render-scale: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  isolation: isolate;
+  transform: scale(0.5);
+  transform-origin: top left;
+  /* Establish a full-size paint surface before the inverse scale. */
+  filter: blur(0);
+  will-change: transform;
+  pointer-events: none;
+}
+.hp-floating-hires::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 2px solid color-mix(in srgb, var(--hp-paper) 84%, var(--hp-line));
+  border-radius: inherit;
+  background: transparent;
+  transform: rotate(var(--hp-card-tilt));
+}
+.hp-floating-sharp .hp-floating-content strong {
+  font-size: calc(var(--hp-card-title) * var(--hp-render-scale));
+}
+.hp-floating-sharp .hp-floating-content p {
+  font-size: calc(var(--hp-card-detail) * var(--hp-render-scale));
+  margin-top: calc(var(--hp-card-detail-gap) * var(--hp-render-scale));
+}
+.hp-floating-sharp .hp-floating-icon {
+  width: calc(var(--hp-card-icon) * var(--hp-render-scale));
+  height: calc(var(--hp-card-icon) * var(--hp-render-scale));
+  border-radius: calc(var(--hp-card-icon-radius) * var(--hp-render-scale));
+}
+.hp-floating-hires .hp-floating-icon > svg {
+  width: 40px;
+  height: 40px;
+}
+.hp-floating-mail .hp-floating-hires .hp-floating-icon > svg {
+  width: 38px;
+  height: 38px;
+}
+.hp-floating-hires .hp-floating-arrow {
+  width: 26px;
+  height: 26px;
+}
+.hp-floating-hires .hp-floating-key {
+  width: 30px;
+  height: 30px;
+}
+.hp-floating-sharp .hp-mini-models {
+  gap: calc(var(--hp-card-model-gap) * var(--hp-render-scale));
+  margin-top: calc(var(--hp-card-model-top) * var(--hp-render-scale));
+}
+.hp-floating-hires .hp-mini-models > svg {
+  width: 32px;
+  height: 32px;
+}
+.hp-floating-hires .hp-mini-models > svg:nth-child(n + 3) {
+  width: 34px;
+  height: 34px;
+}
+.dark .hn-page .hp-floating-hires::before {
+  border-color: #a9c5ec25;
+}
+@media (max-width: 750px) {
+  .hp-floating-card.hp-floating-sharp {
+    --hp-card-padding: 10px;
+    --hp-card-gap: 7px;
+    --hp-card-radius: 10px;
+    --hp-card-title: 11px;
+    --hp-card-detail: 9px;
+    --hp-card-icon: 27px;
+    --hp-card-icon-radius: 7px;
+    --hp-card-model-gap: 8px;
+    --hp-card-model-top: 8px;
+  }
+  .hp-floating-hires .hp-floating-icon > svg,
+  .hp-floating-mail .hp-floating-hires .hp-floating-icon > svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+@media (min-width: 561px) and (max-width: 750px) {
+  .hp-floating-card.hp-floating-sharp {
+    --hp-card-padding: 14px;
+    --hp-card-gap: 9px;
+    --hp-card-title: 13px;
+    --hp-card-detail: 10px;
+    --hp-card-icon: 34px;
+  }
+  .hp-floating-hires .hp-floating-icon > svg {
+    width: 38px;
+    height: 38px;
+  }
+}
+@media (max-width: 360px) {
+  .hp-floating-card.hp-floating-sharp {
+    --hp-card-padding: 9px;
+    --hp-card-gap: 6px;
+    --hp-card-detail: 8px;
+  }
+}

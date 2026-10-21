@@ -1,0 +1,9 @@
+Corresponding source for skymoni v1.0.0-rc.39-skymoni.93-creator-github (2026-10-08).
+Upstream: https://github.com/QuantumNous/new-api (QuantumNous).
+License: AGPL-3.0-or-later; see LICENSE and NOTICE.
+Changes: creator GitHub App connection, proof of existing site authentication, PKCE and one-use session-bound OAuth state, owned public repository import into editable private drafts, README Markdown and source/license provenance, encrypted expiring user tokens with rotation and disconnect.
+Frontend: cd web; bun install --frozen-lockfile; bun run build.
+Backend: combine the supplied frontend as web, then CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -buildvcs=false -ldflags="-s -w -X github.com/QuantumNous/new-api/common.Version=v1.0.0-rc.39-skymoni.93-creator-github" -o new-api .
+Go 1.25.1. No new SQL schema. Configure GitHub App using backend .env.creator-github.example; real credentials belong outside source and image.
+Creator data: /data/creator-center (CREATOR_CENTER_DIR override). Keep github-private/key and connections.enc privately backed up together; exclude from public roots and source archives.
+Existing paid-recharge activation, shared relay authentication, review and public showcase remain in effect. Native App unchanged. Production configuration, credentials, private creator data and local fixtures excluded.

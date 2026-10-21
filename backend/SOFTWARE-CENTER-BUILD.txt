@@ -1,0 +1,10 @@
+Corresponding frontend source for skymoni Software Center, 2026-10-08.
+Based on deployed frontend grok015-20261008, with backend v1.0.0-rc.39-skymoni.88-model-groups unchanged.
+Upstream: QuantumNous/new-api, https://github.com/QuantumNous/new-api.
+License: AGPL-3.0-or-later. See LICENSE, NOTICE and THIRD-PARTY-LICENSES.md.
+Build website: cd web; bun install --frozen-lockfile; bun run build.
+Serve web/dist with SPA fallback for /software; retain the existing public download aliases.
+Third-party tools link to their official websites; their software is not redistributed here.
+The previously published non-web source and BUILD.md are retained without changes.
+The original app-1.1.16 source package remains available at its existing URL.
+Operator credentials, private signing keys and environment files are excluded.

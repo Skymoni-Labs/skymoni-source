@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh shared account identity every ten seconds
+
+[Timer]
+OnBootSec=5
+OnUnitInactiveSec=10
+AccuracySec=1
+Unit=skymoni-community-profiles.service
+
+[Install]
+WantedBy=timers.target

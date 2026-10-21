@@ -1,0 +1,10 @@
+Corresponding source for skymoni v1.0.0-rc.39-skymoni.89-software-management (2026-10-08).
+Upstream: https://github.com/QuantumNous/new-api (QuantumNous).
+License: AGPL-3.0-or-later; see LICENSE and NOTICE.
+Modification: public software catalog, root-administrator editing, streamed installer uploads and publication-aware downloads. Existing App and shop remain independent.
+Frontend: cd web; bun install --frozen-lockfile; bun run build.
+Backend: build the supplied frontend into web/dist first, then:
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w -X github.com/QuantumNous/new-api/common.Version=v1.0.0-rc.39-skymoni.89-software-management" -o new-api .
+Toolchains: Go 1.25.1+, Bun/Node 22+. The local relaykit module is included.
+Software data must persist under /data/software-center. See docs/software-center.md for administration, backup and upload policy.
+Production credentials, configuration and user data are excluded.

@@ -1,0 +1,202 @@
+#root .community-shell .sf-module-nav {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--sf-border) transparent;
+}
+#root .community-shell .sf-module-nav > a {
+  flex-shrink: 0;
+}
+#root .community-shell .sf-topic-module-link {
+  max-width: 220px;
+}
+#root .community-shell .sf-topic-module-link span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#root .community-shell .sf-navigation-manage-link {
+  margin-left: auto;
+  opacity: 0.85;
+  font-size: 12px;
+}
+#root .community-shell .sf-navigation-manage-link svg {
+  width: 15px;
+  height: 15px;
+}
+#root .community-shell .sf-topic-navigation-button {
+  margin: 12px 8px 0 0;
+}
+#root .community-shell .sf-navigation-manager {
+  scroll-margin-top: 105px;
+  border: 1px solid var(--sf-border);
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 26px;
+  background: var(--sf-panel);
+}
+.sf-navigation-manager h2 {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 19px;
+  font-weight: 650;
+}
+.sf-navigation-manager h2 svg {
+  width: 19px;
+  height: 19px;
+  color: var(--sf-accent);
+}
+.sf-navigation-hint {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--sf-muted);
+  margin-top: 10px;
+}
+.sf-navigation-empty {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 32px 18px;
+  margin-top: 20px;
+  border: 1px dashed var(--sf-border);
+  border-radius: 14px;
+  text-align: center;
+}
+.sf-navigation-empty > svg {
+  width: 26px;
+  height: 26px;
+  color: var(--sf-accent);
+}
+.sf-navigation-empty p {
+  font-size: 12px;
+  color: var(--sf-muted);
+}
+.sf-navigation-items {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+.sf-navigation-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px;
+  border: 1px solid var(--sf-border);
+  background: var(--sf-field);
+  border-radius: 12px;
+}
+.sf-navigation-item > div:first-child {
+  min-width: 0;
+}
+.sf-navigation-item strong {
+  color: var(--sf-ink);
+  font-size: 14px;
+}
+.sf-navigation-item p {
+  color: var(--sf-muted);
+  font-size: 12px;
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+}
+.sf-navigation-item-actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 5px;
+}
+.sf-navigation-unavailable {
+  display: inline-block;
+  color: var(--sf-muted);
+  font-size: 11px;
+  margin-top: 7px;
+}
+body .sf-navigation-dialog[data-slot='dialog-content'] {
+  width: min(650px, calc(100vw - 28px));
+  max-width: none;
+}
+.sf-navigation-form {
+  display: grid;
+  gap: 12px;
+}
+.sf-navigation-picker-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: 14px;
+}
+.sf-navigation-picker-filters > div {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+}
+.sf-navigation-form select {
+  width: 100%;
+  min-width: 0;
+  text-overflow: ellipsis;
+}
+.sf-navigation-original {
+  display: grid;
+  gap: 7px;
+  border: 1px solid var(--sf-border);
+  background: var(--sf-field);
+  border-radius: 12px;
+  padding: 14px;
+}
+.sf-navigation-original > span {
+  font-size: 11px;
+  color: var(--sf-muted);
+}
+.sf-navigation-original strong {
+  font-size: 13px;
+  font-weight: 550;
+  color: var(--sf-ink);
+  overflow-wrap: anywhere;
+}
+.sf-navigation-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  color: var(--sf-muted);
+  font-size: 12px;
+}
+.sf-navigation-save-error {
+  border: 1px solid var(--sf-border);
+  border-radius: 10px;
+  padding: 13px;
+  display: grid;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--sf-muted);
+}
+html:not(.dark) #root .community-shell .sf-navigation-manager {
+  background: linear-gradient(145deg, #fffefbf5, #fbfdffed);
+  box-shadow:
+    inset 0 1px #fff,
+    0 5px 20px #6b89a20a;
+}
+@media (max-width: 760px) {
+  #root .community-shell .sf-navigation-manager {
+    padding: 18px 14px;
+  }
+  .sf-navigation-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .sf-navigation-item-actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  .sf-navigation-picker-filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #root .community-shell .sf-topic-module-link {
+    max-width: 180px;
+  }
+  #root .community-shell .sf-navigation-manage-link {
+    margin-left: 0;
+  }
+}

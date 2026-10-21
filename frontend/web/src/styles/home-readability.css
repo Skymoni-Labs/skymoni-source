@@ -1,0 +1,159 @@
+/* Keep actual interface copy readable; miniature artwork keeps its own scale. */
+.hn-page {
+  --hn-readable-muted: #53657b;
+  --hn-readable-link: #286ba8;
+}
+.dark .hn-page {
+  --hn-readable-muted: #bac8dc;
+  --hn-readable-link: #92c8ff;
+}
+
+/* A finished reveal should not leave an entire text panel on a transform layer. */
+.hn-page [data-entrance-settled='true'] {
+  animation-fill-mode: none;
+  will-change: auto;
+}
+
+.hn-page .hn-idea-tabs > span,
+.hn-page .hn-idea-copy small,
+.hn-page .hn-terminal > p,
+.hn-page .hn-terminal-label,
+.hn-page .hn-supported > div:first-child > p,
+.hn-page .hn-supported > div:first-child > span,
+.hn-page .hn-providers > span,
+.hn-page .hn-software-row p,
+.hn-page .hn-software-row > div > span,
+.hn-page .hn-software-note p,
+.hn-page .hn-store-note,
+.hn-page .hn-creator-footer p,
+.hn-page .hn-avatar-marquee h3,
+.hn-page .hn-more-subtitle,
+.hn-page .hn-resource-title,
+.hn-page .hn-resource-card p,
+.hn-page .hn-closing p,
+.hn-page .hp-footer-identity p,
+.hn-page .hp-footer-main nav a,
+.hn-page .hp-footer-bottom,
+.hn-page .ad-platform-note,
+.hn-page .ad-colors > span,
+.hn-page .ad-footer-brand p,
+.hn-page .ad-qr-note {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.8;
+  color: var(--hn-readable-muted);
+}
+.hn-page .hn-idea-tabs button,
+.hn-page .hn-idea-action,
+.hn-page .hn-supported [data-slot='button'],
+.hn-page .hn-supported > div:last-child > span,
+.hn-page .hn-software-tabs [data-slot='button'],
+.hn-page .hn-drip-heading > span:first-child,
+.hn-page .hn-drip-platform,
+.hn-page .ad-features,
+.hn-page .hn-feature-link,
+.hn-page .hn-list-footer,
+.hn-page .hn-text-link,
+.hn-page .hn-closing a,
+.hn-page .hp-footer-main nav > strong,
+.hn-page .hn-gallery-tuner-heading > span,
+.hn-page .hn-gallery-tuner-footer > span,
+.hn-page .hn-gallery-tuner-footer input {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+.hn-page .hn-idea-tabs button {
+  color: var(--hn-readable-muted);
+}
+.hn-page .hn-idea-copy strong {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.65;
+}
+.hn-page .hn-idea-scene {
+  min-height: 102px;
+}
+.hn-page .hn-description,
+.hn-page .hn-section-heading > div > p:last-child:not(.hn-kicker),
+.hn-page .hn-drip-feature > p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--hn-readable-muted);
+}
+.hn-page .hn-software-note strong,
+.hn-page .hn-kicker,
+.hn-page .hn-kicker > span,
+.hn-page .hn-avatar-marquee h3 > span,
+.hn-page .hn-drip-heading [data-slot='badge'] {
+  font-size: 12px;
+  line-height: 1.7;
+}
+.hn-page .hn-terminal-window [class~='text-[10px]'] {
+  font-size: 12px;
+}
+.hn-page .hn-terminal-window [class~='text-foreground/30'],
+.hn-page .hn-terminal-window [class~='text-foreground/40'] {
+  color: var(--hn-readable-muted);
+}
+.hn-page .hn-idea-action,
+.hn-page .hn-store-note a,
+.hn-page .hn-feature-link,
+.hn-page .hn-text-link,
+.hn-page .hn-closing a,
+.hn-page .hn-list-footer {
+  color: var(--hn-readable-link);
+}
+.hn-page .hn-software-note strong,
+.hn-page .hn-drip-platform {
+  color: var(--hn-readable-muted);
+}
+.hn-page .hn-kicker {
+  letter-spacing: 0.1em;
+}
+.hn-page .hn-idea-tabs {
+  flex-wrap: wrap;
+}
+.hn-page .hn-creator-footer p {
+  text-wrap: pretty;
+}
+
+@media (max-width: 767px) {
+  .hn-page .hn-idea-scene {
+    display: grid;
+    grid-template-columns: 33px minmax(0, 1fr);
+    align-items: start;
+    column-gap: 12px;
+    row-gap: 6px;
+  }
+  .hn-page .hn-idea-action {
+    grid-column: 2;
+    justify-self: start;
+    font-size: 12px;
+  }
+  .hn-page .hn-idea-tabs {
+    gap: 4px;
+  }
+  .hn-page .hn-idea-tabs > span {
+    font-size: 12px;
+  }
+  .hn-page .hn-store-note,
+  .hn-page .hn-creator-footer p,
+  .hn-page .hn-terminal > p,
+  .hn-page .hp-footer-bottom,
+  .hn-page .ad-platform-note,
+  .hn-page .ad-qr-note {
+    font-size: 12px;
+  }
+  .hn-page .hn-description,
+  .hn-page .hn-section-heading > div > p:last-child:not(.hn-kicker),
+  .hn-page .hn-drip-feature > p {
+    font-size: 13px;
+  }
+  .hn-page .hn-software-tabs {
+    flex-wrap: wrap;
+  }
+  .hn-page .ad-colors {
+    flex-wrap: wrap;
+  }
+}

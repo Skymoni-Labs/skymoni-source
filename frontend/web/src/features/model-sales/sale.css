@@ -1,0 +1,395 @@
+/*
+Copyright (C) 2023-2026 QuantumNous
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+For commercial licensing, please contact support@quantumnous.com
+*/
+.sale-eyebrow {
+  color: #65b9ec;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+}
+.sale-square-banner {
+  padding: 18px 22px 14px;
+  border: 1px solid #38bdf84d;
+  border-radius: 18px;
+  background: linear-gradient(120deg, #38bdf810, #6366f110);
+}
+.sale-square-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.sale-square-countdown {
+  width: 320px;
+  max-width: 100%;
+  flex-shrink: 0;
+}
+.sale-square-countdown .sale-countdown {
+  margin: 6px 0 0;
+}
+.sale-square-countdown > p {
+  font-size: 12px;
+}
+.sale-promotion-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+.sale-promotion-group {
+  min-width: 0;
+  border: 1px solid #64748b33;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--card) 38%, transparent);
+  padding: 12px;
+}
+.sale-promotion-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 650;
+}
+.sale-promotion-group-header a {
+  color: #65b9ec;
+  flex-shrink: 0;
+  padding: 4px;
+}
+.sale-promotion-rates {
+  display: grid;
+  gap: 5px;
+  margin: 8px 0;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.sale-promotion-rates p {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 3px 6px;
+}
+.sale-promotion-rates p > span:first-child {
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+.sale-promotion-models {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+.sale-promotion-models li {
+  overflow-wrap: anywhere;
+}
+.sale-promotion-schedule {
+  margin-top: 8px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+.sale-promotion-note {
+  margin-top: 10px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+@media (min-width: 641px) and (max-width: 1100px) {
+  .sale-promotion-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .sale-promotion-group:first-child {
+    grid-column: span 2;
+  }
+}
+@media (max-width: 640px) {
+  .sale-square-banner {
+    padding: 14px;
+  }
+  .sale-square-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .sale-square-header .sale-eyebrow {
+    display: none;
+  }
+  .sale-square-header h2 {
+    margin-top: 0;
+  }
+  .sale-square-header > div:first-child > p:last-child {
+    font-size: 12px;
+  }
+  .sale-square-countdown {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sale-square-countdown .sale-countdown {
+    justify-content: flex-start;
+    margin: 4px 0 0;
+    gap: 6px;
+  }
+  .sale-square-countdown .sale-digit {
+    width: 22px;
+    height: 30px;
+    font-size: 21px;
+  }
+  .sale-square-countdown .sale-time-label {
+    font-size: 10px;
+    margin-top: 3px;
+  }
+  .sale-promotion-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .sale-promotion-group {
+    padding: 10px;
+  }
+  .sale-promotion-group:last-child:nth-child(odd) {
+    grid-column: span 2;
+  }
+}
+.sale-panel {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+  padding: 20px;
+  min-width: 0;
+}
+.sale-guard {
+  display: flex;
+  gap: 12px;
+  border: 1px solid #4596c333;
+  background: #248ec30b;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.sale-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 12px;
+}
+.sale-select {
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 9px;
+  background: var(--background);
+  width: 100%;
+}
+.sale-details {
+  font-size: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.sale-details summary {
+  cursor: pointer;
+  color: var(--muted-foreground);
+}
+.sale-model-list {
+  max-height: 430px;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.sale-model {
+  padding: 13px;
+  border-bottom: 1px solid var(--border);
+}
+.sale-model:last-child {
+  border: 0;
+}
+.sale-price-table {
+  border-collapse: collapse;
+  min-width: 480px;
+  width: 100%;
+  margin-top: 10px;
+}
+.sale-price-table th,
+.sale-price-table td {
+  padding: 7px;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.sale-price-table th:first-child,
+.sale-price-table td:first-child {
+  text-align: left;
+}
+.sale-tag {
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+.sale-tag-active {
+  color: #38bdf8;
+  border-color: #38bdf84d;
+  background: #38bdf80b;
+}
+.sale-saved {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 13px;
+}
+.sale-preview,
+.sale-public-card {
+  background:
+    radial-gradient(ellipse at 90% 0, #173762 0, transparent 55%), #091526;
+  border: 1px solid #2c476b;
+  border-radius: 18px;
+  padding: 24px;
+  color: #edf4ff;
+  min-width: 0;
+}
+.sale-countdown {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  margin: 24px 0 18px;
+}
+.sale-time-group {
+  text-align: center;
+}
+.sale-digits {
+  display: flex;
+  gap: 3px;
+}
+.sale-digit {
+  display: block;
+  position: relative;
+  width: 28px;
+  height: 42px;
+  background: linear-gradient(#1d3552 50%, #132942 50%);
+  border: 1px solid #375775;
+  border-radius: 5px;
+  box-shadow: 0 2px 3px #0004;
+  perspective: 160px;
+}
+.sale-digit:after {
+  content: '';
+  height: 1px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  background: #081322b3;
+}
+.sale-digit-value {
+  display: block;
+  font-size: 27px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 40px;
+  animation: sale-flip 0.38s ease-out;
+  transform-origin: center;
+}
+.sale-time-label {
+  display: block;
+  font-size: 10px;
+  color: #84bce1;
+  margin-top: 7px;
+}
+@keyframes sale-flip {
+  0% {
+    transform: rotateX(-75deg);
+    opacity: 0.35;
+  }
+  100% {
+    transform: rotateX(0);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sale-digit-value {
+    animation: none;
+  }
+}
+.sale-public {
+  min-height: 100dvh;
+  background:
+    radial-gradient(ellipse at 70% 0, #172e53 0, transparent 50%), #070f1c;
+  padding: 24px 16px;
+  color: #e7eef9;
+}
+.sale-back {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: #9ac9ee;
+  font-size: 13px;
+}
+.sale-public-card {
+  max-width: 680px;
+  margin: 48px auto;
+  text-align: center;
+  padding: 32px;
+}
+.sale-offer-model {
+  font-size: 12px;
+  color: #bae3ff;
+  border: 1px solid #35536d;
+  border-radius: 8px;
+  padding: 7px 10px;
+  overflow-wrap: anywhere;
+}
+.sale-public-button {
+  display: inline-block;
+  margin-top: 24px;
+  border-radius: 9px;
+  background: #36a5eb;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #051421;
+}
+@media (max-width: 600px) {
+  .sale-panel {
+    padding: 16px;
+  }
+  .sale-saved {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .sale-public-card {
+    margin-top: 28px;
+    padding: 24px 16px;
+  }
+  .sale-countdown {
+    gap: 7px;
+  }
+  .sale-digit {
+    width: 26px;
+  }
+  .sale-preview {
+    padding: 20px;
+  }
+}

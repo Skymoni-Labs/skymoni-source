@@ -1,0 +1,172 @@
+{
+  "verified_at": "2026-10-07",
+  "cny_per_credit": 0.1,
+  "models": {
+    "deepseek-flash": {
+      "currency": "USD",
+      "multiplier": 0.2,
+      "kind": "peak",
+      "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "tiers": {
+        "peak": {
+          "p": 0.3,
+          "c": 1.2,
+          "cr": 0.006
+        },
+        "off_peak": {
+          "p": 0.15,
+          "c": 0.6,
+          "cr": 0.003
+        }
+      }
+    },
+    "deepseek-flash-low": {
+      "currency": "USD",
+      "multiplier": 0.1,
+      "kind": "peak",
+      "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "tiers": {
+        "peak": {
+          "p": 0.3,
+          "c": 1.2,
+          "cr": 0.006
+        },
+        "off_peak": {
+          "p": 0.15,
+          "c": 0.6,
+          "cr": 0.003
+        }
+      }
+    },
+    "deepseek-v4-pro": {
+      "currency": "USD",
+      "multiplier": 0.2,
+      "kind": "peak",
+      "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "tiers": {
+        "peak": {
+          "p": 1.32,
+          "c": 3.96,
+          "cr": 0.044
+        },
+        "off_peak": {
+          "p": 0.66,
+          "c": 1.98,
+          "cr": 0.022
+        }
+      }
+    },
+    "glm-5.3": {
+      "currency": "CNY",
+      "multiplier": 0.2,
+      "kind": "flat",
+      "source": "https://open.bigmodel.cn/pricing",
+      "tiers": {
+        "base": {
+          "p": 8,
+          "c": 28,
+          "cr": 2
+        }
+      }
+    },
+    "glm-5.3-flash": {
+      "currency": "CNY",
+      "multiplier": 0.2,
+      "kind": "flat",
+      "note": "Current official 50% promotion; standard prices are CNY 0.8/2.8/0.23 per million.",
+      "source": "https://open.bigmodel.cn/pricing",
+      "tiers": {
+        "base": {
+          "p": 0.4,
+          "c": 1.4,
+          "cr": 0.115
+        }
+      }
+    },
+    "minimax-m3": {
+      "currency": "USD",
+      "multiplier": 0.2,
+      "kind": "context",
+      "threshold": 512000,
+      "note": "Standard service tier, current permanent 50% discount.",
+      "source": "https://platform.minimax.io/docs/pricing/overview",
+      "tiers": {
+        "short": {
+          "p": 0.3,
+          "c": 1.2,
+          "cr": 0.06
+        },
+        "long": {
+          "p": 0.6,
+          "c": 2.4,
+          "cr": 0.12
+        }
+      }
+    },
+    "kimi-k3": {
+      "currency": "CNY",
+      "multiplier": 0.2,
+      "kind": "flat",
+      "source": "https://platform.kimi.com/docs/pricing/chat",
+      "tiers": {
+        "base": {
+          "p": 20,
+          "c": 100,
+          "cr": 2,
+          "cc": 20,
+          "cc1h": 40
+        }
+      }
+    },
+    "deepseek-v4.1-flash-low": {
+      "currency": "USD",
+      "multiplier": 0.1,
+      "kind": "peak",
+      "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "tiers": {
+        "peak": {
+          "p": 0.3,
+          "c": 1.2,
+          "cr": 0.006
+        },
+        "off_peak": {
+          "p": 0.15,
+          "c": 0.6,
+          "cr": 0.003
+        }
+      }
+    },
+    "deepseek-v4.1-flash": {
+      "currency": "USD",
+      "multiplier": 0.2,
+      "kind": "peak",
+      "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "tiers": {
+        "peak": {
+          "p": 0.3,
+          "c": 1.2,
+          "cr": 0.006
+        },
+        "off_peak": {
+          "p": 0.15,
+          "c": 0.6,
+          "cr": 0.003
+        }
+      }
+    },
+    "deepseek-v4.1-flash-s": {
+      "currency": "USD",
+      "multiplier": 0.45,
+      "kind": "flat",
+      "note": "Dedicated self-hosted route with a fixed price based on the official standard-time reference.",
+      "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "tiers": {
+        "base": {
+          "p": 0.3,
+          "c": 1.2,
+          "cr": 0.006
+        }
+      }
+    }
+  }
+}

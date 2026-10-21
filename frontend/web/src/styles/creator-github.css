@@ -1,0 +1,238 @@
+.cg-panel {
+  padding: clamp(20px, 3vw, 36px);
+  border: 1px solid #dce7f5;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #fff, #f6faff);
+  color: #142e50;
+  min-width: 0;
+}
+.cg-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.cg-heading > div {
+  flex: 1;
+  min-width: 180px;
+}
+.cg-panel h2 {
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: -0.6px;
+  margin-bottom: 8px;
+}
+.cg-panel p,
+.cg-picker-title > span,
+.cg-hint {
+  color: #637793;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.cg-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  color: #438fe7;
+  background: #eaf3ff;
+  box-shadow:
+    inset 0 1px #fff,
+    0 6px 16px #438fe710;
+}
+.cg-icon svg {
+  width: 27px;
+  height: 27px;
+}
+.cg-connected {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #247361;
+  padding: 6px 10px;
+  background: #eaf8f2;
+  border-radius: 20px;
+  overflow-wrap: anywhere;
+}
+.cg-connected svg,
+.cg-actions svg,
+.cg-overview-link svg {
+  width: 17px;
+  height: 17px;
+}
+.cg-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.cg-actions > span {
+  font-size: 12px;
+  color: #75869b;
+}
+.cg-picker {
+  border-top: 1px solid #e3ebf6;
+  margin-top: 25px;
+  padding-top: 24px;
+}
+.cg-picker-title {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.cg-picker h3 {
+  font-size: 17px;
+  font-weight: 600;
+}
+.cg-search {
+  position: relative;
+  margin-bottom: 16px;
+}
+.cg-search > svg {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  color: #8091a7;
+}
+.cg-search input {
+  padding-left: 36px;
+}
+.cg-repositories {
+  display: grid;
+  gap: 10px;
+  max-height: 430px;
+  overflow-y: auto;
+  padding: 3px;
+}
+.cg-repository {
+  width: 100%;
+  height: auto;
+  padding: 16px;
+  text-align: left;
+  justify-content: flex-start;
+  gap: 12px;
+  white-space: normal;
+  background: #fff;
+  border: 1px solid #e0e8f2;
+  border-radius: 12px;
+}
+.cg-repository[aria-pressed='true'] {
+  border-color: #6da9ef;
+  background: #edf5ff;
+  box-shadow: 0 0 0 1px #6da9ef;
+}
+.cg-repository > span:nth-child(2) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  gap: 6px;
+}
+.cg-repository strong {
+  font-weight: 600;
+  color: #3579c9;
+  overflow-wrap: anywhere;
+}
+.cg-repository span > span {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #6b7e97;
+  overflow-wrap: anywhere;
+}
+.cg-repository small {
+  font-size: 11px;
+  color: #8795a7;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.cg-repository small svg {
+  width: 12px;
+  height: 12px;
+}
+.cg-repo-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #f0f5fb;
+  color: #6487b0;
+}
+.cg-pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 20px;
+  font-size: 12px;
+  color: #71839b;
+}
+.cg-picker > label {
+  display: block;
+  margin: 10px 0;
+}
+.cg-picker > .cg-hint {
+  margin: 10px 0 20px;
+  font-size: 12px;
+}
+.cg-result {
+  margin-top: 24px;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #cce7df;
+  background: #f3fbf7;
+}
+.cg-result ul {
+  list-style: disc;
+  padding-left: 20px;
+  color: #637793;
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 12px 0 20px;
+}
+.cg-overview-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  padding: 16px 20px;
+  color: #607d9f;
+  background: #f0f6ff;
+  border: 1px solid #dceafa;
+  border-radius: 12px;
+  font-size: 14px;
+}
+.cg-overview-link a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  color: #3c86db;
+}
+.dark .cg-panel {
+  background: #152236;
+  color: #e0ebf8;
+  border-color: #2c405a;
+}
+.dark .cg-repository {
+  background: #1b2a3e;
+  border-color: #33455d;
+}
+.dark .cg-repository[aria-pressed='true'],
+.dark .cg-overview-link {
+  background: #203952;
+  border-color: #4678a7;
+}
+.dark .cg-result {
+  background: #163b35;
+  border-color: #315e52;
+}

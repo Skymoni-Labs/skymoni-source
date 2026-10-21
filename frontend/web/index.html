@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google" content="notranslate" />
+
+    <!-- Primary Meta Tags -->
+    <title>skymoni</title>
+    <meta name="title" content="skymoni" />
+    <meta
+      name="description"
+      content="Unified AI API gateway and admin dashboard."
+    />
+
+    <meta name="theme-color" content="#f8f7f3" />
+    <script>
+      // Set the first paint before the app loads; keep explicit visitor choices.
+      ;(function () {
+        var saved = document.cookie.match(/(?:^|;\s*)vite-ui-theme=([^;]*)/)
+        var theme =
+          saved && /^(light|dark|system)$/.test(saved[1]) ? saved[1] : 'light'
+        var dark =
+          theme !== 'light' &&
+          (theme !== 'system' ||
+            window.matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.classList.add(dark ? 'dark' : 'light')
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
+      })()
+    </script>
+    <!--umami-->
+    <!--Google Analytics-->
+  </head>
+
+  <body>
+    <div id="root" translate="no" class="notranslate"></div>
+  </body>
+</html>

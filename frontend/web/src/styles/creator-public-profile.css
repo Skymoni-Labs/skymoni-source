@@ -1,0 +1,19 @@
+.ch-profile-portrait .ch-public-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+.ch-public-initial {
+  font-size: clamp(64px, 8vw, 110px);
+  font-weight: 500;
+  color: #7eabd6;
+}
+.ch-public-introduction {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.ch-public-profile .ch-profile-sidebar h1 {
+  overflow-wrap: anywhere;
+}

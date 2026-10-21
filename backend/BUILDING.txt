@@ -1,0 +1,9 @@
+Corresponding source for skymoni v1.0.0-rc.39-skymoni.88-model-groups (2026-10-08).
+Upstream: https://github.com/QuantumNous/new-api (QuantumNous).
+License: AGPL-3.0-or-later; see LICENSE and NOTICE.
+Modification: independent API model-group management, exact model membership and separate channel-routing controls with transactional updates.
+Frontend: cd web; pnpm install --frozen-lockfile; pnpm run build.
+Build toolchain: Go 1.25.1+, Node.js 22+, pnpm (lockfile included).
+Backend: first build/copy the supplied frontend into web/dist, then:
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w -X github.com/QuantumNous/new-api/common.Version=v1.0.0-rc.39-skymoni.88-model-groups" -o new-api .
+The local relaykit module is included. Existing environment values, database and Redis configuration are supplied by the operator and are not included in source packages.

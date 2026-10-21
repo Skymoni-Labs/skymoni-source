@@ -1,0 +1,5 @@
+Subscription formats companion, 2026-10-11.
+AccountHandler accepts sub/clash/json; all use shop_orders.resolve_subscription, including redeemed aliases and refunds. SUB/JSON use a generic User-Agent so native automatic Clash detection cannot change their formats.
+Add json to the Korean /api/subscription format allowlist. The Go gateway verifies origin TLS and strips browser credentials when fetching a subscription.
+No database schema or proxy-core changes.
+Tests: python3 -m unittest discover -p test_*.py (32 tests).

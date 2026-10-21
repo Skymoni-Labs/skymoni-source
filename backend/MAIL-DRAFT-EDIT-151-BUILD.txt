@@ -1,0 +1,1 @@
+Backend release v1.0.0-rc.39-skymoni.151-mail-draft-edit, 2026-10-13. Adds GET /api/admin-mail/:id/edit and PUT /api/admin-mail/:id for authenticated administrators to reopen and update draft campaigns. Updates validate recipients and rebuild delivery rows in a single transaction; campaigns that have left draft status cannot be edited. No schema change.

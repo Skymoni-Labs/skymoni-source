@@ -1,0 +1,4 @@
+Corresponding source for v1.0.0-rc.39-skymoni.133-home-selection. Based on production 132-official-sale. Preserves pricing, sale multipliers, mail, software/history/streaming relay, creator-center, orders, docs and authentication behavior.
+Changes: administrator homepage selection of public works, enable/disable, ordering and automatic inclusion of new works. Atomic locked catalog persistence and revision conflict checks. Public selection omits private/deleted/suspended works. Paid entitlements and creator-center spotlight curation remain independent. No SQL migration.
+External frontend: frontend-source-home-selection-20261011.zip. Build web with rsbuild.release.config.ts and copy web/dist into backend/web/dist before Go build.
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -buildvcs=false -ldflags="-s -w -X github.com/QuantumNous/new-api/common.Version=v1.0.0-rc.39-skymoni.133-home-selection" -o new-api .
