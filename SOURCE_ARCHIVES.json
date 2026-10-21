@@ -1748,5 +1748,12 @@
     "sha256": "84a7a296a512defe9c787ed6440c8ab82b103d2f73284593821760b42934144d",
     "tag": "frontend-nickname-reading-20261021",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/frontend-nickname-reading-20261021/frontend-source-skymoni-nickname-reading-20261021.zip"
+  },
+  {
+    "name": "frontend-source-skymoni-shared-display-name-20261022.zip",
+    "bytes": 18402590,
+    "sha256": "5b227c85e5acf761c6c4e3db06bbe895310010d8286dd5f39372f5f7183a7b7f",
+    "tag": "frontend-shared-display-name-20261022",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/frontend-shared-display-name-20261022/frontend-source-skymoni-shared-display-name-20261022.zip"
   }
 ]
