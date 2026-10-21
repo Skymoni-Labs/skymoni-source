@@ -257,6 +257,8 @@ test('topic page sanitizes markup and anonymous readers cannot submit replies', 
     await screen.findByRole('heading', { name: 'A real community topic' })
   ).toBeVisible()
   expect(rendered.container.querySelector('script')).toBeNull()
+  expect(screen.queryByText('@maker')).not.toBeInTheDocument()
+  expect(screen.queryByText('@reader')).not.toBeInTheDocument()
   expect(
     screen.queryByRole('textbox', { name: '回复内容' })
   ).not.toBeInTheDocument()

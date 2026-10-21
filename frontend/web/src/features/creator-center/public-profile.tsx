@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { publicNickname } from '@/lib/public-nickname'
 import { useAuthStore } from '@/stores/auth-store'
 
 import { loadPublicCreatorProfile } from './api'
@@ -64,7 +65,7 @@ export function CreatorPublicProfilePage({ creatorId }: { creatorId: string }) {
   }
   const { profile, pinned, avatar } = data
   const works = publicShowcaseWorks(data.works)
-  const name = profile.name.trim() || '创作者'
+  const name = publicNickname(profile.name)
   const highlights = pinned.flatMap((workId) =>
     works.filter((work) => work.id === workId)
   )
@@ -109,7 +110,6 @@ export function CreatorPublicProfilePage({ creatorId }: { creatorId: string }) {
               <span aria-hidden>✦</span>
             </div>
             <h1>{name}</h1>
-            <span className='ch-profile-handle'>@{profile.handle}</span>
             <p>{profile.bio || '每一份作品背后，都有一个爱创造的人。'}</p>
             {isOwner && (
               <Button
@@ -148,7 +148,7 @@ export function CreatorPublicProfilePage({ creatorId }: { creatorId: string }) {
                 <section className='ch-profile-readme'>
                   <div>
                     <BookOpen aria-hidden />
-                    <span>@{profile.handle} / 介绍</span>
+                    <span>{name} / 介绍</span>
                   </div>
                   <section>
                     <span className='cc-eyebrow'>HELLO, CREATIVE WORLD</span>

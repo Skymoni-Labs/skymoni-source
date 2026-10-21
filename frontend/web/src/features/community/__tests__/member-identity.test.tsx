@@ -100,3 +100,22 @@ test('switching accounts does not use the new account identity for old authors',
   expect(screen.getByText('Historical name')).toBeInTheDocument()
   expect(await screen.findByRole('img')).toHaveAttribute('src', author.avatar)
 })
+
+test('historical email names and missing account nicknames render a generic member label', () => {
+  const view = render(
+    <MemberName author={{ ...author, name: 'old@example.com' }} />
+  )
+  expect(screen.getByText('社区成员')).toBeInTheDocument()
+  act(() =>
+    useAuthStore.getState().auth.setUser({
+      id: author.id,
+      username: 'login-account',
+      display_name: '',
+      role: 1,
+    })
+  )
+  view.rerender(<MemberName author={author} />)
+  expect(screen.getByText('社区成员')).toBeInTheDocument()
+  expect(screen.queryByText('login-account')).not.toBeInTheDocument()
+  expect(screen.queryByText('old@example.com')).not.toBeInTheDocument()
+})

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
+import { publicNickname } from '@/lib/public-nickname'
 import { accountIdentity } from '@/lib/site-identity'
 import { useAuthStore } from '@/stores/auth-store'
 import { useCreatorAccessStore } from '@/stores/creator-access-store'
@@ -33,9 +34,10 @@ export function WorkAuthor({
     staleTime: 30_000,
     retry: false,
   })
-  const name =
+  const name = publicNickname(
     (own && user ? accountIdentity(user).name : profile.data?.profile.name) ||
-    work.author
+      work.author
+  )
   const avatar =
     own && user ? accountIdentity(user).avatar : profile.data?.avatar
   const image =

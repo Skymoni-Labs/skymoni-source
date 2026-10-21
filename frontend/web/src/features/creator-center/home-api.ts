@@ -1,6 +1,7 @@
 import type { AxiosRequestConfig } from 'axios'
 
 import { api } from '@/lib/api'
+import { publicNickname } from '@/lib/public-nickname'
 import { requireServerSuccess } from '@/lib/server-error-message'
 import { loadSiteIdentities } from '@/lib/site-identity'
 
@@ -122,12 +123,12 @@ export async function loadCreatorHome(
             name: identities[author.userId].name,
             avatar: identities[author.userId].avatar,
           }
-        : author
+        : { ...author, name: publicNickname(author.name) }
     ),
     works: data.works.map((work) =>
       !work.sample && identities[work.ownerId ?? 0]
         ? { ...work, author: identities[work.ownerId ?? 0].name }
-        : work
+        : { ...work, author: publicNickname(work.author) }
     ),
   }
 }

@@ -1,5 +1,6 @@
 import { api, getFreshAuthHeaders } from '@/lib/api'
 import { userAvatarSource } from '@/lib/avatar'
+import { publicNickname } from '@/lib/public-nickname'
 import { requireServerSuccess } from '@/lib/server-error-message'
 import { useAuthStore, type AuthUser } from '@/stores/auth-store'
 
@@ -14,7 +15,7 @@ export function accountIdentity(user: AuthUser): SiteIdentity {
   const source = userAvatarSource(user.setting)
   return {
     id: user.id,
-    name: user.display_name || user.username || '社区成员',
+    name: publicNickname(user.display_name),
     username: user.username,
     avatar: source === '/skymoni-avatar.png' ? '' : source,
   }
@@ -22,7 +23,9 @@ export function accountIdentity(user: AuthUser): SiteIdentity {
 
 export function currentIdentity(identity: SiteIdentity): SiteIdentity {
   const user = useAuthStore.getState().auth.user
-  return user?.id === identity.id ? accountIdentity(user) : identity
+  return user?.id === identity.id
+    ? accountIdentity(user)
+    : { ...identity, name: publicNickname(identity.name) }
 }
 
 export async function loadSiteIdentities(
@@ -44,7 +47,11 @@ export async function loadSiteIdentities(
       skipErrorHandler: true,
       skipAuthRefresh: true,
     })
-    Object.assign(result, requireServerSuccess(response.data).data)
+    for (const [id, identity] of Object.entries(
+      requireServerSuccess(response.data).data
+    )) {
+      result[id] = { ...identity, name: publicNickname(identity.name) }
+    }
   }
   const user = useAuthStore.getState().auth.user
   if (user && unique.includes(user.id)) result[user.id] = accountIdentity(user)

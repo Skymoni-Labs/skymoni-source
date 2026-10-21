@@ -9,6 +9,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { handleServerError } from '@/lib/handle-server-error'
+import { publicNickname } from '@/lib/public-nickname'
 import { useAuthStore } from '@/stores/auth-store'
 
 import { communityRequest, loadCommunityNotifications } from './api'
@@ -114,7 +115,7 @@ export function CommunityNotifications() {
             </span>
             <span className='sf-notice-content'>
               <span>
-                {item.actor} {notificationAction(item)}
+                {publicNickname(item.actor)} {notificationAction(item)}
               </span>
               <strong>{item.title}</strong>
               <CommunityTime timestamp={item.createdAt} short />

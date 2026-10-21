@@ -8,7 +8,7 @@
 
 | 组件 | 在线版本对应源码 | 浏览目录 |
 | --- | --- | --- |
-| 前端 | [社区搜索框修复版，2026-10-21](https://github.com/skyjjgw/skymoni-source/releases/download/frontend-archives-20261021/frontend-source-skymoni-community-search-focus-20261021.zip) | [frontend/web](frontend/web) |
+| 前端 | [社区昵称与阅读工具版，2026-10-21](https://github.com/skyjjgw/skymoni-source/releases/download/frontend-nickname-reading-20261021/frontend-source-skymoni-nickname-reading-20261021.zip) | [frontend/web](frontend/web) |
 | 服务端 | [v1.0.0-rc.39-skymoni.162-creator-live-access](https://github.com/skyjjgw/skymoni-source/releases/download/backend-archives-20261021/backend-source-skymoni-creator-live-access-20261020.tar.gz) | [backend](backend) |
 | 独立社区服务 | 随当前前端源码包提供 | [frontend/community-service](frontend/community-service) |
 

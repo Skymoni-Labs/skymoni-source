@@ -80,6 +80,27 @@ test('work author uses current public avatar and name, deduplicates the query an
   expect(loadPublicCreatorProfile).toHaveBeenCalledTimes(1)
 })
 
+test('work authors hide email snapshots while the public nickname is loading', async () => {
+  vi.mocked(loadPublicCreatorProfile).mockResolvedValue({
+    userId: 55,
+    profile: { ...defaultCreatorProfile, name: 'Current nickname' },
+    avatar: '',
+    works: [],
+    pinned: [],
+  })
+  mount(
+    <WorkAuthor
+      work={{ ...emptyWork(), author: 'old@example.com', ownerId: 55 }}
+    />
+  )
+  expect(screen.queryByText('old@example.com')).not.toBeInTheDocument()
+  expect(screen.getByText('社区成员')).toBeInTheDocument()
+  await screen.findByRole('link', {
+    name: 'Creator profile · Current nickname',
+  })
+  expect(screen.queryByText('old@example.com')).not.toBeInTheDocument()
+})
+
 test('own work identity responds immediately to profile edits without requesting an old public profile', async () => {
   useAuthStore.setState((s) => ({
     auth: {

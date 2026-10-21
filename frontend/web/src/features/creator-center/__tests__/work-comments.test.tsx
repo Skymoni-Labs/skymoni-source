@@ -67,6 +67,7 @@ test('anonymous visitors can read sanitized work comments and sign in back to th
     await screen.findByText('useful work comment', { selector: 'strong' })
   ).toBeVisible()
   expect(view.container.querySelector('script')).toBeNull()
+  expect(screen.queryByText('@maker')).not.toBeInTheDocument()
   expect(
     screen.queryByRole('textbox', { name: '作品评论内容' })
   ).not.toBeInTheDocument()

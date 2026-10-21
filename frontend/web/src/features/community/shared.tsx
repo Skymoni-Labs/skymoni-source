@@ -9,6 +9,7 @@ import {
 } from '@/features/community/access-copy'
 import { toIntlLocale } from '@/i18n/languages'
 import { formatNumber } from '@/lib/format'
+import { publicNickname } from '@/lib/public-nickname'
 import { accountIdentity } from '@/lib/site-identity'
 import { useAuthStore } from '@/stores/auth-store'
 
@@ -30,7 +31,9 @@ export function MemberAvatar(props: {
 
 function useMemberIdentity(author: CommunityAuthor): CommunityAuthor {
   const user = useAuthStore((state) => state.auth.user)
-  return user?.id === author.id ? accountIdentity(user) : author
+  return user?.id === author.id
+    ? accountIdentity(user)
+    : { ...author, name: publicNickname(author.name) }
 }
 
 export function MemberName({ author }: { author: CommunityAuthor }) {

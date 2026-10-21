@@ -10,6 +10,7 @@ import {
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
+import { publicNickname } from '@/lib/public-nickname'
 
 import { showcaseTopics } from '../lib/showcase'
 import { categoryLabel, type Work } from '../types'
@@ -50,7 +51,7 @@ export function Spotlight({
         <p>{t(work.summary)}</p>
         <span className='cs-spotlight-footer'>
           <span>
-            {work.author}{' '}
+            {publicNickname(work.author)}{' '}
             {work.sample && <small>· {t('Example creator')}</small>}
           </span>
           <span>

@@ -1,7 +1,11 @@
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 
 import { api, getFreshAuthHeaders } from '@/lib/api'
-import { loadSiteIdentities, saveAccountIdentity } from '@/lib/site-identity'
+import {
+  accountIdentity,
+  loadSiteIdentities,
+  saveAccountIdentity,
+} from '@/lib/site-identity'
 import { useAuthStore } from '@/stores/auth-store'
 
 vi.mock('@/lib/api', () => ({
@@ -38,6 +42,29 @@ test('batch reads public identity while current account immediately wins a stale
     '/api/community/identities',
     expect.objectContaining({ params: { ids: '7,8' } })
   )
+})
+
+test('public identity never falls back to the login account or an email name', async () => {
+  expect(
+    accountIdentity({
+      ...user,
+      username: 'login@example.com',
+      display_name: '',
+    }).name
+  ).toBe('社区成员')
+  expect(
+    accountIdentity({ ...user, display_name: 'member@example.com' }).name
+  ).toBe('社区成员')
+  vi.mocked(api.get).mockResolvedValue({
+    data: {
+      success: true,
+      data: {
+        8: { id: 8, name: 'old@example.com', username: 'login', avatar: '' },
+      },
+    },
+  })
+  const identities = await loadSiteIdentities([8])
+  expect(identities[8].name).toBe('社区成员')
 })
 
 test('saving identity updates the existing account endpoints and refreshes shared auth without touching settings', async () => {

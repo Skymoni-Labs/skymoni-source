@@ -54,10 +54,7 @@ export function CommunityMember(props: { memberId: string }) {
           <h1>
             <MemberName author={member} />
           </h1>
-          <p>
-            @{member.username}
-            {member.role === 100 ? ' · 社区管理员' : ' · 社区成员'}
-          </p>
+          <p>{member.role === 100 ? '社区管理员' : '社区成员'}</p>
         </div>
       </header>
       {userId === member.id && (

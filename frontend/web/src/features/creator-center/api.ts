@@ -1,6 +1,7 @@
 import type { AxiosRequestConfig } from 'axios'
 
 import { api, getFreshAuthHeaders } from '@/lib/api'
+import { publicNickname } from '@/lib/public-nickname'
 import { requireServerSuccess } from '@/lib/server-error-message'
 import {
   accountIdentity,
@@ -91,7 +92,7 @@ async function syncWorks(works: Work[], signal?: AbortSignal) {
   return works.map((work) =>
     !work.sample && identities[work.ownerId ?? 0]
       ? { ...work, author: identities[work.ownerId ?? 0].name }
-      : work
+      : { ...work, author: publicNickname(work.author) }
   )
 }
 export async function loadCreatorWorks(signal?: AbortSignal): Promise<Work[]> {
@@ -163,7 +164,17 @@ export async function loadPublicCreatorProfile(
         },
         works: result.works.map((work) => ({ ...work, author: identity.name })),
       }
-    : result
+    : {
+        ...result,
+        profile: {
+          ...result.profile,
+          name: publicNickname(result.profile.name),
+        },
+        works: result.works.map((work) => ({
+          ...work,
+          author: publicNickname(work.author),
+        })),
+      }
 }
 export const saveCreatorProfile = async (
   profile: CreatorProfile,

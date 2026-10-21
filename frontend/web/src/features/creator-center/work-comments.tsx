@@ -31,6 +31,7 @@ import {
 import type { Post } from '@/features/community/types'
 import { FormNavigationGuard } from '@/features/system-settings/components/form-navigation-guard'
 import { handleServerError } from '@/lib/handle-server-error'
+import { publicNickname } from '@/lib/public-nickname'
 import { useAuthStore } from '@/stores/auth-store'
 
 type WorkComment = Post & { replyToName?: string }
@@ -164,7 +165,6 @@ function WorkCommentsPanel({ workId }: { workId: string }) {
               <strong>
                 <MemberName author={comment.author} />
               </strong>
-              <span>@{comment.author.username}</span>
               <span className='sf-post-time'>
                 <CommunityTime timestamp={comment.createdAt} />
               </span>
@@ -174,7 +174,7 @@ function WorkCommentsPanel({ workId }: { workId: string }) {
             </header>
             {comment.replyTo && (
               <p className='sf-reply-context'>
-                回复 @{comment.replyToName || '社区成员'}
+                回复 {publicNickname(comment.replyToName)}
               </p>
             )}
             {comment.deleted ? (
@@ -303,7 +303,7 @@ function WorkCommentsPanel({ workId }: { workId: string }) {
             <h3>
               {replyTo ? (
                 <>
-                  回复 @<MemberName author={replyTo.author} />
+                  回复 <MemberName author={replyTo.author} />
                 </>
               ) : (
                 '发表作品评论'
@@ -321,7 +321,7 @@ function WorkCommentsPanel({ workId }: { workId: string }) {
           </div>
           {replyTo && (
             <div className='sf-reply-context'>
-              回复 @<MemberName author={replyTo.author} />
+              回复 <MemberName author={replyTo.author} />
               <Button
                 type='button'
                 variant='ghost'

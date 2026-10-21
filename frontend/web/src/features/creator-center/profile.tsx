@@ -100,7 +100,6 @@ export function CreatorProfilePage() {
           <aside className='ch-profile-sidebar'>
             <CreatorAvatar avatar={profile.avatar} name={name} />
             <h1>{name}</h1>
-            <span className='ch-profile-handle'>@{profile.handle}</span>
             <p>
               {profile.bio ||
                 t('A little about you, and the things you love making.')}
@@ -151,7 +150,7 @@ export function CreatorProfilePage() {
                   <div>
                     <BookOpen aria-hidden />
                     <span>
-                      @{profile.handle} / {t('Introduction')}
+                      {name} / {t('Introduction')}
                     </span>
                     <Button
                       variant='ghost'

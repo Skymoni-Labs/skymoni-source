@@ -35,6 +35,7 @@ import {
   MemberName,
 } from './shared'
 import { TopicNavigationButton } from './topic-navigation'
+import { TopicReader } from './topic-reader'
 import { TopicTrashButton } from './topic-trash-button'
 import { categoryFallback, type Post } from './types'
 
@@ -235,7 +236,6 @@ export function CommunityTopic(props: { topicId: string }) {
                       <MemberName author={post.author} />
                     </strong>
                   </Link>
-                  <span>@{post.author.username}</span>
                   <span className='sf-post-time'>
                     <CommunityTime timestamp={post.createdAt} />
                   </span>
@@ -245,13 +245,29 @@ export function CommunityTopic(props: { topicId: string }) {
                 </header>
                 {post.replyTo && (
                   <p className='sf-reply-context'>
-                    回复 @
-                    {posts.find((item) => item.id === post.replyTo)?.author
-                      .name ?? '社区成员'}
+                    回复{' '}
+                    <MemberName
+                      author={
+                        posts.find((item) => item.id === post.replyTo)
+                          ?.author ?? {
+                          id: 0,
+                          name: '社区成员',
+                          username: '',
+                          avatar: '',
+                        }
+                      }
+                    />
                   </p>
                 )}
                 {post.deleted ? (
                   <p className='sf-deleted-post'>这条回复已删除。</p>
+                ) : index === 0 && page === 1 ? (
+                  <TopicReader
+                    key={post.id}
+                    content={post.content}
+                    format={post.contentFormat ?? topic.contentFormat}
+                    prompt={/提示词|prompt/i.test(topic.title)}
+                  />
                 ) : (
                   <CommunityContent
                     format={
@@ -449,7 +465,7 @@ export function CommunityTopic(props: { topicId: string }) {
           <h2>加入讨论</h2>
           {replyTo && (
             <div className='sf-reply-context'>
-              回复 @<MemberName author={replyTo.author} />
+              回复 <MemberName author={replyTo.author} />
               <Button
                 type='button'
                 variant='ghost'
