@@ -44,7 +44,7 @@ test('batch reads public identity while current account immediately wins a stale
   )
 })
 
-test('public identity never falls back to the login account or an email name', async () => {
+test('public identity uses the relay display name including email-shaped names, without falling back to login accounts', async () => {
   expect(
     accountIdentity({
       ...user,
@@ -54,7 +54,7 @@ test('public identity never falls back to the login account or an email name', a
   ).toBe('社区成员')
   expect(
     accountIdentity({ ...user, display_name: 'member@example.com' }).name
-  ).toBe('社区成员')
+  ).toBe('member@example.com')
   vi.mocked(api.get).mockResolvedValue({
     data: {
       success: true,
@@ -64,7 +64,7 @@ test('public identity never falls back to the login account or an email name', a
     },
   })
   const identities = await loadSiteIdentities([8])
-  expect(identities[8].name).toBe('社区成员')
+  expect(identities[8].name).toBe('old@example.com')
 })
 
 test('saving identity updates the existing account endpoints and refreshes shared auth without touching settings', async () => {

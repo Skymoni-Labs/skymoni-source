@@ -1,4 +1,5 @@
 export function publicNickname(value: unknown): string {
   const name = typeof value === 'string' ? value.trim() : ''
-  return name && !/[@＠]/u.test(name) ? name : '社区成员'
+  // The relay account display name is authoritative, including names with @.
+  return name || '社区成员'
 }

@@ -101,11 +101,11 @@ test('switching accounts does not use the new account identity for old authors',
   expect(await screen.findByRole('img')).toHaveAttribute('src', author.avatar)
 })
 
-test('historical email names and missing account nicknames render a generic member label', () => {
+test('member display names match the relay even when email-shaped; missing names use a generic label', () => {
   const view = render(
     <MemberName author={{ ...author, name: 'old@example.com' }} />
   )
-  expect(screen.getByText('社区成员')).toBeInTheDocument()
+  expect(screen.getByText('old@example.com')).toBeInTheDocument()
   act(() =>
     useAuthStore.getState().auth.setUser({
       id: author.id,
