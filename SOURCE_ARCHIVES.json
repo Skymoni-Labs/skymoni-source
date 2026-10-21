@@ -1741,5 +1741,12 @@
     "sha256": "7ae93864bc33405b890942e0a81397a63a144c295a12715292f08a777f8631a1",
     "tag": "mobile-archives-20261021",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/mobile-archives-20261021/mobile-source-cloud-wallpapers-1.1.20.zip"
+  },
+  {
+    "name": "frontend-source-skymoni-nickname-reading-20261021.zip",
+    "bytes": 18525451,
+    "sha256": "84a7a296a512defe9c787ed6440c8ab82b103d2f73284593821760b42934144d",
+    "tag": "frontend-nickname-reading-20261021",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/frontend-nickname-reading-20261021/frontend-source-skymoni-nickname-reading-20261021.zip"
   }
 ]
