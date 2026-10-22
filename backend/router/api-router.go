@@ -13,6 +13,8 @@ import (
 )
 
 func SetApiRouter(router *gin.Engine) {
+	router.GET("/api/app-update/download/:release/:abi", middleware.RouteTag("api"), middleware.AppUpdateDownloadRateLimit(), controller.DownloadAppUpdate)
+	router.HEAD("/api/app-update/download/:release/:abi", middleware.RouteTag("api"), middleware.AppUpdateDownloadRateLimit(), controller.DownloadAppUpdate)
 	router.GET("/api/software/files/:id/:name", controller.DownloadSoftwareFile)
 	router.HEAD("/api/software/files/:id/:name", controller.DownloadSoftwareFile)
 	router.GET("/drip-api/account/:action", controller.ProxyDripAccount)
@@ -25,6 +27,8 @@ func SetApiRouter(router *gin.Engine) {
 	apiRouter.Use(middleware.GlobalAPIRateLimit())
 	anonymousRequestBodyLimit := middleware.AnonymousRequestBodyLimit()
 	registerAppBetaAPIs(apiRouter)
+	registerAppAccountAPIs(apiRouter)
+	apiRouter.GET("/app-update/latest", middleware.AppAccountRequestRateLimit(), controller.GetAppUpdate)
 	{
 		apiRouter.GET("/setup", controller.GetSetup)
 		apiRouter.POST("/setup", anonymousRequestBodyLimit, controller.PostSetup)

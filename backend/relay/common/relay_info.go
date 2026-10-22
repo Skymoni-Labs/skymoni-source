@@ -637,6 +637,11 @@ func genBaseRelayInfo(c *gin.Context, request dto.Request) *RelayInfo {
 		info.IsAppBeta = true
 		info.IsPlayground = true
 	}
+	if c.GetBool("app_account_authenticated") {
+		// Like the existing web playground, native account chat uses the
+		// ordinary wallet/subscription funding without a separate API key.
+		info.IsPlayground = true
+	}
 	if strings.HasPrefix(c.Request.URL.Path, "/pg") {
 		info.IsPlayground = true
 		info.RequestURLPath = strings.TrimPrefix(info.RequestURLPath, "/pg")

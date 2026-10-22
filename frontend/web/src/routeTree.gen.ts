@@ -57,6 +57,7 @@ import { Route as SoftwareIndexRouteImport } from './routes/software.index'
 import { Route as SoftwareSoftwareIdRouteImport } from './routes/software.$softwareId'
 import { Route as StoreIndexRouteImport } from './routes/store/index'
 import { Route as authUserResetRouteImport } from './routes/(auth)/user/reset'
+import { Route as AuthenticatedAppAuthorizeRouteImport } from './routes/_authenticated/app/authorize'
 import { Route as AuthenticatedBenefitsIndexRouteImport } from './routes/_authenticated/benefits/index'
 import { Route as AuthenticatedChannelsIndexRouteImport } from './routes/_authenticated/channels/index'
 import { Route as AuthenticatedChatChatIdRouteImport } from './routes/_authenticated/chat/$chatId'
@@ -348,6 +349,12 @@ const authUserResetRoute = authUserResetRouteImport.update({
   path: '/user/reset',
   getParentRoute: () => authRouteRoute,
 } as any)
+const AuthenticatedAppAuthorizeRoute =
+  AuthenticatedAppAuthorizeRouteImport.update({
+    id: '/app/authorize',
+    path: '/app/authorize',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedBenefitsIndexRoute =
   AuthenticatedBenefitsIndexRouteImport.update({
     id: '/benefits/',
@@ -692,6 +699,7 @@ export interface FileRoutesByFullPath {
   '/software/': typeof SoftwareIndexRoute
   '/store/': typeof StoreIndexRoute
   '/user/reset': typeof authUserResetRoute
+  '/app/authorize': typeof AuthenticatedAppAuthorizeRoute
   '/chat/$chatId': typeof AuthenticatedChatChatIdRoute
   '/dashboard/$section': typeof AuthenticatedDashboardSectionRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
@@ -788,6 +796,7 @@ export interface FileRoutesByTo {
   '/software': typeof SoftwareIndexRoute
   '/store': typeof StoreIndexRoute
   '/user/reset': typeof authUserResetRoute
+  '/app/authorize': typeof AuthenticatedAppAuthorizeRoute
   '/chat/$chatId': typeof AuthenticatedChatChatIdRoute
   '/dashboard/$section': typeof AuthenticatedDashboardSectionRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
@@ -890,6 +899,7 @@ export interface FileRoutesById {
   '/software/': typeof SoftwareIndexRoute
   '/store/': typeof StoreIndexRoute
   '/(auth)/user/reset': typeof authUserResetRoute
+  '/_authenticated/app/authorize': typeof AuthenticatedAppAuthorizeRoute
   '/_authenticated/chat/$chatId': typeof AuthenticatedChatChatIdRoute
   '/_authenticated/dashboard/$section': typeof AuthenticatedDashboardSectionRoute
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
@@ -991,6 +1001,7 @@ export interface FileRouteTypes {
     | '/software/'
     | '/store/'
     | '/user/reset'
+    | '/app/authorize'
     | '/chat/$chatId'
     | '/dashboard/$section'
     | '/errors/$error'
@@ -1087,6 +1098,7 @@ export interface FileRouteTypes {
     | '/software'
     | '/store'
     | '/user/reset'
+    | '/app/authorize'
     | '/chat/$chatId'
     | '/dashboard/$section'
     | '/errors/$error'
@@ -1188,6 +1200,7 @@ export interface FileRouteTypes {
     | '/software/'
     | '/store/'
     | '/(auth)/user/reset'
+    | '/_authenticated/app/authorize'
     | '/_authenticated/chat/$chatId'
     | '/_authenticated/dashboard/$section'
     | '/_authenticated/errors/$error'
@@ -1604,6 +1617,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/user/reset'
       preLoaderRoute: typeof authUserResetRouteImport
       parentRoute: typeof authRouteRoute
+    }
+    '/_authenticated/app/authorize': {
+      id: '/_authenticated/app/authorize'
+      path: '/app/authorize'
+      fullPath: '/app/authorize'
+      preLoaderRoute: typeof AuthenticatedAppAuthorizeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/benefits/': {
       id: '/_authenticated/benefits/'
@@ -2063,6 +2083,7 @@ const AuthenticatedSystemSettingsRouteRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSystemSettingsRouteRoute: typeof AuthenticatedSystemSettingsRouteRouteWithChildren
   AuthenticatedChat2linkRoute: typeof AuthenticatedChat2linkRoute
+  AuthenticatedAppAuthorizeRoute: typeof AuthenticatedAppAuthorizeRoute
   AuthenticatedChatChatIdRoute: typeof AuthenticatedChatChatIdRoute
   AuthenticatedDashboardSectionRoute: typeof AuthenticatedDashboardSectionRoute
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
@@ -2096,6 +2117,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSystemSettingsRouteRoute:
     AuthenticatedSystemSettingsRouteRouteWithChildren,
   AuthenticatedChat2linkRoute: AuthenticatedChat2linkRoute,
+  AuthenticatedAppAuthorizeRoute: AuthenticatedAppAuthorizeRoute,
   AuthenticatedChatChatIdRoute: AuthenticatedChatChatIdRoute,
   AuthenticatedDashboardSectionRoute: AuthenticatedDashboardSectionRoute,
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,

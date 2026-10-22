@@ -8,8 +8,8 @@
 
 | 组件 | 在线版本对应源码 | 浏览目录 |
 | --- | --- | --- |
-| 前端 | [统一站点显示名称版，2026-10-22](https://github.com/skyjjgw/skymoni-source/releases/download/frontend-shared-display-name-20261022/frontend-source-skymoni-shared-display-name-20261022.zip) | [frontend/web](frontend/web) |
-| 服务端 | [v1.0.0-rc.39-skymoni.162-creator-live-access](https://github.com/skyjjgw/skymoni-source/releases/download/backend-archives-20261021/backend-source-skymoni-creator-live-access-20261020.tar.gz) | [backend](backend) |
+| 前端 | [App 登录与更新版，2026-10-22](https://github.com/skyjjgw/skymoni-source/releases/download/app-account-20261022/source-skymoni-app-account-20261022.zip) | [frontend/web](frontend/web) |
+| 服务端 | [v1.0.0-rc.39-skymoni.164-app-account](https://github.com/skyjjgw/skymoni-source/releases/download/app-account-20261022/source-skymoni-app-account-20261022.zip) | [backend](backend) |
 | 独立社区服务 | 随当前前端源码包提供 | [frontend/community-service](frontend/community-service) |
 
 目录按组件保留公开源码包的结构。编译后的 `dist` 不提交到 Git；原始版本压缩包完整保存在 Releases，下载内容与原网站提供的文件一致。
@@ -62,3 +62,9 @@ Android 包名固定为 `com.skyjjgw.independent.ski`。在服务端验证 Andro
 基于 [QuantumNous/new-api](https://github.com/QuantumNous/new-api)，保留 New API contributors 的版权及组件声明。本站修改按原项目的 AGPL-3.0-or-later 条款提供；完整许可见 [LICENSE](LICENSE)。独立组件及第三方素材同时遵循各自文件中的许可声明。
 
 此仓库仅发布原网站已经提供的对应源码。私有恢复仓库、线上账号、运行数据库和运维凭据不属于本仓库。
+## Skivu App account and update interfaces
+
+The native account authorization, narrow chat and fixed APK update contracts are
+documented in [docs/SKIVU_APP_API.md](docs/SKIVU_APP_API.md). Native account
+sessions retain ordinary relay session limits and wallet/subscription billing;
+the independently attested beta rollout is unchanged.

@@ -16,6 +16,16 @@ type AppBetaModelRoute struct {
 // Reuse the published relay catalog and the account's existing group access.
 // '*' tracks catalog changes; explicit IDs may still be used for a limited rollout.
 func AppBetaModelRoutes(userGroup string) map[string]AppBetaModelRoute {
+	return appChatModelRoutes(userGroup, AppBetaModels())
+}
+
+// Ordinary account login follows the published catalog independently of beta
+// rollout settings and retains the account's original group permissions.
+func AppAccountModelRoutes(userGroup string) map[string]AppBetaModelRoute {
+	return appChatModelRoutes(userGroup, []string{"*"})
+}
+
+func appChatModelRoutes(userGroup string, allowed []string) map[string]AppBetaModelRoute {
 	usable := GetUserUsableGroups(userGroup)
 	groups := make([]string, 0, len(usable))
 	for group := range usable {
@@ -27,7 +37,7 @@ func AppBetaModelRoutes(userGroup string) map[string]AppBetaModelRoute {
 	if userGroup != "" {
 		groups = append([]string{userGroup}, groups...)
 	}
-	routes := appBetaRoutes(model.GetPricing(), groups, AppBetaModels())
+	routes := appBetaRoutes(model.GetPricing(), groups, allowed)
 	published := GetGroupsEnabledModels(groups)
 	for name := range routes {
 		if !slices.Contains(published, name) {

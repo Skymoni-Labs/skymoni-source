@@ -95,6 +95,14 @@ func AppBetaDeviceAuth(requirePaired bool) gin.HandlerFunc {
 // Only the narrow text chat contract is exposed during beta. The original
 // signed body is verified first; model/group/billing overrides are never trusted.
 func AppBetaChatPolicy(c *gin.Context) {
+	appTextChatPolicy(c, service.AppBetaModelRoutes(c.GetString("app_beta_user_group")))
+}
+
+func AppAccountChatPolicy(c *gin.Context) {
+	appTextChatPolicy(c, service.AppAccountModelRoutes(c.GetString("app_account_user_group")))
+}
+
+func appTextChatPolicy(c *gin.Context, routes map[string]service.AppBetaModelRoute) {
 	var body struct {
 		Model    string `json:"model"`
 		Messages []struct {
@@ -120,7 +128,7 @@ func AppBetaChatPolicy(c *gin.Context) {
 		messages = body.Input
 		limit = body.MaxOutputTokens
 	}
-	route, allowed := service.AppBetaModelRoutes(c.GetString("app_beta_user_group"))[body.Model]
+	route, allowed := routes[body.Model]
 	if err == nil && (!allowed || route.Protocol != protocol || len(messages) == 0 || len(messages) > 128 || limit < 1 || limit > 4096) {
 		err = errors.New("模型或消息参数不在内测允许范围内")
 	}
@@ -130,7 +138,7 @@ func AppBetaChatPolicy(c *gin.Context) {
 		}
 	}
 	if err != nil {
-		c.AbortWithStatusJSON(400, gin.H{"success": false, "message": "请选择内测模型，输出上限须为 1–4096 tokens"})
+		c.AbortWithStatusJSON(400, gin.H{"success": false, "code": "INVALID_REQUEST", "message": "请选择可用聊天模型，输出上限须为 1–4096 tokens"})
 		return
 	}
 	var payload any = map[string]any{"model": body.Model, "messages": body.Messages, "stream": body.Stream, "max_tokens": body.MaxTokens}

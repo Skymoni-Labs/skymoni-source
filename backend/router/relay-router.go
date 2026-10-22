@@ -19,6 +19,7 @@ func SetRelayRouter(router *gin.Engine) {
 	router.Use(middleware.BodyStorageCleanup()) // 清理请求体存储
 	router.Use(middleware.StatsMiddleware())
 	registerAppBetaRelay(router)
+	registerAppAccountRelay(router)
 	router.GET("/typesafe/v1/models", middleware.RouteTag("relay"), middleware.TokenAuth(), func(c *gin.Context) {
 		controller.ListModels(c, constant.ChannelTypeTaskPlugin)
 	})
