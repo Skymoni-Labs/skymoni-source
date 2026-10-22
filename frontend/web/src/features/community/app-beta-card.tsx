@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
-import { Smartphone, FlaskConical } from 'lucide-react'
+import { Smartphone, FlaskConical, RefreshCw, ShieldCheck } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -28,6 +28,8 @@ import {
   betaSelf,
   betaStatusText,
 } from './app-beta-api'
+
+import './app-beta-card.css'
 
 export function AppBetaCard() {
   const { t } = useTranslation()
@@ -60,19 +62,34 @@ export function AppBetaCard() {
   })
   const status = account.data?.account.status
   return (
-    <Card className='border-primary/15 bg-card/80 my-4'>
-      <CardHeader>
-        <CardTitle className='flex items-center gap-2'>
-          <FlaskConical size={18} />
-          {t('Skivu App beta')}
-        </CardTitle>
-        <CardDescription>
+    <Card className='skivu-beta-card'>
+      <CardHeader className='skivu-beta-header'>
+        <div className='skivu-beta-heading'>
+          <span className='skivu-beta-icon' aria-hidden='true'>
+            <FlaskConical size={23} strokeWidth={1.6} />
+          </span>
+          <div className='skivu-beta-heading-text'>
+            <span className='skivu-beta-eyebrow' aria-hidden='true'>
+              SKIVU · EARLY ACCESS
+            </span>
+            <CardTitle className='skivu-beta-title'>
+              {t('Skivu App beta')}
+            </CardTitle>
+          </div>
+          {status && (
+            <span className='skivu-beta-status' data-status={status}>
+              <span aria-hidden='true' />
+              {t(betaStatusText[status])}
+            </span>
+          )}
+        </div>
+        <CardDescription className='skivu-beta-description'>
           {t(
             'Apply with your community account. Administrators review applications and assign a separate App-only allowance.'
           )}
         </CardDescription>
       </CardHeader>
-      <CardContent className='space-y-3'>
+      <CardContent className='skivu-beta-content'>
         {!user && (
           <Button
             render={<Link to='/sign-in' search={{ redirect: '/creators' }} />}
@@ -82,17 +99,16 @@ export function AppBetaCard() {
         )}
         {user && account.isPending && <p role='status'>{t('Loading...')}</p>}
         {user && account.isError && (
-          <div role='alert'>
+          <div role='alert' className='skivu-beta-notice space-y-3'>
             <p>{t('Unable to load beta status')}</p>
             <Button variant='outline' onClick={() => void account.refetch()}>
               {t('Retry')}
             </Button>
           </div>
         )}
-        {status && <p className='font-medium'>{t(betaStatusText[status])}</p>}
         {(status === 'none' || status === 'rejected') && (
           <form
-            className='space-y-2'
+            className='skivu-beta-application'
             onSubmit={(event) => {
               event.preventDefault()
               mutate.mutate('apply')
@@ -107,8 +123,13 @@ export function AppBetaCard() {
               value={application}
               onChange={(event) => setApplication(event.target.value)}
               placeholder={t('Tell us what you would like to test')}
+              className='skivu-beta-note-input'
             />
-            <Button type='submit' disabled={mutate.isPending}>
+            <Button
+              className='skivu-beta-primary'
+              type='submit'
+              disabled={mutate.isPending}
+            >
               {t('Apply for beta access')}
             </Button>
             <p className='text-muted-foreground text-xs'>
@@ -117,43 +138,45 @@ export function AppBetaCard() {
           </form>
         )}
         {status === 'pending' && (
-          <p className='text-muted-foreground text-sm'>
+          <p className='skivu-beta-notice text-sm'>
             {t(
               'Your application is awaiting administrator review. Refresh this card to check progress.'
             )}
           </p>
         )}
         {account.data?.account.review_note && (
-          <p className='text-sm'>
+          <p className='skivu-beta-notice text-sm'>
             {t('Review note')}: {account.data.account.review_note}
           </p>
         )}
         {status === 'approved' && (
           <>
-            <div className='flex flex-wrap gap-x-5 gap-y-1 text-sm'>
-              <span>
-                {t('Beta balance')}:{' '}
-                <strong>
-                  {formatQuota(account.data?.account.balance ?? 0)}
-                </strong>
-              </span>
-              <span>
-                {t('Reserved')}:{' '}
-                {formatQuota(account.data?.account.reserved ?? 0)}
-              </span>
-              <span>
-                {t('Beta used')}: {formatQuota(account.data?.account.used ?? 0)}
-              </span>
-            </div>
+            <dl className='skivu-beta-allowance'>
+              <div className='skivu-beta-metric skivu-beta-metric-main'>
+                <dt>{t('Beta balance')}</dt>
+                <dd>{formatQuota(account.data?.account.balance ?? 0)}</dd>
+              </div>
+              <div className='skivu-beta-metric'>
+                <dt>{t('Reserved')}</dt>
+                <dd>{formatQuota(account.data?.account.reserved ?? 0)}</dd>
+              </div>
+              <div className='skivu-beta-metric'>
+                <dt>{t('Beta used')}</dt>
+                <dd>{formatQuota(account.data?.account.used ?? 0)}</dd>
+              </div>
+            </dl>
             {!account.data?.app_available && (
-              <p className='text-muted-foreground text-sm'>
-                {t(
-                  'App connection is not open yet. Your approved allowance is reserved for the App.'
-                )}
+              <p className='skivu-beta-connection-note'>
+                <ShieldCheck size={15} aria-hidden='true' />
+                <span>
+                  {t(
+                    'App connection is not open yet. Your approved allowance is reserved for the App.'
+                  )}
+                </span>
               </p>
             )}
-            <div className='flex flex-wrap items-end gap-2'>
-              <div className='space-y-1'>
+            <div className='skivu-beta-pairing'>
+              <div className='skivu-beta-pair-field'>
                 <Label htmlFor='beta-pair'>
                   {t('Pairing code shown in the App')}
                 </Label>
@@ -164,9 +187,11 @@ export function AppBetaCard() {
                   autoComplete='off'
                   onChange={(event) => setCode(event.target.value)}
                   placeholder='ABCD-EF01-2345-6789'
+                  className='skivu-beta-code'
                 />
               </div>
               <Button
+                className='skivu-beta-primary'
                 disabled={
                   mutate.isPending ||
                   !account.data?.app_available ||
@@ -174,14 +199,12 @@ export function AppBetaCard() {
                 }
                 onClick={() => setPairOpen(true)}
               >
+                <Smartphone size={15} aria-hidden='true' />
                 {t('Connect my App')}
               </Button>
             </div>
             {account.data?.devices?.map((device) => (
-              <div
-                key={device.id}
-                className='flex items-center justify-between gap-2 text-sm'
-              >
+              <div key={device.id} className='skivu-beta-device'>
                 <span className='flex items-center gap-2'>
                   <Smartphone size={16} />
                   {device.label || t('Android device')}
@@ -200,11 +223,17 @@ export function AppBetaCard() {
         )}
         {user && (
           <Button
+            className='skivu-beta-refresh'
             size='sm'
             variant='ghost'
             disabled={account.isFetching}
             onClick={() => void account.refetch()}
           >
+            <RefreshCw
+              size={13}
+              className={account.isFetching ? 'animate-spin' : undefined}
+              aria-hidden='true'
+            />
             {t('Refresh status')}
           </Button>
         )}

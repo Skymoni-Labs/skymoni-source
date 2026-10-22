@@ -1,0 +1,325 @@
+/* Local presentation only: the beta account, actions and eligibility stay in
+   app-beta-card.tsx. Keep this surface independent of other community cards. */
+#root .skivu-beta-card {
+  --beta-accent: color-mix(in srgb, var(--primary) 75%, #679bb5);
+  --beta-line: color-mix(in srgb, var(--beta-accent) 15%, transparent);
+  position: relative;
+  isolation: isolate;
+  gap: 0;
+  margin-block: 16px;
+  padding: 0;
+  border: 1px solid var(--beta-line);
+  border-radius: 24px;
+  background: linear-gradient(125deg, #fffcf5ed, #ffffffed 48%, #edf3ffb8);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 8px 28px #6d80aa08;
+  --tw-ring-shadow: 0 0 #0000;
+}
+
+.skivu-beta-header {
+  position: relative;
+  overflow: hidden;
+  gap: 14px;
+  padding: 24px 26px 20px;
+}
+
+.skivu-beta-header::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -66px -32px auto auto;
+  width: 215px;
+  height: 165px;
+  border: 1px solid var(--beta-line);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 18px #b5c9ed0a,
+    0 0 0 36px #b5c9ed09;
+  transform: rotate(-25deg);
+  pointer-events: none;
+}
+
+.skivu-beta-heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.skivu-beta-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #ffffffdf;
+  border-radius: 16px;
+  color: var(--beta-accent);
+  background: linear-gradient(145deg, #e1f2fc, #ebe8fb);
+  box-shadow:
+    0 4px 12px #7e9cc314,
+    inset 0 1px 0 #fff;
+}
+
+.skivu-beta-heading-text {
+  flex: 1;
+  min-width: 140px;
+}
+.skivu-beta-eyebrow {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--beta-accent);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+.skivu-beta-title {
+  font-size: 19px;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+.skivu-beta-description {
+  max-width: 560px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.skivu-beta-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--beta-line);
+  border-radius: 999px;
+  color: var(--beta-accent);
+  background: color-mix(in srgb, var(--beta-accent) 6%, transparent);
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.skivu-beta-status > span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.skivu-beta-status[data-status='approved'] {
+  color: #478877;
+  background: #71bd9b12;
+  border-color: #71bd9b30;
+}
+.skivu-beta-status[data-status='pending'] {
+  color: #9a783e;
+  background: #c6a46512;
+  border-color: #c6a46530;
+}
+
+.skivu-beta-content {
+  display: grid;
+  gap: 16px;
+  padding: 0 26px 18px;
+}
+.skivu-beta-allowance {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--beta-line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--beta-accent) 3%, transparent);
+}
+.skivu-beta-metric {
+  min-width: 0;
+  padding: 16px 18px;
+}
+.skivu-beta-metric + .skivu-beta-metric {
+  border-inline-start: 1px solid var(--beta-line);
+}
+.skivu-beta-metric dt {
+  margin-bottom: 7px;
+  color: var(--muted-foreground);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.skivu-beta-metric dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 20px;
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+}
+.skivu-beta-metric-main {
+  background: linear-gradient(125deg, #d8ecfa70, #dfe6f530);
+}
+.skivu-beta-metric-main dd {
+  color: var(--beta-accent);
+  font-weight: 650;
+}
+.skivu-beta-connection-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: -3px 0 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.75;
+}
+.skivu-beta-connection-note svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--beta-accent);
+}
+.skivu-beta-pairing {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 2px;
+}
+.skivu-beta-pair-field {
+  display: grid;
+  flex: 1;
+  min-width: 180px;
+  gap: 9px;
+}
+.skivu-beta-pair-field label,
+.skivu-beta-application > label {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  font-weight: 500;
+}
+#root .skivu-beta-code {
+  height: 38px;
+  border-color: var(--beta-line);
+  border-radius: 11px;
+  background: #ffffff80;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+#root .skivu-beta-primary {
+  min-height: 38px;
+  border-radius: 11px;
+  padding-inline: 16px;
+  box-shadow: 0 3px 8px color-mix(in srgb, var(--primary) 12%, transparent);
+  font-size: 12px;
+}
+.skivu-beta-application {
+  display: grid;
+  gap: 12px;
+}
+.skivu-beta-application > button {
+  justify-self: start;
+}
+#root .skivu-beta-note-input {
+  min-height: 84px;
+  border-color: var(--beta-line);
+  border-radius: 12px;
+  background: #ffffff70;
+}
+.skivu-beta-notice {
+  padding: 14px 16px;
+  border: 1px solid var(--beta-line);
+  border-radius: 12px;
+  color: var(--muted-foreground);
+  background: color-mix(in srgb, var(--beta-accent) 4%, transparent);
+  line-height: 1.75;
+}
+.skivu-beta-device {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--beta-line);
+  border-radius: 12px;
+  font-size: 12px;
+}
+#root .skivu-beta-refresh {
+  justify-self: end;
+  height: 28px;
+  padding-inline: 8px;
+  border-radius: 8px;
+  color: var(--muted-foreground);
+  font-size: 11px;
+}
+
+.dark #root .skivu-beta-card {
+  --beta-accent: color-mix(in srgb, var(--primary) 45%, #a5c8ee);
+  --beta-line: #a3c1eb24;
+  background: linear-gradient(125deg, #243b523d, #131e30bf 65%, #29345373);
+  box-shadow:
+    inset 0 1px 0 #dff0ff16,
+    0 8px 28px #00030e24;
+}
+.dark .skivu-beta-icon {
+  background: linear-gradient(145deg, #34526e, #3d4267);
+  border-color: #afceef38;
+  box-shadow: inset 0 1px 0 #ffffff14;
+}
+.dark .skivu-beta-status[data-status='approved'] {
+  color: #a2d9bf;
+}
+.dark .skivu-beta-status[data-status='pending'] {
+  color: #e1c992;
+}
+.dark .skivu-beta-metric-main {
+  background: linear-gradient(125deg, #7fb8e01c, #839be40a);
+}
+.dark #root :is(.skivu-beta-code, .skivu-beta-note-input) {
+  background: #0c1a2e52;
+}
+
+@media (max-width: 480px) {
+  #root .skivu-beta-card {
+    border-radius: 20px;
+  }
+  .skivu-beta-header {
+    padding: 20px 18px 16px;
+  }
+  .skivu-beta-content {
+    padding: 0 18px 16px;
+    gap: 14px;
+  }
+  .skivu-beta-heading {
+    gap: 10px;
+  }
+  .skivu-beta-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+  }
+  .skivu-beta-heading-text {
+    min-width: 115px;
+  }
+  .skivu-beta-title {
+    font-size: 17px;
+  }
+  .skivu-beta-eyebrow {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+  .skivu-beta-status {
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+  .skivu-beta-metric {
+    padding: 13px 10px;
+  }
+  .skivu-beta-metric dt {
+    font-size: 10px;
+  }
+  .skivu-beta-metric dd {
+    font-size: 18px;
+  }
+  .skivu-beta-pairing > button {
+    flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skivu-beta-refresh svg {
+    animation: none;
+  }
+}
