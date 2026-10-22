@@ -8,6 +8,9 @@ import (
 
 func registerAppAccountAPIs(api *gin.RouterGroup) {
 	app := api.Group("/app-account", middleware.DisableCache(), middleware.AnonymousRequestBodyLimit())
+	app.GET("/login/options", controller.AppNativeLoginOptions)
+	app.POST("/login", middleware.LoginRateLimit(), middleware.TurnstileCheck(), controller.AppNativeLogin)
+	app.POST("/login/verify", middleware.CriticalRateLimit(), controller.AppNativeVerifyLogin)
 	app.POST("/authorize", middleware.AppAccountAuthorizationRateLimit(), controller.AppAccountAuthorize)
 	app.POST("/token", middleware.AppAccountPollRateLimit(), controller.AppAccountToken)
 	browser := app.Group("", middleware.UserAuth(), middleware.AppAccountBrowserSession)
@@ -16,10 +19,11 @@ func registerAppAccountAPIs(api *gin.RouterGroup) {
 	native := app.Group("", middleware.AppAccountRequestRateLimit(), middleware.AppAccountAuth(false))
 	native.GET("/me", controller.AppAccountMe)
 	native.GET("/models", controller.AppAccountModels)
+	native.GET("/beta-status", controller.AppAccountBetaStatus)
 	native.DELETE("/session", controller.AppAccountLogout)
 }
 func registerAppAccountRelay(router *gin.Engine) {
-	app := router.Group("/api/app-account", middleware.RouteTag("relay"), middleware.DisableCache(), middleware.SystemPerformanceCheck(), middleware.AppAccountRequestRateLimit(), middleware.AppAccountAuth(true), middleware.AppAccountChatPolicy, middleware.ModelRequestRateLimit(), middleware.Distribute())
+	app := router.Group("/api/app-account", middleware.RouteTag("relay"), middleware.DisableCache(), middleware.SystemPerformanceCheck(), middleware.AppAccountRequestRateLimit(), middleware.AppAccountAuth(true), middleware.AppAccountFunding, middleware.AppAccountChatPolicy, middleware.ModelRequestRateLimit(), middleware.Distribute())
 	app.POST("/chat/completions", controller.AppBetaRelay)
 	app.POST("/responses", controller.AppBetaRelay)
 }

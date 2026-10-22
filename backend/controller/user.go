@@ -216,6 +216,19 @@ func setupLoginAtAuthVersion(user *model.User, expectedAuthVersion int64, c *gin
 }
 
 func writeLoginResponse(c *gin.Context, user *model.User, bundle *service.AuthBundle) {
+	if service.IsAppNativeLoginMethod(bundle.Session.LoginMethod) {
+		token, native, err := service.BindAppNativeLogin(bundle, user)
+		if err != nil {
+			writeAuthSessionError(c, err)
+			return
+		}
+		c.Set("login_method", bundle.Session.LoginMethod)
+		model.UpdateUserLastLoginAt(user.Id)
+		setAuthNoStore(c)
+		recordLoginAudit(user, c)
+		c.JSON(http.StatusOK, gin.H{"success": true, "data": gin.H{"access_token": token, "token_type": "AppAccount", "expires_at": native.ExpiresAt, "session_id": native.SID}})
+		return
+	}
 	c.Set("community_scope", service.CommunitySession(bundle.Session.LoginMethod))
 	c.Request.Header.Del(service.CommunityScopeHeader)
 	c.Set("login_method", bundle.Session.LoginMethod)

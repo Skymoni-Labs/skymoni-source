@@ -46,7 +46,8 @@ func approveAppAccountTest(t *testing.T, user *model.User) (string, string, stri
 }
 func nativeAppRequest(method, path, body, token string, handler gin.HandlerFunc) *httptest.ResponseRecorder {
 	r := gin.New()
-	r.Handle(method, path, middleware.AppAccountAuth(false), handler)
+	routePath, _, _ := strings.Cut(path, "?")
+	r.Handle(method, routePath, middleware.AppAccountAuth(false), handler)
 	w := httptest.NewRecorder()
 	req := httptest.NewRequest(method, path, strings.NewReader(body))
 	req.Header.Set("Authorization", "AppAccount "+token)

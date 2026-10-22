@@ -4,15 +4,77 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"errors"
+	"os"
 	"regexp"
+	"strings"
 	"time"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/model"
+	"gorm.io/gorm"
 )
 
 var appPKCEVerifier = regexp.MustCompile(`^[A-Za-z0-9._~-]{43,128}$`)
 var appPKCEChallenge = regexp.MustCompile(`^[A-Za-z0-9_-]{43}$`)
+
+const AppNativeLoginMethod = "skivu_app:password"
+
+func AppAccountBetaEnabled() bool { return os.Getenv("SKYMONI_APP_ACCOUNT_BETA_ENABLED") == "1" }
+
+func IsAppNativeLoginMethod(method string) bool { return strings.HasPrefix(method, "skivu_app:") }
+
+// The shared primary/MFA login pipeline owns the LoginMethod. A caller cannot
+// convert an ordinary browser login flow by adding a request flag/header.
+func RequireAppNativeLoginFlow(token string) error {
+	flow, err := model.GetAuthFlow(token, model.AuthFlowMatch{Purpose: model.AuthFlowPurposeLoginVerification})
+	if err != nil {
+		return err
+	}
+	var payload loginFlowPayload
+	if common.UnmarshalJsonStr(flow.Payload, &payload) != nil || !IsAppNativeLoginMethod(payload.LoginMethod) {
+		return model.ErrAuthFlowInvalid
+	}
+	return nil
+}
+
+// Convert only an already verified, counted native-origin login session. Its
+// dashboard JWT/refresh secret stay server-side and are never returned or set
+// as cookies. This preserves the site's complete primary/MFA/risk pipeline.
+func BindAppNativeLogin(bundle *AuthBundle, user *model.User) (string, *model.AppAccountSession, error) {
+	if bundle == nil || user == nil || !IsAppNativeLoginMethod(bundle.Session.LoginMethod) {
+		return "", nil, model.ErrAuthFlowInvalid
+	}
+	identity, err := ParseAccessToken(bundle.AccessToken)
+	if err != nil {
+		return "", nil, err
+	}
+	token, err := AppBetaRandom(32)
+	if err != nil {
+		return "", nil, err
+	}
+	native := model.AppAccountSession{TokenHash: AppBetaHash(token), SID: identity.SessionID, UserID: identity.UserID, DeviceName: "Skivu Android", ExpiresAt: bundle.Session.ExpiresAt, CreatedAt: time.Now().Unix()}
+	err = model.DB.Transaction(func(tx *gorm.DB) error {
+		if err := model.ValidateAuthSessionWithTx(tx, identity); err != nil {
+			return err
+		}
+		if identity.UserID != user.Id {
+			return model.ErrAuthFlowInvalid
+		}
+		result := tx.Model(&model.UserSession{}).Where("sid = ? AND user_id = ? AND login_method = ?", identity.SessionID, identity.UserID, bundle.Session.LoginMethod).Update("login_method", "skivu_app")
+		if result.Error != nil {
+			return result.Error
+		}
+		if result.RowsAffected != 1 {
+			return model.ErrAuthFlowInvalid
+		}
+		return tx.Create(&native).Error
+	})
+	if err != nil {
+		_, _ = model.RevokeUserSession(user.Id, identity.SessionID, "app_login_issue_failed")
+		return "", nil, err
+	}
+	return token, &native, nil
+}
 
 func AppAccountChallenge(verifier string) (string, error) {
 	if !appPKCEVerifier.MatchString(verifier) {

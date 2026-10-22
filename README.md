@@ -8,8 +8,8 @@
 
 | 组件 | 在线版本对应源码 | 浏览目录 |
 | --- | --- | --- |
-| 前端 | [App 登录与更新版，2026-10-22](https://github.com/skyjjgw/skymoni-source/releases/download/app-account-20261022/source-skymoni-app-account-20261022.zip) | [frontend/web](frontend/web) |
-| 服务端 | [v1.0.0-rc.39-skymoni.164-app-account](https://github.com/skyjjgw/skymoni-source/releases/download/app-account-20261022/source-skymoni-app-account-20261022.zip) | [backend](backend) |
+| 前端 | [App 登录与更新版，2026-10-22](https://github.com/skyjjgw/skymoni-source/releases/download/app-native-login-20261022/source-skymoni-app-native-login-20261022.zip) | [frontend/web](frontend/web) |
+| 服务端 | [v1.0.0-rc.39-skymoni.165-app-native-login](https://github.com/skyjjgw/skymoni-source/releases/download/app-native-login-20261022/source-skymoni-app-native-login-20261022.zip) | [backend](backend) |
 | 独立社区服务 | 随当前前端源码包提供 | [frontend/community-service](frontend/community-service) |
 
 目录按组件保留公开源码包的结构。编译后的 `dist` 不提交到 Git；原始版本压缩包完整保存在 Releases，下载内容与原网站提供的文件一致。
@@ -66,5 +66,6 @@ Android 包名固定为 `com.skyjjgw.independent.ski`。在服务端验证 Andro
 
 The native account authorization, narrow chat and fixed APK update contracts are
 documented in [docs/SKIVU_APP_API.md](docs/SKIVU_APP_API.md). Native account
-sessions retain ordinary relay session limits and wallet/subscription billing;
-the independently attested beta rollout is unchanged.
+sessions retain ordinary relay session limits. Chat can select the existing
+wallet/subscription preference or the administrator-approved account-beta ledger;
+the separate legacy hardware-attested API gate is unchanged.

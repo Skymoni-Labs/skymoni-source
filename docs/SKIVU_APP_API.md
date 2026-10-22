@@ -1,10 +1,53 @@
 # Skivu Android account and update API
 
-These endpoints use the existing relay account wallet, subscription preference,
-model catalog and permitted groups. They never select beta funding. The separate
-Android hardware-attested beta service retains its original rollout gate.
+These endpoints support the existing relay wallet/subscription preference and an
+explicitly selected, administrator-approved account-beta ledger. Catalog/group
+permissions remain server-controlled. The separate legacy Android hardware-
+attested BetaDevice API retains its original rollout gate; it is not a prerequisite
+for the new account-eligibility channel.
 
-## Browser-assisted account sign-in
+## Direct native account sign-in (primary path)
+
+`GET /api/app-account/login/options` returns:
+
+```json
+{"success":true,"data":{"password_login_enabled":true,"encryption":{"enabled":true,"kid":"public-key-id","public_key":"SPKI PEM","algorithm":"RSA-OAEP-SHA256","mgf1_hash":"SHA256"},"captcha":{"required":false,"site_key":""},"browser_fallback_supported":true}}
+```
+
+When encryption is disabled only `encryption.enabled` is present. When enabled,
+fetch the current public key and send standard-base64 RSA-OAEP ciphertext using
+SHA-256 for OAEP and MGF1, with an empty label. The existing `v2.` RSA-wrapped
+AES-256-GCM envelope is also accepted by the shared password implementation.
+
+`POST /api/app-account/login` accepts `{username,password}` when site encryption
+is disabled, or `{username,password_encrypted,encryption_key_id}` when enabled.
+It uses the original LOGIN rate-limit bucket, password verification, configured
+Turnstile check, MFA policy and relay session limits. Send credentials only in
+an HTTPS POST body, never in query strings, logs or persisted application state.
+When Turnstile is required the existing `?turnstile=<verified-response>` convention
+applies; use the system-browser authorization fallback if a native challenge
+cannot be completed. No protection is disabled for the native endpoint.
+
+Success returns `data:{access_token,token_type:"AppAccount",expires_at,session_id}`.
+It returns **no dashboard JWT or refresh cookie**. If an additional factor is
+required, HTTP 200 returns `success:true,data:{require_verification:true,flow_token,
+expires_at,methods:[{method:"2fa"|"passkey",available,reason?}]}` instead of a session.
+
+`POST /api/app-account/login/verify` accepts `{flow_token,method:"2fa",code}` for
+TOTP or a one-use backup code. It accepts only native-origin login flows and
+returns the same restricted AppAccount session after successful verification.
+The shared factor lockout, challenge expiry, auth-version and single-use checks
+remain active. Passkey-only or CAPTCHA ceremonies can use the existing browser
+fallback below; do not silently ignore a required factor. A browser-origin MFA
+flow cannot be submitted to the native endpoint to obtain broader credentials.
+
+All primary-login failures retain the site's original `success:false,message`
+and available authentication error codes (some use HTTP 200). Always check
+`success`, not just the HTTP status. Invalid native verification requests return
+400 INVALID_REQUEST. Passwords, ciphertext, OTPs and raw tokens are not added to
+login audit records.
+
+## Optional browser-assisted sign-in
 
 The Android app generates a cryptographically random PKCE verifier (43–128
 characters from `A-Z a-z 0-9 . _ ~ -`). Its challenge is unpadded base64url of
@@ -54,7 +97,9 @@ API keys, PATs, community sessions and native credentials cannot approve grants.
 Use `Authorization: AppAccount <access_token>` on:
 
 * `GET /api/app-account/me`
-* `GET /api/app-account/models`
+* `GET /api/app-account/models` (ordinary catalog)
+* `GET /api/app-account/models?funding=beta` (approved account-beta catalog)
+* `GET /api/app-account/beta-status` (current account only)
 * `DELETE /api/app-account/session` (revoke this native login)
 
 `/me` data:
@@ -80,12 +125,48 @@ Billing preference and per-plan wallet-overflow rules remain authoritative.
 
 `/models` data is `{models:["model-id"],model_protocols:{"model-id":"chat"},quota_per_unit:...}`.
 Protocol values are `chat` or `responses`. The server chooses the allowed route
-group. The app must not request a different group or channel.
+group. The app must not request a different group or channel. `funding=beta`
+requires an approved account and enabled account-beta channel; zero remaining
+beta credit does not hide the catalog. Both sources follow the user-approved
+policy of all published chat models within the account's existing permitted
+groups. No separate beta-only model group has been created or opened.
+
+## Account-beta status and administrator control
+
+`/me` additionally includes `beta`; `/beta-status` returns that object as `data`:
+
+```json
+{"account":{"user_id":123,"status":"approved","balance":90000,"reserved":10000,"used":5000,"version":7,"application":"","review_note":""},"account_approved":true,"channel_enabled":true,"requires_device_proof":false,"can_chat":true,"blocked_reason":"","application_url":"https://skymoni.com/creators","quota_per_unit":100000000}
+```
+
+Status strings are `none`, `pending`, `approved`, `rejected`, `suspended`.
+There is no `disabled` account status. Channel disablement is the independent
+`channel_enabled` flag and must not be displayed as “not enrolled”. `balance`
+is **already available credit after reservation**; do not subtract `reserved`
+again. Display `reserved` and `used` separately. `can_chat` requires approved
+status, enabled channel and positive balance. `blocked_reason` is NOT_APPROVED,
+CHANNEL_DISABLED, QUOTA_EXHAUSTED or an empty string. The website application
+entry remains at `application_url`. Only administrators approve/suspend and
+assign or adjust the independent allowance; registering or applying grants none.
+
+The new account-beta path uses the native account's server-side identity,
+approval state, model permissions, rate limits and original transactional beta
+reservation/settlement/refund ledger. It does not require device pairing. Its
+rollout switch is `SKYMONI_APP_ACCOUNT_BETA_ENABLED=1`, independent of the unchanged
+legacy `SKYMONI_APP_BETA_ENABLED` hardware-attested API. Native sessions, API keys,
+wallet balances or client-supplied status/amount/user IDs cannot create approval.
 
 ## Chat
 
 * `POST /api/app-account/chat/completions`: `{model,messages,stream,max_tokens}`
 * `POST /api/app-account/responses`: `{model,input,instructions,stream,max_output_tokens}`
+
+Both chat bodies accept optional `funding:"relay"|"beta"`; omitted means relay
+for compatibility. Relay uses the original wallet/subscription preference. Beta
+uses only the current authenticated account's administrator-approved beta ledger.
+No missing approval, suspension, exhaustion or failure falls back to the relay
+wallet. Explicit invalid/null/empty funding values return 400 INVALID_REQUEST.
+The funding field is removed before forwarding upstream.
 
 Messages/input contain 1–128 `{role,content}` entries. Roles are system/user/
 assistant and content is a text string. Output limit is explicitly 1–4096.
@@ -93,7 +174,7 @@ Maximum body is 256 KiB (`413 REQUEST_TOO_LARGE`). Responses uses `store:false`.
 Do not send tools, attachments, billing overrides or `stream_options`; the server
 reconstructs a narrow allowed payload. Invalid contract/model returns
 `400 INVALID_REQUEST`. Successful JSON and SSE are the native OpenAI-compatible
-format of the selected protocol. Original relay errors/pricing/charging apply.
+format of the selected protocol. Original pricing remains authoritative. Beta precheck errors are 403 BETA_NOT_APPROVED, 403 BETA_QUOTA_EXHAUSTED or 503 BETA_CHANNEL_DISABLED; further reservation failures retain the existing insufficient-quota response and never change funding source.
 
 ## Updates
 

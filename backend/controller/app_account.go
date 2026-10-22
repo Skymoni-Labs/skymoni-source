@@ -127,9 +127,56 @@ func AppAccountMe(c *gin.Context) {
 		}
 		items = append(items, gin.H{"id": s.Id, "plan_id": s.PlanId, "total": s.AmountTotal, "used": s.AmountUsed, "remaining": remaining, "unlimited": s.AmountTotal == 0, "expires_at": s.EndTime, "reset_at": s.NextResetTime, "allow_wallet_overflow": s.AllowWalletOverflow})
 	}
-	appAccountJSON(c, gin.H{"user": gin.H{"id": user.Id, "username": user.Username, "display_name": user.DisplayName, "group": user.Group}, "wallet": gin.H{"balance": balance, "used": user.UsedQuota, "request_count": user.RequestCount}, "billing_preference": common.NormalizeBillingPreference(setting.BillingPreference), "subscriptions": items, "quota_per_unit": common.QuotaPerUnit, "currency": "USD", "session": gin.H{"id": session.SID, "expires_at": session.ExpiresAt, "device_name": session.DeviceName}}, nil)
+	beta, err := appAccountBetaData(user.Id)
+	if err != nil {
+		appAccountJSON(c, nil, err)
+		return
+	}
+	appAccountJSON(c, gin.H{"user": gin.H{"id": user.Id, "username": user.Username, "display_name": user.DisplayName, "group": user.Group}, "wallet": gin.H{"balance": balance, "used": user.UsedQuota, "request_count": user.RequestCount}, "billing_preference": common.NormalizeBillingPreference(setting.BillingPreference), "subscriptions": items, "quota_per_unit": common.QuotaPerUnit, "currency": "USD", "beta": beta, "session": gin.H{"id": session.SID, "expires_at": session.ExpiresAt, "device_name": session.DeviceName}}, nil)
+}
+
+func appAccountBetaData(userID int) (gin.H, error) {
+	a, err := model.GetAppBetaAccount(userID)
+	if err != nil {
+		return nil, err
+	}
+	enabled := service.AppAccountBetaEnabled()
+	approved := a.Status == "approved"
+	reason := ""
+	if !approved {
+		reason = "NOT_APPROVED"
+	} else if !enabled {
+		reason = "CHANNEL_DISABLED"
+	} else if a.Balance <= 0 {
+		reason = "QUOTA_EXHAUSTED"
+	}
+	return gin.H{"account": a, "account_approved": approved, "channel_enabled": enabled, "requires_device_proof": false, "can_chat": approved && enabled && a.Balance > 0, "blocked_reason": reason, "application_url": "https://skymoni.com/creators", "quota_per_unit": common.QuotaPerUnit}, nil
+}
+func AppAccountBetaStatus(c *gin.Context) {
+	data, err := appAccountBetaData(c.GetInt("id"))
+	appAccountJSON(c, data, err)
 }
 func AppAccountModels(c *gin.Context) {
+	funding := c.DefaultQuery("funding", "relay")
+	if funding != "relay" && funding != "beta" {
+		appAccountJSON(c, nil, model.ErrAppGrantInvalid)
+		return
+	}
+	if funding == "beta" {
+		if !service.AppAccountBetaEnabled() {
+			c.JSON(503, gin.H{"success": false, "code": "BETA_CHANNEL_DISABLED", "message": "账号内测通道暂未开放"})
+			return
+		}
+		a, err := model.GetAppBetaAccount(c.GetInt("id"))
+		if err != nil {
+			appAccountJSON(c, nil, err)
+			return
+		}
+		if a.Status != "approved" {
+			c.JSON(403, gin.H{"success": false, "code": "BETA_NOT_APPROVED", "message": "账号内测尚未开通或已暂停"})
+			return
+		}
+	}
 	models := []string{}
 	protocols := map[string]string{}
 	for name, route := range service.AppAccountModelRoutes(c.GetString("app_account_user_group")) {

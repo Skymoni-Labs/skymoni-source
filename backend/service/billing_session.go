@@ -410,8 +410,8 @@ func NewBillingSession(c *gin.Context, relayInfo *relaycommon.RelayInfo, preCons
 	}
 
 	if relayInfo.IsAppBeta {
-		if !c.GetBool("app_beta_authenticated") || c.GetInt("id") != relayInfo.UserId {
-			return nil, types.NewError(fmt.Errorf("beta device authentication required"), types.ErrorCodeAccessDenied, types.ErrOptionWithSkipRetry())
+		if (!c.GetBool("app_beta_authenticated") && !c.GetBool("app_account_beta_authenticated")) || c.GetInt("id") != relayInfo.UserId {
+			return nil, types.NewError(fmt.Errorf("beta authentication required"), types.ErrorCodeAccessDenied, types.ErrOptionWithSkipRetry())
 		}
 		session := &BillingSession{relayInfo: relayInfo, funding: &AppBetaFunding{userID: relayInfo.UserId, requestID: relayInfo.RequestId}}
 		if apiErr := session.preConsume(c, max(1, preConsumedQuota)); apiErr != nil {

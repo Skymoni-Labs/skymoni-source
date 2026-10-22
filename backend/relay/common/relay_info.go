@@ -633,7 +633,7 @@ func genBaseRelayInfo(c *gin.Context, request dto.Request) *RelayInfo {
 		info.RelayMode = c.GetInt("relay_mode")
 	}
 
-	if c.GetBool("app_beta_authenticated") {
+	if c.GetBool("app_beta_authenticated") || c.GetBool("app_account_beta_authenticated") {
 		info.IsAppBeta = true
 		info.IsPlayground = true
 	}
