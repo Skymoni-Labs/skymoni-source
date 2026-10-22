@@ -48,6 +48,17 @@ func (s *BillingSession) Settle(actualQuota int) error {
 	if s.settled {
 		return nil
 	}
+	if s.relayInfo.IsAppBeta {
+		if s.refunded || actualQuota < 0 {
+			return fmt.Errorf("invalid beta settlement")
+		}
+		if err := s.funding.Settle(actualQuota - s.preConsumedQuota); err != nil {
+			return err
+		}
+		s.fundingSettled = true
+		s.settled = true
+		return nil
+	}
 	delta := actualQuota - s.preConsumedQuota
 	if delta == 0 {
 		s.settled = true
@@ -86,6 +97,15 @@ func (s *BillingSession) Settle(actualQuota int) error {
 func (s *BillingSession) Refund(c *gin.Context) {
 	s.mu.Lock()
 	if s.settled || s.refunded || !s.needsRefundLocked() {
+		s.mu.Unlock()
+		return
+	}
+	if s.relayInfo.IsAppBeta {
+		if err := s.funding.Refund(); err != nil {
+			common.SysError("beta refund failed for request " + s.relayInfo.RequestId)
+		} else {
+			s.refunded = true
+		}
 		s.mu.Unlock()
 		return
 	}
@@ -137,6 +157,9 @@ func (s *BillingSession) needsRefundLocked() bool {
 	if s.settled || s.refunded || s.fundingSettled {
 		// fundingSettled 时资金来源已提交结算，不能再退预扣费
 		return false
+	}
+	if beta, ok := s.funding.(*AppBetaFunding); ok && beta.reserved > 0 {
+		return true
 	}
 	if s.tokenConsumed > 0 {
 		return true
@@ -226,6 +249,9 @@ func (s *BillingSession) preConsume(c *gin.Context, quota int) *types.NewAPIErro
 			s.tokenConsumed = 0
 		}
 		// TODO: model 层应定义哨兵错误（如 ErrNoActiveSubscription），用 errors.Is 替代字符串匹配
+		if errors.Is(err, model.ErrBetaQuota) || errors.Is(err, model.ErrBetaAccess) {
+			return types.NewErrorWithStatusCode(err, types.ErrorCodeInsufficientUserQuota, http.StatusForbidden, types.ErrOptionWithSkipRetry(), types.ErrOptionWithNoRecordErrorLog())
+		}
 		if errors.Is(err, ErrInsufficientWalletQuota) {
 			userQuota, quotaErr := model.GetUserQuota(s.relayInfo.UserId, false)
 			if quotaErr != nil {
@@ -253,6 +279,8 @@ func (s *BillingSession) preConsume(c *gin.Context, quota int) *types.NewAPIErro
 
 func (s *BillingSession) reserveFunding(delta int, requireAvailableQuota bool) error {
 	switch funding := s.funding.(type) {
+	case *AppBetaFunding:
+		return funding.PreConsume(delta)
 	case *WalletFunding:
 		if requireAvailableQuota {
 			// Image quantity is known before submission, including retries and
@@ -381,6 +409,16 @@ func NewBillingSession(c *gin.Context, relayInfo *relaycommon.RelayInfo, preCons
 		return nil, types.NewError(fmt.Errorf("relayInfo is nil"), types.ErrorCodeInvalidRequest, types.ErrOptionWithSkipRetry())
 	}
 
+	if relayInfo.IsAppBeta {
+		if !c.GetBool("app_beta_authenticated") || c.GetInt("id") != relayInfo.UserId {
+			return nil, types.NewError(fmt.Errorf("beta device authentication required"), types.ErrorCodeAccessDenied, types.ErrOptionWithSkipRetry())
+		}
+		session := &BillingSession{relayInfo: relayInfo, funding: &AppBetaFunding{userID: relayInfo.UserId, requestID: relayInfo.RequestId}}
+		if apiErr := session.preConsume(c, max(1, preConsumedQuota)); apiErr != nil {
+			return nil, apiErr
+		}
+		return session, nil
+	}
 	pref := common.NormalizeBillingPreference(relayInfo.UserSetting.BillingPreference)
 
 	// 钱包路径需要先检查用户额度

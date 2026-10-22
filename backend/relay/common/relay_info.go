@@ -95,6 +95,7 @@ type RelayInfo struct {
 	//SendLastReasoningResponse bool
 	IsStream               bool
 	IsGeminiBatchEmbedding bool
+	IsAppBeta              bool
 	IsPlayground           bool
 	UsePrice               bool
 	RelayMode              int
@@ -632,6 +633,10 @@ func genBaseRelayInfo(c *gin.Context, request dto.Request) *RelayInfo {
 		info.RelayMode = c.GetInt("relay_mode")
 	}
 
+	if c.GetBool("app_beta_authenticated") {
+		info.IsAppBeta = true
+		info.IsPlayground = true
+	}
 	if strings.HasPrefix(c.Request.URL.Path, "/pg") {
 		info.IsPlayground = true
 		info.RequestURLPath = strings.TrimPrefix(info.RequestURLPath, "/pg")

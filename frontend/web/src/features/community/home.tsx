@@ -19,6 +19,7 @@ import { useAuthStore } from '@/stores/auth-store'
 import { useCreatorStore } from '@/stores/creator-store'
 
 import { loadCommunityMeta, loadTopics } from './api'
+import { AppBetaCard } from './app-beta-card'
 import {
   CommunityNumber,
   CommunitySignIn,
@@ -112,6 +113,10 @@ export function CommunityHome(props: { search: CommunitySearch }) {
     <main className='sf-community-home'>
       <div className='sf-community-grid'>
         <div className='sf-feed-column'>
+          {!restricted &&
+            !search.category &&
+            !search.q &&
+            (!search.view || search.view === 'latest') && <AppBetaCard />}
           {!search.category &&
             !search.q &&
             !restricted &&

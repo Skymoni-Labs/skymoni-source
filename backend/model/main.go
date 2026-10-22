@@ -340,6 +340,7 @@ func migrateDB() error {
 		&User{},
 		&UserSession{},
 		&CommunityAccessConfig{}, &CommunityAdmission{}, &CommunityInvite{},
+		&AppBetaAccount{}, &AppBetaLedger{}, &AppBetaCharge{}, &AppBetaDevice{}, &AppBetaChallenge{}, &AppBetaNonce{},
 		&AuthFlow{},
 		&ExternalIdentityClaim{},
 		&PasskeyCredential{},

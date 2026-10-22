@@ -30,12 +30,24 @@ pnpm build
 
 ```sh
 cd backend
-CGO_ENABLED=0 go build -trimpath -ldflags="-s -w -X github.com/QuantumNous/new-api/common.Version=v1.0.0-rc.39-skymoni.162-creator-live-access" -o new-api .
+CGO_ENABLED=0 go build -trimpath -ldflags="-s -w -X github.com/QuantumNous/new-api/common.Version=v1.0.0-rc.39-skymoni.163-app-beta" -o new-api .
 ```
 
 独立社区服务的构建与运行文件位于 `frontend/community-service`。各组件内原有构建说明及修改记录一并保留；较早说明中的旧版本号对应当时的修改。
 
 部署所需的数据库、运行配置和密钥由部署者自行提供。
+
+## App 内测（2026-10-22）
+
+社区账号可申请内测，管理员在用户管理的“App 内测管理”中审核、手动分配或调整额度。注册、申请不赠送内测额度；余额、冻结预扣、实际使用及审计流水均位于独立的 `app_beta_*` 表，不回退到中转钱包或订阅。重复管理员操作、结算和退款通过唯一操作键保持幂等，管理员变更同时校验版本。意外中止留下的冻结请求保留审计，不自动猜测费用或赠送余额。
+
+专用入口默认关闭。只有配置 `SKYMONI_APP_BETA_ENABLED=1`、`SKYMONI_APP_BETA_CERT_SHA256`（正式 App 签名证书 SHA-256，支持逗号分隔轮换）和 `SKYMONI_APP_BETA_MODELS=*` 后才接收设备注册。`*` 跟随中转已发布聊天模型及账号可用分组；也可填写模型 ID 列表缩小范围。图像、嵌入、重排和音视频专用模型不作为文字聊天入口。兼容 Chat Completions 与 Responses-only 模型，使用既有定价和额度换算。
+
+Android 包名固定为 `com.skyjjgw.independent.ski`。在服务端验证 Android 官方证明链、撤销列表、TEE/StrongBox、锁定验证启动、包名与固定签名后才发出待绑定设备会话。用户须在已开通内测的社区账号内确认 App 显示的五分钟配对码。每次请求签名覆盖方法、路径、时间、随机 nonce、正文散列和会话散列；只有 bearer token、普通 API Key、请求头或来源标记均不能使用内测钱包。最多三台设备，网页可移除；账号停用/内测暂停即时拦截，重新审核需重新绑定。所有凭据仅通过 HTTPS，私钥不可导出，正式部署不能信任公共 debug 签名。
+
+本期接口仅开放文字聊天，上限为每请求 128 条消息、256 KiB 正文、4096 输出 tokens。设备不支持受信任证明或撤销服务不可达时拒绝准入，不降级为可伪造的标记。Keystore 证明与请求签名提高 App 身份保证，不承诺对已完全受控的合法设备提供绝对防滥用保证。
+
+安全参考：[Android Key Attestation](https://developer.android.com/privacy-and-security/security-key-attestation)、[OWASP Authentication](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)、[Session Management](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)、[ASVS 5.0.0](https://owasp.org/projects/asvs)。本次只验证相关鉴权、授权、过期、防重放、额度隔离与并发/退款控制，不声明整站已完成 ASVS 认证。
 
 ## 历史版本与校验
 
