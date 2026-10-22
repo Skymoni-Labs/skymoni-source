@@ -1776,5 +1776,12 @@
     "sha256": "f3d65973e5d8d39b0e8ad6ead39c37fe4690d9a47311c1ede5dd46d5fa58e47a",
     "tag": "app-beta-quota-modes-20261022",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/app-beta-quota-modes-20261022/source-skymoni-app-beta-quota-modes-20261022.zip"
+  },
+  {
+    "name": "source-skymoni-app-account-20261022.zip",
+    "bytes": 18585276,
+    "sha256": "73bc9f296dbb204b7511616e0b3b3dc8f5b5fb32da320e673653ac7354dc6a93",
+    "tag": "app-account-20261022",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/app-account-20261022/source-skymoni-app-account-20261022.zip"
   }
 ]
