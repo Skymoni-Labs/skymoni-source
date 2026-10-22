@@ -1755,5 +1755,12 @@
     "sha256": "5b227c85e5acf761c6c4e3db06bbe895310010d8286dd5f39372f5f7183a7b7f",
     "tag": "frontend-shared-display-name-20261022",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/frontend-shared-display-name-20261022/frontend-source-skymoni-shared-display-name-20261022.zip"
+  },
+  {
+    "name": "source-skymoni-app-beta-20261022.zip",
+    "bytes": 18530028,
+    "sha256": "7c5905346a8c7bffb1c13569eaa4a093eb7794adcc904d9f0ab459c019d3cbc1",
+    "tag": "app-beta-20261022",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/app-beta-20261022/source-skymoni-app-beta-20261022.zip"
   }
 ]
