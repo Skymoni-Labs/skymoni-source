@@ -320,3 +320,25 @@ test('admin can explicitly approve with zero credit and invalid requests do not 
   )
   expect(screen.getByText('#123 · Awaiting review')).toBeInTheDocument()
 })
+
+test('native account entry explains App login without suggesting the disabled legacy pairing flow', async () => {
+  fixture.self.mockResolvedValue({
+    account: { ...fixture.account, status: 'approved' },
+    devices: null,
+    app_available: false,
+  })
+  view(<AppBetaCard nativeAppLogin />)
+  expect(
+    await screen.findByText(/使用同一社区账号登录 Skivu/)
+  ).toBeInTheDocument()
+  expect(
+    screen.queryByLabelText('Pairing code shown in the App')
+  ).not.toBeInTheDocument()
+  expect(
+    screen.queryByText(
+      'App connection is not open yet. Your approved allowance is reserved for the App.'
+    )
+  ).not.toBeInTheDocument()
+  expect(fixture.pair).not.toHaveBeenCalled()
+  expect(fixture.apply).not.toHaveBeenCalled()
+})

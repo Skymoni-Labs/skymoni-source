@@ -23,7 +23,7 @@ function BetaCenter() {
       </header>
       <div className='skivu-beta-center-grid'>
         <div>
-          <AppBetaCard redirectTo='/creators/skivu-beta' />
+          <AppBetaCard redirectTo='/creators/skivu-beta' nativeAppLogin />
         </div>
         <aside>
           <span className='skivu-launch-eyebrow'>TAKE SKIVU WITH YOU</span>

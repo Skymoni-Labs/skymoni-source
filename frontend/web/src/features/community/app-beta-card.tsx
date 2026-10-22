@@ -33,8 +33,10 @@ import './app-beta-card.css'
 
 export function AppBetaCard({
   redirectTo = '/creators',
+  nativeAppLogin = false,
 }: {
   redirectTo?: string
+  nativeAppLogin?: boolean
 }) {
   const { t } = useTranslation()
   const user = useAuthStore((state) => state.auth.user)
@@ -169,44 +171,56 @@ export function AppBetaCard({
                 <dd>{formatQuota(account.data?.account.used ?? 0)}</dd>
               </div>
             </dl>
-            {!account.data?.app_available && (
+            {nativeAppLogin ? (
               <p className='skivu-beta-connection-note'>
                 <ShieldCheck size={15} aria-hidden='true' />
                 <span>
-                  {t(
-                    'App connection is not open yet. Your approved allowance is reserved for the App.'
-                  )}
+                  使用同一社区账号登录 Skivu，在 App
+                  中查看并使用内测额度。实际可用状态以 App 显示为准。
                 </span>
               </p>
+            ) : (
+              !account.data?.app_available && (
+                <p className='skivu-beta-connection-note'>
+                  <ShieldCheck size={15} aria-hidden='true' />
+                  <span>
+                    {t(
+                      'App connection is not open yet. Your approved allowance is reserved for the App.'
+                    )}
+                  </span>
+                </p>
+              )
             )}
-            <div className='skivu-beta-pairing'>
-              <div className='skivu-beta-pair-field'>
-                <Label htmlFor='beta-pair'>
-                  {t('Pairing code shown in the App')}
-                </Label>
-                <Input
-                  id='beta-pair'
-                  value={code}
-                  maxLength={19}
-                  autoComplete='off'
-                  onChange={(event) => setCode(event.target.value)}
-                  placeholder='ABCD-EF01-2345-6789'
-                  className='skivu-beta-code'
-                />
+            {(!nativeAppLogin || account.data?.app_available) && (
+              <div className='skivu-beta-pairing'>
+                <div className='skivu-beta-pair-field'>
+                  <Label htmlFor='beta-pair'>
+                    {t('Pairing code shown in the App')}
+                  </Label>
+                  <Input
+                    id='beta-pair'
+                    value={code}
+                    maxLength={19}
+                    autoComplete='off'
+                    onChange={(event) => setCode(event.target.value)}
+                    placeholder='ABCD-EF01-2345-6789'
+                    className='skivu-beta-code'
+                  />
+                </div>
+                <Button
+                  className='skivu-beta-primary'
+                  disabled={
+                    mutate.isPending ||
+                    !account.data?.app_available ||
+                    code.replaceAll('-', '').trim().length !== 16
+                  }
+                  onClick={() => setPairOpen(true)}
+                >
+                  <Smartphone size={15} aria-hidden='true' />
+                  {t('Connect my App')}
+                </Button>
               </div>
-              <Button
-                className='skivu-beta-primary'
-                disabled={
-                  mutate.isPending ||
-                  !account.data?.app_available ||
-                  code.replaceAll('-', '').trim().length !== 16
-                }
-                onClick={() => setPairOpen(true)}
-              >
-                <Smartphone size={15} aria-hidden='true' />
-                {t('Connect my App')}
-              </Button>
-            </div>
+            )}
             {account.data?.devices?.map((device) => (
               <div key={device.id} className='skivu-beta-device'>
                 <span className='flex items-center gap-2'>
