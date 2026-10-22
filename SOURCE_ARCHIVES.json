@@ -1804,5 +1804,12 @@
     "sha256": "7495b6bc9b2cc8a4f1fa9f92c587822f95a3b159e37445f54c7c0285a6a55103",
     "tag": "skivu-launch-20261023",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-launch-20261023/source-skymoni-skivu-launch-20261023.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-launch-20261023-r2.zip",
+    "bytes": 40057104,
+    "sha256": "66c367f9606f241b07abf95e87713742be854afe3a5e9a12fbab8a2ebfe4e792",
+    "tag": "skivu-launch-20261023-r2",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-launch-20261023-r2/source-skymoni-skivu-launch-20261023-r2.zip"
   }
 ]
