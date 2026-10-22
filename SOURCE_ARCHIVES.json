@@ -1762,5 +1762,12 @@
     "sha256": "7c5905346a8c7bffb1c13569eaa4a093eb7794adcc904d9f0ab459c019d3cbc1",
     "tag": "app-beta-20261022",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/app-beta-20261022/source-skymoni-app-beta-20261022.zip"
+  },
+  {
+    "name": "source-skymoni-app-beta-empty-state-20261022.zip",
+    "bytes": 18530374,
+    "sha256": "434ee63a175adb4a448d0695f75b329dd7be882ab6d19c7a97336041fca70f28",
+    "tag": "app-beta-empty-state-20261022",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/app-beta-empty-state-20261022/source-skymoni-app-beta-empty-state-20261022.zip"
   }
 ]
