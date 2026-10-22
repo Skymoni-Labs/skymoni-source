@@ -182,7 +182,7 @@ export function AppBetaManager(props: {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {list.data.items.map((item) => (
+                      {list.data.items?.map((item) => (
                         <TableRow key={item.user_id}>
                           <TableCell>
                             <strong>
@@ -208,7 +208,7 @@ export function AppBetaManager(props: {
                           </TableCell>
                         </TableRow>
                       ))}
-                      {list.data.items.length === 0 && (
+                      {!list.data.items?.length && (
                         <TableRow>
                           <TableCell colSpan={5}>
                             {t('No beta applications')}
@@ -370,7 +370,7 @@ export function AppBetaManager(props: {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {detail.data?.ledger.map((entry) => (
+                      {detail.data?.ledger?.map((entry) => (
                         <TableRow key={entry.id}>
                           <TableCell>
                             {t(`Beta ledger ${entry.kind}`)}

@@ -19,7 +19,7 @@ export type BetaAccount = {
 export type BetaDevice = { id: string; label: string; expires_at: number }
 export type BetaSelf = {
   account: BetaAccount
-  devices: BetaDevice[]
+  devices: BetaDevice[] | null
   app_available: boolean
 }
 export type BetaLedger = {
@@ -33,9 +33,9 @@ export type BetaLedger = {
   created_at: number
   actor_id: number
 }
-export type BetaDetail = { account: BetaAccount; ledger: BetaLedger[] }
+export type BetaDetail = { account: BetaAccount; ledger: BetaLedger[] | null }
 export type BetaList = {
-  items: BetaAccount[]
+  items: BetaAccount[] | null
   total: number
   app_available: boolean
 }

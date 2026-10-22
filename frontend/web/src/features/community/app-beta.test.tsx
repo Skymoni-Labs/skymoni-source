@@ -116,6 +116,30 @@ function view(component: React.ReactNode) {
     </QueryClientProvider>
   )
 }
+
+test('admin renders an empty pending list when the server returns null items', async () => {
+  fixture.list.mockResolvedValue({ items: null, total: 0, app_available: false })
+  view(<AppBetaManager open onOpenChange={vi.fn()} />)
+  expect(await screen.findByRole('table')).toBeInTheDocument()
+  expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
+  expect(fixture.error).not.toHaveBeenCalled()
+})
+
+test('approved accounts render with no bound devices when the server returns null', async () => {
+  fixture.self.mockResolvedValue({
+    account: { ...fixture.account, status: 'approved' },
+    devices: null,
+    app_available: false,
+  })
+  view(<AppBetaCard />)
+  expect(await screen.findByText('Beta enabled')).toBeInTheDocument()
+})
+
+test('admin renders an account whose ledger is still empty on the server', async () => {
+  fixture.detail.mockResolvedValue({ account: fixture.account, ledger: null })
+  view(<AppBetaManager userId={123} open onOpenChange={vi.fn()} />)
+  expect(await screen.findByLabelText('Allowance (USD)')).toBeInTheDocument()
+})
 test('visitors see the registration entry and cannot submit anonymous applications', () => {
   fixture.user = false
   view(<AppBetaCard />)

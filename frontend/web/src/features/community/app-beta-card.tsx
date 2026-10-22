@@ -177,7 +177,7 @@ export function AppBetaCard() {
                 {t('Connect my App')}
               </Button>
             </div>
-            {account.data?.devices.map((device) => (
+            {account.data?.devices?.map((device) => (
               <div
                 key={device.id}
                 className='flex items-center justify-between gap-2 text-sm'
