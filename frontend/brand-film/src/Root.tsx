@@ -1,0 +1,71 @@
+import { Composition, Folder } from "remotion";
+import { BrandFilm, WebsiteLoop } from "./open-space/Film";
+import {
+  Awakening,
+  Product,
+  Conversation,
+  Personalization,
+  Closing,
+} from "./open-space/Scenes";
+export const RemotionRoot = () => (
+  <>
+    <Composition
+      id="SkivuBrandFilm"
+      component={BrandFilm}
+      width={1920}
+      height={1080}
+      fps={30}
+      durationInFrames={1200}
+    />
+    <Composition
+      id="SkivuWebsiteLoop"
+      component={WebsiteLoop}
+      width={1920}
+      height={1080}
+      fps={30}
+      durationInFrames={300}
+    />
+    <Folder name="Open-Space">
+      <Composition
+        id="Awakening"
+        component={Awakening}
+        width={1920}
+        height={1080}
+        fps={30}
+        durationInFrames={150}
+      />
+      <Composition
+        id="Product"
+        component={Product}
+        width={1920}
+        height={1080}
+        fps={30}
+        durationInFrames={210}
+      />
+      <Composition
+        id="Conversation"
+        component={Conversation}
+        width={1920}
+        height={1080}
+        fps={30}
+        durationInFrames={330}
+      />
+      <Composition
+        id="Personalization"
+        component={Personalization}
+        width={1920}
+        height={1080}
+        fps={30}
+        durationInFrames={270}
+      />
+      <Composition
+        id="Closing"
+        component={Closing}
+        width={1920}
+        height={1080}
+        fps={30}
+        durationInFrames={240}
+      />
+    </Folder>
+  </>
+);

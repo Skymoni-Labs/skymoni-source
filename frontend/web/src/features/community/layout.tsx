@@ -124,6 +124,20 @@ function CommunitySidebar(props: { onNavigate?: () => void }) {
           </Link>
         </div>
       )}
+      <div className='sf-nav-group'>
+        <h2>应用与体验</h2>
+        <a href='/skivu/'>
+          <Sparkles />
+          探索 Skivu
+        </a>
+        <Link
+          to='/creators/skivu-beta'
+          activeProps={{ 'aria-current': 'page' }}
+        >
+          <CircleHelp />
+          内测中心
+        </Link>
+      </div>
       <details
         className='sf-nav-group sf-category-section'
         open={location.pathname === '/creators'}
@@ -327,6 +341,7 @@ export function CommunityLayout(props: { children: ReactNode }) {
     [/\/(projects|explore|works)/, '作品与灵感'],
     [/\/new|\/edit$/, '分享与创作'],
     [/\/guidelines/, '社区指南'],
+    [/\/skivu-beta/, 'Skivu 内测中心'],
   ] as const) {
     if (pattern.test(pathname)) {
       section = label

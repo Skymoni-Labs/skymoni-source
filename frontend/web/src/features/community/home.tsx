@@ -19,13 +19,13 @@ import { useAuthStore } from '@/stores/auth-store'
 import { useCreatorStore } from '@/stores/creator-store'
 
 import { loadCommunityMeta, loadTopics } from './api'
-import { AppBetaCard } from './app-beta-card'
 import {
   CommunityNumber,
   CommunitySignIn,
   CommunityTime,
   MemberAvatar,
 } from './shared'
+import { SkivuPromoCard } from './skivu-promo-card'
 import { SkyObservatory } from './sky-decorations'
 import { TopicWindowFrame } from './topic-window'
 import {
@@ -116,7 +116,7 @@ export function CommunityHome(props: { search: CommunitySearch }) {
           {!restricted &&
             !search.category &&
             !search.q &&
-            (!search.view || search.view === 'latest') && <AppBetaCard />}
+            (!search.view || search.view === 'latest') && <SkivuPromoCard />}
           {!search.category &&
             !search.q &&
             !restricted &&

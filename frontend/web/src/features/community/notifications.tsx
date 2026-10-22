@@ -62,7 +62,7 @@ export function CommunityNotifications() {
             size='sm'
             variant='ghost'
             disabled={!unread || mark.isPending}
-            onClick={() => mark.mutate()}
+            onClick={() => mark.mutate(undefined)}
           >
             <CheckCheck />
             全部已读

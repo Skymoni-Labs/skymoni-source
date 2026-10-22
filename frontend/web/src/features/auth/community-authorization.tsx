@@ -123,7 +123,7 @@ export function CommunityAuthorization({ returnTo }: { returnTo: string }) {
           <Button
             className='sky-authorization-confirm'
             disabled={approve.isPending}
-            onClick={() => approve.mutate()}
+            onClick={() => approve.mutate(undefined)}
           >
             <ShieldCheck />
             {approve.isPending ? '正在确认…' : '确认授权并进入社区'}

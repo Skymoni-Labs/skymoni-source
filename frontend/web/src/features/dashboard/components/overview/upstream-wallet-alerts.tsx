@@ -299,13 +299,13 @@ export function UpstreamWalletAlerts({
                 <Button
                   variant='outline'
                   disabled={dirty || test.isPending || !query.data?.smtp_ready}
-                  onClick={() => test.mutate()}
+                  onClick={() => test.mutate(undefined)}
                 >
                   {test.isPending ? '正在发送…' : '发送测试邮件'}
                 </Button>
                 <Button
                   disabled={save.isPending || !dirty}
-                  onClick={() => save.mutate()}
+                  onClick={() => save.mutate(undefined)}
                 >
                   {save.isPending ? '保存中…' : '保存预警设置'}
                 </Button>

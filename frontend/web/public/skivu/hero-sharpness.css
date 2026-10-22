@@ -1,0 +1,30 @@
+/* Only the existing hero phone illustration. Geometry and motion stay intact. */
+.promo-art .phone {
+  filter: none;
+  text-rendering: geometricPrecision;
+}
+.promo-art .phone-main {
+  backface-visibility: hidden;
+}
+.promo-art .phone-back::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgb(0 0 0 / 30%);
+  pointer-events: none;
+}
+.promo-art .phone-main .mini-bubble {
+  color: #2e4662;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-shadow: none;
+}
+.promo-art .phone-main .phone-chat-heading {
+  color: #2d4360;
+  text-shadow: none;
+}
+.promo-art .phone-main .phone-composer {
+  color: #526b89;
+  text-shadow: none;
+}

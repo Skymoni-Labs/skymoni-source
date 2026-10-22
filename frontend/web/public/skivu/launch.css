@@ -1,0 +1,3 @@
+
+html{scroll-padding-top:24px}body{padding-top:0!important}.site-header{top:0!important}.page-shell{padding-top:0}.header-nav{flex-wrap:wrap}.header-nav a{white-space:nowrap}.film-frame{min-width:0}.film-caption{gap:12px;flex-wrap:wrap}.site-footer a{color:inherit;text-decoration:none}.button:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid #a4d8c9;outline-offset:4px}
+@media(max-width:600px){.site-header{gap:12px;padding:18px 20px}.header-nav{gap:14px}.header-end{display:none}.film-caption{font-size:10px}.film-format{font-size:10px}.film-frame{border-radius:16px}.film-poster small{display:none}}

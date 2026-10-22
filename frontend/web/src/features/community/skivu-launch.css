@@ -1,0 +1,210 @@
+.skivu-community-promo {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  overflow: hidden;
+  padding: 30px;
+  border: 1px solid #b5b6ed40;
+  border-radius: 24px;
+  color: #eef1f9;
+  background:
+    radial-gradient(ellipse at 85% 20%, #635a9a50, transparent 65%), #0a1021;
+  box-shadow: 0 16px 55px #04081516;
+}
+.skivu-launch-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #9daed3;
+}
+.skivu-community-promo h2 {
+  font-size: clamp(22px, 2.5vw, 32px);
+  line-height: 1.3;
+  margin: 10px 0 12px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+.skivu-community-promo p {
+  font-size: 13px;
+  color: #b6c1d8;
+  line-height: 1.8;
+  max-width: 440px;
+}
+.skivu-launch-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.skivu-launch-actions a,
+.skivu-download-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 10px 17px;
+  border: 1px solid #abbbe94a;
+  border-radius: 12px;
+  color: #e1efff;
+  background: #b3c9f013;
+  text-decoration: none;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+.skivu-launch-actions a:first-child {
+  background: #b6d2ed;
+  color: #14243d;
+}
+.skivu-launch-actions a:hover,
+.skivu-download-link:hover {
+  background: #829cca44;
+}
+.skivu-promo-mark {
+  position: relative;
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  border: 1px solid #c3bcf02b;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle, #a086d232, transparent 70%);
+}
+.skivu-promo-mark img {
+  width: 68px;
+  mix-blend-mode: screen;
+}
+.skivu-promo-mark svg {
+  position: absolute;
+  right: -8px;
+  top: 8px;
+  width: 19px;
+  color: #bdafeb;
+}
+.skivu-beta-center {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 20px 70px;
+}
+.skivu-back-link {
+  display: inline-block;
+  color: inherit;
+  opacity: 0.7;
+  font-size: 13px;
+  text-decoration: none;
+  margin: 8px 0 30px;
+}
+.skivu-beta-center > header {
+  margin: 0 0 38px;
+}
+.skivu-beta-center h1 {
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.25;
+  margin: 14px 0;
+}
+.skivu-beta-center h1 span {
+  color: #859abf;
+}
+.skivu-beta-center > header p {
+  color: #8996b2;
+}
+.skivu-beta-center-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 24px;
+  align-items: start;
+}
+.skivu-beta-center-grid > div {
+  min-width: 0;
+}
+.skivu-beta-center-grid > aside {
+  padding: 28px;
+  border-radius: 22px;
+  border: 1px solid #91a8d034;
+  background: linear-gradient(140deg, #9fbde518, #b5a9d90b);
+}
+.skivu-beta-center-grid aside h2 {
+  font-size: 23px;
+  line-height: 1.5;
+  margin: 12px 0;
+}
+.skivu-beta-center-grid aside p {
+  font-size: 13px;
+  color: #8996b2;
+  line-height: 1.8;
+  margin-bottom: 22px;
+}
+.skivu-beta-center-grid small {
+  display: block;
+  color: #8996b2;
+  font-size: 12px;
+  line-height: 1.9;
+  margin-top: 24px;
+}
+.skivu-beta-center .skivu-beta-card {
+  margin: 0;
+}
+.skivu-beta-center .skivu-beta-title {
+  font-size: 20px;
+}
+.skivu-beta-center a:focus-visible,
+.skivu-community-promo a:focus-visible {
+  outline: 2px solid #8cb7d8;
+  outline-offset: 4px;
+}
+@media (max-width: 900px) {
+  .skivu-beta-center-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .skivu-beta-center-grid > aside {
+    display: block;
+  }
+  .skivu-beta-center h1 span {
+    display: block;
+  }
+}
+@media (max-width: 500px) {
+  .skivu-community-promo {
+    padding: 24px;
+    gap: 10px;
+  }
+  .skivu-promo-mark {
+    width: 55px;
+    height: 55px;
+    align-self: flex-start;
+  }
+  .skivu-promo-mark img {
+    width: 36px;
+  }
+  .skivu-promo-mark svg {
+    width: 12px;
+    right: -4px;
+  }
+  .skivu-community-promo h2 {
+    font-size: 23px;
+  }
+  .skivu-beta-center {
+    padding: 20px 12px 50px;
+  }
+}
+
+.skivu-beta-center .skivu-launch-eyebrow {
+  color: #657ba1;
+}
+.skivu-beta-center .skivu-download-link {
+  color: #34557a;
+  background: #8aa9cb21;
+  border-color: #8aa9cb55;
+}
+.dark .skivu-beta-center .skivu-launch-eyebrow {
+  color: #a4b8d5;
+}
+.dark .skivu-beta-center .skivu-download-link {
+  color: #d8eaff;
+  background: #b3c9f013;
+  border-color: #abbbe94a;
+}

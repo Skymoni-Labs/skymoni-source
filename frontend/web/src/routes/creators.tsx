@@ -24,14 +24,17 @@ import '@/styles/community-clouds.css'
 import '@/styles/community-writing.css'
 import '@/styles/community-access.css'
 import '@/styles/community-motion.css'
+import '@/styles/community-window.css'
 
 function CreatorLayout() {
-  const publicProfile = useRouterState({
-    select: (state) => state.location.pathname.startsWith('/creators/people/'),
+  const independentPage = useRouterState({
+    select: (state) =>
+      state.location.pathname.startsWith('/creators/people/') ||
+      state.location.pathname === '/creators/skivu-beta',
   })
   return (
     <CreatorPlatformLayout>
-      {publicProfile ? (
+      {independentPage ? (
         <Outlet />
       ) : (
         <CreatorRuntime>
@@ -48,5 +51,3 @@ export const Route = createFileRoute('/creators')({
   },
   errorComponent: AuthSessionError,
 })
-
-import '@/styles/community-window.css'

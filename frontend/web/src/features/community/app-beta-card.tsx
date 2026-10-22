@@ -31,7 +31,11 @@ import {
 
 import './app-beta-card.css'
 
-export function AppBetaCard() {
+export function AppBetaCard({
+  redirectTo = '/creators',
+}: {
+  redirectTo?: string
+}) {
   const { t } = useTranslation()
   const user = useAuthStore((state) => state.auth.user)
   const sid = useAuthStore((state) => state.auth.session?.sid)
@@ -92,7 +96,7 @@ export function AppBetaCard() {
       <CardContent className='skivu-beta-content'>
         {!user && (
           <Button
-            render={<Link to='/sign-in' search={{ redirect: '/creators' }} />}
+            render={<Link to='/sign-in' search={{ redirect: redirectTo }} />}
           >
             {t('Sign in or register to apply')}
           </Button>

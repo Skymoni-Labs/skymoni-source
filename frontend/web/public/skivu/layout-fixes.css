@@ -1,0 +1,5 @@
+/* Keep the decorative hero orbit inside its section at tablet widths. */
+.promo-card { overflow: clip; }
+/* Film labels may wrap without forcing the 16:9 media frame wider. */
+.film-caption { display: flex; flex-wrap: wrap; gap: 12px; }
+.film-frame { min-width: 0; }

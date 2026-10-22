@@ -46,6 +46,7 @@ import { Route as CreatorsModerationRouteImport } from './routes/creators.modera
 import { Route as CreatorsNewRouteImport } from './routes/creators.new'
 import { Route as CreatorsProfileRouteImport } from './routes/creators.profile'
 import { Route as CreatorsProjectsRouteImport } from './routes/creators.projects'
+import { Route as CreatorsSkivuBetaRouteImport } from './routes/creators.skivu-beta'
 import { Route as CreatorsStudioRouteImport } from './routes/creators.studio'
 import { Route as CreatorsWorkspaceRouteImport } from './routes/creators.workspace'
 import { Route as ModelOffersIdRouteImport } from './routes/model-offers.$id'
@@ -292,6 +293,11 @@ const CreatorsProfileRoute = CreatorsProfileRouteImport.update({
 const CreatorsProjectsRoute = CreatorsProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
+  getParentRoute: () => CreatorsRoute,
+} as any)
+const CreatorsSkivuBetaRoute = CreatorsSkivuBetaRouteImport.update({
+  id: '/skivu-beta',
+  path: '/skivu-beta',
   getParentRoute: () => CreatorsRoute,
 } as any)
 const CreatorsStudioRoute = CreatorsStudioRouteImport.update({
@@ -686,6 +692,7 @@ export interface FileRoutesByFullPath {
   '/creators/new': typeof CreatorsNewRoute
   '/creators/profile': typeof CreatorsProfileRoute
   '/creators/projects': typeof CreatorsProjectsRoute
+  '/creators/skivu-beta': typeof CreatorsSkivuBetaRoute
   '/creators/studio': typeof CreatorsStudioRoute
   '/creators/workspace': typeof CreatorsWorkspaceRoute
   '/model-offers/$id': typeof ModelOffersIdRoute
@@ -783,6 +790,7 @@ export interface FileRoutesByTo {
   '/creators/new': typeof CreatorsNewRoute
   '/creators/profile': typeof CreatorsProfileRoute
   '/creators/projects': typeof CreatorsProjectsRoute
+  '/creators/skivu-beta': typeof CreatorsSkivuBetaRoute
   '/creators/studio': typeof CreatorsStudioRoute
   '/creators/workspace': typeof CreatorsWorkspaceRoute
   '/model-offers/$id': typeof ModelOffersIdRoute
@@ -886,6 +894,7 @@ export interface FileRoutesById {
   '/creators/new': typeof CreatorsNewRoute
   '/creators/profile': typeof CreatorsProfileRoute
   '/creators/projects': typeof CreatorsProjectsRoute
+  '/creators/skivu-beta': typeof CreatorsSkivuBetaRoute
   '/creators/studio': typeof CreatorsStudioRoute
   '/creators/workspace': typeof CreatorsWorkspaceRoute
   '/model-offers/$id': typeof ModelOffersIdRoute
@@ -988,6 +997,7 @@ export interface FileRouteTypes {
     | '/creators/new'
     | '/creators/profile'
     | '/creators/projects'
+    | '/creators/skivu-beta'
     | '/creators/studio'
     | '/creators/workspace'
     | '/model-offers/$id'
@@ -1085,6 +1095,7 @@ export interface FileRouteTypes {
     | '/creators/new'
     | '/creators/profile'
     | '/creators/projects'
+    | '/creators/skivu-beta'
     | '/creators/studio'
     | '/creators/workspace'
     | '/model-offers/$id'
@@ -1187,6 +1198,7 @@ export interface FileRouteTypes {
     | '/creators/new'
     | '/creators/profile'
     | '/creators/projects'
+    | '/creators/skivu-beta'
     | '/creators/studio'
     | '/creators/workspace'
     | '/model-offers/$id'
@@ -1539,6 +1551,13 @@ declare module '@tanstack/react-router' {
       path: '/projects'
       fullPath: '/creators/projects'
       preLoaderRoute: typeof CreatorsProjectsRouteImport
+      parentRoute: typeof CreatorsRoute
+    }
+    '/creators/skivu-beta': {
+      id: '/creators/skivu-beta'
+      path: '/skivu-beta'
+      fullPath: '/creators/skivu-beta'
+      preLoaderRoute: typeof CreatorsSkivuBetaRouteImport
       parentRoute: typeof CreatorsRoute
     }
     '/creators/studio': {
@@ -2173,6 +2192,7 @@ interface CreatorsRouteChildren {
   CreatorsNewRoute: typeof CreatorsNewRoute
   CreatorsProfileRoute: typeof CreatorsProfileRoute
   CreatorsProjectsRoute: typeof CreatorsProjectsRoute
+  CreatorsSkivuBetaRoute: typeof CreatorsSkivuBetaRoute
   CreatorsStudioRoute: typeof CreatorsStudioRoute
   CreatorsWorkspaceRoute: typeof CreatorsWorkspaceRoute
   CreatorsIndexRoute: typeof CreatorsIndexRoute
@@ -2192,6 +2212,7 @@ const CreatorsRouteChildren: CreatorsRouteChildren = {
   CreatorsNewRoute: CreatorsNewRoute,
   CreatorsProfileRoute: CreatorsProfileRoute,
   CreatorsProjectsRoute: CreatorsProjectsRoute,
+  CreatorsSkivuBetaRoute: CreatorsSkivuBetaRoute,
   CreatorsStudioRoute: CreatorsStudioRoute,
   CreatorsWorkspaceRoute: CreatorsWorkspaceRoute,
   CreatorsIndexRoute: CreatorsIndexRoute,

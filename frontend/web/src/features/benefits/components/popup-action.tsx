@@ -76,7 +76,7 @@ export function PopupBenefitAction(props: {
       <Button
         variant='outline'
         disabled={claim.isPending}
-        onClick={() => claim.mutate()}
+        onClick={() => claim.mutate(undefined)}
       >
         {t('Claim benefit')}
       </Button>

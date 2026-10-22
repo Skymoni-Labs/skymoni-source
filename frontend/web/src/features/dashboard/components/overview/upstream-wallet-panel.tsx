@@ -428,7 +428,7 @@ export function UpstreamWalletPanel() {
                     onChange={(e) => setValue(e.target.value)}
                   />
                   <Button
-                    onClick={() => mutation.mutate()}
+                    onClick={() => mutation.mutate(undefined)}
                     disabled={mutation.isPending}
                   >
                     <ArrowDownLeft className='size-4' />
@@ -653,7 +653,7 @@ export function UpstreamWalletPanel() {
             onChange={(e) => setNote(e.target.value)}
           />
           <Button
-            onClick={() => mutation.mutate()}
+            onClick={() => mutation.mutate(undefined)}
             disabled={mutation.isPending || !channelIDs.length}
           >
             保存账户
