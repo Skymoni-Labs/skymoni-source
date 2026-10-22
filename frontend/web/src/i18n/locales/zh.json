@@ -9098,7 +9098,9 @@
     "Beta ledger approve": "审核开通",
     "Back to applications": "返回申请列表",
     "This device will immediately lose beta access.": "移除后，该设备将立即失去内测访问权限。",
-    "Reserved": "预扣冻结"
+    "Reserved": "预扣冻结",
+    "Adjust the available beta balance. Reserved and used quota remain unchanged.": "调整内测可用额度，已预扣和已用额度保持不变。",
+    "Approval adds the amount entered. Relay credit is never changed.": "审核开通时增加所填额度，中转余额保持不变。"
   },
   "Daily random recommendations": "每日随机推荐",
   "Daily random recommendations enabled": "已开启每日随机推荐",

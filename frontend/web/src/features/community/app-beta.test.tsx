@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { act, cleanup, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createInstance } from 'i18next'
 import { I18nextProvider } from 'react-i18next'
@@ -106,19 +106,102 @@ beforeEach(async () => {
 })
 afterEach(cleanup)
 function view(component: React.ReactNode) {
-  return render(
-    <QueryClientProvider
-      client={
-        new QueryClient({ defaultOptions: { queries: { retry: false } } })
-      }
-    >
+  const client = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  })
+  const result = render(
+    <QueryClientProvider client={client}>
       <I18nextProvider i18n={betaI18n}>{component}</I18nextProvider>
     </QueryClientProvider>
   )
+  return { ...result, client }
 }
 
+test.each([
+  ['Add', '1', 500000, '2500000 units'],
+  ['Subtract', '1', -500000, '1500000 units'],
+  ['Override', '6', 1000000, '3000000 units'],
+  ['Override', '0', -2000000, '0 units'],
+])(
+  'beta %s previews and submits an independent versioned delta',
+  async (mode, amount, delta, result) => {
+    fixture.account.status = 'approved'
+    fixture.account.balance = 2000000
+    view(<AppBetaManager userId={123} open onOpenChange={vi.fn()} />)
+    const click = userEvent.setup()
+    await click.click(await screen.findByRole('button', { name: mode }))
+    await click.type(screen.getByLabelText('Amount (USD)'), amount)
+    expect(screen.getByTestId('beta-quota-preview')).toHaveTextContent(result)
+    await click.click(
+      screen.getByRole('button', { name: 'Adjust beta allowance' })
+    )
+    expect(fixture.review).not.toHaveBeenCalled()
+    await click.click(screen.getByRole('button', { name: 'Continue' }))
+    await waitFor(() =>
+      expect(fixture.review).toHaveBeenCalledWith(
+        123,
+        expect.objectContaining({ action: 'adjust', amount: delta, version: 7 })
+      )
+    )
+  }
+)
+
+test('adjustments require nonnegative amounts, prevent overdraft and reject unchanged overrides', async () => {
+  fixture.account.status = 'approved'
+  fixture.account.balance = 2000000
+  view(<AppBetaManager userId={123} open onOpenChange={vi.fn()} />)
+  const click = userEvent.setup()
+  const input = await screen.findByLabelText('Amount (USD)')
+  const submit = screen.getByRole('button', { name: 'Adjust beta allowance' })
+  expect(submit).toBeDisabled()
+  await click.type(input, '-1')
+  expect(submit).toBeDisabled()
+  await click.click(screen.getByRole('button', { name: 'Subtract' }))
+  expect(input).toHaveValue('')
+  await click.type(input, '5')
+  expect(submit).toBeDisabled()
+  await click.click(screen.getByRole('button', { name: 'Override' }))
+  await click.type(input, '4')
+  expect(submit).toBeDisabled()
+  expect(fixture.review).not.toHaveBeenCalled()
+})
+
+test('confirmation keeps the reviewed target and version if account data refreshes', async () => {
+  fixture.account.status = 'approved'
+  fixture.account.balance = 2000000
+  const { client } = view(
+    <AppBetaManager userId={123} open onOpenChange={vi.fn()} />
+  )
+  const click = userEvent.setup()
+  await click.click(await screen.findByRole('button', { name: 'Override' }))
+  await click.type(screen.getByLabelText('Amount (USD)'), '1')
+  await click.click(
+    screen.getByRole('button', { name: 'Adjust beta allowance' })
+  )
+  act(() =>
+    client.setQueryData(['admin-app-beta-detail', 123, 'test-session', 123], {
+      account: { ...fixture.account, balance: 3000000, version: 8 },
+      ledger: [],
+    })
+  )
+  expect(screen.getByRole('alertdialog')).toHaveTextContent(
+    '2000000 units → 500000 units'
+  )
+  await click.click(screen.getByRole('button', { name: 'Continue' }))
+  await waitFor(() =>
+    expect(fixture.review).toHaveBeenCalledWith(
+      123,
+      expect.objectContaining({ amount: -1500000, version: 7 })
+    )
+  )
+})
+
 test('admin renders an empty pending list when the server returns null items', async () => {
-  fixture.list.mockResolvedValue({ items: null, total: 0, app_available: false })
+  fixture.list.mockResolvedValue({
+    items: null,
+    total: 0,
+    app_available: false,
+  })
   view(<AppBetaManager open onOpenChange={vi.fn()} />)
   expect(await screen.findByRole('table')).toBeInTheDocument()
   expect(screen.queryByText('Loading...')).not.toBeInTheDocument()

@@ -8245,7 +8245,9 @@
     "Beta ledger approve": "Beta ledger approve",
     "Back to applications": "Back to applications",
     "This device will immediately lose beta access.": "This device will immediately lose beta access.",
-    "Reserved": "Reserved"
+    "Reserved": "Reserved",
+    "Adjust the available beta balance. Reserved and used quota remain unchanged.": "Adjust the available beta balance. Reserved and used quota remain unchanged.",
+    "Approval adds the amount entered. Relay credit is never changed.": "Approval adds the amount entered. Relay credit is never changed."
   },
   "Daily random recommendations": "Daily random recommendations",
   "Daily random recommendations enabled": "Daily random recommendations enabled",
