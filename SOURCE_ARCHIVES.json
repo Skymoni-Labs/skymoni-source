@@ -1790,5 +1790,12 @@
     "sha256": "6aea11d8a2a8edace4eacfe1bc6dda30ecdd381738616235a2db3bc79ca0f1c6",
     "tag": "app-native-login-20261022",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/app-native-login-20261022/source-skymoni-app-native-login-20261022.zip"
+  },
+  {
+    "name": "source-skymoni-beta-card-ui-20261022.zip",
+    "bytes": 18604656,
+    "sha256": "d9e8c9b305dc43d97a4fe623de2faa91c0acdd36e874c4a44e3ec01da1b2260c",
+    "tag": "beta-card-ui-20261022",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/beta-card-ui-20261022/source-skymoni-beta-card-ui-20261022.zip"
   }
 ]
