@@ -1818,5 +1818,12 @@
     "sha256": "61e0cffffb25da76df8d74c13bf0cd8f9c4e3ed7876e463aa7eb45f4cf5bd89e",
     "tag": "skivu-direct-download-20261023",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-direct-download-20261023/source-skymoni-skivu-direct-download-20261023.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-community-promo-20261023.zip",
+    "tag": "skivu-community-promo-20261023",
+    "bytes": 39798807,
+    "sha256": "faddd4570d1279badcd245c2046d9a73f857b8613d0d354c3659f99486210192",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-community-promo-20261023/source-skymoni-skivu-community-promo-20261023.zip"
   }
 ]
