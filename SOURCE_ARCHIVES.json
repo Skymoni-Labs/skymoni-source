@@ -1881,5 +1881,12 @@
     "bytes": 40557893,
     "sha256": "9defe59ef6a4422910ab1a7e9e1c54fca8274c47ed41a520539eb580deb2d3ba",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-button-tones-20261023/source-skymoni-skivu-button-tones-20261023.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-mail-template-list-20261023.zip",
+    "tag": "skivu-mail-template-list-20261023",
+    "bytes": 40557513,
+    "sha256": "8567605c2921a3a50835e509ed21c9ba10442f14b2bf04b891447d0912244dce",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-mail-template-list-20261023/source-skymoni-skivu-mail-template-list-20261023.zip"
   }
 ]
