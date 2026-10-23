@@ -1860,5 +1860,12 @@
     "bytes": 40557359,
     "sha256": "fb419abda520273b067efce9a1feae031dea8a468f4b4e832817bc879482dbab",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-beta-mail-20261023/source-skymoni-skivu-beta-mail-20261023.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-capsule-buttons-20261023.zip",
+    "tag": "skivu-capsule-buttons-20261023",
+    "bytes": 40557417,
+    "sha256": "0bbf647836c1ab059e283b47befbe89093ba73837f7ca203e9742e5b76545cab",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-capsule-buttons-20261023/source-skymoni-skivu-capsule-buttons-20261023.zip"
   }
 ]
