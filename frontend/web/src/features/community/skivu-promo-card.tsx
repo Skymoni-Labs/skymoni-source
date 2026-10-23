@@ -1,115 +1,114 @@
-import {
-  ArrowUpRight,
-  Layers3,
-  MessageCircle,
-  Palette,
-  Sparkles,
-} from 'lucide-react'
+import { ArrowUpRight, Layers3, MessageCircle, Palette } from 'lucide-react'
 
 import './skivu-promo-card.css'
 
-const stars = [
-  [8, 18, 1, 0],
-  [25, 76, 1, 2],
-  [41, 12, 2, 1],
-  [56, 87, 1, 4],
-  [68, 18, 1, 3],
-  [79, 72, 2, 1],
-  [92, 30, 1, 5],
-  [94, 87, 1, 2],
-  [53, 47, 1, 2],
-  [72, 43, 1, 0],
-  [17, 92, 1, 4],
-  [36, 40, 1, 3],
+// Stable positions keep the sky consistent across rerenders.
+const stars = Array.from({ length: 32 }, (_, id) => ({
+  id,
+  x: (id * 37 + 11) % 100,
+  y: (id * 23 + 7) % 100,
+  size: id % 7 === 0 ? 2 : 1,
+  delay: -(id % 6),
+}))
+const features = [
+  {
+    number: '01',
+    Icon: Layers3,
+    title: '多模型对话',
+    detail: '为灵感，找到更多可能',
+  },
+  {
+    number: '02',
+    Icon: MessageCircle,
+    title: '角色陪伴',
+    detail: '让对话，拥有自己的性格',
+  },
+  {
+    number: '03',
+    Icon: Palette,
+    title: '外观随心',
+    detail: '把每一处，变成你的样子',
+  },
 ]
 
 export function SkivuPromoCard() {
   return (
     <section className='skivu-community-promo' aria-label='探索 Skivu'>
       <div className='sp-sky' aria-hidden='true'>
-        <div className='sp-nebula' />
+        <div
+          className='sp-galaxy'
+          style={{
+            backgroundImage: "url('/skivu/assets/community-galaxy.webp')",
+          }}
+        />
+        <div className='sp-sky-shade' />
         <div className='sp-horizon' />
         <span className='sp-comet' />
-        {stars.map(([x, y, size, delay]) => (
+        <span className='sp-comet sp-comet-second' />
+        {stars.map(({ id, x, y, size, delay }) => (
           <i
-            key={`${x}-${y}`}
+            key={id}
             style={{
               left: `${x}%`,
               top: `${y}%`,
               width: size,
               height: size,
-              animationDelay: `${-delay}s`,
+              animationDelay: `${delay}s`,
             }}
           />
         ))}
       </div>
-      <div className='sp-copy'>
-        <div className='sp-eyebrow'>
-          <span /> SKIVU <i /> YOUR OWN ORBIT
-        </div>
-        <h2>
-          一个属于你的<span>AI 空间。</span>
-        </h2>
-        <p>
-          让每次对话，更像你。
-          <br />
-          自由选择模型，遇见角色，也定义自己的界面。
-        </p>
-        <div className='sp-features' aria-label='Skivu 已有功能'>
-          <span>
-            <Layers3 />
-            多模型对话
-          </span>
-          <span>
-            <MessageCircle />
-            角色陪伴
-          </span>
-          <span>
-            <Palette />
-            外观随心
-          </span>
-        </div>
-        <div className='sp-actions'>
-          <a href='/skivu/'>
-            探索 Skivu{' '}
-            <span>
-              <ArrowUpRight size={16} />
-            </span>
-          </a>
-          <a href='/creators/skivu-beta'>
-            内测中心 <ArrowUpRight size={16} />
-          </a>
-        </div>
-      </div>
-      <div className='sp-universe' aria-hidden='true'>
-        <span className='sp-wordmark'>Skivu</span>
-        <div className='sp-orbit sp-orbit-one' />
-        <div className='sp-orbit sp-orbit-two' />
-        <svg className='sp-constellation' viewBox='0 0 360 280' fill='none'>
-          <path d='M43 190Q115 230 183 139T318 78M83 56Q210 40 183 139T291 239' />
-          <circle cx='43' cy='190' r='3' />
-          <circle cx='318' cy='78' r='3' />
-          <circle cx='83' cy='56' r='2' />
-          <circle cx='291' cy='239' r='2' />
-        </svg>
-        <div className='sp-core-glow' />
-        <div className='sp-core'>
-          <div>
-            <img src='/skivu/assets/skivu.png' alt='' />
+      <div className='sp-main'>
+        <div className='sp-copy'>
+          <div className='sp-eyebrow'>
+            <span /> SKIVU <i /> YOUR OWN UNIVERSE
+          </div>
+          <h2>
+            一个属于你的<span>AI 空间。</span>
+          </h2>
+          <p>
+            让每次对话，更像你。
+            <br />
+            自由选择模型，遇见角色，也定义自己的界面。
+          </p>
+          <div className='sp-actions'>
+            <a href='/skivu/'>
+              探索 Skivu <ArrowUpRight />
+            </a>
+            <a href='/creators/skivu-beta'>
+              内测中心 <ArrowUpRight />
+            </a>
           </div>
         </div>
-        <span className='sp-satellite sp-satellite-one'>
-          <MessageCircle />
-        </span>
-        <span className='sp-satellite sp-satellite-two'>
-          <Sparkles />
-        </span>
-        <span className='sp-satellite sp-satellite-three'>
-          <Palette />
-        </span>
-        <span className='sp-universe-caption'>
-          <i /> A SPACE, FOR YOU
-        </span>
+        <div className='sp-universe' aria-hidden='true'>
+          <div className='sp-aura' />
+          <div className='sp-orbit sp-orbit-outer' />
+          <div className='sp-orbit sp-orbit-inner' />
+          <div className='sp-orbit sp-orbit-cross' />
+          <span className='sp-orbit-star sp-orbit-star-one' />
+          <span className='sp-orbit-star sp-orbit-star-two' />
+          <div
+            className='sp-cloud'
+            style={{ maskImage: "url('/skivu/assets/skivu.png')" }}
+          />
+          <div className='sp-coordinate'>
+            SKIVU <span>·</span> A SPACE, FOR YOU
+          </div>
+        </div>
+      </div>
+      <div className='sp-features' aria-label='Skivu 已有功能'>
+        {features.map(({ number, Icon, title, detail }) => (
+          <div className='sp-feature' key={number}>
+            <span className='sp-feature-icon'>
+              <Icon />
+            </span>
+            <div>
+              <span className='sp-feature-title'>{title}</span>
+              <span className='sp-feature-detail'>{detail}</span>
+            </div>
+            <span className='sp-feature-number'>{number}</span>
+          </div>
+        ))}
       </div>
     </section>
   )

@@ -1,39 +1,45 @@
-/* A self-contained brand surface. Decoration never transforms the outer card,
-   and the explicit flow margin keeps it clear of the community welcome card. */
+/* Decorative motion stays clipped inside a card in normal document flow. */
 #root .community-shell .skivu-community-promo {
   container-type: inline-size;
   isolation: isolate;
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-  align-items: center;
-  gap: 12px;
+  display: block;
   min-width: 0;
   margin: 0 0 24px;
-  padding: 34px 36px;
+  padding: 36px 42px 0;
   overflow: hidden;
-  border: 1px solid #b0bfdc3d;
+  border: 1px solid #8ca8e14a;
   border-radius: 26px;
-  background: linear-gradient(118deg, #10192b 0%, #0c1427 48%, #1a203c 100%);
+  background: #050b1c;
   color: #eef3ff;
   box-shadow:
-    inset 0 1px 0 #e5efff12,
-    0 12px 28px #0000001c;
+    inset 0 1px 0 #bcdfff24,
+    0 16px 38px #0205113d;
 }
 .skivu-community-promo::after {
   content: '';
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
+  z-index: 3;
+  top: 0;
+  left: 6%;
+  width: 65%;
+  height: 1px;
   background: linear-gradient(
-    105deg,
-    #b8dff510,
-    transparent 30%,
-    transparent 65%,
-    #c5b1f412
+    90deg,
+    transparent,
+    #88def6a3,
+    #ac9cf070,
+    transparent
   );
   pointer-events: none;
+}
+.skivu-community-promo .sp-main {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: center;
+  min-height: 325px;
+  padding-bottom: 28px;
 }
 .skivu-community-promo .sp-copy {
   position: relative;
@@ -43,89 +49,64 @@
 .skivu-community-promo .sp-eyebrow {
   display: flex;
   align-items: center;
-  gap: 10px;
-  color: #b5c5dd;
+  gap: 11px;
+  color: #b0c5e6;
   font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
+  font-weight: 550;
+  letter-spacing: 0.2em;
 }
 .skivu-community-promo .sp-eyebrow > span {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #afe1d6;
-  box-shadow: 0 0 12px #8cddc88c;
+  width: 19px;
+  height: 2px;
+  background: #8be7e5;
+  box-shadow: 0 0 10px #76dffa8a;
 }
 .skivu-community-promo .sp-eyebrow > i {
-  height: 9px;
   width: 1px;
-  background: #b4c3df45;
+  height: 9px;
+  background: #bad8f35c;
 }
 .skivu-community-promo .sp-copy h2 {
-  margin: 20px 0 14px;
-  color: #f0f4fe;
-  font-size: clamp(30px, 4.8cqi, 43px);
-  line-height: 1.12;
+  margin: 24px 0 18px;
+  color: #f2f5ff;
+  font-size: clamp(36px, 4.8cqi, 60px);
+  line-height: 1.13;
   letter-spacing: -0.045em;
   font-weight: 650;
+  text-shadow: 0 3px 28px #00000033;
 }
 .skivu-community-promo .sp-copy h2 > span {
   display: block;
   width: fit-content;
-  padding-bottom: 3px;
-  background: linear-gradient(100deg, #b4ddf5 0%, #c8c4f4 74%, #dce1ff);
+  padding-bottom: 4px;
+  background: linear-gradient(105deg, #92e7f6 3%, #b5c7ff 52%, #d0a8fa);
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .skivu-community-promo .sp-copy p {
   margin: 0;
-  max-width: 440px;
-  color: #a9b9d1;
+  color: #b6c5df;
   font-size: 12px;
   line-height: 1.95;
-}
-.skivu-community-promo .sp-features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 19px;
-}
-.skivu-community-promo .sp-features > span {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 26px;
-  padding: 4px 9px;
-  color: #b8c9df;
-  background: #c4d7f008;
-  border: 1px solid #b4cae51c;
-  border-radius: 7px;
-  font-size: 10px;
-  white-space: nowrap;
-}
-.skivu-community-promo .sp-features svg {
-  width: 12px;
-  height: 12px;
-  color: #9dcacb;
+  text-shadow: 0 2px 6px #030813;
 }
 .skivu-community-promo .sp-actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   gap: 12px;
-  margin-top: 23px;
+  margin-top: 26px;
 }
 .skivu-community-promo .sp-actions > a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 24px;
   min-height: 44px;
-  padding: 10px 16px;
-  border: 1px solid #acc5e73b;
-  border-radius: 12px;
-  background: #a6bfe50b;
-  color: #d5e2f5;
+  padding: 11px 19px;
+  border: 1px solid #94b3e14d;
+  border-radius: 10px;
+  background: #0b172b99;
+  color: #dbe7fb;
   font-size: 12px;
   font-weight: 550;
   text-decoration: none;
@@ -135,22 +116,12 @@
     box-shadow 0.25s;
 }
 .skivu-community-promo .sp-actions > a:first-child {
-  padding: 7px 9px 7px 18px;
-  background: linear-gradient(115deg, #c6e5f1, #b5c9ec);
-  color: #182b43;
-  border-color: #e1f3ff80;
+  color: #071e36;
+  border-color: #b8eeffb3;
+  background: linear-gradient(110deg, #aff6f0, #a9ceff);
   box-shadow:
-    inset 0 1px 0 #ffffff75,
-    0 5px 20px #7eaceb1a;
-}
-.skivu-community-promo .sp-actions > a > span {
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  background: #ffffff4a;
-  border: 1px solid #ffffff5c;
-  border-radius: 8px;
+    inset 0 1px 0 #ffffff80,
+    0 0 24px #68b8f52b;
 }
 .skivu-community-promo .sp-actions svg {
   width: 15px;
@@ -158,18 +129,18 @@
   transition: transform 0.25s;
 }
 .skivu-community-promo .sp-actions > a:hover {
-  background: #adc9ed21;
-  border-color: #d2e4fc75;
+  background: #adc9ed24;
+  border-color: #c9e6ff9c;
 }
 .skivu-community-promo .sp-actions > a:first-child:hover {
-  background: linear-gradient(115deg, #d7f1f6, #c6d8f5);
-  box-shadow: 0 7px 24px #8cbde22b;
+  background: linear-gradient(110deg, #c8fff7, #c0dfff);
+  box-shadow: 0 0 30px #70caff4d;
 }
 .skivu-community-promo .sp-actions > a:hover svg {
-  transform: translate(1px, -1px);
+  transform: translate(2px, -2px);
 }
 .skivu-community-promo .sp-actions > a:focus-visible {
-  outline: 2px solid #a4e1d3;
+  outline: 2px solid #a4f4e2;
   outline-offset: 4px;
 }
 .skivu-community-promo .sp-sky {
@@ -179,259 +150,364 @@
   overflow: hidden;
   pointer-events: none;
 }
-.skivu-community-promo .sp-nebula {
+.skivu-community-promo .sp-galaxy {
   position: absolute;
-  inset: -15%;
-  background:
-    radial-gradient(ellipse at 76% 38%, #9382dc2b, transparent 28%),
-    radial-gradient(ellipse at 61% 94%, #4e92a922, transparent 44%);
+  inset: -4%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  animation: skivu-galaxy-drift 38s ease-in-out infinite alternate;
 }
-.skivu-community-promo .sp-horizon {
+.skivu-community-promo .sp-sky-shade {
   position: absolute;
-  width: 115%;
-  height: 210px;
-  bottom: -185px;
-  left: -5%;
-  border: 1px solid #b3c8f329;
-  border-radius: 50%;
-  box-shadow: 0 -12px 46px #b3c8f00b;
-  transform: rotate(-8deg);
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      #040a19ed 0%,
+      #071026c7 30%,
+      #0710253b 67%,
+      #090e2521
+    ),
+    linear-gradient(0deg, #050a1af2 0%, transparent 43%);
 }
 .skivu-community-promo .sp-sky > i {
   position: absolute;
   border-radius: 50%;
-  background: #d8eaff;
-  opacity: 0.5;
+  background: #d1efff;
+  opacity: 0.6;
   animation: skivu-promo-twinkle 6s ease-in-out infinite;
+}
+.skivu-community-promo .sp-horizon {
+  position: absolute;
+  width: 115%;
+  height: 225px;
+  left: -5%;
+  bottom: -195px;
+  border: 1px solid #8bd9ff45;
+  border-radius: 50%;
+  box-shadow: 0 -8px 35px #7aafff12;
+  transform: rotate(-7deg);
 }
 .skivu-community-promo .sp-comet {
   position: absolute;
-  width: 95px;
+  width: 150px;
   height: 1px;
   top: 12%;
-  left: 50%;
-  background: linear-gradient(90deg, transparent, #bdddf6bd);
+  left: 45%;
+  background: linear-gradient(90deg, transparent, #9be9ff);
   opacity: 0;
-  transform: rotate(23deg);
-  animation: skivu-promo-comet 13s linear infinite;
+  filter: drop-shadow(0 0 3px #85d9ff);
+  animation: skivu-promo-comet 12s linear infinite;
+}
+.skivu-community-promo .sp-comet-second {
+  left: 72%;
+  top: 27%;
+  width: 80px;
+  animation-delay: -7s;
+  animation-duration: 17s;
 }
 .skivu-community-promo .sp-universe {
   position: relative;
-  justify-self: end;
+  justify-self: center;
   width: 100%;
-  max-width: 340px;
-  height: 285px;
+  max-width: 500px;
+  height: 300px;
   pointer-events: none;
 }
-.skivu-community-promo .sp-wordmark {
+.skivu-community-promo .sp-aura {
   position: absolute;
-  right: -11px;
-  bottom: 9px;
-  color: #c9d4f008;
-  font-size: 88px;
-  font-weight: 650;
-  line-height: 1;
-  letter-spacing: -0.07em;
-}
-.skivu-community-promo .sp-orbit {
-  position: absolute;
-  width: 94%;
-  height: 48%;
-  left: 3%;
-  top: 24%;
-  border: 1px solid #bdd4ef29;
-  border-radius: 50%;
-  transform: rotate(-29deg);
-}
-.skivu-community-promo .sp-orbit-two {
-  width: 70%;
-  height: 86%;
-  left: 15%;
-  top: 4%;
-  transform: rotate(32deg);
-  border-color: #b8a5e91c;
-}
-.skivu-community-promo .sp-constellation {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-.skivu-community-promo .sp-constellation path {
-  stroke: #b7d0ee42;
-  stroke-width: 0.8;
-  stroke-dasharray: 2 7;
-}
-.skivu-community-promo .sp-constellation circle {
-  fill: #b3dce9;
-  filter: drop-shadow(0 0 4px #b3dce9);
-}
-.skivu-community-promo .sp-core-glow {
-  position: absolute;
-  width: 210px;
-  height: 210px;
-  left: calc(50% - 105px);
-  top: calc(47% - 105px);
-  border-radius: 50%;
+  width: 310px;
+  height: 250px;
+  left: calc(50% - 155px);
+  top: 12px;
   background: radial-gradient(
-    circle,
-    #b5a4e032,
-    #8aaedc17 46%,
+    ellipse,
+    #a8d2ff26,
+    #9984ff17 43%,
     transparent 70%
   );
 }
-.skivu-community-promo .sp-core {
+/* Luminance uses the exact original white silhouette: black pixels, including
+   the internal swoosh, become transparent. No tile or generated replacement. */
+.skivu-community-promo .sp-cloud {
   position: absolute;
-  width: 118px;
-  height: 118px;
-  left: calc(50% - 59px);
-  top: calc(47% - 59px);
-  padding: 8px;
-  border-radius: 32px;
-  background: linear-gradient(140deg, #dce4ff2e, #b4cce908 55%, #e1d2ff1f);
-  border: 1px solid #dce8ff4f;
-  box-shadow:
-    inset 1px 1px 0 #ffffff1f,
-    0 18px 34px #02081366;
-  transform: rotate(-9deg);
+  width: 190px;
+  height: 190px;
+  left: calc(50% - 95px);
+  top: 49px;
+  background: linear-gradient(155deg, #ffffff, #d3e8ff);
+  mask-position: center;
+  mask-size: 125% 125%;
+  mask-repeat: no-repeat;
+  mask-mode: luminance;
   animation: skivu-promo-float 7s ease-in-out infinite;
 }
-.skivu-community-promo .sp-core > div {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  border-radius: 24px;
-  border: 1px solid #c6daed1e;
-  background: linear-gradient(155deg, #6d70934a, #17233a);
-}
-.skivu-community-promo .sp-core img {
-  display: block;
-  width: 70px;
-  height: 70px;
-  object-fit: contain;
-  mix-blend-mode: screen;
-  transform: rotate(9deg);
-}
-.skivu-community-promo .sp-satellite {
+.skivu-community-promo .sp-orbit {
   position: absolute;
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border: 1px solid #b1c8e136;
-  border-radius: 11px;
-  background: linear-gradient(140deg, #455471aa, #1c2a42aa);
-  color: #b5d1e9;
+  left: 8%;
+  top: 28%;
+  width: 84%;
+  height: 41%;
+  border-radius: 50%;
+  border: 1px solid #92dfff4f;
   box-shadow:
-    inset 0 1px 0 #ffffff17,
-    0 5px 18px #03071333;
+    inset 0 1px 0 #b4d7ff17,
+    0 0 18px #72bdff12;
+  transform: rotate(-28deg);
 }
-.skivu-community-promo .sp-satellite svg {
-  width: 15px;
-  height: 15px;
-}
-.skivu-community-promo .sp-satellite-one {
-  left: 5%;
-  top: 54%;
-  color: #a6d7d0;
-}
-.skivu-community-promo .sp-satellite-two {
-  right: 7%;
-  top: 14%;
-  color: #c9b9ef;
-}
-.skivu-community-promo .sp-satellite-three {
-  left: 27%;
-  top: 8%;
-  width: 27px;
-  height: 27px;
-  opacity: 0.65;
-}
-.skivu-community-promo .sp-universe-caption {
+.skivu-community-promo .sp-orbit-outer::after {
+  content: '';
   position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  bottom: 0;
-  left: 29%;
-  color: #9dafcb;
-  font-size: 8px;
-  letter-spacing: 0.17em;
-  white-space: nowrap;
+  inset: -12px;
+  border: 1px solid #a3a1ff21;
+  border-radius: inherit;
 }
-.skivu-community-promo .sp-universe-caption > i {
+.skivu-community-promo .sp-orbit-inner {
+  left: 20%;
+  top: 4%;
+  width: 60%;
+  height: 86%;
+  border-color: #b5a0f247;
+  transform: rotate(27deg);
+}
+.skivu-community-promo .sp-orbit-cross {
+  left: 13%;
+  top: 24%;
+  width: 74%;
+  height: 51%;
+  border-color: #9bddf32b;
+  transform: rotate(24deg);
+  border-style: dashed;
+}
+.skivu-community-promo .sp-orbit-star {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #d5f7ff;
+  box-shadow:
+    0 0 6px 2px #9de4ff91,
+    0 0 22px 6px #7391ff29;
+}
+.skivu-community-promo .sp-orbit-star-one {
+  left: 16%;
+  top: 64%;
+}
+.skivu-community-promo .sp-orbit-star-two {
+  right: 15%;
+  top: 23%;
   width: 3px;
   height: 3px;
-  background: #a8dad2;
-  border-radius: 50%;
+}
+.skivu-community-promo .sp-coordinate {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 8px;
+  color: #b4c9ee;
+  letter-spacing: 0.23em;
+}
+.skivu-community-promo .sp-coordinate span {
+  color: #99edeb;
+  padding-inline: 7px;
+}
+.skivu-community-promo .sp-features {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid #a0bdf036;
+  padding: 20px 0 23px;
+  gap: 26px;
+}
+.skivu-community-promo .sp-feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.skivu-community-promo .sp-feature-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid #94d3f33b;
+  background: linear-gradient(135deg, #8ddbe925, #72a9d809);
+  color: #a5e4ee;
+}
+.skivu-community-promo .sp-feature:nth-child(2) .sp-feature-icon {
+  color: #c9b6fa;
+  border-color: #baa2ed40;
+  background: linear-gradient(135deg, #b8a2f525, #7a89e609);
+}
+.skivu-community-promo .sp-feature:nth-child(3) .sp-feature-icon {
+  color: #ace4d8;
+}
+.skivu-community-promo .sp-feature-icon svg {
+  width: 16px;
+  height: 16px;
+}
+.skivu-community-promo .sp-feature-title {
+  display: block;
+  color: #deebff;
+  font-size: 12px;
+  font-weight: 550;
+}
+.skivu-community-promo .sp-feature-detail {
+  display: block;
+  color: #8b9fbd;
+  font-size: 10px;
+  line-height: 1.7;
+  margin-top: 3px;
+}
+.skivu-community-promo .sp-feature-number {
+  margin-left: auto;
+  color: #9eb5da70;
+  font:
+    10px ui-monospace,
+    monospace;
+}
+@container (max-width: 740px) {
+  .skivu-community-promo .sp-main {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  }
+  .skivu-community-promo .sp-universe {
+    height: 270px;
+  }
+  .skivu-community-promo .sp-cloud {
+    width: 148px;
+    height: 148px;
+    left: calc(50% - 74px);
+    top: 62px;
+  }
+  .skivu-community-promo .sp-feature-detail,
+  .skivu-community-promo .sp-feature-number {
+    display: none;
+  }
+  .skivu-community-promo .sp-features {
+    gap: 12px;
+  }
+  .skivu-community-promo .sp-feature {
+    gap: 8px;
+  }
 }
 @container (max-width: 580px) {
-  .skivu-community-promo .sp-copy {
-    grid-column: 1 / -1;
+  .skivu-community-promo .sp-main {
+    display: block;
+    min-height: 0;
+    padding-bottom: 28px;
   }
   .skivu-community-promo .sp-copy h2 {
-    font-size: 32px;
+    font-size: 38px;
+  }
+  .skivu-community-promo .sp-copy p {
+    max-width: 290px;
+    font-size: 11px;
   }
   .skivu-community-promo .sp-universe {
     position: absolute;
-    right: -50px;
-    top: 6px;
-    width: 210px;
-    height: 210px;
-    opacity: 0.4;
+    width: 220px;
+    height: 230px;
+    right: -70px;
+    top: -35px;
+    opacity: 0.55;
   }
-  .skivu-community-promo .sp-satellite,
-  .skivu-community-promo .sp-universe-caption,
-  .skivu-community-promo .sp-wordmark {
+  .skivu-community-promo .sp-cloud {
+    width: 110px;
+    height: 110px;
+    left: calc(50% - 55px);
+    top: 60px;
+  }
+  .skivu-community-promo .sp-coordinate {
     display: none;
   }
-  .skivu-community-promo .sp-core {
-    width: 86px;
-    height: 86px;
-    left: calc(50% - 43px);
-    top: calc(47% - 43px);
-    border-radius: 25px;
+  .skivu-community-promo .sp-aura {
+    width: 220px;
+    left: 0;
   }
-  .skivu-community-promo .sp-core > div {
-    border-radius: 18px;
+  .skivu-community-promo .sp-feature {
+    gap: 6px;
   }
-  .skivu-community-promo .sp-core img {
-    width: 50px;
-    height: 50px;
+  .skivu-community-promo .sp-feature-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+  }
+  .skivu-community-promo .sp-feature-icon svg {
+    width: 13px;
+    height: 13px;
+  }
+  .skivu-community-promo .sp-feature-title {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+}
+@container (max-width: 280px) {
+  .skivu-community-promo .sp-universe {
+    position: relative;
+    right: auto;
+    top: auto;
+    width: 100%;
+    height: 120px;
+    margin-top: 22px;
+    opacity: 0.9;
+  }
+  .skivu-community-promo .sp-cloud {
+    width: 100px;
+    height: 100px;
+    left: calc(50% - 50px);
+    top: 4px;
+  }
+  .skivu-community-promo .sp-aura {
+    height: 120px;
+    top: 0;
   }
 }
 @media (max-width: 500px) {
   #root .community-shell .skivu-community-promo {
-    padding: 27px 24px;
+    padding: 28px 23px 0;
     margin-bottom: 20px;
     border-radius: 22px;
   }
+  .skivu-community-promo .sp-copy h2 {
+    font-size: 34px;
+    margin-top: 25px;
+  }
   .skivu-community-promo .sp-eyebrow {
-    font-size: 8px;
+    font-size: 7px;
     gap: 8px;
   }
-  .skivu-community-promo .sp-copy h2 {
-    font-size: 31px;
-    margin-top: 23px;
-  }
-  .skivu-community-promo .sp-copy p {
-    font-size: 11px;
-  }
-  .skivu-community-promo .sp-features {
-    gap: 5px;
-  }
-  .skivu-community-promo .sp-features > span {
-    padding-inline: 7px;
-    font-size: 9px;
+  .skivu-community-promo .sp-eyebrow > span {
+    width: 13px;
   }
   .skivu-community-promo .sp-actions {
     gap: 10px;
+    margin-top: 23px;
   }
   .skivu-community-promo .sp-actions > a {
+    padding-inline: 14px;
+    gap: 16px;
     font-size: 11px;
-    gap: 15px;
+  }
+  .skivu-community-promo .sp-features {
+    gap: 7px;
+    padding: 18px 0;
+  }
+  .skivu-community-promo .sp-feature {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+@keyframes skivu-galaxy-drift {
+  from {
+    transform: scale(1) translate(0, 0);
+  }
+  to {
+    transform: scale(1.045) translate(-0.7%, 0.5%);
   }
 }
 @keyframes skivu-promo-twinkle {
@@ -440,36 +516,37 @@
     opacity: 0.25;
   }
   50% {
-    opacity: 0.75;
+    opacity: 0.8;
   }
 }
 @keyframes skivu-promo-float {
   0%,
   100% {
-    transform: translateY(0) rotate(-9deg);
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(-5px) rotate(-7deg);
+    transform: translateY(-7px);
   }
 }
 @keyframes skivu-promo-comet {
   0%,
-  68%,
+  65%,
   100% {
     opacity: 0;
-    transform: translate(-180px, -70px) rotate(23deg);
+    transform: translate(-160px, -65px) rotate(24deg);
   }
-  71% {
-    opacity: 0.7;
+  69% {
+    opacity: 0.9;
   }
   80% {
     opacity: 0;
-    transform: translate(360px, 150px) rotate(23deg);
+    transform: translate(450px, 210px) rotate(24deg);
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .skivu-community-promo .sp-galaxy,
   .skivu-community-promo .sp-sky > i,
-  .skivu-community-promo .sp-core {
+  .skivu-community-promo .sp-cloud {
     animation: none;
   }
   .skivu-community-promo .sp-comet {

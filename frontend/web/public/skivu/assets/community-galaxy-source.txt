@@ -1,0 +1,11 @@
+Skivu community galaxy background
+Created: 2026-10-23, using the built-in image_gen tool.
+Original generation: exec-02900417-06d3-4cce-9c56-27ee0d5b9d89.png
+Brief: original wide midnight-blue galaxy, cyan and violet astronomical dust,
+quiet negative space on the left, luminous depth on the right; no text or logo.
+Production asset: community-galaxy.webp, format conversion only.
+No third-party stock image was imported for this asset.
+
+Cloud mark: existing Skivu skivu.png brand asset, unchanged. A CSS luminance
+mask displays its exact white silhouette with transparent surroundings and
+transparent internal swoosh. The generated cutout experiment was not used.
