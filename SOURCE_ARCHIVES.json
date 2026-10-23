@@ -1846,5 +1846,12 @@
     "bytes": 40049252,
     "sha256": "e87745f35b38606b23230d4919f426b3e1e9bd5aba551b7ff5c9a60e0e29341e",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-galaxy-promo-r2-20261023/source-skymoni-skivu-galaxy-promo-r2-20261023.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-galaxy-buttons-20261023.zip",
+    "tag": "skivu-galaxy-buttons-20261023",
+    "bytes": 40049813,
+    "sha256": "bd0ebb94d34e1b161418c61a6de015d70d09791501efd1a5df1f8f32965b00f2",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-galaxy-buttons-20261023/source-skymoni-skivu-galaxy-buttons-20261023.zip"
   }
 ]
