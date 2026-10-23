@@ -52,6 +52,7 @@ import {
 import type { MailCampaign, MailInput } from '../types'
 import { MailEditorFields } from './editor-fields'
 import { MailPreview } from './mail-preview'
+import { SkivuBetaMailPanel } from './skivu-beta-panel'
 
 const defaults: MailFormValues = {
   subject: '',
@@ -156,27 +157,34 @@ export function MailComposer(props: {
   if (props.draftId) composerTitle = 'Edit email draft'
   else if (props.templateId) composerTitle = 'Reuse email template'
   return (
-    <div className='grid min-w-0 gap-4 xl:grid-cols-2'>
-      <Card className='min-w-0'>
-        <CardHeader>
-          <CardTitle>{t(composerTitle)}</CardTitle>
-          <CardDescription>
-            {props.templateId
-              ? t(
-                  'Edit this template and save it as a new draft. Review it before sending.'
-                )
-              : t('Save a draft, review the recipients, then confirm sending.')}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {draft.isError && sourceId && (
-            <ErrorState
-              onRetry={() => {
-                void draft.refetch()
-              }}
-            />
-          )}
-          <Form {...form}>
+    <Form {...form}>
+      <div className='grid min-w-0 gap-4 xl:grid-cols-2'>
+        <SkivuBetaMailPanel
+          disabled={busy || draft.isLoading}
+          onEdit={() => setHtml('')}
+          onBusyChange={setUploading}
+        />
+        <Card className='min-w-0'>
+          <CardHeader>
+            <CardTitle>{t(composerTitle)}</CardTitle>
+            <CardDescription>
+              {props.templateId
+                ? t(
+                    'Edit this template and save it as a new draft. Review it before sending.'
+                  )
+                : t(
+                    'Save a draft, review the recipients, then confirm sending.'
+                  )}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {draft.isError && sourceId && (
+              <ErrorState
+                onRetry={() => {
+                  void draft.refetch()
+                }}
+              />
+            )}
             <form
               onSubmit={(event) => {
                 void form.handleSubmit((values) => submit(values, 'save'))(
@@ -231,30 +239,30 @@ export function MailComposer(props: {
                 </div>
               </fieldset>
             </form>
-          </Form>
-        </CardContent>
-      </Card>
-      <Card className='min-w-0'>
-        <CardHeader>
-          <CardTitle>{t('Email preview')}</CardTitle>
-          <CardDescription>
-            {t('The preview uses the same rendered content as the email.')}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className='max-h-[640px] min-h-64 overflow-auto'>
-          {html ? (
-            <MailPreview html={html} />
-          ) : (
-            <EmptyState
-              icon={Mail}
-              title={t('Preview your email')}
-              description={t(
-                'Enter a subject, content and recipients, then click Preview.'
-              )}
-            />
-          )}
-        </CardContent>
-      </Card>
-    </div>
+          </CardContent>
+        </Card>
+        <Card className='min-w-0'>
+          <CardHeader>
+            <CardTitle>{t('Email preview')}</CardTitle>
+            <CardDescription>
+              {t('The preview uses the same rendered content as the email.')}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className='max-h-[640px] min-h-64 overflow-auto'>
+            {html ? (
+              <MailPreview html={html} />
+            ) : (
+              <EmptyState
+                icon={Mail}
+                title={t('Preview your email')}
+                description={t(
+                  'Enter a subject, content and recipients, then click Preview.'
+                )}
+              />
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </Form>
   )
 }
