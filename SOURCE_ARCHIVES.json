@@ -1825,5 +1825,12 @@
     "bytes": 39798807,
     "sha256": "faddd4570d1279badcd245c2046d9a73f857b8613d0d354c3659f99486210192",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-community-promo-20261023/source-skymoni-skivu-community-promo-20261023.zip"
+  },
+  {
+    "name": "source-skymoni-community-layout-20261023.zip",
+    "tag": "community-layout-20261023",
+    "bytes": 39798920,
+    "sha256": "1439b1046908588da84cac456ac0bd0f45df8ca1bcdf9285821fdff8d81234c1",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/community-layout-20261023/source-skymoni-community-layout-20261023.zip"
   }
 ]
