@@ -3,3 +3,5 @@
 /* Film labels may wrap without forcing the 16:9 media frame wider. */
 .film-caption { display: flex; flex-wrap: wrap; gap: 12px; }
 .film-frame { min-width: 0; }
+
+.promo-actions{flex-wrap:wrap}.source-button{white-space:nowrap}

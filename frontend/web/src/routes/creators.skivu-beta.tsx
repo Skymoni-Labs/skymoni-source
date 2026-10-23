@@ -35,11 +35,18 @@ function BetaCenter() {
           <p>使用同一社区账号登录 App，同步你的内测资格与额度。</p>
           <a
             className='skivu-download-link'
-            href='https://github.com/skyjjgw/skivu/releases/latest'
+            href='/skivu/download/latest.apk'
+            download
+          >
+            下载 Android 版 ↓
+          </a>
+          <a
+            className='skivu-download-link skivu-source-link'
+            href='https://github.com/skyjjgw/skivu'
             target='_blank'
             rel='noreferrer'
           >
-            下载 Android 版 ↗
+            GitHub 开源 ↗
           </a>
           <small>
             注册与申请不会自动赠送额度。审核通过后，额度由管理员手动分配，与中转站余额独立。
