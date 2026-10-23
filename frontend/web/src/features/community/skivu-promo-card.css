@@ -91,53 +91,122 @@
   text-shadow: 0 2px 6px #030813;
 }
 .skivu-community-promo .sp-actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 390px;
   gap: 12px;
   margin-top: 26px;
 }
 .skivu-community-promo .sp-actions > a {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 24px;
-  min-height: 44px;
-  padding: 11px 19px;
-  border: 1px solid #94b3e14d;
-  border-radius: 10px;
-  background: #0b172b99;
-  color: #dbe7fb;
-  font-size: 12px;
-  font-weight: 550;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  min-height: 66px;
+  padding: 12px 13px 12px 17px;
+  border: 1px solid #b4cdf552;
+  border-radius: 15px;
+  background: linear-gradient(125deg, #52729936, #0b172bb8);
+  backdrop-filter: blur(8px);
+  color: #e3edff;
+  box-shadow:
+    inset 0 1px 0 #e9f4ff1a,
+    0 8px 24px #02071133;
+  font-size: 13px;
+  font-weight: 600;
   text-decoration: none;
   transition:
     background 0.25s,
     border-color 0.25s,
-    box-shadow 0.25s;
+    box-shadow 0.25s,
+    transform 0.25s;
 }
 .skivu-community-promo .sp-actions > a:first-child {
   color: #071e36;
-  border-color: #b8eeffb3;
-  background: linear-gradient(110deg, #aff6f0, #a9ceff);
+  border-color: #d1fcffc7;
+  background: linear-gradient(115deg, #b5faf0, #b2deff 57%, #bbbdff);
   box-shadow:
-    inset 0 1px 0 #ffffff80,
-    0 0 24px #68b8f52b;
+    inset 0 1px 0 #ffffffe0,
+    inset 0 -1px 0 #5775a54d,
+    0 6px 28px #79c0ff3b;
+}
+.skivu-community-promo .sp-actions > a::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    #ffffff66 48%,
+    transparent 75%
+  );
+  transform: translateX(-150%);
+  transition: transform 0.65s;
+  pointer-events: none;
+}
+.skivu-community-promo .sp-button-label {
+  display: block;
+  min-width: 0;
+  line-height: 1.25;
+}
+.skivu-community-promo .sp-button-label small {
+  display: block;
+  margin-top: 5px;
+  color: #adc0dc;
+  font-size: 9px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.skivu-community-promo .sp-actions > a:first-child small {
+  color: #345c78;
+}
+.skivu-community-promo .sp-button-arrow {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #b9d8f54d;
+  border-radius: 10px;
+  background: #badfff0b;
+}
+.skivu-community-promo .sp-actions > a:first-child .sp-button-arrow {
+  background: #ffffff52;
+  border-color: #ffffff94;
+  box-shadow: inset 0 1px 0 #ffffff8c;
 }
 .skivu-community-promo .sp-actions svg {
   width: 15px;
   height: 15px;
   transition: transform 0.25s;
 }
-.skivu-community-promo .sp-actions > a:hover {
-  background: #adc9ed24;
-  border-color: #c9e6ff9c;
+@media (hover: hover) {
+  .skivu-community-promo .sp-actions > a:hover {
+    border-color: #c9e6ffb3;
+    box-shadow:
+      inset 0 1px 0 #e9f4ff26,
+      0 9px 28px #6bb1f026;
+    transform: translateY(-2px);
+  }
+  .skivu-community-promo .sp-actions > a:first-child:hover {
+    box-shadow:
+      inset 0 1px 0 #ffffff,
+      0 8px 30px #83ccff66;
+  }
+  .skivu-community-promo .sp-actions > a:hover::before {
+    transform: translateX(150%);
+  }
+  .skivu-community-promo .sp-actions > a:hover svg {
+    transform: translate(1px, -1px);
+  }
 }
-.skivu-community-promo .sp-actions > a:first-child:hover {
-  background: linear-gradient(110deg, #c8fff7, #c0dfff);
-  box-shadow: 0 0 30px #70caff4d;
-}
-.skivu-community-promo .sp-actions > a:hover svg {
-  transform: translate(2px, -2px);
+.skivu-community-promo .sp-actions > a:active {
+  transform: scale(0.98);
 }
 .skivu-community-promo .sp-actions > a:focus-visible {
   outline: 2px solid #a4f4e2;
@@ -435,6 +504,9 @@
   }
 }
 @container (max-width: 280px) {
+  .skivu-community-promo .sp-actions {
+    grid-template-columns: 1fr;
+  }
   .skivu-community-promo .sp-universe {
     position: relative;
     right: auto;
@@ -477,9 +549,10 @@
     margin-top: 23px;
   }
   .skivu-community-promo .sp-actions > a {
-    padding-inline: 14px;
-    gap: 16px;
-    font-size: 11px;
+    padding: 11px 10px 11px 12px;
+    gap: 8px;
+    font-size: 12px;
+    min-height: 62px;
   }
   .skivu-community-promo .sp-features {
     gap: 7px;
@@ -542,7 +615,12 @@
     display: none;
   }
   .skivu-community-promo .sp-actions > a,
-  .skivu-community-promo .sp-actions svg {
+  .skivu-community-promo .sp-actions svg,
+  .skivu-community-promo .sp-actions > a::before {
     transition: none;
+  }
+  .skivu-community-promo .sp-actions > a:hover,
+  .skivu-community-promo .sp-actions > a:active {
+    transform: none;
   }
 }

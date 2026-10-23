@@ -71,11 +71,21 @@ export function SkivuPromoCard() {
             自由选择模型，遇见角色，也定义自己的界面。
           </p>
           <div className='sp-actions'>
-            <a href='/skivu/'>
-              探索 Skivu <ArrowUpRight />
+            <a href='/skivu/' aria-label='探索 Skivu'>
+              <span className='sp-button-label'>
+                探索 Skivu<small>开启你的 AI 空间</small>
+              </span>
+              <span className='sp-button-arrow'>
+                <ArrowUpRight />
+              </span>
             </a>
-            <a href='/creators/skivu-beta'>
-              内测中心 <ArrowUpRight />
+            <a href='/creators/skivu-beta' aria-label='内测中心'>
+              <span className='sp-button-label'>
+                内测中心<small>查看申请与进度</small>
+              </span>
+              <span className='sp-button-arrow'>
+                <ArrowUpRight />
+              </span>
             </a>
           </div>
         </div>
