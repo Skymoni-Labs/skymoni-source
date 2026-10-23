@@ -1874,5 +1874,12 @@
     "bytes": 40557624,
     "sha256": "9f4ffd0e1caad5909a0157130e07507bb7593e5fdc32d88e56a8305bc22fbee6",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-capsule-refine-20261023/source-skymoni-skivu-capsule-refine-20261023.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-button-tones-20261023.zip",
+    "tag": "skivu-button-tones-20261023",
+    "bytes": 40557893,
+    "sha256": "9defe59ef6a4422910ab1a7e9e1c54fca8274c47ed41a520539eb580deb2d3ba",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-button-tones-20261023/source-skymoni-skivu-button-tones-20261023.zip"
   }
 ]
