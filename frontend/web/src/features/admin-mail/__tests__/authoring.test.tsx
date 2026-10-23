@@ -23,6 +23,7 @@ import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 
 import { MailComposer } from '../components/composer'
 import { MailDetailDialog } from '../components/detail-dialog'
+import { skivuBetaTemplate } from '../lib/skivu-beta-template'
 import type { MailCampaign } from '../types'
 
 const server = vi.hoisted(() => ({
@@ -127,6 +128,65 @@ async function fillMail() {
     'all_users'
   )
 }
+
+test('a prepared built-in template waits for recipients and never saves or sends on load', async () => {
+  const onContentChange = vi.fn()
+  renderMail(
+    <MailComposer
+      initialValues={{
+        ...skivuBetaTemplate('15'),
+        format: 'html',
+        audience: 'users',
+        user_ids: [],
+        recipient_emails: '',
+      }}
+      onSaved={vi.fn()}
+      onContentChange={onContentChange}
+    />
+  )
+  expect(
+    await screen.findByRole('textbox', { name: 'Email subject' })
+  ).toHaveValue('Skivu 内测已开通｜赠送 $15 App 专属额度')
+  expect(onContentChange).toHaveBeenCalledWith(true)
+  expect(server.getMailTemplateInput).not.toHaveBeenCalled()
+  await userEvent.click(
+    screen.getByRole('button', { name: 'Save email draft' })
+  )
+  expect(await screen.findByText('Select at least one user')).toBeVisible()
+  expect(server.createMailDraft).not.toHaveBeenCalled()
+  expect(server.changeMailState).not.toHaveBeenCalled()
+})
+
+test('saving a prepared template creates a new draft with selected recipients', async () => {
+  const onSaved = vi.fn()
+  renderMail(
+    <MailComposer
+      initialValues={{
+        ...skivuBetaTemplate('12.5'),
+        format: 'html',
+        audience: 'users',
+        user_ids: [5],
+        recipient_emails: '',
+      }}
+      onSaved={onSaved}
+    />
+  )
+  await userEvent.click(
+    screen.getByRole('button', { name: 'Save email draft' })
+  )
+  await waitFor(() => expect(onSaved).toHaveBeenCalledWith(draft))
+  expect(server.createMailDraft).toHaveBeenCalledWith(
+    expect.objectContaining({
+      subject: expect.stringContaining('$12.5'),
+      audience: 'users',
+      user_ids: [5],
+      emails: [],
+      format: 'html',
+    })
+  )
+  expect(server.updateMailDraft).not.toHaveBeenCalled()
+  expect(server.changeMailState).not.toHaveBeenCalled()
+})
 
 test('saving a draft freezes the request and never sends email', async () => {
   const onSaved = vi.fn()

@@ -6,7 +6,7 @@ import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 
 import { Form } from '@/components/ui/form'
 
-import { SkivuBetaMailPanel } from '../components/skivu-beta-panel'
+import { SkivuBetaTemplateDialog } from '../components/skivu-beta-template-dialog'
 import type { MailFormValues } from '../lib/schema'
 import { betaMailAmount, skivuBetaTemplate } from '../lib/skivu-beta-template'
 
@@ -50,7 +50,14 @@ function Editor({ initial = {} }: { initial?: Partial<MailFormValues> }) {
   const values = form.watch()
   return (
     <Form {...form}>
-      <SkivuBetaMailPanel onEdit={vi.fn()} />
+      <SkivuBetaTemplateDialog
+        open
+        onOpenChange={vi.fn()}
+        onUse={(prepared) => form.reset(prepared)}
+        replaceExisting={Boolean(
+          initial.subject || initial.content || initial.audience === 'all_users'
+        )}
+      />
       <output data-testid='values'>{JSON.stringify(values)}</output>
     </Form>
   )

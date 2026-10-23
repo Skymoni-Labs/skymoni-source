@@ -52,7 +52,6 @@ import {
 import type { MailCampaign, MailInput } from '../types'
 import { MailEditorFields } from './editor-fields'
 import { MailPreview } from './mail-preview'
-import { SkivuBetaMailPanel } from './skivu-beta-panel'
 
 const defaults: MailFormValues = {
   subject: '',
@@ -64,17 +63,38 @@ const defaults: MailFormValues = {
 }
 
 export function MailComposer(props: {
+  initialValues?: MailFormValues
+  onContentChange?: (hasContent: boolean) => void
+  onBusyChange?: (busy: boolean) => void
   draftId?: number | null
   templateId?: number | null
   onSaved: (campaign: MailCampaign) => void
   onCancelEdit?: () => void
 }) {
+  const { onContentChange, onBusyChange } = props
   const { t } = useTranslation()
   const client = useQueryClient()
   const form = useForm<MailFormValues>({
     resolver: zodResolver(mailFormSchema),
-    defaultValues: defaults,
+    defaultValues: props.initialValues ?? defaults,
   })
+  useEffect(() => {
+    const report = () => {
+      const values = form.getValues()
+      onContentChange?.(
+        Boolean(
+          values.subject.trim() ||
+          values.content.trim() ||
+          values.user_ids.length ||
+          values.recipient_emails.trim() ||
+          values.audience === 'all_users'
+        )
+      )
+    }
+    report()
+    const subscription = form.watch(report)
+    return () => subscription.unsubscribe()
+  }, [form, onContentChange])
   const [html, setHtml] = useState('')
   const [uploading, setUploading] = useState(false)
   const [selectingRecipients, setSelectingRecipients] = useState(false)
@@ -92,7 +112,7 @@ export function MailComposer(props: {
   useEffect(() => {
     request.current = { key: crypto.randomUUID(), fingerprint: '' }
     if (!sourceId) {
-      form.reset(defaults)
+      form.reset(props.initialValues ?? defaults)
       setHtml('')
       return
     }
@@ -105,7 +125,7 @@ export function MailComposer(props: {
       user_ids: draft.data.user_ids,
       recipient_emails: draft.data.emails.join('\n'),
     })
-  }, [draft.data, form, sourceId, props.templateId])
+  }, [draft.data, form, sourceId, props.templateId, props.initialValues])
   const preview = useMutation({
     mutationFn: previewMail,
     onSuccess: setHtml,
@@ -153,22 +173,22 @@ export function MailComposer(props: {
   }
   const busy =
     save.isPending || preview.isPending || uploading || selectingRecipients
+  useEffect(() => {
+    onBusyChange?.(busy)
+  }, [busy, onBusyChange])
   let composerTitle = 'Compose email'
   if (props.draftId) composerTitle = 'Edit email draft'
-  else if (props.templateId) composerTitle = 'Reuse email template'
+  else if (props.templateId || props.initialValues) {
+    composerTitle = 'Reuse email template'
+  }
   return (
     <Form {...form}>
       <div className='grid min-w-0 gap-4 xl:grid-cols-2'>
-        <SkivuBetaMailPanel
-          disabled={busy || draft.isLoading}
-          onEdit={() => setHtml('')}
-          onBusyChange={setUploading}
-        />
         <Card className='min-w-0'>
           <CardHeader>
             <CardTitle>{t(composerTitle)}</CardTitle>
             <CardDescription>
-              {props.templateId
+              {props.templateId || props.initialValues
                 ? t(
                     'Edit this template and save it as a new draft. Review it before sending.'
                   )
@@ -218,7 +238,7 @@ export function MailComposer(props: {
                   >
                     {preview.isPending ? t('Loading...') : t('Preview')}
                   </Button>
-                  {sourceId && (
+                  {(sourceId || props.initialValues) && (
                     <Button
                       type='button'
                       variant='outline'

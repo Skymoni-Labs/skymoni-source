@@ -39,8 +39,13 @@ import { formatDateTimeObject } from '@/lib/time'
 import { listMail } from './api'
 import { MailComposer } from './components/composer'
 import { MailDetailDialog } from './components/detail-dialog'
+import { SkivuBetaTemplateDialog } from './components/skivu-beta-template-dialog'
 import { mailStatusLabel } from './lib/labels'
+import type { MailFormValues } from './lib/schema'
+import { skivuBetaTemplate } from './lib/skivu-beta-template'
 import type { MailCampaign } from './types'
+
+type MailEntry = MailCampaign | { kind: 'skivu-beta-template' }
 
 export function AdminMail() {
   const client = useQueryClient()
@@ -49,6 +54,13 @@ export function AdminMail() {
   const [page, setPage] = useState(1)
   const [editingId, setEditingId] = useState<number | null>(null)
   const [templateId, setTemplateId] = useState<number | null>(null)
+  const [preparedTemplate, setPreparedTemplate] = useState<{
+    key: string
+    values: MailFormValues
+  } | null>(null)
+  const [skivuTemplateOpen, setSkivuTemplateOpen] = useState(false)
+  const [hasComposerContent, setHasComposerContent] = useState(false)
+  const [composerBusy, setComposerBusy] = useState(false)
   const composerRef = useRef<HTMLDivElement>(null)
   const [detailId, setDetailId] = useState<number | null>(() => {
     const value = new URLSearchParams(window.location.search).get(
@@ -64,6 +76,7 @@ export function AdminMail() {
     all_users: t('All active users with email'),
   }
   const openComposer = (id: number, mode: 'edit' | 'reuse') => {
+    setPreparedTemplate(null)
     setEditingId(mode === 'edit' ? id : null)
     setTemplateId(mode === 'reuse' ? id : null)
     setDetailId(null)
@@ -79,106 +92,141 @@ export function AdminMail() {
         ? 5000
         : false,
   })
-  const columns: StaticDataTableColumn<MailCampaign>[] = [
+  const columns: StaticDataTableColumn<MailEntry>[] = [
     {
       id: 'subject',
       header: t('Email subject'),
-      cell: (mail) => (
-        <p className='max-w-72 font-medium break-words'>{mail.subject}</p>
-      ),
+      cell: (mail) =>
+        'kind' in mail ? (
+          <div className='max-w-72 space-y-1'>
+            <p className='font-medium break-words'>
+              {skivuBetaTemplate('15').subject}
+            </p>
+            <p className='text-muted-foreground text-xs'>
+              开通通知 · 金额可调整 · 可附宣传海报
+            </p>
+          </div>
+        ) : (
+          <p className='max-w-72 font-medium break-words'>{mail.subject}</p>
+        ),
     },
     {
       id: 'audience',
       header: t('Recipients'),
-      cell: (mail) => (
-        <div>
-          {audienceLabels[mail.audience]}
-          <p className='text-muted-foreground text-xs'>
-            {t('{{count}} recipients', {
-              count: formatNumber(mail.recipient_count, locale),
-            })}
-          </p>
-        </div>
-      ),
+      cell: (mail) =>
+        'kind' in mail ? (
+          <span className='text-muted-foreground text-sm'>
+            使用时选择收件人
+          </span>
+        ) : (
+          <div>
+            {audienceLabels[mail.audience]}
+            <p className='text-muted-foreground text-xs'>
+              {t('{{count}} recipients', {
+                count: formatNumber(mail.recipient_count, locale),
+              })}
+            </p>
+          </div>
+        ),
     },
     {
       id: 'status',
       header: t('Status'),
-      cell: (mail) => (
-        <div className='space-y-1'>
-          <Badge variant='outline'>{mailStatusLabel(mail.status, t)}</Badge>
-          {mail.send_at > 0 && (
-            <p className='text-muted-foreground text-xs'>
-              {new Date(mail.send_at * 1000).toLocaleString('zh-CN', {
-                timeZone: 'Asia/Shanghai',
-                hour12: false,
-              })}{' '}
-              {t('北京时间')}
-            </p>
-          )}
-        </div>
-      ),
+      cell: (mail) =>
+        'kind' in mail ? (
+          <Badge variant='outline'>预置模板</Badge>
+        ) : (
+          <div className='space-y-1'>
+            <Badge variant='outline'>{mailStatusLabel(mail.status, t)}</Badge>
+            {mail.send_at > 0 && (
+              <p className='text-muted-foreground text-xs'>
+                {new Date(mail.send_at * 1000).toLocaleString('zh-CN', {
+                  timeZone: 'Asia/Shanghai',
+                  hour12: false,
+                })}{' '}
+                {t('北京时间')}
+              </p>
+            )}
+          </div>
+        ),
     },
     {
       id: 'progress',
       header: t('Delivery progress'),
-      cell: (mail) => (
-        <div className='text-xs'>
-          <p>
-            {t('Accepted: {{count}}', {
-              count: formatNumber(mail.counts?.sent ?? 0, locale),
-            })}
-          </p>
-          <p>
-            {t('Failed: {{count}}', {
-              count: formatNumber(mail.counts?.failed ?? 0, locale),
-            })}
-          </p>
-          <p>
-            {t('Unconfirmed: {{count}}', {
-              count: formatNumber(mail.counts?.uncertain ?? 0, locale),
-            })}
-          </p>
-        </div>
-      ),
+      cell: (mail) =>
+        'kind' in mail ? (
+          <span className='text-muted-foreground text-xs'>尚未发送</span>
+        ) : (
+          <div className='text-xs'>
+            <p>
+              {t('Accepted: {{count}}', {
+                count: formatNumber(mail.counts?.sent ?? 0, locale),
+              })}
+            </p>
+            <p>
+              {t('Failed: {{count}}', {
+                count: formatNumber(mail.counts?.failed ?? 0, locale),
+              })}
+            </p>
+            <p>
+              {t('Unconfirmed: {{count}}', {
+                count: formatNumber(mail.counts?.uncertain ?? 0, locale),
+              })}
+            </p>
+          </div>
+        ),
     },
     {
       id: 'created',
       header: t('Created at'),
-      cell: (mail) => formatDateTimeObject(new Date(mail.created_at * 1000)),
+      cell: (mail) =>
+        'kind' in mail
+          ? '—'
+          : formatDateTimeObject(new Date(mail.created_at * 1000)),
     },
     {
       id: 'action',
       header: t('Actions'),
-      cell: (mail) => (
-        <div className='flex flex-wrap gap-2'>
-          {mail.status === 'draft' && (
-            <Button
-              size='sm'
-              variant='outline'
-              onClick={() => openComposer(mail.id, 'edit')}
-            >
-              <Pencil />
-              {t('Edit draft')}
-            </Button>
-          )}
+      cell: (mail) =>
+        'kind' in mail ? (
           <Button
             size='sm'
             variant='outline'
-            onClick={() => openComposer(mail.id, 'reuse')}
+            disabled={composerBusy}
+            onClick={() => setSkivuTemplateOpen(true)}
           >
             <Copy />
             {t('Reuse template')}
           </Button>
-          <Button
-            size='sm'
-            variant='outline'
-            onClick={() => setDetailId(mail.id)}
-          >
-            {t('View / send')}
-          </Button>
-        </div>
-      ),
+        ) : (
+          <div className='flex flex-wrap gap-2'>
+            {mail.status === 'draft' && (
+              <Button
+                size='sm'
+                variant='outline'
+                onClick={() => openComposer(mail.id, 'edit')}
+              >
+                <Pencil />
+                {t('Edit draft')}
+              </Button>
+            )}
+            <Button
+              size='sm'
+              variant='outline'
+              onClick={() => openComposer(mail.id, 'reuse')}
+            >
+              <Copy />
+              {t('Reuse template')}
+            </Button>
+            <Button
+              size='sm'
+              variant='outline'
+              onClick={() => setDetailId(mail.id)}
+            >
+              {t('View / send')}
+            </Button>
+          </div>
+        ),
     },
   ]
   return (
@@ -222,14 +270,19 @@ export function AdminMail() {
             )}
             <div ref={composerRef} className='scroll-mt-20'>
               <MailComposer
-                key={`${editingId ?? 'new'}:${templateId ?? 'none'}`}
+                key={`${editingId ?? 'new'}:${templateId ?? 'none'}:${preparedTemplate?.key ?? 'empty'}`}
+                initialValues={preparedTemplate?.values}
+                onContentChange={setHasComposerContent}
+                onBusyChange={setComposerBusy}
                 draftId={editingId}
                 templateId={templateId}
                 onCancelEdit={() => {
+                  setPreparedTemplate(null)
                   setEditingId(null)
                   setTemplateId(null)
                 }}
                 onSaved={(campaign) => {
+                  setPreparedTemplate(null)
                   setEditingId(null)
                   setTemplateId(null)
                   setPage(1)
@@ -238,9 +291,7 @@ export function AdminMail() {
               />
             </div>
             <div className='space-y-3'>
-              <h2 className='text-lg font-semibold'>
-                {t('Email sending history')}
-              </h2>
+              <h2 className='text-lg font-semibold'>邮件模板与发送历史</h2>
               {query.isLoading && <LoadingState />}
               {query.isError && (
                 <ErrorState
@@ -253,8 +304,11 @@ export function AdminMail() {
                 <>
                   <StaticDataTable
                     columns={columns}
-                    data={query.data.items}
-                    getRowKey={(mail) => mail.id}
+                    data={[
+                      { kind: 'skivu-beta-template' },
+                      ...query.data.items,
+                    ]}
+                    getRowKey={(mail) => ('kind' in mail ? mail.kind : mail.id)}
                     emptyContent={
                       <EmptyState
                         title={t('No email messages yet')}
@@ -266,7 +320,7 @@ export function AdminMail() {
                   />
                   <div className='flex items-center justify-between gap-2'>
                     <p className='text-muted-foreground text-sm'>
-                      {t('Total')} {formatNumber(query.data.total, locale)}
+                      已保存邮件共 {formatNumber(query.data.total, locale)} 封
                     </p>
                     <div className='flex gap-2'>
                       <Button
@@ -291,6 +345,24 @@ export function AdminMail() {
           </div>
         </SectionPageLayout.Content>
       </SectionPageLayout>
+      {skivuTemplateOpen && (
+        <SkivuBetaTemplateDialog
+          open={skivuTemplateOpen}
+          onOpenChange={setSkivuTemplateOpen}
+          disabled={composerBusy}
+          replaceExisting={hasComposerContent}
+          onUse={(values) => {
+            setEditingId(null)
+            setTemplateId(null)
+            setDetailId(null)
+            setPreparedTemplate({ key: crypto.randomUUID(), values })
+            composerRef.current?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            })
+          }}
+        />
+      )}
       {detailId !== null && (
         <MailDetailDialog
           key={detailId}
