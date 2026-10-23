@@ -1867,5 +1867,12 @@
     "bytes": 40557417,
     "sha256": "0bbf647836c1ab059e283b47befbe89093ba73837f7ca203e9742e5b76545cab",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-capsule-buttons-20261023/source-skymoni-skivu-capsule-buttons-20261023.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-capsule-refine-20261023.zip",
+    "tag": "skivu-capsule-refine-20261023",
+    "bytes": 40557624,
+    "sha256": "9f4ffd0e1caad5909a0157130e07507bb7593e5fdc32d88e56a8305bc22fbee6",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-capsule-refine-20261023/source-skymoni-skivu-capsule-refine-20261023.zip"
   }
 ]
