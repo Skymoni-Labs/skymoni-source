@@ -72,21 +72,31 @@ export function SkivuPromoCard() {
           </p>
           <div className='sp-actions'>
             <a href='/skivu/' aria-label='探索 Skivu'>
-              <span className='sp-button-friend' aria-hidden='true'>
-                <img
-                  src='/branding/skymoni-cloud-friend-transparent.png'
-                  alt=''
+              <svg
+                className='sp-button-friend'
+                viewBox='210 145 805 835'
+                aria-hidden='true'
+              >
+                <image
+                  href='/branding/skymoni-cloud-friend-transparent.png'
+                  width='1254'
+                  height='1254'
                 />
-              </span>
+              </svg>
               <span className='sp-button-label'>探索 Skivu</span>
             </a>
             <a href='/creators/skivu-beta' aria-label='内测中心'>
-              <span className='sp-button-friend' aria-hidden='true'>
-                <img
-                  src='/branding/skymoni-cloud-friend-transparent.png'
-                  alt=''
+              <svg
+                className='sp-button-friend'
+                viewBox='210 145 805 835'
+                aria-hidden='true'
+              >
+                <image
+                  href='/branding/skymoni-cloud-friend-transparent.png'
+                  width='1254'
+                  height='1254'
                 />
-              </span>
+              </svg>
               <span className='sp-button-label'>内测中心</span>
             </a>
           </div>
