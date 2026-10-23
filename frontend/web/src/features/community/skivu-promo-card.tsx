@@ -1,4 +1,4 @@
-import { ArrowUpRight, Layers3, MessageCircle, Palette } from 'lucide-react'
+import { Layers3, MessageCircle, Palette } from 'lucide-react'
 
 import './skivu-promo-card.css'
 
@@ -72,20 +72,22 @@ export function SkivuPromoCard() {
           </p>
           <div className='sp-actions'>
             <a href='/skivu/' aria-label='探索 Skivu'>
-              <span className='sp-button-label'>
-                探索 Skivu<small>开启你的 AI 空间</small>
+              <span className='sp-button-friend' aria-hidden='true'>
+                <img
+                  src='/branding/skymoni-cloud-friend-transparent.png'
+                  alt=''
+                />
               </span>
-              <span className='sp-button-arrow'>
-                <ArrowUpRight />
-              </span>
+              <span className='sp-button-label'>探索 Skivu</span>
             </a>
             <a href='/creators/skivu-beta' aria-label='内测中心'>
-              <span className='sp-button-label'>
-                内测中心<small>查看申请与进度</small>
+              <span className='sp-button-friend' aria-hidden='true'>
+                <img
+                  src='/branding/skymoni-cloud-friend-transparent.png'
+                  alt=''
+                />
               </span>
-              <span className='sp-button-arrow'>
-                <ArrowUpRight />
-              </span>
+              <span className='sp-button-label'>内测中心</span>
             </a>
           </div>
         </div>
