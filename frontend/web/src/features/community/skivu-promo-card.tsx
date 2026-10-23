@@ -42,7 +42,6 @@ export function SkivuPromoCard() {
           }}
         />
         <div className='sp-sky-shade' />
-        <div className='sp-horizon' />
         <span className='sp-comet' />
         <span className='sp-comet sp-comet-second' />
         {stars.map(({ id, x, y, size, delay }) => (

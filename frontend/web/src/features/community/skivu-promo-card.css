@@ -178,17 +178,6 @@
   opacity: 0.6;
   animation: skivu-promo-twinkle 6s ease-in-out infinite;
 }
-.skivu-community-promo .sp-horizon {
-  position: absolute;
-  width: 115%;
-  height: 225px;
-  left: -5%;
-  bottom: -195px;
-  border: 1px solid #8bd9ff45;
-  border-radius: 50%;
-  box-shadow: 0 -8px 35px #7aafff12;
-  transform: rotate(-7deg);
-}
 .skivu-community-promo .sp-comet {
   position: absolute;
   width: 150px;
