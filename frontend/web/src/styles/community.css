@@ -149,7 +149,7 @@
   display: none;
 }
 .sf-frame {
-  width: min(1540px, 100%);
+  width: 100%;
   display: grid;
   grid-template-columns: 224px minmax(0, 1fr);
   margin: auto;

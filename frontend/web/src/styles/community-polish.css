@@ -109,10 +109,10 @@
   min-height: 36px;
 }
 #root .community-shell .sf-frame {
-  max-width: 1600px;
+  max-width: none;
   grid-template-columns: 218px minmax(0, 1fr);
-  gap: 30px;
-  padding: 28px 32px 0;
+  gap: 24px;
+  padding: 28px 16px 0;
 }
 #root .community-shell .sf-sidebar {
   top: 104px;
@@ -1543,7 +1543,7 @@ body .sf-mobile-sidebar .sf-nav-group h2 {
   #root .community-shell .sf-frame {
     grid-template-columns: 195px minmax(0, 1fr);
     gap: 24px;
-    padding: 24px 24px 0;
+    padding: 24px 16px 0;
   }
   #root .community-shell .sf-header-inner {
     padding: 12px 24px;
@@ -1597,7 +1597,7 @@ body .sf-mobile-sidebar .sf-nav-group h2 {
 @media (max-width: 960px) {
   #root .community-shell .sf-frame {
     grid-template-columns: 172px minmax(0, 1fr);
-    padding: 22px 20px 0;
+    padding: 22px 16px 0;
     gap: 20px;
   }
   #root .community-shell .sf-nav-group a {
