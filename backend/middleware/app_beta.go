@@ -105,19 +105,13 @@ func AppAccountChatPolicy(c *gin.Context) {
 
 func appTextChatPolicy(c *gin.Context, routes map[string]service.AppBetaModelRoute) {
 	var body struct {
-		Model    string `json:"model"`
-		Messages []struct {
-			Role    string `json:"role"`
-			Content string `json:"content"`
-		} `json:"messages"`
-		Stream    bool `json:"stream"`
-		MaxTokens int  `json:"max_tokens"`
-		Input     []struct {
-			Role    string `json:"role"`
-			Content string `json:"content"`
-		} `json:"input"`
-		Instructions    string `json:"instructions"`
-		MaxOutputTokens int    `json:"max_output_tokens"`
+		Model           string           `json:"model"`
+		Messages        []appChatMessage `json:"messages"`
+		Stream          bool             `json:"stream"`
+		MaxTokens       int              `json:"max_tokens"`
+		Input           []appChatMessage `json:"input"`
+		Instructions    string           `json:"instructions"`
+		MaxOutputTokens int              `json:"max_output_tokens"`
 	}
 	err := common.DecodeJson(c.Request.Body, &body)
 	if err == nil && body.Model != "" {
@@ -145,12 +139,15 @@ func appTextChatPolicy(c *gin.Context, routes map[string]service.AppBetaModelRou
 		err = errors.New("模型或消息参数不在内测允许范围内")
 	}
 	for _, m := range messages {
+		if !validAppChatContent(m.Content, m.Role, responses, c.GetBool("app_account_authenticated")) {
+			err = errors.New("不支持的消息内容")
+		}
 		if !slices.Contains([]string{"system", "user", "assistant"}, m.Role) {
 			err = errors.New("不支持的消息角色")
 		}
 	}
 	if err != nil {
-		c.AbortWithStatusJSON(400, gin.H{"success": false, "code": "INVALID_REQUEST", "message": "请选择可用聊天模型，输出上限须为 1–4096 tokens"})
+		c.AbortWithStatusJSON(400, gin.H{"success": false, "code": "INVALID_REQUEST", "message": "请选择可用聊天模型，输出上限须为 1–4096 tokens；图片须使用有效的 PNG、JPG 或 WebP 内联图片"})
 		return
 	}
 	var payload any = map[string]any{"model": body.Model, "messages": body.Messages, "stream": body.Stream, "max_tokens": body.MaxTokens}
