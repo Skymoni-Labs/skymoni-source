@@ -64,13 +64,13 @@ func TestModelPublicationSelectionGuard(t *testing.T) {
 	allowed, err = model.IsModelPublished("guard-visible")
 	require.NoError(t, err)
 	assert.False(t, allowed)
-	// Polling a server-owned task remains possible after delisting; token pins
-	// above cannot use this exception to create a new generation.
+	// Origin-task pins create new variations/remixes and cannot bypass hiding.
 	c = newContext()
 	GetChannelConstraints(c).AddPin(dto.ChannelPin{ChannelId: 2102, Source: dto.PinSourceOriginTask, Rank: dto.PinRankOriginTask})
 	channel, _, denied = SelectChannelForRequest(c, "guard-hidden", &RetryParam{Ctx: c, TokenGroup: "default", Retry: common.GetPointer(0)})
-	assert.Nil(t, denied)
-	require.NotNil(t, channel)
+	assert.Nil(t, channel)
+	require.NotNil(t, denied)
+	assert.Equal(t, types.ErrorCodeModelUnavailable, denied.Code)
 	// A database failure must never fall back to an enabled hidden channel.
 	require.NoError(t, db.Migrator().DropTable(&model.Model{}))
 	c = newContext()

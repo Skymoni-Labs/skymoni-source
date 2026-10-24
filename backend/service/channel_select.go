@@ -304,18 +304,16 @@ type ChannelSelectError struct {
 func SelectChannelForRequest(c *gin.Context, modelName string, retry *RetryParam) (*model.Channel, string, *ChannelSelectError) {
 	constraints := GetChannelConstraints(c)
 	pin, found, overridden := constraints.ResolvedPin()
-	// Existing tasks may still poll their owning channel after delisting. Every
-	// new submission (including pinned, affinity and WebSocket requests) must
-	// satisfy the public catalog policy before selecting or charging a channel.
-	if !found || pin.Source != dto.PinSourceOriginTask {
-		published, err := model.IsModelPublished(modelName)
-		if err != nil {
-			logger.LogError(c, "failed to read model publication policy")
-			return nil, "", &ChannelSelectError{StatusCode: http.StatusServiceUnavailable, Code: types.ErrorCodeGetChannelFailed, MessageID: i18n.MsgDistributorModelPolicyUnavailable}
-		}
-		if !published {
-			return nil, "", &ChannelSelectError{StatusCode: http.StatusNotFound, Code: types.ErrorCodeModelUnavailable, MessageID: i18n.MsgDistributorModelUnavailable, Params: map[string]any{"Model": modelName}}
-		}
+	// Origin-task pins can also create new variations/remixes, so they must
+	// satisfy publication policy just like token pins. Existing task retrieval
+	// uses the separate ownership-checked read handlers, not this selector.
+	published, err := model.IsModelPublished(modelName)
+	if err != nil {
+		logger.LogError(c, "failed to read model publication policy")
+		return nil, "", &ChannelSelectError{StatusCode: http.StatusServiceUnavailable, Code: types.ErrorCodeGetChannelFailed, MessageID: i18n.MsgDistributorModelPolicyUnavailable}
+	}
+	if !published {
+		return nil, "", &ChannelSelectError{StatusCode: http.StatusNotFound, Code: types.ErrorCodeModelUnavailable, MessageID: i18n.MsgDistributorModelUnavailable, Params: map[string]any{"Model": modelName}}
 	}
 	if !model.RoutingModelGroupAllowsModel(retry.TokenGroup, modelName) && (!found || pin.Source != dto.PinSourceOriginTask) {
 		return nil, "", &ChannelSelectError{StatusCode: http.StatusForbidden, Code: types.ErrorCodeGetChannelFailed, MessageID: i18n.MsgDistributorNoAvailableChannel, Params: map[string]any{"Group": retry.TokenGroup, "Model": modelName}}
