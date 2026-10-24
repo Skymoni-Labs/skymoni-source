@@ -1916,5 +1916,14 @@
     "bytes": 41252619,
     "sha256": "daa6eda57ba0b824603bc92fd0ecd812ac31dc1e35ff59646dd8159b4097a6d2",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/app-media-20261024/source-skymoni-app-media-20261024.zip"
+  },
+  {
+    "component": "backend",
+    "name": "source-skymoni-app-update-catalog-20261024.zip",
+    "bytes": 41325105,
+    "sha256": "ce36dfa432d5d5fdb89f2cb1704265cda8ae18709f0aa2f75871fa4962be5429",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/app-update-catalog-20261024/source-skymoni-app-update-catalog-20261024.zip",
+    "tag": "app-update-catalog-20261024",
+    "source_commit": "7d851c479d1bd69cea52a8dd4ac08efc5ce197f0"
   }
 ]
