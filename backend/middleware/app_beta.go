@@ -14,6 +14,7 @@ import (
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/constant"
+	"github.com/QuantumNous/new-api/i18n"
 	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/service"
 	"github.com/gin-gonic/gin"
@@ -119,6 +120,17 @@ func appTextChatPolicy(c *gin.Context, routes map[string]service.AppBetaModelRou
 		MaxOutputTokens int    `json:"max_output_tokens"`
 	}
 	err := common.DecodeJson(c.Request.Body, &body)
+	if err == nil && body.Model != "" {
+		published, policyErr := model.IsModelPublished(body.Model)
+		if policyErr != nil {
+			c.AbortWithStatusJSON(http.StatusServiceUnavailable, gin.H{"success": false, "code": "model_policy_unavailable", "message": i18n.T(c, i18n.MsgDistributorModelPolicyUnavailable)})
+			return
+		}
+		if !published {
+			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"success": false, "code": "model_not_available", "message": i18n.T(c, i18n.MsgDistributorModelUnavailable, map[string]any{"Model": body.Model})})
+			return
+		}
+	}
 	responses := strings.HasSuffix(c.Request.URL.Path, "/responses")
 	protocol := "chat"
 	messages := body.Messages

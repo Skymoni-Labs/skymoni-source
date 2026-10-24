@@ -77,6 +77,7 @@ const (
 	ErrorCodeEmptyResponse          ErrorCode = "empty_response"
 	ErrorCodeAwsInvokeError         ErrorCode = "aws_invoke_error"
 	ErrorCodeModelNotFound          ErrorCode = "model_not_found"
+	ErrorCodeModelUnavailable       ErrorCode = "model_not_available"
 	ErrorCodePromptBlocked          ErrorCode = "prompt_blocked"
 
 	// sql error

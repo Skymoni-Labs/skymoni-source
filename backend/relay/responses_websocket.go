@@ -893,6 +893,14 @@ func buildResponsesWSErrorPayload(eventID, streamID string, apiErr *types.NewAPI
 // pinned to a channel: the check is stricter there on purpose, because a
 // persistent connection keeps serving the model after the pin was resolved.
 func checkResponsesWSModelAccess(c *gin.Context, modelName string) *types.NewAPIError {
+	// Runs for every response.create, including an already connected session.
+	published, policyErr := appmodel.IsModelPublished(modelName)
+	if policyErr != nil {
+		return types.NewErrorWithStatusCode(errors.New(i18n.T(c, i18n.MsgDistributorModelPolicyUnavailable)), types.ErrorCodeGetChannelFailed, http.StatusServiceUnavailable, types.ErrOptionWithSkipRetry())
+	}
+	if !published {
+		return types.NewErrorWithStatusCode(errors.New(i18n.T(c, i18n.MsgDistributorModelUnavailable, map[string]any{"Model": modelName})), types.ErrorCodeModelUnavailable, http.StatusNotFound, types.ErrOptionWithSkipRetry())
+	}
 	if !common.GetContextKeyBool(c, appconstant.ContextKeyTokenModelLimitEnabled) {
 		return nil
 	}

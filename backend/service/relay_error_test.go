@@ -173,7 +173,8 @@ func TestUpstream429CooldownSelectsAnotherChannel(t *testing.T) {
 	sqlDB, err := database.DB()
 	require.NoError(t, err)
 	sqlDB.SetMaxOpenConns(1)
-	require.NoError(t, database.AutoMigrate(&model.Channel{}, &model.Ability{}))
+	require.NoError(t, database.AutoMigrate(&model.Channel{}, &model.Ability{}, &model.Model{}))
+	require.NoError(t, database.Create(&model.Model{ModelName: "cooldown-model", Status: 1}).Error)
 	model.DB = database
 	common.SetMainDatabaseType(common.DatabaseTypeSQLite)
 	for _, channel := range []model.Channel{

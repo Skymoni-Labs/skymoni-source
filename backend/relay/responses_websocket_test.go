@@ -74,6 +74,8 @@ func TestNormalizeResponsesWSMaxOutputTokens(t *testing.T) {
 func TestSelectResponsesWSChannelHonorsPinsAndFilters(t *testing.T) {
 	require.NoError(t, i18n.Init())
 	database := setupRelayChannelDB(t)
+	require.NoError(t, database.AutoMigrate(&model.Model{}))
+	require.NoError(t, database.Create(&model.Model{ModelName: "gpt-5.1", Status: 1}).Error)
 	enabled := &model.Channel{Name: "enabled", Key: "sk-test", Status: common.ChannelStatusEnabled, Type: constant.ChannelTypeOpenAI}
 	enabled.SetSetting(dto.ChannelSettings{ResponsesWebSocketEnabled: true})
 	wsDisabled := &model.Channel{Name: "ws-disabled", Key: "sk-test", Status: common.ChannelStatusEnabled, Type: constant.ChannelTypeOpenAI}
@@ -120,6 +122,11 @@ func TestSelectResponsesWSChannelHonorsPinsAndFilters(t *testing.T) {
 // The WebSocket relay must admit the same model names as the HTTP distributor
 // when a token restricts models (reasoning suffixes and @modifiers included).
 func TestCheckResponsesWSModelAccessMatchesHTTPTokenLimits(t *testing.T) {
+	database := setupRelayChannelDB(t)
+	require.NoError(t, database.AutoMigrate(&model.Model{}))
+	for _, name := range []string{"gpt-5.1", "gpt-5.1-high", "gpt-5.1@thinking:on", "gpt-4o"} {
+		require.NoError(t, database.Create(&model.Model{ModelName: name, Status: 1}).Error)
+	}
 	for _, tc := range []struct {
 		model  string
 		status int
@@ -149,6 +156,8 @@ func TestCheckResponsesWSModelAccessMatchesHTTPTokenLimits(t *testing.T) {
 func TestSelectResponsesWSChannelAcceptsNativeResponsesChannelTypes(t *testing.T) {
 	require.NoError(t, i18n.Init())
 	database := setupRelayChannelDB(t)
+	require.NoError(t, database.AutoMigrate(&model.Model{}))
+	require.NoError(t, database.Create(&model.Model{ModelName: "ws-model", Status: 1}).Error)
 	nativeRoute := &dto.AdvancedCustomConfig{Routes: []dto.AdvancedCustomRoute{{IncomingPath: "/v1/responses", UpstreamPath: "/v1/responses"}}}
 	noneRoute := &dto.AdvancedCustomConfig{Routes: []dto.AdvancedCustomRoute{{IncomingPath: "/v1/responses", UpstreamPath: "/v1/responses", Converter: "none"}}}
 	convertedRoute := &dto.AdvancedCustomConfig{Routes: []dto.AdvancedCustomRoute{{IncomingPath: "/v1/responses", UpstreamPath: "/v1/chat/completions", Converter: "openai_responses_to_openai_chat_completions"}}}
@@ -224,6 +233,8 @@ func TestRestoreConnectionContextRejectsChangedAdvancedCustomRoute(t *testing.T)
 func TestResponsesWSChannelRoutingRequiresExplicitOptIn(t *testing.T) {
 	require.NoError(t, i18n.Init())
 	database := setupRelayChannelDB(t)
+	require.NoError(t, database.AutoMigrate(&model.Model{}))
+	require.NoError(t, database.Create(&model.Model{ModelName: "ws-model", Status: 1}).Error)
 	require.NoError(t, database.AutoMigrate(&model.Ability{}))
 	legacy := &model.Channel{Name: "legacy-http", Key: "sk-test", Type: constant.ChannelTypeOpenAI, Status: common.ChannelStatusEnabled, Group: "default", Models: "ws-model", Priority: common.GetPointer(int64(10))}
 	enabled := &model.Channel{Name: "websocket", Key: "sk-test", Type: constant.ChannelTypeCodex, Status: common.ChannelStatusEnabled, Group: "default", Models: "ws-model", Priority: common.GetPointer(int64(0))}
@@ -275,6 +286,8 @@ func TestResponsesWSChannelRoutingRequiresExplicitOptIn(t *testing.T) {
 func TestSelectResponsesWSChannelHonorsStrictSessionBinding(t *testing.T) {
 	require.NoError(t, i18n.Init())
 	database := setupRelayChannelDB(t)
+	require.NoError(t, database.AutoMigrate(&model.Model{}))
+	require.NoError(t, database.Create(&model.Model{ModelName: "ws-model", Status: 1}).Error)
 	require.NoError(t, database.AutoMigrate(&model.Ability{}))
 	bound := &model.Channel{Name: "bound", Key: "sk-test", Type: constant.ChannelTypeOpenAI, Status: common.ChannelStatusAutoDisabled, Group: "default", Models: "ws-model", Priority: common.GetPointer(int64(10))}
 	fallback := &model.Channel{Name: "fallback", Key: "sk-test", Type: constant.ChannelTypeOpenAI, Status: common.ChannelStatusEnabled, Group: "default", Models: "ws-model", Priority: common.GetPointer(int64(0))}
