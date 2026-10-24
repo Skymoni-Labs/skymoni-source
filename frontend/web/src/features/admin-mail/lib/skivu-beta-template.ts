@@ -1,4 +1,5 @@
-export const SKIVU_POSTER_URL = '/skivu/assets/skivu-poster-20261023.jpg'
+export const SKIVU_POSTER_FILENAME = 'Skivu-promo-20261024.jpg'
+export const SKIVU_POSTER_URL = '/skivu/assets/skivu-poster-20261024.jpg'
 
 export function betaMailAmount(value: string): string | null {
   const trimmed = value.trim()

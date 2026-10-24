@@ -188,7 +188,7 @@ test('uploads the bundled poster as an existing mail-image marker, without save/
   )
   expect(server.upload).toHaveBeenCalledOnce()
   expect(server.upload.mock.calls[0][0]).toMatchObject({
-    name: 'Skivu-promo-20261023.jpg',
+    name: 'Skivu-promo-20261024.jpg',
     type: 'image/jpeg',
   })
   expect(values().content).not.toContain('<img')

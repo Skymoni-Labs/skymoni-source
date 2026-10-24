@@ -22,6 +22,7 @@ import { uploadMailImage } from '../api'
 import type { MailFormValues } from '../lib/schema'
 import {
   betaMailAmount,
+  SKIVU_POSTER_FILENAME,
   SKIVU_POSTER_URL,
   skivuBetaTemplate,
 } from '../lib/skivu-beta-template'
@@ -70,7 +71,7 @@ export function SkivuBetaTemplateDialog(props: {
           throw new Error('海报文件大小不符合邮件要求')
         }
         const image = await uploadMailImage(
-          new File([blob], 'Skivu-promo-20261023.jpg', { type: 'image/jpeg' })
+          new File([blob], SKIVU_POSTER_FILENAME, { type: 'image/jpeg' })
         )
         imageName = image.name
       }
@@ -162,7 +163,7 @@ export function SkivuBetaTemplateDialog(props: {
                 <a
                   className='text-muted-foreground inline-flex items-center gap-2 text-sm hover:underline'
                   href={SKIVU_POSTER_URL}
-                  download='Skivu-promo-20261023.jpg'
+                  download={SKIVU_POSTER_FILENAME}
                 >
                   <Download size={14} />
                   下载宣传海报
