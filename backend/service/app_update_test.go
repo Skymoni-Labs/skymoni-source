@@ -1,6 +1,8 @@
 package service
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/url"
 	"os"
@@ -55,6 +57,52 @@ func TestAppUpdateManifestFailsClosed(t *testing.T) {
 	_, err = LoadAppReleases()
 	require.Error(t, err)
 	require.NoError(t, os.WriteFile(p, []byte(strings.Repeat("x", (64<<10)+1)), 0600))
+	_, err = LoadAppReleases()
+	require.Error(t, err)
+}
+
+func TestAppUpdateCatalogPreservesHistoryBeyondThirty(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "releases.json")
+	t.Setenv("SKYMONI_APP_RELEASES_FILE", path)
+	entries := make([]AppRelease, 0, maxAppReleaseEntries+1)
+	for i := 1; i <= maxAppReleaseEntries+1; i++ {
+		release := testAppRelease()
+		release.ID = fmt.Sprintf("v0.2.%d", i)
+		release.Version = fmt.Sprintf("0.2.%d", i)
+		release.VersionCode = int64(i)
+		entries = append(entries, release)
+		if i != 31 && i != maxAppReleaseEntries && i != maxAppReleaseEntries+1 {
+			continue
+		}
+		raw, err := json.Marshal(map[string]interface{}{"releases": entries})
+		require.NoError(t, err)
+		require.NoError(t, os.WriteFile(path, raw, 0600))
+		loaded, err := LoadAppReleases()
+		if i > maxAppReleaseEntries {
+			require.Error(t, err)
+			continue
+		}
+		require.NoError(t, err)
+		require.Len(t, loaded, i)
+		foundOldest := false
+		for _, release := range loaded {
+			if release.ID == "v0.2.1" {
+				foundOldest = true
+			}
+		}
+		require.True(t, foundOldest, "old download IDs must remain available")
+	}
+}
+
+func TestAppUpdateCatalogByteLimitStillFailsClosed(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "releases.json")
+	t.Setenv("SKYMONI_APP_RELEASES_FILE", path)
+	raw := []byte(`{"releases":[]}`)
+	raw = append(raw, []byte(strings.Repeat(" ", maxAppReleaseManifestBytes-len(raw)))...)
+	require.NoError(t, os.WriteFile(path, raw, 0600))
+	_, err := LoadAppReleases()
+	require.NoError(t, err)
+	require.NoError(t, os.WriteFile(path, append(raw, ' '), 0600))
 	_, err = LoadAppReleases()
 	require.Error(t, err)
 }

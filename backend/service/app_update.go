@@ -15,6 +15,9 @@ import (
 
 const AppPackageName = "com.skyjjgw.independent.ski"
 
+const maxAppReleaseEntries = 128
+const maxAppReleaseManifestBytes = 256 << 10
+
 var appReleaseID = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$`)
 var appReleaseVersion = regexp.MustCompile(`^[0-9]+\.[0-9]+\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$`)
 var appReleaseHash = regexp.MustCompile(`^[a-f0-9]{64}$`)
@@ -66,14 +69,14 @@ func LoadAppReleases() ([]AppRelease, error) {
 		return nil, err
 	}
 	defer f.Close()
-	data, err := io.ReadAll(io.LimitReader(f, (64<<10)+1))
-	if err != nil || len(data) > 64<<10 {
+	data, err := io.ReadAll(io.LimitReader(f, maxAppReleaseManifestBytes+1))
+	if err != nil || len(data) > maxAppReleaseManifestBytes {
 		return nil, errors.New("invalid release manifest")
 	}
 	var manifest struct {
 		Releases []AppRelease `json:"releases"`
 	}
-	if json.Unmarshal(data, &manifest) != nil || len(manifest.Releases) > 30 {
+	if json.Unmarshal(data, &manifest) != nil || len(manifest.Releases) > maxAppReleaseEntries {
 		return nil, errors.New("invalid release manifest")
 	}
 	ids := map[string]bool{}
