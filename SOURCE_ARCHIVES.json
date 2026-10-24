@@ -1902,5 +1902,12 @@
     "bytes": 41361577,
     "sha256": "b080489e90ef9b7d00e05527aef033b34ebae7e51018e9b6b4effd59a877e05c",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/model-publication-guard-20261024/source-skymoni-model-publication-guard-20261024.zip"
+  },
+  {
+    "name": "source-skymoni-model-publication-guard-r2-20261024.zip",
+    "tag": "model-publication-guard-r2-20261024",
+    "bytes": 41385606,
+    "sha256": "cab1d75a4e6574ec670aa2b2619a9164942f527259ab79365712a5c75758454c",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/model-publication-guard-r2-20261024/source-skymoni-model-publication-guard-r2-20261024.zip"
   }
 ]
