@@ -160,7 +160,10 @@ if (plate && hero) {
     if (paused()) {
       cancelAnimationFrame(raf);
       raf = 0;
-    } else resume();
+    } else {
+      void initialize();
+      resume();
+    }
   });
   void initialize();
 }
