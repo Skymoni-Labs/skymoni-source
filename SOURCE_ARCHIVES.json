@@ -1979,5 +1979,12 @@
     "bytes": 43487465,
     "sha256": "5f53bf5099762eccf1b97f793c6a11dcff98783906133cf1e93b6830320611f7",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-station-tour-r7-20261025/source-skymoni-skivu-universe-station-tour-r7-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-station-focus-r8-20261025.zip",
+    "tag": "skivu-universe-station-focus-r8-20261025",
+    "bytes": 43492886,
+    "sha256": "fc3e512be1000361aec3edbf623595d2d11d3bf9a0078d40a42f9e2b7ee35ccc",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-station-focus-r8-20261025/source-skymoni-skivu-universe-station-focus-r8-20261025.zip"
   }
 ]
