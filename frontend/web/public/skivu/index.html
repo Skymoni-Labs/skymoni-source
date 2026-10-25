@@ -9,7 +9,10 @@
       name="description"
       content="Skivu，一个属于你的 AI 空间。自由选择模型，定义角色与外观，探索开放插件生态。下载 Android App，开启属于你的探索。"
     />
-    <meta name="skivu-release" content="skymoni-skivu-universe-site-20261025" />
+    <meta
+      name="skivu-release"
+      content="skymoni-skivu-universe-interactive-20261025"
+    />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Skivu · 一个属于你的 AI 空间" />
     <meta
@@ -32,6 +35,7 @@
     />
     <link rel="stylesheet" href="universe.css?v=20261025" />
     <script defer src="universe.js?v=20261025"></script>
+    <script type="module" src="interactive/hero.js?v=20261025-3d"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">跳到主要内容</a
@@ -43,7 +47,7 @@
         ><strong>Skivu</strong></a
       >
       <nav aria-label="主导航">
-        <a href="#experience">探索体验</a><a href="#ecosystem">开放生态</a
+        <a href="#experience">探索体验</a><a href="#orbital-lab">轨道探索</a
         ><a href="#film">品牌故事</a><a href="/creators">社区 <span>↗</span></a>
       </nav>
       <div class="header-actions">
@@ -351,6 +355,40 @@
         </div>
       </section>
       <section
+        class="orbital-lab section-space"
+        id="orbital-lab"
+        aria-labelledby="orbital-title"
+      >
+        <div class="orbital-heading page-width reveal">
+          <div>
+            <p class="eyebrow">ORBITAL EXPERIENCE / BEYOND THE HORIZON</p>
+            <h2 id="orbital-title">
+              想象的边界，<span class="gradient-text">从未止步于地平线。</span>
+            </h2>
+          </div>
+          <p>触碰一座空间站，<br />把视角，交给探索。</p>
+        </div>
+        <div class="station-viewer-shell">
+          <iframe
+            id="station-viewer"
+            src="interactive/index.html?embed=1"
+            loading="lazy"
+            title="国际空间站三维交互体验"
+            allow="fullscreen"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="orbital-caption page-width">
+          <span>宣传页宇宙交互场景 · 空间站结构示意</span
+          ><a
+            href="interactive/index.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            >打开独立 3D 视图 ↗</a
+          >
+        </div>
+      </section>
+      <section
         class="ecosystem section-space"
         id="ecosystem"
         aria-labelledby="ecosystem-title"
@@ -358,7 +396,7 @@
         <div class="ecosystem-heading page-width reveal">
           <p class="eyebrow">04 — AN OPEN UNIVERSE</p>
           <h2 id="ecosystem-title">
-            你的空间站，<br /><span class="gradient-text">连接更多可能。</span>
+            让你的空间，<br /><span class="gradient-text">继续生长。</span>
           </h2>
           <p class="section-lead">
             开放插件生态，让你的 AI 空间继续生长。<br />探索独立插件，也为自己的想法创造入口。
@@ -381,19 +419,13 @@
             />
             <path d="M125 240H1075M600 35V445" />
           </svg>
-          <div class="orbital-station">
-            <div class="station-beacon" aria-hidden="true"><span></span></div>
-            <img
-              src="assets/orbital-station-20261025.webp"
-              alt="Skivu 开放生态空间站创意视觉"
-              width="1792"
-              height="1024"
-              loading="lazy"
-              decoding="async"
-            /><span class="station-signature"
-              ><span class="brand-cloud" aria-hidden="true"></span>SKIVU / OPEN
-              SPACE STATION</span
-            >
+          <div class="orbital-station sdk-station">
+            <div class="sdk-nexus">
+              <span class="nexus-orbit"></span
+              ><span class="brand-cloud" aria-hidden="true"></span><b>Skivu</b
+              ><small>OPEN PLUGIN SDK</small>
+            </div>
+            <span class="station-signature">AN OPEN SPACE FOR YOUR IDEAS</span>
             <div class="station-docking" aria-hidden="true"></div>
           </div>
           <button

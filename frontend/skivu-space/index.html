@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#030810" />
+    <title>国际空间站 · Skivu 轨道探索</title>
+    <link rel="stylesheet" href="src/station.css" />
+  </head>
+  <body>
+    <main class="station-experience" id="station-experience">
+      <div id="station-canvas" role="img" aria-label="可拖动旋转的国际空间站三维模型"></div>
+      <div class="vignette" aria-hidden="true"></div>
+      <header class="station-brand">
+        <span>SKIVU</span><i></i> ORBITAL EXPLORER <a href="../" aria-label="返回 Skivu">↗</a>
+      </header>
+      <aside class="mission-copy">
+        <p class="kicker">HUMANITY, BEYOND THE HORIZON</p>
+        <h1>国际空间站</h1>
+        <p class="subtitle">地球之上，人类的另一扇窗。</p>
+        <div class="mission-stats">
+          <div>
+            <b>109<small>m</small></b
+            ><span>空间站横跨</span>
+          </div>
+          <div>
+            <b>400<small>km</small></b
+            ><span>示意轨道高度</span>
+          </div>
+          <div>
+            <b>90<small>min</small></b
+            ><span>约每圈时间</span>
+          </div>
+        </div>
+        <article class="module-info" id="module-info" aria-live="polite">
+          <p class="info-kicker" id="info-kicker">ORBITAL OVERVIEW</p>
+          <h2 id="info-title">从这里，望向更远。</h2>
+          <p class="info-description" id="info-description">
+            拖动旋转，靠近细节。点击舱段，探索这座人类共同建造的轨道实验室。
+          </p>
+          <dl>
+            <div>
+              <dt>建造 / 安装</dt>
+              <dd id="info-date">1998 年起分阶段组装</dd>
+            </div>
+            <div>
+              <dt>参与机构</dt>
+              <dd id="info-agency">NASA · ESA · JAXA · CSA 等</dd>
+            </div>
+          </dl>
+          <a
+            id="info-source"
+            href="https://www.nasa.gov/international-space-station/space-station-facts-and-figures/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >查阅资料来源 ↗</a
+          >
+        </article>
+      </aside>
+      <nav class="module-nav" aria-label="空间站模块导航">
+        <p>选择探索舱段</p>
+        <button data-module="solar" aria-pressed="false">
+          <span>01</span><b>太阳能阵列</b><i>↗</i></button
+        ><button data-module="destiny" aria-pressed="false">
+          <span>02</span><b>命运号实验舱</b><i>↗</i></button
+        ><button data-module="kibo" aria-pressed="false">
+          <span>03</span><b>希望号实验舱</b><i>↗</i></button
+        ><button data-module="cupola" aria-pressed="false">
+          <span>04</span><b>穹顶观测舱</b><i>↗</i></button
+        ><button data-module="truss" aria-pressed="false">
+          <span>05</span><b>主桁架</b><i>↗</i></button
+        ><button data-module="arm" aria-pressed="false">
+          <span>06</span><b>机械臂</b><i>↗</i>
+        </button>
+      </nav>
+      <div class="hover-tooltip" id="hover-tooltip" hidden></div>
+      <div class="loading" id="loading">
+        <span></span>
+        <p>正在建立轨道视角…</p>
+      </div>
+      <p class="interaction-help">
+        左键拖动旋转 · 滚轮缩放 · 右键平移<span>触屏：单指旋转 · 双指缩放与平移</span>
+      </p>
+      <footer class="station-controls">
+        <button id="auto-rotate" aria-pressed="true"><span>↻</span> 自动旋转</button
+        ><button id="reset-view"><span>⟲</span> 重置视角</button
+        ><button id="fullscreen"><span>⛶</span> 全屏探索</button>
+      </footer>
+      <p class="model-note">公开资料比例建模 · 结构示意 · 非实时轨道</p>
+    </main>
+    <script type="module" src="src/station.ts"></script>
+  </body>
+</html>

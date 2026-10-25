@@ -9,6 +9,26 @@
   const menuButton = document.querySelector('.menu-toggle')
   const canvas = document.getElementById('starfield')
   const ctx = canvas.getContext('2d')
+  const stationFrame = document.getElementById('station-viewer')
+  let stationVisible = false
+  function syncStation() {
+    stationFrame.contentWindow?.postMessage(
+      { type: 'skivu-motion', paused },
+      location.origin
+    )
+    stationFrame.contentWindow?.postMessage(
+      { type: 'skivu-station-visibility', visible: stationVisible },
+      location.origin
+    )
+  }
+  stationFrame.addEventListener('load', syncStation)
+  new IntersectionObserver(
+    (entries) => {
+      stationVisible = entries[0].isIntersecting
+      syncStation()
+    },
+    { rootMargin: '150px' }
+  ).observe(stationFrame)
   const orbitalScene = document.querySelector('.ecosystem-space')
   const dockOrder = ['web', 'canvas', 'world', 'chat']
   let litDock = ''
@@ -125,7 +145,11 @@
     }
   }
   function motionState() {
+    syncStation()
     root.classList.toggle('motion-paused', paused)
+    document.dispatchEvent(
+      new CustomEvent('skivu-motion-change', { detail: { paused } })
+    )
     motionButton.setAttribute('aria-pressed', String(paused))
     motionButton.setAttribute(
       'aria-label',
