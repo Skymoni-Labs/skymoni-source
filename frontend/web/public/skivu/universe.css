@@ -1658,6 +1658,11 @@ h2 {
   color: #b6c8e0;
   margin-top: 27px;
   text-shadow: 0 1px 5px #000;
+  padding: 8px 14px;
+  background: #050b19d9;
+  border: 1px solid #adc9f13d;
+  border-radius: 999px;
+  color: #d3e5fc;
 }
 .source-link svg {
   width: 15px;
