@@ -5,7 +5,7 @@ export default defineConfig({
     modulePreload: { polyfill: false },
     outDir: "../web/public/skivu/interactive",
     emptyOutDir: true,
-    target: "es2022",
+    target: "es2018",
     minify: true,
     rollupOptions: {
       input: { station: "index.html", hero: "src/hero.ts" },

@@ -48,11 +48,14 @@ const utcClock = must<HTMLSpanElement>('#utcClock');
 
 const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
 const isSmallViewport = () => window.innerWidth <= 900;
+const mobileQuality = isCoarsePointer || isSmallViewport();
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const embedded = window.parent !== window;
 app.classList.toggle('is-embedded', embedded);
 let hostPaused = false;
-let frameVisible = !embedded;
+// Render independently until the host supplies visibility. A missed message
+// must not leave an embedded viewer permanently black.
+let frameVisible = true;
 let sceneReady = false;
 let contextLost = false;
 let frameRequest = 0;
@@ -66,8 +69,8 @@ const ambientMotion = () => !hostPaused && !reducedMotion.matches;
 function createRenderer(): THREE.WebGLRenderer {
   try { return new THREE.WebGLRenderer({
   canvas,
-  antialias: true,
-  powerPreference: 'high-performance',
+  antialias: !mobileQuality,
+  powerPreference: mobileQuality ? 'low-power' : 'high-performance',
   logarithmicDepthBuffer: true,
   alpha: false,
   }); } catch {
@@ -76,12 +79,13 @@ function createRenderer(): THREE.WebGLRenderer {
   }
 }
 const renderer = createRenderer();
+renderer.debug.onShaderError = () => { throw new Error('当前设备无法编译三维着色器，已改为结构预览。'); };
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, isCoarsePointer || isSmallViewport() ? 1.25 : 1.6));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.03;
-renderer.shadowMap.enabled = true;
+renderer.shadowMap.enabled = !mobileQuality;
 renderer.shadowMap.type = THREE.PCFShadowMap;
 renderer.shadowMap.autoUpdate = false;
 renderer.shadowMap.needsUpdate = true;
@@ -137,12 +141,12 @@ exitInteraction.addEventListener('click', disengage);
 /*  Lighting                                                          */
 /* ------------------------------------------------------------------ */
 
-const hemisphere = new THREE.HemisphereLight(0x9ec9e8, 0x04070a, 0.78);
+const hemisphere = new THREE.HemisphereLight(0x9ec9e8, 0x04070a, mobileQuality ? 1.15 : 0.78);
 scene.add(hemisphere);
 
 const sun = new THREE.DirectionalLight(0xfff5e8, 3.7);
 sun.position.set(-118, 162, 104);
-sun.castShadow = true;
+sun.castShadow = !mobileQuality;
 sun.shadow.mapSize.set(isCoarsePointer ? 1024 : 2048, isCoarsePointer ? 1024 : 2048);
 sun.shadow.camera.near = 1;
 sun.shadow.camera.far = 420;
@@ -429,9 +433,7 @@ function selectModule(id: string, keepCamera: boolean): void {
 }
 
 function showError(message: string): void {
-  errorMessage.textContent = message;
-  errorPanel.hidden = false;
-  loader.classList.add('is-complete');
+  window.dispatchEvent(new CustomEvent('skivu-scene-error', { detail: message }));
 }
 
 /* ------------------------------------------------------------------ */
@@ -730,7 +732,12 @@ function pickAt(event: PointerEvent): void {
 /* ------------------------------------------------------------------ */
 
 const delay = (ms: number) => new Promise<void>((resolve) => window.setTimeout(resolve, ms));
-const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+// Lazy iframes can have requestAnimationFrame suspended before their first
+// intersection. Boot must complete even while the iframe is offscreen.
+const nextFrame = () => new Promise<void>((resolve) => {
+  const timer = window.setTimeout(resolve, 100);
+  requestAnimationFrame(() => { clearTimeout(timer); resolve(); });
+});
 
 function setLoader(progress: number, message: string): void {
   loaderBar.style.width = `${progress}%`;
@@ -743,8 +750,8 @@ async function init(): Promise<void> {
   await nextFrame();
   await delay(80);
 
-  const maxAnisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
-  const quality = isCoarsePointer || isSmallViewport() ? 1024 : 1536;
+  const maxAnisotropy = Math.min(mobileQuality ? 2 : 8, renderer.capabilities.getMaxAnisotropy());
+  const quality = mobileQuality ? 512 : 1536;
 
   setLoader(16, 'GENERATING PROCEDURAL EARTH');
   await nextFrame();
@@ -752,12 +759,12 @@ async function init(): Promise<void> {
 
   setLoader(43, 'ASSEMBLING PRESSURIZED MODULES');
   await nextFrame();
-  station = createStation(maxAnisotropy);
+  station = createStation(maxAnisotropy, mobileQuality);
   scene.add(station.root);
 
   setLoader(63, 'ALIGNING SOLAR ARRAY GIMBALS');
   await nextFrame();
-  earth = createEarth(earthTextures, sunDirection);
+  earth = createEarth(earthTextures, sunDirection, mobileQuality);
   scene.add(earth.group);
 
   const defaultView = computeOverviewView();
@@ -783,12 +790,16 @@ async function init(): Promise<void> {
   setLoader(100, 'ORBITAL LINK ESTABLISHED');
   await delay(420);
 
-  loader.classList.add('is-complete');
-  app.classList.add('is-ready');
-  window.setTimeout(() => loader.remove(), 1200);
-
   sceneReady = true;
+  if (app.classList.contains('is-compat')) return;
   updateProjection();
+  // Paint a real frame before hiding the loading/fallback view. First paint
+  // deliberately does not depend on animation, host messages or visibility.
+  renderer.render(scene, camera);
+  app.classList.add('is-ready');
+  window.dispatchEvent(new Event('skivu-scene-ready'));
+  loader.classList.add('is-complete');
+  window.setTimeout(() => loader.remove(), 1200);
   setAutoRotate(!reducedMotion.matches);
   cameraMode = OVERVIEW_ID;
   // A gentle arrival move from the outer approach to the fitted overview.
@@ -935,7 +946,15 @@ renderer.domElement.addEventListener('webglcontextlost', (event) => {
   contextLost = true;
   cancelAnimationFrame(frameRequest);
   frameRequest = 0;
-  showError('WebGL 上下文已中断。请刷新页面重新接入空间站。');
+  showError('三维渲染暂时中断，已切换为结构预览。可点击重新加载恢复三维视图。');
+});
+renderer.domElement.addEventListener('webglcontextrestored', () => {
+  // The compatibility controls may already be in use; let the user choose
+  // when to reload rather than changing the current view underneath them.
+  showError('三维渲染已恢复，可点击重新加载返回三维视图。');
+});
+window.addEventListener('skivu-scene-compat', () => {
+  contextLost = true; cancelAnimationFrame(frameRequest); frameRequest = 0;
 });
 
 /* ------------------------------------------------------------------ */
@@ -964,7 +983,8 @@ function renderFrame(now: number): void {
     }
 
     if (pointerDirty) updateHover();
-    renderer.render(scene, camera);
+    try { renderer.render(scene, camera); }
+    catch { contextLost = true; showError('三维渲染暂时不可用，已切换为二维结构预览。'); return; }
     if (ambientMotion() || tween) queueFrame();
 }
 function animate(): void {
@@ -991,7 +1011,18 @@ window.addEventListener('message', (event) => {
   if (event.data?.type === 'skivu-motion') { hostPaused = event.data.paused === true; syncActivity(); }
   if (event.data?.type === 'skivu-station-visibility') { frameVisible = event.data.visible === true; syncActivity(); }
 });
-document.addEventListener('visibilitychange', syncActivity);
+function requestHostState(): void {
+  if (embedded) window.parent.postMessage({ type: 'skivu-station-ready' }, location.origin);
+}
+// Both sides announce readiness: ordering of iframe load and async modules
+// differs between mobile browsers and bfcache restores.
+requestHostState();
+window.addEventListener('pageshow', () => { requestHostState(); syncActivity(); });
+document.addEventListener('visibilitychange', () => { requestHostState(); syncActivity(); });
+new IntersectionObserver((entries) => {
+  frameVisible = entries[0].isIntersecting;
+  syncActivity();
+}, { rootMargin: '150px' }).observe(canvas);
 reducedMotion.addEventListener('change', syncActivity);
 new ResizeObserver(() => { updateProjection(); queueFrame(); }).observe(must<HTMLElement>('.left-panel'));
 

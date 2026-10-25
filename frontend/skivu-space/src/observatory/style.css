@@ -79,6 +79,23 @@ a {
   opacity: 1;
 }
 
+.compat-scene { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(ellipse at 55% 45%, #12354b55, transparent 65%); }
+.compat-earth { position: absolute; width: 140%; height: 80%; left: -20%; top: 70%; border-radius: 50%; background: radial-gradient(ellipse at 50% 0, #91c9eb88, #20415b 12%, #071421 65%); box-shadow: 0 -3px 16px #7fc9ef77; }
+.compat-station { position: absolute; width: 60%; height: 60%; left: 22%; top: 19%; filter: drop-shadow(0 12px 20px #0008); }
+#app.is-ready .compat-scene { visibility: hidden; }
+.compat-notice { display: none; position: fixed; z-index: 30; bottom: 76px; left: 50%; transform: translateX(-50%); width: min(460px, 85vw); padding: 12px 16px; background: #071321ed; border: 1px solid #94cce63d; border-radius: 10px; font-size: 11px; line-height: 1.7; text-align: center; }
+.compat-notice strong { color: #bfe4f8; }
+.compat-notice p { color: #91aabc; margin: 5px 0; }
+.compat-notice button { background: #203b51; color: #d3ecf8; border: 1px solid #8bcee544; border-radius: 6px; padding: 4px 12px; cursor: pointer; }
+#app.is-compat .compat-notice { display: block; }
+#app.is-compat #scene, #app.is-compat .control-dock, #app.is-compat .control-hint { display: none; }
+#app.is-compat .left-panel, #app.is-compat .right-nav, #app.is-compat .topbar { opacity: 1; transform: none; }
+@media (max-width: 900px) {
+  .compat-station { width: 96%; height: 38%; left: 2%; top: 39%; }
+  .compat-notice { bottom: 8px; padding: 8px 12px; font-size: 10px; }
+  #app.is-compat .right-nav { bottom: 142px; }
+}
+
 #scene:active {
   cursor: grabbing;
 }
@@ -1671,4 +1688,18 @@ button:focus-visible {
   .has-selection .stats-grid { display: none; }
   .module-meta { margin-top: 9px; }
   .module-meta dd { font-size: 10px; }
+}
+@media (max-width: 900px) {
+  /* Keep the product-page embed focused on the model. Full details remain
+     available after a module selection and in the standalone viewer. */
+  .is-embedded .panel-kicker { display: none; }
+  .is-embedded .title-row { margin-top: 0; }
+  .is-embedded .title-row h1 { font-size: 25px; }
+  .is-embedded .iss-stamp { width: 30px; height: 30px; }
+  .is-embedded .panel-scroll { padding: 12px 15px; }
+  .is-embedded .left-panel, .is-embedded .panel-scroll { max-height: 31vh; }
+  .is-embedded:not(.has-selection) .module-card { display: none; }
+  .is-embedded .subtitle { margin-top: 5px; }
+  .is-embedded .module-card { margin-top: 8px; padding-top: 8px; }
+  .is-embedded .left-panel::after { display: none; }
 }

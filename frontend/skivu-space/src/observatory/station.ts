@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import {
   createDecalTexture,
   createHazardTexture,
@@ -1169,7 +1170,7 @@ function createSoyuz(anisotropy: number): THREE.Group {
 /*  Assemble the station                                               */
 /* ------------------------------------------------------------------ */
 
-export function createStation(anisotropy: number): StationBuild {
+export function createStation(anisotropy: number, mobile = false): StationBuild {
   const root = new THREE.Group();
   root.name = 'International Space Station';
   const modules = new Map<string, ModuleBinding>();
@@ -1460,6 +1461,41 @@ export function createStation(anisotropy: number): StationBuild {
       stowageMat,
       [i % 2 === 0 ? 5.4 : -5.4, -2.15, -3.1 + (i - 2.5) * 1.25],
     );
+  }
+
+  if (mobile) {
+    // Merge only static siblings with the same material. The module groups,
+    // solar pivots, arm joints and their picking/animation boundaries survive.
+    const batch = (parent: THREE.Object3D) => {
+      for (const child of [...parent.children]) if (!(child instanceof THREE.Mesh)) batch(child);
+      const buckets = new Map<string, THREE.Mesh[]>();
+      for (const child of parent.children) {
+        if (!(child instanceof THREE.Mesh) || Array.isArray(child.material) || child.children.length || child.userData.noPick) continue;
+        const layout = Object.keys(child.geometry.attributes).sort().map(name => {
+          const attr = child.geometry.getAttribute(name) as THREE.BufferAttribute;
+          return `${name}/${attr.itemSize}/${attr.normalized}/${attr.array.constructor.name}`;
+        }).join(',');
+        const key = `${child.material.uuid}:${child.castShadow}:${child.receiveShadow}:${layout}`;
+        const list = buckets.get(key) || []; list.push(child); buckets.set(key, list);
+      }
+      for (const list of buckets.values()) {
+        if (list.length < 2) continue;
+        const parts = list.map(object => {
+          object.updateMatrix();
+          const geometry = object.geometry.index ? object.geometry.toNonIndexed() : object.geometry.clone();
+          return geometry.applyMatrix4(object.matrix);
+        });
+        const geometry = mergeGeometries(parts, false);
+        parts.forEach(part => part.dispose());
+        if (!geometry) continue;
+        const combined = new THREE.Mesh(geometry, list[0].material);
+        combined.castShadow = list[0].castShadow;
+        combined.receiveShadow = list[0].receiveShadow;
+        list.forEach(object => parent.remove(object));
+        parent.add(combined);
+      }
+    };
+    batch(root);
   }
 
   const update = (elapsed: number) => {

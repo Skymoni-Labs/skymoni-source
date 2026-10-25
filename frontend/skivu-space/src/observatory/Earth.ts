@@ -15,7 +15,7 @@ interface EarthTextures {
   cloudMask: THREE.Texture;
 }
 
-export function createEarth(textures: EarthTextures, sunDirection: THREE.Vector3): EarthBuild {
+export function createEarth(textures: EarthTextures, sunDirection: THREE.Vector3, mobile = false): EarthBuild {
   const group = new THREE.Group();
   group.position.set(0, EARTH_CENTER_Y, 0);
   // The station is placed over a mid-latitude ocean. Tilting the planet's
@@ -33,7 +33,7 @@ export function createEarth(textures: EarthTextures, sunDirection: THREE.Vector3
   });
 
   const earth = new THREE.Mesh(
-    new THREE.SphereGeometry(EARTH_RADIUS, 160, 96),
+    new THREE.SphereGeometry(EARTH_RADIUS, mobile ? 64 : 160, mobile ? 40 : 96),
     earthMaterial,
   );
   earth.rotation.y = -0.4;
@@ -89,7 +89,7 @@ export function createEarth(textures: EarthTextures, sunDirection: THREE.Vector3
     toneMapped: false,
   });
   const clouds = new THREE.Mesh(
-    new THREE.SphereGeometry(EARTH_RADIUS + 14_000, 160, 96),
+    new THREE.SphereGeometry(EARTH_RADIUS + 14_000, mobile ? 64 : 160, mobile ? 40 : 96),
     cloudMaterial,
   );
   clouds.rotation.y = 1.1;
@@ -97,7 +97,7 @@ export function createEarth(textures: EarthTextures, sunDirection: THREE.Vector3
   group.add(clouds);
 
   const atmosphere = new THREE.Mesh(
-    new THREE.SphereGeometry(EARTH_RADIUS + 95_000, 128, 80),
+    new THREE.SphereGeometry(EARTH_RADIUS + 95_000, mobile ? 48 : 128, mobile ? 32 : 80),
     new THREE.ShaderMaterial({
       uniforms: {
         uSunDirection: { value: sunDirection.clone().normalize() },

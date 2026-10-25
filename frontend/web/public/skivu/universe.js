@@ -22,6 +22,11 @@
     )
   }
   stationFrame.addEventListener('load', syncStation)
+  window.addEventListener('message', (event) => {
+    if (event.origin !== location.origin || event.source !== stationFrame.contentWindow) return
+    if (event.data?.type === 'skivu-station-ready') syncStation()
+  })
+  window.addEventListener('pageshow', syncStation)
   new IntersectionObserver(
     (entries) => {
       stationVisible = entries[0].isIntersecting

@@ -1578,6 +1578,7 @@ h2 {
   transform: translate3d(calc(var(--pointer-x) * -5px), calc(var(--pointer-y) * -4px), 0);
   animation: finale-drift 32s ease-in-out infinite alternate;
 }
+.journey-rotation-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .journey-universe:after {
   content: '';
   position: absolute;
@@ -3836,8 +3837,9 @@ h2 {
     margin-top: 20px;
   }
   .station-viewer-shell {
-    height: max(800px, 100svh);
-    max-height: 950px;
+    height: 680px;
+    height: clamp(560px, 82svh, 740px);
+    max-height: 740px;
   }
   .orbital-caption {
     font-size: 7px;
