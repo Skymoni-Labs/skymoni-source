@@ -7,6 +7,12 @@ app.classList.toggle('is-product-tour', new URLSearchParams(location.search).get
 const status = document.getElementById('compatStatus')!;
 let compatible = false;
 let ready = false;
+function reportMode() {
+  if (parent !== window && (compatible || ready)) parent.postMessage({ type: 'skivu-station-mode', mode: compatible ? '2d' : '3d' }, location.origin);
+}
+window.addEventListener('message', event => {
+  if (event.source === parent && event.origin === location.origin && event.data?.type === 'skivu-station-query') reportMode();
+});
 
 function select(id: string) {
   const info = ISS_MODULES[id] || ISS_MODULES[OVERVIEW_ID];
@@ -45,6 +51,7 @@ function fallback(message: string) {
     button.addEventListener('click', () => select(id)); nav.append(button);
   });
   select(OVERVIEW_ID);
+  reportMode();
 }
 
 const retry = document.getElementById('retryScene')!;
@@ -57,6 +64,7 @@ window.addEventListener('skivu-scene-error', (event) => {
 });
 window.addEventListener('skivu-scene-ready', () => {
   ready = true;
+  reportMode();
 });
 
 // Syntax/module/GPU failures retain the HTML structure illustration instead

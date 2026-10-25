@@ -1666,7 +1666,8 @@ button:focus-visible {
 .is-product-tour #exitInteraction, .is-product-tour .scanlines { display: none !important; }
 .is-product-tour ~ .scene-disclaimer { display: none; }
 .is-product-tour .compat-station { left: 4%; width: 50%; }
-@media(max-width:900px) { .is-product-tour .compat-station { left: 0; width: 80%; top: 10%; height: 65%; } }
+.is-product-tour .compat-notice { display: none !important; }
+@media(max-width:900px) { .is-product-tour .compat-station { left: 5%; width: 90%; top: 5%; height: 80%; } }
 .motion-paused *, .motion-paused *::before, .motion-paused *::after {
   animation-play-state: paused !important;
 }

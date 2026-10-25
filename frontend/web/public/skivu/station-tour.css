@@ -127,3 +127,140 @@
   .station-route span { white-space: nowrap; }
 }
 @media(prefers-reduced-motion:reduce) { .station-route a { transition: none; } }
+
+/* R8: one pinned stage, exactly one product chapter at a time. */
+.station-instant-scroll { scroll-behavior: auto !important; }
+.station-scroll-mode { overflow-anchor: none; }
+.station-scroll-anchors { position: absolute; inset: 0; pointer-events: none; }
+.station-scroll-anchors > span { position: absolute; left: 0; width: 1px; height: 1px; }
+.base-render-status { display: block; font-size: 7px; letter-spacing: .06em; color: #7097a7; margin: 6px 0 0 22px; }
+.station-journey[data-render-mode="2d"] .base-render-status { font-size: 10px; color: #c4e9f5; }
+#station-retry { background: #163145; border: 1px solid #a2d8e94d; border-radius: 4px; padding: 4px 9px; color: #c4ebf3; font-size: 9px; margin: 7px 0 0 22px; }
+#station-retry[hidden] { display: none; }
+.station-scroll-mode .station-base { height: calc(100svh - 72px); min-height: 0; max-height: none; }
+.station-scroll-mode .station-base .station-viewer-shell { position: absolute; top: 0; left: 0; width: 56%; height: 100%; }
+.station-scroll-mode .station-base-shade { background: linear-gradient(90deg,transparent 28%,#030812ad 46%,#030812 60%),linear-gradient(#02060c,transparent 15%,transparent 82%,#030811); }
+.station-scroll-mode .station-chapters { position: absolute; inset: auto 5% auto auto; top: 50%; transform: translateY(-50%); width: min(40%,520px); margin: 0; padding: 14px 0; max-height: calc(100% - 32px); overflow-x: hidden; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #58829855 transparent; pointer-events: auto; background: transparent; }
+.station-scroll-mode .station-chapter { min-height: 0; padding: 0; border: 0; background: transparent; }
+.station-scroll-mode .station-chapter[hidden] { display: none !important; }
+.station-scroll-mode .station-chapter.is-active { animation: cabin-enter .5s cubic-bezier(.2,.65,.3,1) both; }
+.station-scroll-mode .station-chapter .feature-layout,
+.station-scroll-mode .station-chapter .feature-layout.reverse,
+.station-scroll-mode .arrival-copy,
+.station-scroll-mode .station-chapter .ecosystem-heading,
+.station-scroll-mode .station-chapter .ecosystem-space,
+.station-scroll-mode .station-chapter .ecosystem-footer { width: 100%; max-width: none; margin: 0; gap: 16px; }
+.station-scroll-mode .arrival-copy { padding: 0; }
+.station-scroll-mode .arrival-copy h3 { font-size: clamp(32px,3.5vw,50px); }
+.station-scroll-mode .station-arrival-label { display: none; }
+.station-scroll-mode .station-chapter h2 { font-size: clamp(28px,2.8vw,38px); line-height: 1.32; margin-top: 12px; }
+.station-scroll-mode .station-chapter .feature-copy > p:not(.eyebrow),
+.station-scroll-mode .station-chapter .section-lead { font-size: 12px; line-height: 1.8; margin-top: 12px; }
+.station-scroll-mode .station-chapter .demo-note { font-size: 7px; margin-top: 10px; }
+.station-scroll-mode .station-chapter .scenario-tabs,
+.station-scroll-mode .station-chapter .persona-tabs { margin-top: 18px; }
+.station-scroll-mode .station-chapter .chat-panel { min-height: 0; }
+.station-scroll-mode .station-chapter .conversation-visual { padding: 0; }
+.station-scroll-mode .station-chapter .panel-bar { padding: 12px 18px; }
+.station-scroll-mode .station-chapter .chat-thread { min-height: 0; padding: 18px 20px; }
+.station-scroll-mode .station-chapter .chat-answer { min-height: 0; line-height: 1.8; }
+.station-scroll-mode .station-chapter .chat-user { font-size: 11px; padding: 10px 14px; }
+.station-scroll-mode .station-chapter .assistant-label { margin-top: 18px; }
+.station-scroll-mode .station-chapter .chat-panel-bottom { padding: 8px 18px; }
+.station-scroll-mode .station-chapter .character-universe { height: 210px; }
+.station-scroll-mode .station-chapter .character-universe:before { inset: 0; width: 100%; height: 100%; }
+.station-scroll-mode .station-chapter .mascot-sphere { width: 135px; height: 135px; left: calc(50% - 67px); }
+.station-scroll-mode .station-chapter .mascot-sphere svg { width: 118px; height: 122px; }
+.station-scroll-mode .station-chapter .character-ring { width: 180px; height: 160px; left: calc(50% - 90px); top: -12px; }
+.station-scroll-mode .station-chapter .ring-two { width: 215px; height: 150px; left: calc(50% - 107px); }
+.station-scroll-mode .station-chapter .persona-quote { padding: 12px 18px; }
+.station-scroll-mode .station-chapter .persona-quote p { font-size: 15px; }
+.station-scroll-mode .station-chapter .appearance-controls { margin-top: 15px; }
+.station-scroll-mode .station-chapter .appearance-visual { height: 200px; }
+.station-scroll-mode .station-chapter .glass-art { height: 175px; top: 6px; padding: 17px; }
+.station-scroll-mode .station-chapter .glass-art h3 { font-size: 24px; margin-top: 12px; }
+.station-scroll-mode .station-chapter .color-planet { width: 170px; height: 170px; }
+.station-scroll-mode .station-chapter .spectrum { height: 18px; margin-top: 12px; }
+.station-scroll-mode .station-chapter .glass-art-footer { display: none; }
+.station-scroll-mode .station-chapter .ecosystem-space { gap: 10px; padding-bottom: 50px; margin-top: 22px; }
+.station-scroll-mode .station-chapter .ecosystem-heading .section-lead { margin-bottom: 0; }
+.station-scroll-mode .station-chapter .plugin-node { height: 115px; padding: 13px; }
+.station-scroll-mode .station-chapter .dock-art { height: 24px; scale: .65; transform-origin: left top; }
+.station-scroll-mode .station-chapter .dock-label b { font-size: 13px; }
+.station-scroll-mode .station-chapter .dock-label em { font-size: 8px; }
+.station-scroll-mode .station-chapter .docking-caption { bottom: 8px; font-size: 9px; }
+.station-scroll-mode .station-chapter .ecosystem-footer { padding-top: 12px; }
+@keyframes cabin-enter { from { opacity: 0; scale: .985; } to { opacity: 1; scale: 1; } }
+.motion-paused .station-chapter.is-active { animation: none; }
+.station-journey:not(.station-scroll-mode) .station-base { position: relative; height: auto; overflow: visible; }
+.station-journey:not(.station-scroll-mode) .station-chapters { margin-top: 0; }
+@media(min-width:1800px) { .station-scroll-mode .station-chapters { right: 9%; } }
+@media(max-width:900px) {
+  .base-render-status { font-size: 6px; margin-top: 3px; }
+  .station-scroll-mode .station-base { top: 62px; height: calc(100svh - 62px); }
+  .station-scroll-mode .station-base .station-viewer-shell { width: 100%; height: 30%; }
+  .station-scroll-mode .station-base-shade { background: linear-gradient(transparent 15%,#03081255 27%,#030812 36%); }
+  .station-scroll-mode .station-target { display: none; }
+  .station-scroll-mode .station-route { bottom: 14px; z-index: 2; }
+  .station-scroll-mode .station-route-progress { bottom: 6px; }
+  .station-scroll-mode .station-chapters { inset: 30% 22px 68px; transform: none; width: auto; max-height: none; display: flex; align-items: center; }
+  .station-scroll-mode .station-chapter { width: 100%; margin-block: auto; flex: 0 0 100%; scroll-margin: 0; }
+  .station-scroll-mode .station-chapter .feature-layout,
+  .station-scroll-mode .station-chapter .feature-layout.reverse { gap: 12px; }
+  .station-scroll-mode .station-chapter h2 { font-size: 26px; line-height: 1.28; margin-top: 8px; }
+  .station-scroll-mode .station-chapter .eyebrow { font-size: 6px; line-height: 20px; }
+  .station-scroll-mode .station-chapter .chapter-number { width: 20px; height: 20px; margin-right: 7px; font-size: 7px; }
+  .station-scroll-mode .station-chapter .feature-copy > p:not(.eyebrow),
+  .station-scroll-mode .station-chapter .section-lead { font-size: 11px; line-height: 1.65; margin-top: 9px; }
+  .station-scroll-mode .station-chapter .demo-note { font-size: 6px; margin-top: 8px; }
+  .station-scroll-mode .station-chapter .scenario-tabs,
+  .station-scroll-mode .station-chapter .persona-tabs { margin-top: 12px; gap: 9px; }
+  .station-scroll-mode .station-chapter .scenario-tabs button { padding: 5px 9px; font-size: 9px; }
+  .station-scroll-mode .station-chapter .persona-tabs button { width: 65px; }
+  .station-scroll-mode .station-chapter .persona-tabs span { width: 29px; height: 29px; font-size: 17px; }
+  .station-scroll-mode .station-chapter .persona-tabs b { font-size: 8px; margin-top: 5px; }
+  .station-scroll-mode .station-chapter .panel-bar { padding: 9px 13px; font-size: 9px; }
+  .station-scroll-mode .station-chapter .chat-thread { padding: 10px 13px; }
+  .station-scroll-mode .station-chapter .chat-user { font-size: 10px; padding: 8px 10px; max-width: 240px; }
+  .station-scroll-mode .station-chapter .assistant-label { margin-top: 10px; font-size: 8px; }
+  .station-scroll-mode .station-chapter .chat-answer { font-size: 11px; line-height: 1.7; margin-left: 22px; }
+  .station-scroll-mode .station-chapter .chat-panel-bottom { padding: 6px 13px; font-size: 7px; }
+  .station-scroll-mode .station-chapter .chat-panel-bottom button { width: 25px; height: 25px; font-size: 14px; }
+  .station-scroll-mode .station-chapter .character-universe { height: 110px; }
+  .station-scroll-mode .station-chapter .character-ring { width: 100px; height: 100px; left: 0; top: 0; }
+  .station-scroll-mode .station-chapter .ring-two { width: 115px; height: 90px; left: -6px; top: 5px; }
+  .station-scroll-mode .station-chapter .mascot-sphere { width: 100px; height: 100px; left: 0; }
+  .station-scroll-mode .station-chapter .mascot-sphere svg { width: 85px; height: 90px; }
+  .station-scroll-mode .station-chapter .orbit-point { display: none; }
+  .station-scroll-mode .station-chapter .persona-quote { left: 112px; top: 12px; bottom: auto; width: calc(100% - 112px); padding: 9px 10px; border-radius: 0 13px 13px; }
+  .station-scroll-mode .station-chapter .persona-quote p { font-size: 12px; margin-top: 5px; }
+  .station-scroll-mode .station-chapter .persona-quote small { font-size: 6px; }
+  .station-scroll-mode .station-chapter .appearance-controls { margin-top: 12px; gap: 6px 14px; }
+  .station-scroll-mode .station-chapter .theme-tabs { margin-bottom: 5px; }
+  .station-scroll-mode .station-chapter .theme-tabs button { padding: 4px 7px; font-size: 9px; }
+  .station-scroll-mode .station-chapter .appearance-controls label { font-size: 8px; }
+  .station-scroll-mode .station-chapter .appearance-visual { height: 125px; }
+  .station-scroll-mode .station-chapter .color-planet { width: 120px; height: 120px; }
+  .station-scroll-mode .station-chapter .glass-art { width: 94%; height: 112px; padding: 12px; top: 0; }
+  .station-scroll-mode .station-chapter .glass-art-header { font-size: 7px; }
+  .station-scroll-mode .station-chapter .glass-art h3 { font-size: 19px; line-height: 1.25; margin-top: 10px; }
+  .station-scroll-mode .station-chapter .spectrum { display: none; }
+  .station-scroll-mode .station-chapter .ecosystem-space { gap: 8px; margin-top: 14px; padding-bottom: 40px; }
+  .station-scroll-mode .station-chapter .plugin-node { height: 88px; padding: 11px; display: block; }
+  .station-scroll-mode .station-chapter .dock-art { position: absolute; right: 4px; top: 7px; width: 30px; height: 25px; scale: .5; opacity: .45; }
+  .station-scroll-mode .station-chapter .dock-label b { font-size: 11px; }
+  .station-scroll-mode .station-chapter .dock-label small { font-size: 5px; }
+  .station-scroll-mode .station-chapter .dock-label em { font-size: 7px; }
+  .station-scroll-mode .station-chapter .docking-caption { font-size: 8px; bottom: 3px; }
+  .station-scroll-mode .station-chapter .ecosystem-footer .text-link { font-size: 10px; }
+  .station-scroll-mode .arrival-copy { gap: 16px; }
+  .station-scroll-mode .arrival-copy h3 { font-size: 31px; }
+  .station-scroll-mode .arrival-copy > p:not(.eyebrow) { font-size: 12px; }
+}
+@media(max-width:360px) {
+  .station-scroll-mode .station-base .station-viewer-shell { height: 25%; }
+  .station-scroll-mode .station-chapters { top: 25%; }
+  .station-scroll-mode .station-chapters { left: 18px; right: 18px; }
+  .station-scroll-mode .station-chapter h2 { font-size: 23px; }
+}
+@media(prefers-reduced-motion:reduce) { .station-scroll-mode .station-chapter.is-active { animation: none; } }

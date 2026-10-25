@@ -334,7 +334,7 @@
       requestAnimationFrame(() => quote.classList.add('changing'))
     })
   )
-  const appearance = document.getElementById('appearance')
+  const appearance = document.getElementById('panel-appearance') || document.getElementById('appearance')
   document.querySelectorAll('.theme-tabs [data-theme]').forEach((button) =>
     button.addEventListener('click', () => {
       document

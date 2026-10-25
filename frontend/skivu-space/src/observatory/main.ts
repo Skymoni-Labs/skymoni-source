@@ -6,6 +6,7 @@ import { createStation } from './station';
 import { createEarthTextures, createStarTexture, mulberry32 } from './textures';
 import { ISS_MODULES, NAV_ITEMS, OVERVIEW_ID, OVERVIEW_STATS } from './data';
 import type { ModuleView } from './data';
+import { sceneRuntime, productTourChapters } from './runtime';
 
 /* ------------------------------------------------------------------ */
 /*  DOM                                                               */
@@ -46,13 +47,13 @@ const fullscreenButton = must<HTMLButtonElement>('#fullscreenButton');
 const fullscreenLabel = must<HTMLElement>('#fullscreenLabel');
 const utcClock = must<HTMLSpanElement>('#utcClock');
 
-const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+const runtime = sceneRuntime();
+const isCoarsePointer = runtime.coarse;
 const isSmallViewport = () => window.innerWidth <= 900;
-const mobileQuality = isCoarsePointer || isSmallViewport();
+const mobileQuality = runtime.lowQuality;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-const embedded = window.parent !== window;
-const productTour = embedded && new URLSearchParams(location.search).get('tour') === 'skivu';
-const tourModules: Record<string, string> = { overview: OVERVIEW_ID, conversation: 'destiny', characters: 'kibo', appearance: 'cupola', ecosystem: 'canadarm' };
+const embedded = runtime.embedded;
+const productTour = runtime.productTour;
 let tourChapter = 'overview';
 app.classList.toggle('is-embedded', embedded);
 app.classList.toggle('is-product-tour', productTour);
@@ -73,8 +74,8 @@ const ambientMotion = () => !hostPaused && !reducedMotion.matches;
 function createRenderer(): THREE.WebGLRenderer {
   try { return new THREE.WebGLRenderer({
   canvas,
-  antialias: !mobileQuality,
-  powerPreference: mobileQuality ? 'low-power' : 'high-performance',
+  antialias: runtime.antialias,
+  powerPreference: mobileQuality || productTour ? 'low-power' : 'high-performance',
   logarithmicDepthBuffer: true,
   alpha: false,
   }); } catch {
@@ -85,11 +86,11 @@ function createRenderer(): THREE.WebGLRenderer {
 const renderer = createRenderer();
 renderer.debug.onShaderError = () => { throw new Error('当前设备无法编译三维着色器，已改为结构预览。'); };
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, isCoarsePointer || isSmallViewport() ? 1.25 : 1.6));
+renderer.setPixelRatio(runtime.pixelRatio());
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.03;
-renderer.shadowMap.enabled = !mobileQuality;
+renderer.shadowMap.enabled = runtime.shadows;
 renderer.shadowMap.type = THREE.PCFShadowMap;
 renderer.shadowMap.autoUpdate = false;
 renderer.shadowMap.needsUpdate = true;
@@ -151,7 +152,7 @@ scene.add(hemisphere);
 
 const sun = new THREE.DirectionalLight(0xfff5e8, 3.7);
 sun.position.set(-118, 162, 104);
-sun.castShadow = !mobileQuality;
+sun.castShadow = runtime.shadows;
 sun.shadow.mapSize.set(isCoarsePointer ? 1024 : 2048, isCoarsePointer ? 1024 : 2048);
 sun.shadow.camera.near = 1;
 sun.shadow.camera.far = 420;
@@ -311,7 +312,7 @@ let pointerDirty = false;
 let hoveredId: string | null = null;
 let pointerDownPosition: { x: number; y: number } | null = null;
 
-const clock = { last: performance.now() };
+const clock = { last: performance.now(), renderedAt: performance.now() };
 let elapsed = 0;
 
 /* ------------------------------------------------------------------ */
@@ -509,9 +510,10 @@ function setAutoRotate(enabled: boolean): void {
 
 function availableView(): { left: number; top: number; width: number; height: number } {
   const width = innerWidth, height = innerHeight;
-  if (productTour) return isSmallViewport()
-    ? { left: 5, top: 20, width: width * .78, height: Math.max(130, height - 65) }
-    : { left: width * .025, top: 90, width: width * .51, height: Math.max(250, height - 220) };
+  if (productTour) return {
+    left: width * .03, top: height < 400 ? 18 : 60,
+    width: width * .94, height: Math.max(85, height - (height < 400 ? 24 : 150)),
+  };
   const panel = must<HTMLElement>('.left-panel').getBoundingClientRect();
   const nav = must<HTMLElement>('.right-nav').getBoundingClientRect();
   if (isSmallViewport()) {
@@ -567,7 +569,7 @@ function focusViewFor(id: string): ModuleView {
 
 function applyTourChapter(): void {
   if (!productTour || !sceneReady) return;
-  const id = tourModules[tourChapter] ?? OVERVIEW_ID;
+  const id = productTourChapters[tourChapter]?.module ?? OVERVIEW_ID;
   cameraMode = id;
   setAutoRotate(false);
   selectModule(id, false);
@@ -581,10 +583,9 @@ function applyTourChapter(): void {
     p.sub(t).multiplyScalar(isSmallViewport() ? 2.0 : 2.3).add(t);
     view.position = [p.x, p.y, p.z];
   }
-  flyTo(view, 2200);
+  flyTo(view, isSmallViewport() ? 900 : 1200);
   app.dataset.tourChapter = tourChapter;
-  const chapterNames: Record<string, string> = { overview: '基地总览', conversation: '对话中枢', characters: '角色舱', appearance: '光影舱', ecosystem: '拓展坞' };
-  canvas.setAttribute('aria-label', `Skivu 空间站 · ${chapterNames[tourChapter]}`);
+  canvas.setAttribute('aria-label', `Skivu 空间站 · ${productTourChapters[tourChapter].name}`);
 }
 
 function computeOverviewView(): ModuleView {
@@ -952,7 +953,7 @@ window.addEventListener('resize', () => {
   const height = window.innerHeight;
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isCoarsePointer || isSmallViewport() ? 1.25 : 1.6));
+  renderer.setPixelRatio(runtime.pixelRatio());
   renderer.setSize(width, height);
   updateProjection();
   queueFrame();
@@ -997,15 +998,20 @@ function queueFrame(): void {
 function renderFrame(now: number): void {
     frameRequest = 0;
     if (!frameVisible || document.hidden || contextLost) return;
-    if (now - clock.last < (isSmallViewport() ? 42 : 32)) { queueFrame(); return; }
-    const delta = Math.min((now - clock.last) / 1000, 0.08);
-    clock.last = now;
+    const interval = 1000 / runtime.framesPerSecond;
+    const pending = now - clock.last;
+    if (pending < interval) { queueFrame(); return; }
+    const delta = Math.min((now - clock.renderedAt) / 1000, 0.08);
+    clock.renderedAt = now;
+    // Keep the fractional budget on 60/90/120 Hz displays rather than
+    // repeatedly discarding it and accidentally dropping below the target.
+    clock.last = now - pending % interval;
     if (ambientMotion()) elapsed += delta;
 
     station?.update(elapsed);
     earth?.update(elapsed);
 
-    if (tween) {
+    if (tween && ambientMotion()) {
       updateTween(now);
     } else {
       controls.update(delta);
@@ -1014,10 +1020,10 @@ function renderFrame(now: number): void {
     if (pointerDirty) updateHover();
     try { renderer.render(scene, camera); }
     catch { contextLost = true; showError('三维渲染暂时不可用，已切换为二维结构预览。'); return; }
-    if (ambientMotion() || tween) queueFrame();
+    if (ambientMotion()) queueFrame();
 }
 function animate(): void {
-  clock.last = performance.now();
+  clock.last = clock.renderedAt = performance.now();
   queueFrame();
 }
 
@@ -1025,13 +1031,13 @@ let suspendedAt = 0;
 function syncActivity(): void {
   app.classList.toggle('motion-paused', !ambientMotion());
   controls.autoRotate = autoRotate && ambientMotion();
-  if (!frameVisible || document.hidden) {
+  if (!frameVisible || document.hidden || !ambientMotion()) {
     if (!suspendedAt) suspendedAt = performance.now();
     cancelAnimationFrame(frameRequest); frameRequest = 0;
   } else {
     if (suspendedAt && tween) tween.start += performance.now() - suspendedAt;
     suspendedAt = 0;
-    clock.last = performance.now();
+    clock.last = clock.renderedAt = performance.now();
     queueFrame();
   }
 }
@@ -1039,7 +1045,7 @@ window.addEventListener('message', (event) => {
   if (!embedded || event.source !== window.parent || event.origin !== location.origin) return;
   if (event.data?.type === 'skivu-motion') { hostPaused = event.data.paused === true; syncActivity(); }
   if (event.data?.type === 'skivu-station-visibility') { frameVisible = event.data.visible === true; syncActivity(); }
-  if (productTour && event.data?.type === 'skivu-station-chapter' && Object.hasOwn(tourModules, event.data.chapter)) {
+  if (productTour && event.data?.type === 'skivu-station-chapter' && Object.prototype.hasOwnProperty.call(productTourChapters, event.data.chapter)) {
     tourChapter = event.data.chapter;
     applyTourChapter();
   }
