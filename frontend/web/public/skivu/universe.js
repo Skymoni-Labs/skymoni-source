@@ -378,6 +378,37 @@
     })
   )
   if ('IntersectionObserver' in window) {
+    const thoughtRibbon = document.querySelector('.thought-ribbon')
+    if (thoughtRibbon) {
+      thoughtRibbon.querySelectorAll('.thought-track').forEach((track) => {
+        const repeat = track.firstElementChild.cloneNode(true)
+        repeat.setAttribute('aria-hidden', 'true')
+        track.append(repeat)
+      })
+      // Cover wide viewports too, so a loop never exposes an empty strip.
+      const sizeThoughtGroups = () => {
+        const width = thoughtRibbon.querySelector('.thought-viewport').clientWidth
+        thoughtRibbon.querySelectorAll('.thought-set').forEach((set) => {
+          set.style.minWidth = width + 'px'
+        })
+      }
+      sizeThoughtGroups()
+      if ('ResizeObserver' in window) new ResizeObserver(sizeThoughtGroups).observe(thoughtRibbon)
+      else window.addEventListener('resize', sizeThoughtGroups, { passive: true })
+      let thoughtsVisible = false
+      const syncThoughtMotion = () => {
+        thoughtRibbon.classList.toggle('is-streaming', thoughtsVisible && !document.hidden)
+      }
+      const thoughtObserver = new IntersectionObserver(
+        (entries) => {
+          thoughtsVisible = entries[0].isIntersecting
+          syncThoughtMotion()
+        },
+        { rootMargin: '100px' }
+      )
+      thoughtObserver.observe(thoughtRibbon)
+      document.addEventListener('visibilitychange', syncThoughtMotion)
+    }
     root.classList.add('js-motion')
     const revealObserver = new IntersectionObserver(
       (entries) => {
