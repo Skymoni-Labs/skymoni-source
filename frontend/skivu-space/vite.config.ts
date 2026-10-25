@@ -8,7 +8,7 @@ export default defineConfig({
     target: "es2022",
     minify: true,
     rollupOptions: {
-      input: { station: "index.html", hero: "src/hero.ts" },
+      input: { station: "index.html", hero: "src/hero.ts", earth: "src/earth.ts" },
       output: {
         entryFileNames: "[name].js",
         chunkFileNames: "chunks/[name]-[hash].js",

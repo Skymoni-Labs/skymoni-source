@@ -1,8 +1,8 @@
 import * as T from "three";
 
-// Reproject the existing hero's visible hemisphere onto an oblate 3D sphere.
-// Its first frame uses exactly the original pixels; the concealed hemisphere is
-// a continuous mirrored continuation, not newly claimed geographic information.
+// The source is a cropped, already-lit illustration, not a global planet map.
+// Only sample its interior for motion. The baked atmospheric limb stays fixed
+// in the original plate; it must never rotate across the visible surface.
 const plate = document.querySelector<HTMLElement>(".hero-plate");
 const hero = document.querySelector<HTMLElement>(".hero");
 if (plate && hero) {
@@ -17,6 +17,7 @@ if (plate && hero) {
     raf = 0,
     last = 0,
     angle = 0,
+    elapsed = 0,
     failed = false,
     loading = false;
   const paused = () =>
@@ -50,7 +51,9 @@ if (plate && hero) {
       const dt = last ? Math.min((time - last) / 1000, 0.08) : 0;
       last = time;
       angle += dt * 0.026;
+      elapsed += dt;
       material!.uniforms.rotation.value = angle;
+      material!.uniforms.flow.value = 0.88 * (1 - Math.exp(-elapsed / 9));
       renderer!.render(scene, camera);
     }
     raf = requestAnimationFrame(render);
@@ -87,27 +90,37 @@ if (plate && hero) {
       });
       material = new T.ShaderMaterial({
         transparent: true,
-        uniforms: { plate: { value: texture }, rotation: { value: 0 } },
+        uniforms: { plate: { value: texture }, rotation: { value: 0 }, flow: { value: 0 } },
         vertexShader: `varying vec3 localPoint;varying vec3 facing;void main(){localPoint=position;facing=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
         fragmentShader: `
           uniform sampler2D plate;
           uniform float rotation;
+          uniform float flow;
           varying vec3 localPoint;
           varying vec3 facing;
           vec2 project(vec3 n){return vec2((1400.+448.*n.x)/1672.,1.-(554.-420.*n.y)/941.);}
           float sunlight(vec3 n){return .18+.82*smoothstep(-.28,.85,dot(n,normalize(vec3(-.65,.7,.22))));}
+          vec3 interior(float phase,float latitude){
+            vec2 xy=vec2((-.70+1.16*phase)*sqrt(max(0.,1.-latitude*latitude)),.80*latitude);
+            vec3 source=vec3(xy,sqrt(max(0.,1.-dot(xy,xy))));
+            return texture2D(plate,project(source)).rgb;
+          }
           void main(){
             vec3 n=normalize(localPoint);
             float c=cos(rotation),s=sin(rotation);
             vec3 rotated=vec3(c*n.x+s*n.z,n.y,-s*n.x+c*n.z);
-            vec2 uv=project(rotated);
-            uv.x=1.-abs(1.-uv.x);
-            vec3 sourceNormal=vec3((uv.x*1672.-1400.)/448.,rotated.y,0.);
-            sourceNormal.z=sqrt(max(0.,1.-dot(sourceNormal.xy,sourceNormal.xy)));
+            // Overlap two interior strips with complementary sin² weights.
+            // Each strip fades to zero before its wrap seam. Unlike reflected
+            // longitude this does not flatten into long bands at quarter turns.
+            float longitude=atan(rotated.x,rotated.z);
+            float phase=fract(longitude/6.2831853+.5);
+            float other=fract(phase+.5);
+            float weight=pow(sin(phase*3.14159265),2.);
             vec3 base=texture2D(plate,project(n)).rgb;
-            vec3 moving=texture2D(plate,uv).rgb*sunlight(n)/sunlight(normalize(sourceNormal));
-            float surface=smoothstep(.06,.43,n.z);
-            vec3 col=mix(base,moving,surface);
+            vec3 moving=mix(interior(other,n.y),interior(phase,n.y),weight);
+            moving*=.87+.13*sunlight(n);
+            float surface=smoothstep(.18,.60,n.z);
+            vec3 col=mix(base,moving,surface*flow);
             float edge=smoothstep(0.,.095,abs(facing.z));
             gl_FragColor=vec4(col,edge);
             #include <tonemapping_fragment>

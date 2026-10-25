@@ -1565,25 +1565,39 @@ h2 {
 }
 .journey-planet {
   position: absolute;
-  width: 1800px;
-  height: 1800px;
+  width: clamp(1100px, 128vw, 1800px);
+  aspect-ratio: 1;
   left: 50%;
-  top: 480px;
+  top: 405px;
   transform: translateX(-50%);
+  z-index: -2;
+  pointer-events: none;
+}
+.journey-earth-fallback {
+  position: absolute;
+  width: 94.34%;
+  height: 94.34%;
+  inset: 2.83%;
   border-radius: 50%;
+  object-fit: cover;
+  filter: brightness(.8) saturate(.85);
+}
+.journey-earth-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: brightness(.8) saturate(.9);
+}
+.earth-ready .journey-earth-fallback {
+  visibility: hidden;
+}
+.journey-earth-shade {
+  position: absolute;
+  inset: 0;
   z-index: -1;
-  background: radial-gradient(
-    ellipse at 50% 0,
-    #617ba7 0,
-    #243758 4%,
-    #101d36 9%,
-    #080f1e 18%
-  );
-  box-shadow:
-    0 -3px 5px #b3ccfd88,
-    0 -8px 35px #7da9f52a,
-    0 -45px 140px #687ed31c;
-  border: 1px solid #b0cbff88;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 38%, #05091499 63%, #05091422 100%);
 }
 .journey-rings {
   position: absolute;
@@ -1605,6 +1619,7 @@ h2 {
 }
 .journey-content {
   position: relative;
+  z-index: 1;
 }
 .journey-cloud {
   width: 60px;
@@ -1629,9 +1644,16 @@ h2 {
   margin-top: 35px;
 }
 .beta-note {
-  font-size: 9px;
-  color: #768dab;
+  width: fit-content;
+  margin-inline: auto;
+  font-size: 11px;
+  line-height: 1.9;
+  color: #c0cfe3;
   margin-top: 22px;
+  padding: 7px 12px;
+  border-radius: 10px;
+  background: #05091499;
+  text-shadow: 0 1px 5px #000;
 }
 .source-link {
   display: inline-flex;
@@ -1640,6 +1662,7 @@ h2 {
   font-size: 11px;
   color: #b6c8e0;
   margin-top: 27px;
+  text-shadow: 0 1px 5px #000;
 }
 .source-link svg {
   width: 15px;
@@ -2180,7 +2203,7 @@ h2 {
     font-size: 27px;
   }
   .journey-planet {
-    top: 400px;
+    top: 370px;
   }
   .journey {
     padding-top: 80px;
@@ -2753,7 +2776,6 @@ h2 {
   .journey-planet {
     top: 340px;
     width: 1100px;
-    height: 1100px;
   }
   .journey-rings {
     top: 295px;

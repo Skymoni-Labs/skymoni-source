@@ -11,7 +11,7 @@
     />
     <meta
       name="skivu-release"
-      content="skymoni-skivu-universe-interactive-r2-20261025"
+      content="skymoni-skivu-universe-earth-r3-20261025"
     />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Skivu · 一个属于你的 AI 空间" />
@@ -33,9 +33,10 @@
       href="assets/universe-hero-20261025.webp"
       fetchpriority="high"
     />
-    <link rel="stylesheet" href="universe.css?v=20261025" />
+    <link rel="stylesheet" href="universe.css?v=20261025-earth-r3" />
     <script defer src="universe.js?v=20261025"></script>
-    <script type="module" src="interactive/hero.js?v=20261025-3d-r2"></script>
+    <script type="module" src="interactive/hero.js?v=20261025-earth-r3"></script>
+    <script type="module" src="interactive/earth.js?v=20261025-earth-r3"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">跳到主要内容</a
@@ -549,7 +550,10 @@
         id="download"
         aria-labelledby="journey-title"
       >
-        <div class="journey-planet" aria-hidden="true"></div>
+        <div class="journey-planet" aria-hidden="true">
+          <img class="journey-earth-fallback" src="assets/earth-blue-marble-east.webp" loading="lazy" alt="" width="2048" height="2048" />
+        </div>
+        <div class="journey-earth-shade" aria-hidden="true"></div>
         <div class="journey-rings" aria-hidden="true"></div>
         <div class="journey-content page-width reveal">
           <p class="eyebrow">YOUR UNIVERSE BEGINS HERE</p>
