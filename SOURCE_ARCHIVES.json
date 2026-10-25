@@ -1937,5 +1937,12 @@
     "bytes": 41850828,
     "sha256": "5a548ebbf706eb8ec9ea9047dbd185630705f61a88a277dc1e5d0f22e4ff12f1",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-interactive-r2-20261025/source-skymoni-skivu-universe-interactive-r2-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-earth-r3-20261025.zip",
+    "tag": "skivu-universe-earth-r3-20261025",
+    "bytes": 43158912,
+    "sha256": "5fc7f1205319a4338e1c57e6116ddf4fed9bcd83acf8ea688d60f01a013cb2ef",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-earth-r3-20261025/source-skymoni-skivu-universe-earth-r3-20261025.zip"
   }
 ]
