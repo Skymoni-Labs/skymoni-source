@@ -1,94 +1,206 @@
 <!doctype html>
 <html lang="zh-CN">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#030810" />
-    <title>国际空间站 · Skivu 轨道探索</title>
-    <script type="module" crossorigin src="./station.js"></script>
-    <link rel="modulepreload" crossorigin href="./chunks/three.module-g9f9OKTm.js">
-    <link rel="stylesheet" crossorigin href="./assets/station--N16m7-d.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="国际空间站程序化交互式 3D 展馆。探索太阳翼、命运号、希望号、穹顶舱与加拿大臂。"
+    />
+    <meta name="theme-color" content="#03080d" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23030a10'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%2375e1ff' stroke-width='2'/%3E%3Cellipse cx='32' cy='32' rx='27' ry='9' fill='none' stroke='%2375e1ff' stroke-opacity='.7' stroke-width='1.5' transform='rotate(32 32 32)'/%3E%3Ccircle cx='32' cy='32' r='3' fill='%2375e1ff'/%3E%3C/svg%3E"
+    />
+    <title>国际空间站 · 地球之上，人类的另一扇窗</title>
+    <script type="module" crossorigin src="./station-B9INwOhq.js"></script>
+    <link rel="modulepreload" crossorigin href="./chunks/three.module-0tfIS3O-.js">
+    <link rel="stylesheet" crossorigin href="./assets/station-DvE28sOQ.css">
   </head>
   <body>
-    <main class="station-experience" id="station-experience">
-      <div id="station-canvas" role="img" aria-label="可拖动旋转的国际空间站三维模型"></div>
+    <div id="app">
+      <canvas id="scene" aria-label="国际空间站三维交互场景"></canvas>
+
+      <div class="screen-glass" aria-hidden="true"></div>
       <div class="vignette" aria-hidden="true"></div>
-      <header class="station-brand">
-        <span>SKIVU</span><i></i> ORBITAL EXPLORER <a href="../" aria-label="返回 Skivu">↗</a>
+      <div class="scanlines" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <div class="topbar-brand">
+          <span class="brand-mark" aria-hidden="true">
+            <i></i>
+          </span>
+          <span class="brand-copy">
+            <b>SKIVU ORBITAL EXPLORER</b>
+            <small>INTERNATIONAL SPACE STATION</small>
+          </span>
+        </div>
+        <div class="topbar-telemetry">
+          <span class="telemetry-item"><em>INC</em> 51.64°</span>
+          <span class="telemetry-item"><em>PERIOD</em> ≈90 MIN</span>
+          <span class="telemetry-item clock" id="utcClock">--:--:-- UTC</span>
+          <span class="link-status"><i></i>VISUALIZATION</span>
+        </div>
       </header>
-      <aside class="mission-copy">
-        <p class="kicker">HUMANITY, BEYOND THE HORIZON</p>
-        <h1>国际空间站</h1>
-        <p class="subtitle">地球之上，人类的另一扇窗。</p>
-        <div class="mission-stats">
-          <div>
-            <b>109<small>m</small></b
-            ><span>空间站横跨</span>
+
+      <aside class="left-panel" aria-label="空间站概览与模块信息">
+        <div class="corner corner-tl" aria-hidden="true"></div>
+        <div class="corner corner-br" aria-hidden="true"></div>
+        <div class="panel-scroll">
+          <div class="panel-kicker">
+            <span class="kicker-line"></span>
+            <span>LOW EARTH ORBIT / 408 KM</span>
+            <span class="kicker-index">01 — ISS</span>
           </div>
-          <div>
-            <b>400<small>km</small></b
-            ><span>示意轨道高度</span>
+
+          <div class="title-row">
+            <h1>国际<br />空间站</h1>
+            <span class="iss-stamp" aria-hidden="true">ISS<span>1998</span></span>
           </div>
-          <div>
-            <b>90<small>min</small></b
-            ><span>约每圈时间</span>
+
+          <p class="subtitle">地球之上，人类的另一扇窗</p>
+          <p class="lede">
+            一座以每小时 27,600 公里掠过晨昏线的轨道前哨。拖动视角，靠近它的每一片太阳翼与每一扇舷窗。
+          </p>
+
+          <div class="stats-grid" aria-label="空间站统计数据">
+            <div class="stat">
+              <span class="stat-label">轨道高度</span>
+              <span class="stat-value">408<small>km</small></span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">轨道速度</span>
+              <span class="stat-value">7.66<small>km/s</small></span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">在轨质量</span>
+              <span class="stat-value">419.7<small>t</small></span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">长期乘员</span>
+              <span class="stat-value">07<small>人</small></span>
+            </div>
+          </div>
+
+          <section class="module-card" id="infoCard" aria-live="polite">
+            <div class="module-card-head">
+              <span class="section-label" id="moduleCategory">LOW EARTH ORBIT · 408 KM</span>
+              <span class="module-code" id="moduleCode">ISS / 01</span>
+            </div>
+            <h2 id="moduleName">国际空间站</h2>
+            <p class="module-english" id="moduleEnglish">INTERNATIONAL SPACE STATION</p>
+            <p class="module-description" id="moduleDescription">
+              人类在近地轨道上建造的最大人造结构。由多个国家和航天机构共同建设，开展微重力科学实验与国际合作。
+            </p>
+            <dl class="module-meta">
+              <div>
+                <dt>功能</dt>
+                <dd id="moduleFunc">微重力科学实验、地球观测、技术验证与国际合作平台</dd>
+              </div>
+              <div>
+                <dt>建造时间</dt>
+                <dd id="moduleBuilt">1998 — 2011（持续扩建）</dd>
+              </div>
+              <div>
+                <dt>所属机构</dt>
+                <dd id="moduleAgency">NASA · Roscosmos · ESA · JAXA · CSA</dd>
+              </div>
+            </dl>
+          </section>
+
+          <div class="scale-note">
+            <span class="scale-rule" aria-hidden="true"></span>
+            <span>比例结构示意 · 非实时轨道 · 1 UNIT = 1 METRE</span>
           </div>
         </div>
-        <article class="module-info" id="module-info" aria-live="polite">
-          <p class="info-kicker" id="info-kicker">ORBITAL OVERVIEW</p>
-          <h2 id="info-title">从这里，望向更远。</h2>
-          <p class="info-description" id="info-description">
-            拖动旋转，靠近细节。点击舱段，探索这座人类共同建造的轨道实验室。
-          </p>
-          <dl>
-            <div>
-              <dt>建造 / 安装</dt>
-              <dd id="info-date">1998 年起分阶段组装</dd>
-            </div>
-            <div>
-              <dt>参与机构</dt>
-              <dd id="info-agency">NASA · ESA · JAXA · CSA 等</dd>
-            </div>
-          </dl>
-          <a
-            id="info-source"
-            href="https://www.nasa.gov/international-space-station/space-station-facts-and-figures/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >查阅资料来源 ↗</a
-          >
-        </article>
       </aside>
-      <nav class="module-nav" aria-label="空间站模块导航">
-        <p>选择探索舱段</p>
-        <button data-module="solar" aria-pressed="false">
-          <span>01</span><b>太阳能阵列</b><i>↗</i></button
-        ><button data-module="destiny" aria-pressed="false">
-          <span>02</span><b>命运号实验舱</b><i>↗</i></button
-        ><button data-module="kibo" aria-pressed="false">
-          <span>03</span><b>希望号实验舱</b><i>↗</i></button
-        ><button data-module="cupola" aria-pressed="false">
-          <span>04</span><b>穹顶观测舱</b><i>↗</i></button
-        ><button data-module="truss" aria-pressed="false">
-          <span>05</span><b>主桁架</b><i>↗</i></button
-        ><button data-module="arm" aria-pressed="false">
-          <span>06</span><b>机械臂</b><i>↗</i>
-        </button>
+
+      <nav class="right-nav" aria-label="空间站结构导航">
+        <div class="nav-heading">
+          <span class="nav-title">结构导航</span>
+          <span class="nav-subtitle">MODULE INDEX</span>
+        </div>
+        <div class="nav-items" id="navItems"></div>
       </nav>
-      <div class="hover-tooltip" id="hover-tooltip" hidden></div>
-      <div class="loading" id="loading">
-        <span></span>
-        <p>正在建立轨道视角…</p>
+
+      <div class="tooltip" id="tooltip" role="status" aria-live="polite">
+        <span class="tooltip-kicker" id="tooltipKicker">MODULE</span>
+        <strong id="tooltipName">太阳能阵列</strong>
+        <span id="tooltipEnglish">SOLAR ARRAY WINGS</span>
+        <span class="tooltip-action">单击查看结构数据 <i>↗</i></span>
       </div>
-      <p class="interaction-help">
-        左键拖动旋转 · 滚轮缩放 · 右键平移<span>触屏：单指旋转 · 双指缩放与平移</span>
-      </p>
-      <footer class="station-controls">
-        <button id="auto-rotate" aria-pressed="true"><span>↻</span> 自动旋转</button
-        ><button id="reset-view"><span>⟲</span> 重置视角</button
-        ><button id="fullscreen"><span>⛶</span> 全屏探索</button>
+
+      <div class="control-hint" aria-hidden="true">
+        <span>DRAG TO ORBIT</span>
+        <span>SCROLL TO ZOOM</span>
+        <span>RIGHT DRAG TO PAN</span>
+      </div>
+
+      <footer class="control-dock" aria-label="场景控制">
+        <button class="dock-button is-active" id="autoRotateButton" type="button" aria-pressed="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.2 8.6A8.5 8.5 0 1 0 21 13" />
+            <path d="M20.4 4.7v4.2h-4.2" />
+          </svg>
+          <span>
+            <b>自动旋转</b>
+            <small>AUTO ORBIT</small>
+          </span>
+        </button>
+        <span class="dock-separator" aria-hidden="true"></span>
+        <button class="dock-button" id="resetButton" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4.2 9.1A8.4 8.4 0 1 1 4 14.4" />
+            <path d="M4 4.6v4.7h4.7" />
+            <path d="M12 8.2v4.5l3 1.8" />
+          </svg>
+          <span>
+            <b>重置视角</b>
+            <small>RESET VIEW</small>
+          </span>
+        </button>
+        <span class="dock-separator" aria-hidden="true"></span>
+        <button class="dock-button" id="fullscreenButton" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8.4 3.8H3.8v4.6" />
+            <path d="M15.6 3.8h4.6v4.6" />
+            <path d="M20.2 15.6v4.6h-4.6" />
+            <path d="M3.8 15.6v4.6h4.6" />
+          </svg>
+          <span>
+            <b id="fullscreenLabel">全屏模式</b>
+            <small>FULLSCREEN</small>
+          </span>
+        </button>
       </footer>
-      <p class="model-note">公开资料比例建模 · 结构示意 · 非实时轨道</p>
-    </main>
+
+      <div class="loading-screen" id="loader" aria-label="正在构建空间站">
+        <div class="loader-grid" aria-hidden="true"></div>
+        <div class="loader-content">
+          <div class="loader-orbit" aria-hidden="true">
+            <span class="loader-core"></span>
+            <span class="loader-ring ring-a"><i></i></span>
+            <span class="loader-ring ring-b"><i></i></span>
+            <span class="loader-ring ring-c"></span>
+          </div>
+          <p class="loader-kicker">INTERNATIONAL SPACE STATION / 1998—PRESENT</p>
+          <h2>正在接入轨道</h2>
+          <div class="loader-progress"><span id="loaderBar"></span></div>
+          <div class="loader-row">
+            <span id="loaderStatus">INITIALIZING ORBITAL FRAME</span>
+            <span id="loaderPercent">0%</span>
+          </div>
+          <div class="loader-coordinates">51.64° INCLINATION · 408 KM · 7.66 KM/S</div>
+        </div>
+      </div>
+
+      <div class="error-panel" id="errorPanel" hidden>
+        <strong>场景初始化中止</strong>
+        <p id="errorMessage"></p>
+      </div>
+    </div>
+
+    <button type="button" id="exitInteraction" class="exit-interaction" hidden>退出交互 · 继续浏览</button>
+    <p class="scene-disclaimer">公开资料比例建模 · 结构与地球纹理示意 · 非实时遥测</p>
   </body>
 </html>

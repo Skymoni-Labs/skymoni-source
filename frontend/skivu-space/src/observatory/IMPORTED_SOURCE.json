@@ -1,0 +1,31 @@
+{
+  "source": "user-supplied iss-3d project",
+  "imported": "2026-10-25",
+  "files": [
+    {
+      "file": "main.ts",
+      "original_sha256": "94a1f49fdfb2d501991fad733d0180daf251dc93a9cd633181c62adc8e32dba5"
+    },
+    {
+      "file": "station.ts",
+      "original_sha256": "2ba35b3a9f9dca4c90ac1b5f5a5f77b85c54b6657b1dfc882f4617efe58c18ba"
+    },
+    {
+      "file": "Earth.ts",
+      "original_sha256": "ca8e10734b4e9972cac216545e40b13b3deea7720c999bea1b2df8c371b04896"
+    },
+    {
+      "file": "textures.ts",
+      "original_sha256": "e518a34a5c8db9f952173e165d7a907af87ba88640b58bb0874cf29475cbf6c7"
+    },
+    {
+      "file": "data.ts",
+      "original_sha256": "5e053e56e3d597685089781b19a2a1773fd124c0c2137a3381f7818cf1c58759"
+    },
+    {
+      "file": "style.css",
+      "original_sha256": "d76865495e02daf1662bf3a424a27dcf99ca3c6079bf8aba3192e8ec15e55317"
+    }
+  ],
+  "integration": "Parent iframe controls, reduced-motion, visibility, responsive viewport and factual-label adjustments are maintained in this copy. Original supplied project is unchanged."
+}

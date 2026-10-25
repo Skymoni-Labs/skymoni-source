@@ -1,0 +1,239 @@
+export interface ModuleView {
+  /** Camera position in station-space meters. */
+  position: [number, number, number];
+  /** Orbit target in station-space meters. */
+  target: [number, number, number];
+  fov?: number;
+}
+
+export interface ModuleInfo {
+  id: string;
+  name: string;
+  english: string;
+  category: string;
+  description: string;
+  func: string;
+  built: string;
+  agency: string;
+  view?: ModuleView;
+  accent: string;
+}
+
+export const OVERVIEW_ID = 'overview';
+
+export const ISS_MODULES: Record<string, ModuleInfo> = {
+  [OVERVIEW_ID]: {
+    id: OVERVIEW_ID,
+    name: '国际空间站',
+    english: 'INTERNATIONAL SPACE STATION',
+    category: 'LOW EARTH ORBIT · 408 KM',
+    description:
+      '人类在近地轨道上建造的大型轨道实验室。自 1998 年首个舱段入轨以来，多个国家和航天机构共同建设，在此开展微重力科学实验与国际合作。',
+    func: '微重力科学实验、地球观测、技术验证与国际合作平台',
+    built: '1998 — 2011（持续扩建）',
+    agency: 'NASA · Roscosmos · ESA · JAXA · CSA',
+    accent: '#6fe4ff',
+  },
+  'solar-array': {
+    id: 'solar-array',
+    name: '太阳能阵列',
+    english: 'SOLAR ARRAY WINGS',
+    category: 'ELECTRICAL POWER SYSTEM',
+    description:
+      '八片太阳翼总面积约 2,500 平方米，随太阳方向缓慢转动。它们将光子转化为电流，经桁架电缆输送给整个空间站的每一个系统。',
+    func: '将太阳能转化为电能，为空间站提供约 120 kW 的电力',
+    built: '2000 — 2009 年分批部署',
+    agency: 'NASA / Boeing',
+    accent: '#64c8ff',
+    view: { target: [-30, 8, 0], position: [10, 28, 155], fov: 40 },
+  },
+  destiny: {
+    id: 'destiny',
+    name: '命运号实验舱',
+    english: 'DESTINY LABORATORY',
+    category: 'US LABORATORY MODULE',
+    description:
+      '美国舱段的核心实验室，也是空间站的主控中枢。舱内设有 24 个国际标准有效载荷机柜，支撑材料、流体、燃烧与生命科学研究。',
+    func: '微重力实验、站务控制与生命保障系统管理',
+    built: '2001 年 2 月发射并安装',
+    agency: 'NASA',
+    accent: '#7fe9ff',
+    view: { target: [0, 0.4, 4.5], position: [24, 16, 44], fov: 38 },
+  },
+  kibo: {
+    id: 'kibo',
+    name: '希望号实验舱',
+    english: 'KIBO JAPANESE EXPERIMENT MODULE',
+    category: 'JAPANESE LABORATORY',
+    description:
+      '日本研制的最大舱段，名称“きぼう”意为“希望”。它由加压实验舱、后勤舱和暴露在真空中的实验平台组成，可进行舱外材料与天文观测实验。',
+    func: '舱内与舱外微重力实验、材料暴露试验、小型卫星释放',
+    built: '2008 — 2009 年分三次发射组装',
+    agency: 'JAXA',
+    accent: '#ffd07a',
+    view: { target: [9.2, 0.8, 11.8], position: [39, 19, 41], fov: 38 },
+  },
+  cupola: {
+    id: 'cupola',
+    name: '穹顶观测舱',
+    english: 'CUPOLA OBSERVATION MODULE',
+    category: 'EARTH OBSERVATION',
+    description:
+      '空间站面向地球的“眼睛”。七扇巨大的舷窗环绕中央圆窗，航天员在这里操作机械臂、监视来访飞船，也用肉眼观察地球的天气与地貌。',
+    func: '对地观测、机械臂操作视野与来访飞船监视',
+    built: '2010 年 2 月发射并安装',
+    agency: 'ESA（Thales Alenia Space 制造）/ NASA',
+    accent: '#8de5ff',
+    view: { target: [-7, -2.9, -3.1], position: [-16, 8, 20], fov: 35 },
+  },
+  truss: {
+    id: 'truss',
+    name: '主桁架',
+    english: 'INTEGRATED TRUSS STRUCTURE',
+    category: 'PRIMARY STRUCTURE',
+    description:
+      '长约 94 米的金属骨架，支撑太阳翼、散热器、机械臂与外部载荷，并连接到加压舱段，也构成了航天员舱外作业的通道。',
+    func: '承载太阳翼、散热器、机械臂与外部载荷',
+    built: '1998 — 2009 年逐段发射组装',
+    agency: 'NASA / Boeing',
+    accent: '#c2d0d8',
+    view: { target: [0, 7, 0], position: [42, 29, 71], fov: 40 },
+  },
+  canadarm: {
+    id: 'canadarm',
+    name: '加拿大臂 2',
+    english: 'CANADARM2 SPACE ROBOTIC ARM',
+    category: 'ROBOTIC MANIPULATOR SYSTEM',
+    description:
+      '一根可以“行走”的机械臂：它的末端执行器能够抓住空间站表面的固定点，逐段移动自己的基座。航天员用它搬运设备、捕捉来访飞船并协助舱外作业。',
+    func: '舱外设备操作、飞船捕获、协助航天员出舱活动',
+    built: '2001 年 4 月发射并安装',
+    agency: 'Canadian Space Agency / MDA',
+    accent: '#ffdc8a',
+    view: { target: [20, 14.5, 8], position: [40, 22, 31], fov: 37 },
+  },
+  harmony: {
+    id: 'harmony',
+    name: '和谐号节点舱',
+    english: 'HARMONY · NODE 2',
+    category: 'CONNECTING NODE',
+    description:
+      '连接美国、欧洲和日本舱段的关键节点。哥伦布号与希望号在这里接到空间站主干，同时也提供多个停泊口与生命保障管线。',
+    func: '连接国际舱段、提供对接端口与资源分配',
+    built: '2007 年 10 月发射',
+    agency: 'NASA / ESA（Thales Alenia Space 制造）',
+    accent: '#84e5ff',
+  },
+  columbus: {
+    id: 'columbus',
+    name: '哥伦布号实验舱',
+    english: 'COLUMBUS LABORATORY',
+    category: 'EUROPEAN LABORATORY',
+    description:
+      '欧洲空间局的首个长期在轨实验室，配备十个实验机柜和四个外部载荷平台，研究流体物理、太阳活动、生物学与地球观测。',
+    func: '欧洲微重力科学研究与外部载荷平台',
+    built: '2008 年 2 月发射',
+    agency: 'ESA / Airbus Defence and Space',
+    accent: '#60b7ff',
+  },
+  unity: {
+    id: 'unity',
+    name: '团结号节点舱',
+    english: 'UNITY · NODE 1',
+    category: 'CONNECTING NODE',
+    description:
+      '美国舱段的第一个节点，是空间站组装初期的中心接口。命运号、宁静号、穹顶舱与多艘来访飞船都通过它接入站体。',
+    func: '连接美国舱段、对接端口与站内资源枢纽',
+    built: '1998 年 12 月发射',
+    agency: 'NASA / Boeing',
+    accent: '#84e5ff',
+  },
+  tranquility: {
+    id: 'tranquility',
+    name: '宁静号节点舱',
+    english: 'TRANQUILITY · NODE 3',
+    category: 'LIFE SUPPORT NODE',
+    description:
+      '空间站生命保障系统的“机房”，容纳空气再生、水循环与废物处理设备。穹顶舱连接在其地球方向的对接口上。',
+    func: '环境控制与生命保障、乘员生活支持',
+    built: '2010 年 2 月发射',
+    agency: 'NASA / ESA（Thales Alenia Space 制造）',
+    accent: '#84e5ff',
+  },
+  zarya: {
+    id: 'zarya',
+    name: '曙光号功能货舱',
+    english: 'ZARYA · FUNCTIONAL CARGO BLOCK',
+    category: 'RUSSIAN SEGMENT',
+    description:
+      '1998 年升空的首个空间站舱段，最初提供电力、推进与姿态控制。它的名字“Заря”意为“曙光”，见证了空间站组装的起点。',
+    func: '早期供电、推进、姿控与货运储存',
+    built: '1998 年 11 月发射',
+    agency: 'Roscosmos / NASA（Khrunichev 制造）',
+    accent: '#ff9c78',
+  },
+  zvezda: {
+    id: 'zvezda',
+    name: '星辰号服务舱',
+    english: 'ZVEZDA SERVICE MODULE',
+    category: 'RUSSIAN SEGMENT',
+    description:
+      '俄罗斯舱段的核心，提供乘员生活区、生命保障、导航与轨道控制。它的外形源自和平号空间站的核心舱设计。',
+    func: '乘员生活、生命保障、轨道与姿态控制',
+    built: '2000 年 7 月发射',
+    agency: 'Roscosmos / Energia',
+    accent: '#ff9c78',
+  },
+  quest: {
+    id: 'quest',
+    name: '寻求号气闸舱',
+    english: 'QUEST AIRLOCK',
+    category: 'EVA AIRLOCK',
+    description:
+      '美国舱段的出舱活动枢纽，由设备舱与乘员气闸组成。航天员在这里穿上舱外服，进入真空维护空间站外部设备。',
+    func: '舱外活动准备、减压与舱外服保障',
+    built: '2001 年 7 月发射',
+    agency: 'NASA / Boeing',
+    accent: '#d6e0e5',
+  },
+  dragon: {
+    id: 'dragon',
+    name: '龙飞船',
+    english: 'CREW DRAGON',
+    category: 'VISITING VEHICLE',
+    description:
+      'SpaceX 研制的商业载人飞船，停泊在和谐号的前向端口。可重复使用的乘员舱与服务舱把轮换乘员和实验载荷送往轨道。',
+    func: '乘员往返运输与货运补给',
+    built: '2020 年起执行商业载人任务',
+    agency: 'SpaceX / NASA',
+    accent: '#e8f3f8',
+  },
+  soyuz: {
+    id: 'soyuz',
+    name: '联盟号飞船',
+    english: 'SOYUZ MS',
+    category: 'VISITING VEHICLE',
+    description:
+      '停靠在星辰号后向端口的三舱式载人飞船，由轨道舱、返回舱和仪器推进舱组成。它同时充当乘员的应急救生艇。',
+    func: '乘员轮换与在轨应急撤离',
+    built: '2016 年起执行 MS 系列任务',
+    agency: 'Roscosmos / Energia',
+    accent: '#ffb284',
+  },
+};
+
+export const NAV_ITEMS = [
+  'solar-array',
+  'destiny',
+  'kibo',
+  'cupola',
+  'truss',
+  'canadarm',
+] as const;
+
+export const OVERVIEW_STATS = [
+  { label: '示意轨道高度', value: '408', unit: 'km' },
+  { label: '空间站横跨', value: '109', unit: 'm' },
+  { label: '主桁架长度', value: '94', unit: 'm' },
+  { label: '首段入轨', value: '1998', unit: '年' },
+];
