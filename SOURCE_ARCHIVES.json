@@ -1944,5 +1944,12 @@
     "bytes": 43158912,
     "sha256": "5fc7f1205319a4338e1c57e6116ddf4fed9bcd83acf8ea688d60f01a013cb2ef",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-earth-r3-20261025/source-skymoni-skivu-universe-earth-r3-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-observatory-r4-20261025.zip",
+    "tag": "skivu-universe-observatory-r4-20261025",
+    "bytes": 43462900,
+    "sha256": "135cfa193ff9927163fc6dcdb252b9f7b33dd542eb0a9a567e91dbce1fb2c97e",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-observatory-r4-20261025/source-skymoni-skivu-universe-observatory-r4-20261025.zip"
   }
 ]
