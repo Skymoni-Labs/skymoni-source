@@ -1659,6 +1659,14 @@ button:focus-visible {
   font-size: 9px; letter-spacing: .04em; color: #8babb9; pointer-events: none;
 }
 .is-embedded:not(.is-interacting) #scene { touch-action: pan-y; }
+/* Promotional host supplies the product story and chapter controls. */
+.is-product-tour .topbar, .is-product-tour .left-panel,
+.is-product-tour .right-nav, .is-product-tour .control-dock,
+.is-product-tour .control-hint, .is-product-tour .tooltip,
+.is-product-tour #exitInteraction, .is-product-tour .scanlines { display: none !important; }
+.is-product-tour ~ .scene-disclaimer { display: none; }
+.is-product-tour .compat-station { left: 4%; width: 50%; }
+@media(max-width:900px) { .is-product-tour .compat-station { left: 0; width: 80%; top: 10%; height: 65%; } }
 .motion-paused *, .motion-paused *::before, .motion-paused *::after {
   animation-play-state: paused !important;
 }

@@ -77,14 +77,14 @@
     for (const star of stars) {
       const x =
         (((star.x * width +
-          pointerX * 12 * star.depth +
+          pointerX * 21 * star.depth +
           elapsed * star.speed * 0.7) %
           width) +
           width) %
         width
       const y =
         (((star.y * height +
-          pointerY * 8 * star.depth -
+          pointerY * 13 * star.depth -
           scrollRatio * 55 * star.depth) %
           height) +
           height) %
@@ -210,6 +210,7 @@
     },
     { passive: true }
   )
+  document.documentElement.addEventListener('pointerleave', () => { targetX = 0; targetY = 0 })
   function scrollState() {
     const y = window.scrollY
     header.classList.toggle('scrolled', y > 30)

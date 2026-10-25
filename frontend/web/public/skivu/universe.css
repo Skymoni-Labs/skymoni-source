@@ -291,8 +291,8 @@ h2 {
   inset: -4%;
   background: url('assets/universe-hero-20261025.webp') center/cover no-repeat;
   transform: translate3d(
-      calc(var(--pointer-x)*-9px),
-      calc(var(--pointer-y)*-7px),
+      calc(var(--pointer-x)*-23px),
+      calc(var(--pointer-y)*-16px),
       0
     )
     scale(1.02);
@@ -1665,8 +1665,8 @@ h2 {
 .journey {
   text-align: center;
   padding-top: 120px;
-  padding-bottom: 220px;
-  min-height: 880px;
+  padding-bottom: 420px;
+  min-height: 1080px;
   overflow: hidden;
 }
 .journey-universe {
@@ -1684,13 +1684,19 @@ h2 {
   animation: finale-drift 32s ease-in-out infinite alternate;
 }
 .journey-rotation-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.journey-planet-stage { position: absolute; inset: 0; }
+.journey-universe.planet-ready .journey-panorama {
+  background-image: url('assets/community-galaxy.webp');
+  background-position: 60% center;
+  opacity: .77;
+}
 .journey-universe:after {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, var(--space), transparent 24%, transparent 82%, var(--space)),
-    radial-gradient(ellipse at 50% 35%, #03071070, transparent 62%);
+    linear-gradient(180deg, var(--space), transparent 24%, transparent 94%, var(--space)),
+    radial-gradient(ellipse at 50% 28%, #030710b0, transparent 65%);
 }
 .journey-aurora {
   position: absolute;
@@ -2310,8 +2316,8 @@ h2 {
   }
   .journey {
     padding-top: 80px;
-    padding-bottom: 130px;
-    min-height: 790px;
+    padding-bottom: 350px;
+    min-height: 1000px;
   }
   .site-footer {
     gap: 15px;
@@ -2842,7 +2848,7 @@ h2 {
   }
   .journey {
     padding-top: 70px;
-    padding-bottom: 105px;
+    padding-bottom: 340px;
   }
   .journey .eyebrow {
     font-size: 7px;

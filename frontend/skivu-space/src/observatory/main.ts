@@ -51,7 +51,11 @@ const isSmallViewport = () => window.innerWidth <= 900;
 const mobileQuality = isCoarsePointer || isSmallViewport();
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const embedded = window.parent !== window;
+const productTour = embedded && new URLSearchParams(location.search).get('tour') === 'skivu';
+const tourModules: Record<string, string> = { overview: OVERVIEW_ID, conversation: 'destiny', characters: 'kibo', appearance: 'cupola', ecosystem: 'canadarm' };
+let tourChapter = 'overview';
 app.classList.toggle('is-embedded', embedded);
+app.classList.toggle('is-product-tour', productTour);
 let hostPaused = false;
 // Render independently until the host supplies visibility. A missed message
 // must not leave an embedded viewer permanently black.
@@ -123,6 +127,7 @@ controls.touches = {
 controls.autoRotate = false;
 controls.autoRotateSpeed = 0.18;
 controls.enableZoom = !embedded;
+if (productTour) controls.enabled = false;
 function engage(): void {
   if (!embedded) return;
   controls.enableZoom = true;
@@ -504,6 +509,9 @@ function setAutoRotate(enabled: boolean): void {
 
 function availableView(): { left: number; top: number; width: number; height: number } {
   const width = innerWidth, height = innerHeight;
+  if (productTour) return isSmallViewport()
+    ? { left: 5, top: 20, width: width * .78, height: Math.max(130, height - 65) }
+    : { left: width * .025, top: 90, width: width * .51, height: Math.max(250, height - 220) };
   const panel = must<HTMLElement>('.left-panel').getBoundingClientRect();
   const nav = must<HTMLElement>('.right-nav').getBoundingClientRect();
   if (isSmallViewport()) {
@@ -555,6 +563,28 @@ function focusViewFor(id: string): ModuleView {
     position: [position.x, position.y, position.z],
     fov: 39,
   };
+}
+
+function applyTourChapter(): void {
+  if (!productTour || !sceneReady) return;
+  const id = tourModules[tourChapter] ?? OVERVIEW_ID;
+  cameraMode = id;
+  setAutoRotate(false);
+  selectModule(id, false);
+  setGlow(id === OVERVIEW_ID ? null : id);
+  const original = id === OVERVIEW_ID ? computeOverviewView() : focusViewFor(id);
+  const view: ModuleView = { ...original, position: [...original.position], target: [...original.target] };
+  // Frame the whole connected base around each selected module, rather than
+  // filling the screen with an unreadable extreme close-up.
+  if (id !== OVERVIEW_ID) {
+    const p = new THREE.Vector3(...view.position), t = new THREE.Vector3(...view.target);
+    p.sub(t).multiplyScalar(isSmallViewport() ? 2.0 : 2.3).add(t);
+    view.position = [p.x, p.y, p.z];
+  }
+  flyTo(view, 2200);
+  app.dataset.tourChapter = tourChapter;
+  const chapterNames: Record<string, string> = { overview: '基地总览', conversation: '对话中枢', characters: '角色舱', appearance: '光影舱', ecosystem: '拓展坞' };
+  canvas.setAttribute('aria-label', `Skivu 空间站 · ${chapterNames[tourChapter]}`);
 }
 
 function computeOverviewView(): ModuleView {
@@ -800,12 +830,11 @@ async function init(): Promise<void> {
   window.dispatchEvent(new Event('skivu-scene-ready'));
   loader.classList.add('is-complete');
   window.setTimeout(() => loader.remove(), 1200);
-  setAutoRotate(!reducedMotion.matches);
+  setAutoRotate(!productTour && !reducedMotion.matches);
   cameraMode = OVERVIEW_ID;
   // A gentle arrival move from the outer approach to the fitted overview.
-  flyTo(defaultView, 2600, () => {
-    cameraMode = OVERVIEW_ID;
-  });
+  if (productTour) applyTourChapter();
+  else flyTo(defaultView, 2600, () => { cameraMode = OVERVIEW_ID; });
   animate();
 }
 
@@ -1010,6 +1039,10 @@ window.addEventListener('message', (event) => {
   if (!embedded || event.source !== window.parent || event.origin !== location.origin) return;
   if (event.data?.type === 'skivu-motion') { hostPaused = event.data.paused === true; syncActivity(); }
   if (event.data?.type === 'skivu-station-visibility') { frameVisible = event.data.visible === true; syncActivity(); }
+  if (productTour && event.data?.type === 'skivu-station-chapter' && Object.hasOwn(tourModules, event.data.chapter)) {
+    tourChapter = event.data.chapter;
+    applyTourChapter();
+  }
 });
 function requestHostState(): void {
   if (embedded) window.parent.postMessage({ type: 'skivu-station-ready' }, location.origin);

@@ -2,6 +2,8 @@ import './style.css';
 import { ISS_MODULES, NAV_ITEMS, OVERVIEW_ID } from './data';
 
 const app = document.getElementById('app')!;
+// The promotional tour reuses this model; the independent viewer keeps its HUD.
+app.classList.toggle('is-product-tour', new URLSearchParams(location.search).get('tour') === 'skivu' && parent !== window);
 const status = document.getElementById('compatStatus')!;
 let compatible = false;
 let ready = false;

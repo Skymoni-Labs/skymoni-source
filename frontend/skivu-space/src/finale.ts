@@ -1,95 +1,118 @@
 import * as T from 'three';
 import { planetTextures, planetSurfaceGLSL } from './planet-surface';
 
-// The illustrated atmosphere, sunrise, moon and galaxy stay fixed. A global
-// surface/cloud map rotates inside the matching curved planetary horizon.
-const host = document.querySelector<HTMLElement>('.journey-panorama');
-if (host) {
+// A separate sphere rotates within a fixed atmospheric light field.
+const stage = document.querySelector<HTMLElement>('.journey-planet-stage');
+if (stage) {
   let renderer: T.WebGLRenderer | undefined;
-  let material: T.ShaderMaterial;
+  let earth: T.Mesh;
   let visible = false, loading = false, failed = false, raf = 0, last = 0, elapsed = 0;
   const scene = new T.Scene();
-  const camera = new T.OrthographicCamera(-1, 1, 1, -1, 0, 2);
-  camera.position.z = 1;
+  const camera = new T.OrthographicCamera(-1, 1, 1, -1, .1, 10000);
+  camera.position.z = 4000;
+  const globe = new T.Group();
+  scene.add(globe);
+  const axis = new T.Group();
+  axis.rotation.set(.25, 0, -.18);
+  globe.add(axis);
   const paused = () => document.hidden || document.documentElement.classList.contains('motion-paused');
   function resize() {
     if (!renderer) return;
-    const w = host!.clientWidth, h = host!.clientHeight;
-    const scale = Math.max(w / 1672, h / 941);
-    const p = getComputedStyle(host!).backgroundPosition.split(' ');
-    material.uniforms.cover.value.set(w / scale, h / scale,
-      (w - 1672 * scale) * parseFloat(p[0]) / 100 / scale,
-      (h - 941 * scale) * parseFloat(p[1] || '60%') / 100 / scale);
+    const w = stage!.clientWidth, h = stage!.clientHeight;
     renderer.setPixelRatio(Math.min(devicePixelRatio, w < 640 ? 1 : 1.4));
     renderer.setSize(w, h);
+    camera.left = -w / 2; camera.right = w / 2;
+    camera.top = h / 2; camera.bottom = -h / 2;
+    camera.updateProjectionMatrix();
+    const radius = w < 640 ? Math.max(w * .88, h * .44) : Math.max(w * .59, h * .69);
+    const horizon = h * (w < 640 ? .58 : .57);
+    globe.scale.setScalar(radius);
+    globe.position.set(w * .025, h / 2 - horizon - radius, 0);
     renderer.render(scene, camera);
   }
   function draw(now: number) {
     raf = 0;
-    if (!visible || paused() || !renderer) return;
-    if (now - last >= (innerWidth < 640 ? 50 : 33)) {
+    if (!visible || paused() || !renderer || failed) return;
+    if (now - last >= (innerWidth < 640 ? 42 : 32)) {
       elapsed += last ? Math.min((now - last) / 1000, .1) : 0;
       last = now;
-      material.uniforms.turn.value = elapsed * .085;
-      material.uniforms.mixIn.value = 1 - Math.exp(-elapsed / 2);
+      earth.rotation.y = -1.2 + elapsed * .105;
       renderer.render(scene, camera);
     }
     raf = requestAnimationFrame(draw);
   }
   function resume() {
-    if (renderer && visible && !paused() && !raf) { last = 0; raf = requestAnimationFrame(draw); }
+    if (renderer && visible && !paused() && !failed && !raf) { last = 0; raf = requestAnimationFrame(draw); }
+  }
+  function fallback() {
+    failed = true; cancelAnimationFrame(raf); raf = 0;
+    renderer?.domElement.remove();
+    stage!.parentElement!.classList.remove('planet-ready');
   }
   async function init() {
     if (renderer || loading || failed || !visible) return;
     loading = true;
     try {
-      const [texture, [land, cloud]] = await Promise.all([
-        new T.TextureLoader().loadAsync(new URL('assets/universe-finale-20261025.webp', document.baseURI).href), planetTextures(),
-      ]);
-      texture.colorSpace = T.SRGBColorSpace;
+      const [land, cloud] = await planetTextures();
       renderer = new T.WebGLRenderer({ alpha: true, antialias: false, powerPreference: 'low-power' });
       renderer.outputColorSpace = T.SRGBColorSpace;
       renderer.setClearColor(0, 0);
-      material = new T.ShaderMaterial({
-        transparent: true, depthTest: false, depthWrite: false,
-        uniforms: { plate: { value: texture }, landMap: { value: land }, cloudMap: { value: cloud }, cover: { value: new T.Vector4() }, turn: { value: 0 }, mixIn: { value: 0 } },
-        vertexShader: `varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
-        fragmentShader: `
-          uniform sampler2D plate;uniform vec4 cover;uniform float turn;uniform float mixIn;varying vec2 vUv;
-          ${planetSurfaceGLSL}
-          float horizon(float x){return 574.+.000103*(x-1470.)*(x-1470.);}
+      renderer.debug.onShaderError = () => { throw new Error('Closing globe shader unavailable'); };
+      const geometry = new T.SphereGeometry(1, 128, 64);
+      const material = new T.ShaderMaterial({
+        uniforms: { landMap: { value: land }, cloudMap: { value: cloud } },
+        vertexShader: `
+          varying vec3 localPoint;varying vec3 facing;
           void main(){
-            vec2 px=vec2(vUv.x,1.-vUv.y)*cover.xy-cover.zw;
-            float depth=px.y-horizon(px.x);
-            float mask=smoothstep(25.,95.,depth);
-            if(mask<.001){gl_FragColor=vec4(0.);return;}
-            vec2 xy=vec2((px.x-1470.)/4626.,(5200.-px.y)/4626.);
-            vec3 n=normalize(vec3(xy,sqrt(max(.001,1.-dot(xy,xy)))));
-            vec3 tilted=vec3(n.x,.342*n.y-.94*n.z,.94*n.y+.342*n.z);
-            vec3 surface=planetarySurface(normalize(tilted),turn-1.2);
-            vec3 original=texture2D(plate,vec2(px.x/1672.,1.-px.y/941.)).rgb;
-            // Preserve the frame's original warm/cool lighting and deep shadows.
-            vec3 light=mix(vec3(.34,.49,.74),vec3(1.18,1.06,.94),1.-clamp(px.x/1672.,0.,1.));
-            vec3 color=mix(original,surface*light,.92*mixIn);
-            gl_FragColor=vec4(color,mask);
+            localPoint=position;facing=normalize(normalMatrix*normal);
+            gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);
+          }`,
+        fragmentShader: `
+          varying vec3 localPoint;varying vec3 facing;
+          ${planetSurfaceGLSL}
+          void main(){
+            vec3 n=normalize(facing);
+            float sun=max(0.,dot(n,normalize(vec3(-.7,.65,.8))));
+            vec3 surface=planetarySurface(normalize(localPoint),0.);
+            vec3 color=surface*(.12+sun*1.05);
+            float rim=pow(1.-max(n.z,0.),3.5);
+            color+=vec3(.025,.10,.23)*rim*(.35+sun);
+            gl_FragColor=vec4(color,1.);
             #include <colorspace_fragment>
           }`,
       });
-      scene.add(new T.Mesh(new T.PlaneGeometry(2, 2), material));
+      earth = new T.Mesh(geometry, material);
+      earth.rotation.y = -1.2;
+      axis.add(earth);
+      const atmosphere = new T.Mesh(geometry, new T.ShaderMaterial({
+        transparent: true, side: T.BackSide, depthWrite: false, blending: T.AdditiveBlending,
+        vertexShader: `varying vec3 facing;void main(){facing=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+        fragmentShader: `
+          varying vec3 facing;
+          void main(){
+            vec3 n=normalize(facing);
+            float rim=pow(1.-abs(n.z),3.5);
+            float sun=.20+.80*max(0.,dot(n,normalize(vec3(-.7,.65,.8))));
+            gl_FragColor=vec4(.18,.46,.92,rim*sun*.62);
+          }`,
+      }));
+      atmosphere.scale.setScalar(1.012);
+      globe.add(atmosphere);
       renderer.domElement.className = 'journey-rotation-canvas';
       renderer.domElement.setAttribute('aria-hidden', 'true');
-      host!.append(renderer.domElement); resize(); resume();
-      renderer.domElement.addEventListener('webglcontextlost', () => {
-        failed = true; cancelAnimationFrame(raf); raf = 0; renderer?.domElement.remove();
-      });
-    } catch { failed = true; renderer?.domElement.remove(); renderer?.dispose(); }
+      stage!.append(renderer.domElement);
+      resize();
+      stage!.parentElement!.classList.add('planet-ready');
+      renderer.domElement.addEventListener('webglcontextlost', fallback);
+      resume();
+    } catch { fallback(); renderer?.dispose(); }
     finally { loading = false; }
   }
-  new ResizeObserver(resize).observe(host);
+  new ResizeObserver(resize).observe(stage);
   new IntersectionObserver(entries => {
     visible = entries[0].isIntersecting;
     if (visible) { void init(); resume(); } else { cancelAnimationFrame(raf); raf = 0; }
-  }, { rootMargin: '100px' }).observe(host);
+  }, { rootMargin: '100px' }).observe(stage);
   for (const event of ['visibilitychange', 'skivu-motion-change']) document.addEventListener(event, () => {
     if (paused()) { cancelAnimationFrame(raf); raf = 0; } else { void init(); resume(); }
   });
