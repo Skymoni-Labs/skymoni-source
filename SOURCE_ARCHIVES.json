@@ -1958,5 +1958,12 @@
     "bytes": 43463078,
     "sha256": "dc77ce7dd3b085828c567f5f4bf83c10afd8c1356ae3d78dea0ec05dc738590c",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-observatory-r4b-20261025/source-skymoni-skivu-universe-observatory-r4b-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-motion-mobile-r5-20261025.zip",
+    "tag": "skivu-universe-motion-mobile-r5-20261025",
+    "bytes": 43478174,
+    "sha256": "a686aeed1399eabd6d13bee60669b3104c66e4b79ed138ea0e46f79e3ab05513",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-motion-mobile-r5-20261025/source-skymoni-skivu-universe-motion-mobile-r5-20261025.zip"
   }
 ]
