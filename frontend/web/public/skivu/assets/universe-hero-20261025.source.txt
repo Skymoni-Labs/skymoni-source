@@ -1,0 +1,3 @@
+Skivu universe website hero — 2026-10-25
+Original AI-generated background created with the built-in image_gen tool for this project. No third-party photo or brand reference was supplied. No text, logo, UI or phone in the artwork.
+The PNG master is retained in the local task asset directory; WebP format conversion by Pillow, quality 91, no semantic editing.
