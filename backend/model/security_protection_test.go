@@ -593,3 +593,28 @@ func TestSecurityProtectionRetentionPreservesActionAuditAndManualBans(t *testing
 	require.NoError(t, db.Model(&SecurityProtectionBan{}).Count(&n).Error)
 	require.EqualValues(t, 1, n)
 }
+
+func TestSecurityProtectionNativeAccountStatePrecedesProtectionStoreFailure(t *testing.T) {
+	db := securityProtectionTestDB(t)
+	securityProtectionTestUser(t, 1, 24*time.Hour)
+	securityProtectionTestUser(t, 2, 24*time.Hour)
+	securityProtectionTestUser(t, 3, 24*time.Hour)
+	require.NoError(t, db.Model(&User{}).Where("id = ?", 2).Update("status", common.UserStatusDisabled).Error)
+	require.NoError(t, db.Delete(&User{}, 3).Error)
+	require.NoError(t, db.Migrator().DropTable(&SecurityProtectionPolicy{}))
+	for _, uid := range []int{2, 3, 999999} {
+		d, err := SecurityProtectionAccess(uid, "8.8.8.8", "account")
+		require.NoError(t, err)
+		require.NotNil(t, d)
+		require.False(t, d.Allowed)
+		require.Equal(t, "AUTH_USER_DISABLED", d.Code)
+	}
+	d, err := SecurityProtectionAccess(1, "8.8.8.8", "account")
+	require.Error(t, err)
+	require.Nil(t, d, "normal users surface the protection storage error for the existing paid-flow degradation policy")
+	_, err = UserCheckinProtected(1, "8.8.8.8", "/api/user/checkin")
+	require.Error(t, err)
+	var u User
+	require.NoError(t, db.First(&u, 1).Error)
+	require.Zero(t, u.Quota)
+}

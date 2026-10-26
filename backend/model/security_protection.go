@@ -352,20 +352,23 @@ func SecurityProtectionAccess(userID int, rawIP, scope string) (*SecurityProtect
 	// Account restrictions remain effective when source attribution is absent.
 	// An unknown IP skips automatic IP actions, never a manual UID restriction.
 	ip, _ := NormalizeSecurityProtectionIP(rawIP)
-	v, err := GetSecurityProtectionConfig()
-	if err != nil {
-		return nil, err
-	}
 	role := 0
 	if userID > 0 {
 		var u User
 		if err := DB.Unscoped().Select("id", "role", "status", "deleted_at").First(&u, userID).Error; err != nil {
+			if errors.Is(err, gorm.ErrRecordNotFound) {
+				return &SecurityProtectionDecision{Code: "AUTH_USER_DISABLED", Rule: "native_account_missing", Message: "账号不存在或已删除"}, nil
+			}
 			return nil, err
 		}
 		if u.DeletedAt.Valid || u.Status != common.UserStatusEnabled {
 			return &SecurityProtectionDecision{Code: "AUTH_USER_DISABLED", Rule: "native_account_disabled", Message: "账号已停用或删除"}, nil
 		}
 		role = u.Role
+	}
+	v, err := GetSecurityProtectionConfig()
+	if err != nil {
+		return nil, err
 	}
 	// Administrators and explicit allowlists bypass this module only. Native
 	// account state above and existing nginx/firewall/identity bans still apply.
