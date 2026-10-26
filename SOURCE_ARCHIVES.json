@@ -2000,5 +2000,12 @@
     "bytes": 43511561,
     "sha256": "9a55d0b08fc2de774bcdf8111eb3ba883dda14d7070e03304676b4326796c979",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-cosmic-gravity-r9b-20261026/source-skymoni-skivu-universe-cosmic-gravity-r9b-20261026.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-voyage-r10-20261026.zip",
+    "tag": "skivu-universe-voyage-r10-20261026",
+    "bytes": 43754932,
+    "sha256": "b3ecf1b6760736c0c6e28bc22e38b11cc391c0b5b4329d438dcece9f42014fa1",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-voyage-r10-20261026/source-skymoni-skivu-universe-voyage-r10-20261026.zip"
   }
 ]
