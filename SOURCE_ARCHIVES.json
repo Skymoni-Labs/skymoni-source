@@ -2035,5 +2035,14 @@
     "sha256": "efe18c7a6ae73503d9f8c4fee1d3b580bb6d871c2f886bfacd60b8bc0d10d856",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/security-protection-20261027-r2/source-skymoni-security-protection-20261027-r2.zip",
     "source_commit": "9f93a84ba3777d9157ae911065e5d6c6d65bb4f3"
+  },
+  {
+    "component": "frontend",
+    "name": "source-skymoni-security-protection-20261027-frontend-runtime.zip",
+    "tag": "security-protection-20261027-frontend-runtime",
+    "bytes": 43958682,
+    "sha256": "eda10e7478ce13dc19abd8f581756917e9ad07e658c7eb2a9a246184d79439d5",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/security-protection-20261027-frontend-runtime/source-skymoni-security-protection-20261027-frontend-runtime.zip",
+    "source_commit": "db7218ba2e4241a17338a1cdf47a714cd4e775ad"
   }
 ]
