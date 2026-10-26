@@ -12,6 +12,7 @@
   const stationFrame = document.getElementById('station-viewer')
   let stationVisible = false
   function syncStation() {
+    if (!stationFrame) return
     stationFrame.contentWindow?.postMessage(
       { type: 'skivu-motion', paused },
       location.origin
@@ -21,13 +22,13 @@
       location.origin
     )
   }
-  stationFrame.addEventListener('load', syncStation)
+  stationFrame?.addEventListener('load', syncStation)
   window.addEventListener('message', (event) => {
-    if (event.origin !== location.origin || event.source !== stationFrame.contentWindow) return
+    if (!stationFrame || event.origin !== location.origin || event.source !== stationFrame.contentWindow) return
     if (event.data?.type === 'skivu-station-ready') syncStation()
   })
   window.addEventListener('pageshow', syncStation)
-  new IntersectionObserver(
+  if (stationFrame) new IntersectionObserver(
     (entries) => {
       stationVisible = entries[0].isIntersecting
       syncStation()
