@@ -2016,5 +2016,14 @@
     "bytes": 43754932,
     "sha256": "b3ecf1b6760736c0c6e28bc22e38b11cc391c0b5b4329d438dcece9f42014fa1",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-voyage-r10-20261026/source-skymoni-skivu-universe-voyage-r10-20261026.zip"
+  },
+  {
+    "component": "backend-and-frontend",
+    "name": "source-skymoni-security-protection-20261027.zip",
+    "tag": "security-protection-20261027",
+    "bytes": 43946320,
+    "sha256": "d1042f907a9cb9052067cc050df01d610a02a535ac4c09cd868eb2daefdb3c5b",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/security-protection-20261027/source-skymoni-security-protection-20261027.zip",
+    "source_commit": "bf0c44a3b8789eb4adc0d4617cc1f306ceeba330"
   }
 ]
