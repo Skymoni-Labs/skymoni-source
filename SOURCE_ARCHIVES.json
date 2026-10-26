@@ -2024,6 +2024,16 @@
     "bytes": 43946320,
     "sha256": "d1042f907a9cb9052067cc050df01d610a02a535ac4c09cd868eb2daefdb3c5b",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/security-protection-20261027/source-skymoni-security-protection-20261027.zip",
-    "source_commit": "bf0c44a3b8789eb4adc0d4617cc1f306ceeba330"
+    "source_commit": "bf0c44a3b8789eb4adc0d4617cc1f306ceeba330",
+    "activation_status": "superseded-before-production"
+  },
+  {
+    "component": "backend-and-frontend",
+    "name": "source-skymoni-security-protection-20261027-r2.zip",
+    "tag": "security-protection-20261027-r2",
+    "bytes": 43954004,
+    "sha256": "efe18c7a6ae73503d9f8c4fee1d3b580bb6d871c2f886bfacd60b8bc0d10d856",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/security-protection-20261027-r2/source-skymoni-security-protection-20261027-r2.zip",
+    "source_commit": "9f93a84ba3777d9157ae911065e5d6c6d65bb4f3"
   }
 ]
