@@ -1993,5 +1993,12 @@
     "bytes": 43511204,
     "sha256": "d0a7e9dafbb76531670a6e3c789798d42e5a318334e2982216a2683e5c79fcd4",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-cosmic-gravity-r9-20261026/source-skymoni-skivu-universe-cosmic-gravity-r9-20261026.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-cosmic-gravity-r9b-20261026.zip",
+    "tag": "skivu-universe-cosmic-gravity-r9b-20261026",
+    "bytes": 43511561,
+    "sha256": "9a55d0b08fc2de774bcdf8111eb3ba883dda14d7070e03304676b4326796c979",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-cosmic-gravity-r9b-20261026/source-skymoni-skivu-universe-cosmic-gravity-r9b-20261026.zip"
   }
 ]
