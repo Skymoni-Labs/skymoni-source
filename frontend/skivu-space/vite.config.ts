@@ -8,7 +8,7 @@ export default defineConfig({
     target: "es2018",
     minify: true,
     rollupOptions: {
-      input: { station: "index.html", hero: "src/hero.ts", cosmos: "src/cosmos.ts" },
+      input: { station: "index.html", hero: "src/hero.ts", cosmos: "src/cosmos.ts", gate: "src/gate.ts" },
       output: {
         entryFileNames: (chunk) => chunk.name === "station" ? "station-[hash].js" : "[name].js",
         chunkFileNames: "chunks/[name]-[hash].js",
