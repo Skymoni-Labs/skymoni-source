@@ -16,13 +16,15 @@
 
 ## 构建
 
-前端需要 Node.js 22+ 和 pnpm：
+前端需要 Node.js 22+ 和 Bun，使用仓库的 `bun.lock`：
 
 ```sh
 cd frontend/web
-pnpm install --frozen-lockfile
-pnpm build
+bun install --frozen-lockfile --ignore-scripts
+bun run build
 ```
+
+安装应使用空的 `node_modules`，不要向其他包管理器创建的依赖树叠装。开发和构建命令会先校验 React 与 renderer 版本及所有已安装 React 使用方的实际解析路径，拒绝重复运行时。校验脚本的回归测试可用 `bun run test:react-runtime` 执行。
 
 前端构建会使用 `frontend/moni` 与 `frontend/pkg` 内随包提供的构建数据，保留这些目录的相对位置。
 

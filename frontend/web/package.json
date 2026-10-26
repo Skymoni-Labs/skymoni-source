@@ -4,9 +4,10 @@
   "private": false,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild dev",
-    "build": "node scripts/export-mobile-pricing.mjs && rsbuild build && node scripts/verify-brand-icon-build.mjs",
-    "build:check": "node scripts/export-mobile-pricing.mjs && tsgo -b && rsbuild build",
+    "dev": "node scripts/verify-react-runtime.mjs && rsbuild dev",
+    "build": "node scripts/verify-react-runtime.mjs && node scripts/export-mobile-pricing.mjs && rsbuild build && node scripts/verify-brand-icon-build.mjs",
+    "build:check": "node scripts/verify-react-runtime.mjs && node scripts/export-mobile-pricing.mjs && tsgo -b && rsbuild build",
+    "test:react-runtime": "node --test scripts/__tests__/verify-react-runtime.test.mjs",
     "typecheck": "tsgo -b",
     "lint": "oxlint -c .oxlintrc.json .",
     "lint:fix": "oxlint -c .oxlintrc.json . --fix",
