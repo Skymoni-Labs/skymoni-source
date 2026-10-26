@@ -100,8 +100,8 @@
 .cosmos-instant-scroll { scroll-behavior:auto !important; }
 .cosmos-fallback { position:absolute; inset:0; transition:opacity .8s; }
 .cosmos-viewport.webgl-ready .cosmos-fallback { opacity:0; pointer-events:none; }
-.cosmos-fallback-orb { position:absolute; width:59%; aspect-ratio:1; left:18%; top:50%; translate:0 -50%; border-radius:50%; background:radial-gradient(circle at 20% 20%,#b7edfa,#306783 14%,#182c51 32%,#080d21 63%); box-shadow:inset 3px 3px 12px #d1f9ff73,inset -20px -15px 70px #02050a,0 0 50px #6a99f11a; }
-.cosmos-fallback-ring { position:absolute; left:4%; top:27%; width:88%; height:46%; border-radius:50%; border:10px solid #afc9ed33; transform:rotate(-23deg); box-shadow:0 0 30px #8ed2ff44,inset 0 0 20px #99d1e333; animation:cosmos-ring 18s ease-in-out infinite alternate; }
+.cosmos-fallback-orb { position:absolute; width:min(59%,calc((100svh - 72px)*.72)); aspect-ratio:1; left:50%; top:50%; translate:-50% -50%; border-radius:50%; background:radial-gradient(circle at 20% 20%,#b7edfa,#306783 14%,#182c51 32%,#080d21 63%); box-shadow:inset 3px 3px 12px #d1f9ff73,inset -20px -15px 70px #02050a,0 0 50px #6a99f11a; }
+.cosmos-fallback-ring { position:absolute; left:50%; top:50%; width:min(88%,calc((100svh - 72px)*1.26)); height:auto; aspect-ratio:2.5; translate:-50% -50%; border-radius:50%; border:10px solid #afc9ed33; transform:rotate(-23deg); box-shadow:0 0 30px #8ed2ff44,inset 0 0 20px #99d1e333; animation:cosmos-ring 18s ease-in-out infinite alternate; }
 .cosmos-fallback-ring.ring-b { border-width:1px; scale:1.12; opacity:.4; }
 .cosmos-fallback-moon { position:absolute; width:8%; aspect-ratio:1; border-radius:50%; left:70%; top:28%; background:radial-gradient(circle at 25% 20%,#d1e6f7,#334560 45%,#050d1c 75%); box-shadow:0 0 18px #bcd8fa22; }
 @keyframes cosmos-drift { to { transform:translate3d(-1%,2%,0) scale(1.06); } }
@@ -110,10 +110,13 @@
 .motion-paused .cosmos-chapter.is-active { animation:none; }
 .motion-paused .cosmos-galaxy,.motion-paused .cosmos-fallback-ring { animation-play-state:paused; }
 @media(min-width:1800px) { .cosmos-chapters { right:8%; } }
-@media(max-width:900px) {
+@media(min-width:721px) and (max-width:900px) { .cosmos-base { top:62px; height:calc(100svh - 62px); } }
+@media(max-width:720px) {
  .cosmos-expedition { padding-top:60px; }
  .cosmos-base { top:62px; height:calc(100svh - 62px); }
  .cosmos-viewport { width:100%; height:35%; }
+ .cosmos-fallback-orb { width:min(59%,calc((100svh - 62px)*.28)); }
+ .cosmos-fallback-ring { width:min(88%,calc((100svh - 62px)*.56)); }
  .cosmos-galaxy { background-position:35% 0; opacity:.55; }
  .cosmos-shade { background:linear-gradient(transparent 13%,#03071040 25%,#030710 37%); }
  .cosmos-signature { left:22px; top:17px; font-size:6px; }
