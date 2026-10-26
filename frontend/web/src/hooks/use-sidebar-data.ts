@@ -162,6 +162,12 @@ export function useSidebarData(): SidebarData {
         title: t('Admin'),
         items: [
           {
+            title: '安全防护',
+            url: '/security-protection',
+            icon: ShieldCheck,
+            requiredRole: ROLE.SUPER_ADMIN,
+          },
+          {
             title: t('Channels'),
             url: '/channels',
             icon: Radio,

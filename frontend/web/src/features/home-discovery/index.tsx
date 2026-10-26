@@ -31,6 +31,8 @@ import { publicPreviewProducts } from '@/features/shop-public-preview/catalog'
 import { loadPublicSoftware } from '@/features/software-center/api'
 import { SoftwareArtwork } from '@/features/software-center/artwork'
 
+import { HomeAnnouncement } from './home-announcement'
+
 import '@/styles/home-preview.css'
 import '@/styles/software-center.css'
 import '@/styles/creator-center.css'
@@ -542,6 +544,7 @@ export function HomeDiscovery() {
       <PublicHeader />
       <div className='hp-page hn-page' ref={motionRef}>
         <main>
+          <HomeAnnouncement />
           <DiscoveryHero />
           <AppDownload />
           <ModelDiscovery />

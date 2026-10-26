@@ -3,7 +3,7 @@ package router
 import (
 	"bytes"
 	"encoding/base64"
-"encoding/json"
+	"encoding/json"
 	"fmt"
 	"image"
 	"image/color"
@@ -39,7 +39,8 @@ func setupCreatorHome(t *testing.T, dir string) (*gin.Engine, *gorm.DB) {
 	connection, err := db.DB()
 	require.NoError(t, err)
 	connection.SetMaxOpenConns(1)
-	require.NoError(t, db.AutoMigrate(&model.User{}, &model.TopUp{}, &model.AuditLog{}, &model.CreatorHomeCard{}, &model.CreatorHomeOrder{}, &model.CreatorHomeConfig{}, &model.CreatorHomeAuthor{}))
+	require.NoError(t, db.AutoMigrate(&model.CommunityAccessConfig{}, &model.CommunityAdmission{}, &model.CommunityInvite{}, &model.User{}, &model.TopUp{}, &model.AuditLog{}, &model.CreatorHomeCard{}, &model.CreatorHomeOrder{}, &model.CreatorHomeConfig{}, &model.CreatorHomeAuthor{}))
+	require.NoError(t, model.InitSecurityProtection(db))
 	oldDB, oldLog, oldRedis, oldBatch := model.DB, model.LOG_DB, common.RedisEnabled, common.BatchUpdateEnabled
 	mainType, logType := common.MainDatabaseType(), common.LogDatabaseType()
 	model.DB, model.LOG_DB, common.RedisEnabled, common.BatchUpdateEnabled = db, db, false, false
@@ -101,12 +102,16 @@ func homeRequest(t *testing.T, e *gin.Engine, method, path, token string, data a
 	return rec
 }
 func homeDisplayedWorks(t *testing.T, e *gin.Engine) string {
- t.Helper()
- response:=homeRequest(t,e,"GET","/home","",nil)
- require.Equal(t,200,response.Code)
- var body struct {Data struct {Works json.RawMessage `json:"works"`} `json:"data"`}
- require.NoError(t,json.Unmarshal(response.Body.Bytes(),&body))
- return string(body.Data.Works)
+	t.Helper()
+	response := homeRequest(t, e, "GET", "/home", "", nil)
+	require.Equal(t, 200, response.Code)
+	var body struct {
+		Data struct {
+			Works json.RawMessage `json:"works"`
+		} `json:"data"`
+	}
+	require.NoError(t, json.Unmarshal(response.Body.Bytes(), &body))
+	return string(body.Data.Works)
 }
 
 func TestCreatorHomePaymentAndControls(t *testing.T) {
@@ -173,7 +178,7 @@ func TestCreatorHomePaymentAndControls(t *testing.T) {
 	c = card()
 	assert.Equal(t, 200, homeRequest(t, e, "PUT", "/admin/home/cards/home-demo-website", homeTestAdmin, map[string]any{"decision": "display", "revision": c.Revision, "hidden": true}).Code)
 	assert.Equal(t, 404, homeRequest(t, e, "GET", "/home/posters/home-demo-website", "", nil).Code)
-	assert.NotContains(t, homeDisplayedWorks(t,e), "home-demo-website")
+	assert.NotContains(t, homeDisplayedWorks(t, e), "home-demo-website")
 	// Automatic author inclusion is independent of any published or paid work.
 	assert.Contains(t, homeRequest(t, e, "GET", "/home", "", nil).Body.String(), "Yuki")
 	cfg, err := model.GetCreatorHomeConfig(db)
@@ -255,7 +260,7 @@ func TestCreatorHomeRenewalExpiryAndConcurrentRetry(t *testing.T) {
 	// Past-due cards vanish server-side without a cleanup job.
 	require.NoError(t, db.Model(&model.CreatorHomeCard{}).Where("work_id = ?", c.WorkID).Update("expires_at", time.Now().Unix()-1).Error)
 	assert.Equal(t, 404, homeRequest(t, e, "GET", "/home/posters/home-demo-website", "", nil).Code)
-	assert.NotContains(t, homeDisplayedWorks(t,e), "home-demo-website")
+	assert.NotContains(t, homeDisplayedWorks(t, e), "home-demo-website")
 	assert.Contains(t, homeRequest(t, e, "GET", "/home", "", nil).Body.String(), "Yuki")
 	// Turning a module off cannot permit a new charge or expose a saved poster.
 	cfg, err := model.GetCreatorHomeConfig(db)

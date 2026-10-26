@@ -182,6 +182,11 @@ func TestTokenModelLimitAllowsExemptAtNameByFullName(t *testing.T) {
 }
 
 func TestDistributeHidesTaskPluginDetailsButLogsDiagnostics(t *testing.T) {
+	// Published metadata is required before channel selection. This fixture
+	// intentionally has no eligible channel, while the model itself is public.
+	setupOriginTaskDB(t)
+	require.NoError(t, model.DB.AutoMigrate(&model.Model{}))
+	require.NoError(t, model.DB.Create(&model.Model{ModelName: "task-model", Status: 1}).Error)
 	require.NoError(t, i18n.Init())
 	previousCacheEnabled := common.MemoryCacheEnabled
 	common.MemoryCacheEnabled = true

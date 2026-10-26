@@ -14,6 +14,7 @@ import (
 )
 
 func SetRouter(router *gin.Engine, assets WebAssets) {
+	router.Use(middleware.SecurityProtectionIPMiddleware())
 	// Devin's CLI OAuth redirects to this fixed loopback path. The local Docker
 	// setup exposes it on 127.0.0.1:59653 and the handler verifies one-time state.
 	router.GET("/callback", middleware.CriticalRateLimit(), middleware.DisableCache(), controller.CompleteDevinChannelOAuth)

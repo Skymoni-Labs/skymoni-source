@@ -350,6 +350,7 @@ func AddToken(c *gin.Context) {
 		common.ApiError(c, err)
 		return
 	}
+	recordSecurityProtectionMetadata(c, cleanToken.UserId, "token_created")
 	params["id"] = cleanToken.Id
 	common.SetContextKey(c, constant.ContextKeyTokenAuditSucceeded, true)
 	c.JSON(http.StatusOK, gin.H{

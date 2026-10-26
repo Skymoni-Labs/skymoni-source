@@ -1,83 +1,939 @@
 <!DOCTYPE html>
-
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="dark" name="color-scheme"/>
-<title>Skivu · 一个属于你的 AI 空间</title>
-<link href="assets/skivu.png" rel="icon"/>
-<link href="styles.css" rel="stylesheet"/>
-<link href="premium.css" rel="stylesheet"/>
-<link href="brand.css" rel="stylesheet"/>
-<link href="grand.css" rel="stylesheet"/>
-<link href="cosmos.css" rel="stylesheet"/>
-<link href="experience-motion.css?v=2" rel="stylesheet"/>
-<link href="hero-sharpness.css?v=1" rel="stylesheet"/>
-<link href="layout-fixes.css?v=1" rel="stylesheet"/>
-<link href="launch.css" rel="stylesheet"/></head>
-<body>
-<canvas aria-hidden="true" id="cosmos-canvas"></canvas>
-<div aria-hidden="true" class="cosmos-vignette"></div>
-<header class="site-header">
-<a aria-label="Skivu 首页" class="site-brand" href="#community"><img alt="" src="assets/skivu.png"/><strong>Skivu<span>YOUR OWN ORBIT</span></strong></a>
-<nav aria-label="Skivu 品牌导航" class="header-nav">
-<a data-nav="community" href="#community">产品介绍</a>
-<a href="https://github.com/skyjjgw/skivu/releases" rel="noopener noreferrer" target="_blank">更新记录</a>
-<a data-nav="beta" href="/creators/skivu-beta">内测计划<span class="nav-new">INSIDER</span></a>
-<a href="/creators">社区</a></nav>
-<div class="header-end"><a class="header-join" href="/creators/skivu-beta">加入探索 <i data-icon="arrow"></i></a></div>
-</header>
-<div class="page-shell">
-<main id="main-content">
-<section aria-label="Skivu 品牌首页" id="community-view">
-<div class="page-context"><span>SKIVU / THE EXPERIENCE</span><span><span class="live-dot"></span> A SPACE THAT FEELS LIKE YOU</span></div>
-<article class="promo-card" data-motion-card="">
-<div aria-hidden="true" class="hero-grain"></div>
-<span aria-hidden="true" class="explore-rail">SCROLL TO EXPLORE <span></span></span>
-<div class="promo-copy">
-<div class="product-line"><span class="app-mark"><img alt="Skivu" src="assets/skivu.png"/></span><span class="product-name">Skivu<span>让灵感，自在流动</span></span><span class="pill"><span></span> EARLY ACCESS</span></div>
-<div class="hero-kicker"><span></span> YOUR PERSONAL AI UNIVERSE <b>✧</b></div>
-<div class="hero-edition"><span>SKIVU · 全新探索</span><span>VOL. 001 ↗</span></div><h1>你的世界，<br/>从此<span class="headline-accent">无限。</span></h1>
-<p class="promo-description">把模型、角色与灵感，装进属于你的对话空间。<br class="desktop-break"/>自由选择，认真表达，让每一次连接都有温度。</p>
-<div class="feature-tags"><span><i data-icon="spark"></i>多模型聊天</span><span><i data-icon="user"></i>自定义角色</span><span><i data-icon="layers"></i>液态玻璃</span></div>
-<div class="promo-actions"><a class="button primary" download="" href="/skivu/download/latest.apk"><i data-icon="download"></i>下载 Android 版</a><a class="button secondary" href="/creators/skivu-beta" id="promo-beta-action">申请内测 <i data-icon="arrow"></i></a><a class="button secondary source-button" href="https://github.com/skyjjgw/skivu" rel="noopener noreferrer" target="_blank">GitHub 开源 ↗</a></div>
-<button class="film-trigger" data-film=""><span>▶</span> 观看品牌宣传片 <small>00:40</small></button><div class="release-note"><span class="release-dot"></span>免费下载 <span class="divider-dot">·</span> Android 7.0+ <span class="divider-dot">·</span> <a href="/creators/skivu-beta">内测资格单独申请</a></div>
-</div>
-<div aria-label="Skivu 界面示意" class="promo-art">
-<div class="art-stage">
-<div aria-hidden="true" class="cosmic-portal"><div class="portal-dial"></div><div class="portal-core"></div><div class="portal-orbit"></div><div class="portal-orbit orbit-cross"></div><span class="portal-coordinate">SKIVU · PERSONAL UNIVERSE<br/>30° 04′ N / YOUR OWN ORBIT</span></div><div aria-hidden="true" class="scene-wordmark">SKIVU</div><div aria-hidden="true" class="grand-horizon"></div><div class="signal-card signal-top"><span class="signal-icon">✦</span><div><small>CONNECTION ESTABLISHED</small><b>灵感，正在共振。</b></div><span class="signal-bars"><i></i><i></i><i></i><i></i></span></div><div class="signal-card signal-bottom"><span class="signal-avatar"><img alt="" src="assets/skivu.png"/></span><div><small>YOUR EVERYDAY COMPANION</small><b>每一次相遇，都有回响。</b></div></div>
-<div class="art-halo"></div><div class="art-orbit"></div><div class="art-star star-one">✦</div><div class="art-star star-two">✧</div>
-<div aria-hidden="true" class="glass-orb orb-one"></div><div aria-hidden="true" class="glass-orb orb-two"></div><div aria-hidden="true" class="orbital-trace"><span></span></div>
-<div class="floating-label label-top"><i data-icon="spark"></i><span>灵感正在发生</span><span class="label-light"></span></div>
-<div aria-hidden="true" class="phone phone-back"><div class="phone-island"></div><div class="phone-status">9:41 <span>▰</span></div><div class="phone-back-heading">我的角色 <b>＋</b></div><p class="phone-subheading">每一份陪伴，都有自己的模样</p><div class="persona-box"><div class="persona-art"><img alt="" src="assets/skivu.png"/></div><b>云朵</b><span>把平凡日常，聊成小小惊喜</span></div><div class="persona-small"><span>✧</span><div><b>灵感搭档</b><p>一起收集闪闪发光的想法</p></div></div><div class="phone-tabbar">对话 <b>角色</b> 设置</div></div>
-<div aria-hidden="true" class="phone phone-main"><div class="phone-island"></div><div class="phone-status">9:41 <span>▰</span></div><div class="phone-chat-heading"><span>☰</span><b>Skivu</b><i data-icon="phone"></i></div><div class="phone-chat-date">今天 · 一个新的灵感</div><div class="mini-bubble user-bubble">想把今天的灵感<br/>整理成一个小计划。</div><div class="mini-assistant"><img alt="" src="assets/skivu.png"/><span>云朵</span></div><div class="mini-bubble assistant-bubble">当然。慢慢说，我在听。<br/><br/>从你最想做的那件事开始，<br/>我们一起让它变得清晰。</div><div class="mini-bubble user-bubble second-bubble">那就从现在开始 ✨</div><div class="phone-composer"><span>有什么想和我说的？</span><div><small>✦ 选择模型 ⌄</small><b>↑</b></div></div><div class="phone-homebar"></div></div>
-<div class="floating-label label-bottom"><span class="label-mini-logo"><img alt="" src="assets/skivu.png"/></span><div><b>把陪伴，变成日常</b><small>YOUR EVERYDAY COMPANION</small></div></div>
-</div>
-<span class="art-caption">界面示意 · 以实际 App 为准</span>
-</div>
-<div class="hero-signature"><span><i data-icon="spark"></i> 为日常，留一点想象。</span><span>DESIGNED FOR YOUR LITTLE UNIVERSE <b>✦</b></span></div>
-</article>
-<div class="cosmos-status-strip"><span><i class="live-dot"></i> 为你的想象，保持在线</span><div><span>01 / 多模型自由切换</span><span>02 / 个性角色</span><span>03 / 液态玻璃</span></div><span class="strip-spark">✦</span></div>
-<section aria-labelledby="experience-title" class="experience-section">
-<div class="section-heading"><div><span class="eyebrow">01 / EXPLORE YOUR UNIVERSE</span><h2 id="experience-title">不止看见。<span>亲手感受。</span></h2></div><p>轻触、切换、探索。<br/>每一种可能，都有你的参与。</p></div>
-<div class="experience-tour-tools"><span><i></i>让一颗流星，串起你的空间。</span><button class="experience-tour-play" type="button">✦ 播放流星引导 <span>↗</span></button></div>
-<div class="cosmos-bento">
-<svg aria-hidden="true" class="experience-guide"><defs><lineargradient gradientunits="userSpaceOnUse" id="experience-meteor-tail"><stop stop-color="#89c9ef" stop-opacity="0"></stop><stop offset=".8" stop-color="#b5d9ff" stop-opacity=".65"></stop><stop offset="1" stop-color="#f2fbff"></stop></lineargradient><radialgradient id="experience-meteor-head"><stop stop-color="#ebfaff" stop-opacity=".9"></stop><stop offset=".2" stop-color="#a4d5f8" stop-opacity=".5"></stop><stop offset="1" stop-color="#659bdd" stop-opacity="0"></stop></radialgradient></defs><polyline class="tour-trail glow" fill="none"></polyline><polyline class="tour-trail core" fill="none"></polyline><circle class="tour-halo" fill="url(#experience-meteor-head)" r="15"></circle><circle class="tour-star" fill="#edfbff" r="2"></circle></svg>
-<article class="experience-card model-card" data-spotlight=""><div class="card-heading"><span class="module-id">01 / INTELLIGENCE</span><span class="module-icon">✧</span></div><div class="model-visual"><svg aria-hidden="true" viewbox="0 0 600 230"><defs><lineargradient id="node-edge"><stop stop-color="#8068ff"></stop><stop offset="1" stop-color="#79e4ff"></stop></lineargradient></defs><path d="M100 65Q300 40 300 119T510 170M145 190Q220 200 300 119T480 50"></path><circle class="model-orbit" cx="300" cy="119" r="78"></circle><circle class="model-orbit outer" cx="300" cy="119" r="100"></circle></svg><span class="model-satellite sat-one">✳</span><span class="model-satellite sat-two">◈</span><span class="model-satellite sat-three">✴</span><span class="model-satellite sat-four">⌘</span><div class="model-nucleus"><img alt="Skivu" src="assets/skivu.png"/></div><span class="data-packet packet-one"></span><span class="data-packet packet-two"></span></div><div class="module-copy"><span class="mini-label" id="model-label">深度思考 · 让复杂变得清晰</span><h3>一个入口。<br/>连接更多智慧。</h3><p>灵感、推理、日常聊天，找到适合此刻的节奏。</p></div><div aria-label="模型场景演示" class="model-switch" role="group"><button aria-pressed="true" class="selected" data-model="think">深度思考 <span>↗</span></button><button aria-pressed="false" data-model="create">灵感创作 <span>↗</span></button><button aria-pressed="false" data-model="chat">轻松聊聊 <span>↗</span></button></div></article>
-<article class="experience-card character-card" data-spotlight=""><div class="card-heading"><span class="module-id">02 / COMPANIONSHIP</span><span class="module-icon">♡</span></div><div class="character-visual"><div class="character-aura"></div><div class="character-disc"><img alt="" src="assets/skivu.png"/></div><span class="character-spark">✦</span><span class="character-orbit-text">A LITTLE CLOSER TO YOU</span></div><div aria-live="polite" class="character-message"><span id="persona-name">云朵 · 日常陪伴</span><p id="persona-message">“慢慢说，我一直在。”</p><span class="typing-indicator"><i></i><i></i><i></i></span></div><div class="module-copy"><h3>万千模样，<br/>总有一种懂你。</h3><p>让每一段对话，都有属于它的性格。</p></div><div aria-label="角色风格演示" class="persona-switch" role="group"><button aria-label="日常陪伴" aria-pressed="true" class="selected" data-persona="cloud">✦</button><button aria-label="灵感搭档" aria-pressed="false" data-persona="creative">✳</button><button aria-label="深夜倾听" aria-pressed="false" data-persona="night">☾</button><span>选择一种相遇 <i>↗</i></span></div></article>
-<article class="experience-card glass-card" data-spotlight=""><div class="glass-content"><div class="card-heading"><span class="module-id">03 / LIQUID EXPRESSION</span><span class="module-icon">◫</span></div><div class="module-copy"><h3>让星光，<br/>穿过你的界面。</h3><p>透明度、色彩与光影，都由你来定义。</p></div><div class="glass-controls"><label for="glass-demo">玻璃模糊 <output id="glass-value">12 px</output></label><input aria-label="调节玻璃展示模糊程度" id="glass-demo" max="28" min="0" type="range" value="12"/><div aria-label="展示主题" class="theme-dots" role="group"><button aria-label="星云紫" aria-pressed="true" class="selected" data-theme="violet"></button><button aria-label="极光青" aria-pressed="false" data-theme="cyan"></button><button aria-label="霞光粉" aria-pressed="false" data-theme="rose"></button><span>YOUR STYLE. YOUR SPACE.</span></div></div></div><div class="glass-experiment"><div class="glass-planet"></div><div class="glass-planet small"></div><div class="demo-glass"><div class="demo-glass-top"><span>✦　灵感空间</span><span>•••</span></div><p>想象，没有边界。</p><span class="demo-pill">一起探索新的可能　↗</span><div class="demo-wave">▂ ▅ ▃ ▆ ▄ ▂ ▅ ▇ ▃ ▅ ▂ ▄ ▆ ▃ ▅ ▂ ▄</div><div class="demo-composer">此刻，你在想什么？ <span>↑</span></div></div></div></article>
-</div><p class="interaction-note">以上为产品交互概念演示，实际功能以 App 为准。</p>
-</section>
-<section aria-labelledby="film-title" class="brand-film-section" id="brand-film"><div class="section-heading"><div><span class="eyebrow">02 / THE ORIGIN FILM</span><h2 id="film-title">一束微光。<span>一个宇宙。</span></h2></div><span class="film-format">SKIVU BRAND FILM<br/>00:40 / REMOTION</span></div><div class="film-frame"><div class="film-corner top-left"></div><div class="film-corner bottom-right"></div><iframe allow="fullscreen" allowfullscreen="" id="remotion-brand-player" loading="lazy" src="film/index.html" style="display:block;width:100%;aspect-ratio:16/9;border:0" title="Skivu 品牌宣传片，40 秒，默认静音"></iframe></div><div class="film-caption"><span>ORIGIN 001 — 从相遇开始</span><span>40 秒完整宣传片 · 默认静音 · 可开启声音</span></div></section>
-<section aria-label="加入内测计划" class="grand-invitation"><div aria-hidden="true" class="invitation-orbit"></div><span class="eyebrow">03 / THE INNER CIRCLE</span><h2>下一次进化，<br/>邀你<span>一起。</span></h2><p>每一份认真反馈，都能让未来的体验更进一步。</p><a class="button secondary" href="/creators/skivu-beta">进入内测中心 <i data-icon="arrow"></i></a><span aria-hidden="true" class="invitation-watermark">INSIDER</span></section>
-</section>
-<footer class="page-footer"><span>SKIVU · YOUR OWN ORBIT</span><span><a href="/creators">社区</a> · <a href="/open-source.html">开源许可</a> · <a href="film/licenses/">素材声明</a></span></footer>
-</main>
-</div>
-<script src="launch.js"></script>
-<script src="cosmos.js?v=experience-motion-2"></script>
-<script src="experience-motion.js?v=2"></script>
-<script defer="" src="film-embed.js?v=1"></script>
-</body>
+<html data-gate-scene="0" lang="zh-CN">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="#04060f" name="theme-color"/>
+  <meta content="dark" name="color-scheme"/>
+  <meta content="Skivu，一个属于你的 AI 空间。自由选择模型，定义角色与外观，探索开放插件生态。下载 Android App，开启属于你的探索。" name="description"/>
+  <meta name="skivu-release" content="skymoni-skivu-universe-voyage-r10-20261026"/>
+  <meta content="website" property="og:type"/>
+  <meta content="Skivu · 一个属于你的 AI 空间" property="og:title"/>
+  <meta content="AI 对话、多模型选择、角色配置、外观自定义与开放插件。让每一次打开，都更像你。" property="og:description"/>
+  <meta content="https://skymoni.com/skivu/" property="og:url"/>
+  <meta content="https://skymoni.com/skivu/assets/skivu-poster-20261024.jpg" property="og:image"/>
+  <link href="https://skymoni.com/skivu/" rel="canonical"/>
+  <title>
+   Skivu · 一个属于你的 AI 空间
+  </title>
+  <link href="assets/skivu.png" rel="icon"/>
+  <link as="image" fetchpriority="high" href="assets/stargate-panorama-20261026.webp" rel="preload"/>
+  <link href="gate.css?v=20261026-r10" rel="stylesheet"/>
+  <script defer="" src="gate.js?v=20261026-r10">
+  </script>
+  <script src="interactive/gate.js?v=20261026-r10" type="module">
+  </script>
+ </head>
+ <body>
+  <a class="skip-link" href="#main">
+   跳到主要内容
+  </a>
+  <div aria-hidden="true" class="universe-sky">
+   <div class="sky-gate">
+   </div>
+   <div class="sky-nebula">
+   </div>
+   <div class="sky-vignette">
+   </div>
+  </div>
+  <div aria-hidden="true" id="gate-viewport">
+   <div class="fallback-gate">
+    <i>
+    </i>
+    <b>
+    </b>
+   </div>
+  </div>
+  <div aria-hidden="true" class="read-progress">
+  </div>
+  <header class="site-header">
+   <a aria-label="Skivu 首页" class="brand" href="#home">
+    <span aria-hidden="true" class="brand-cloud">
+    </span>
+    <strong>
+     Skivu
+    </strong>
+   </a>
+   <nav aria-label="主导航" id="main-navigation">
+    <a href="#conversation">
+     探索体验
+    </a>
+    <a href="#ecosystem">
+     开放生态
+    </a>
+    <a href="#film">
+     品牌故事
+    </a>
+    <a href="/creators">
+     社区 ↗
+    </a>
+   </nav>
+   <div class="header-tools">
+    <button aria-label="暂停动态效果" aria-pressed="false" class="motion-toggle" type="button">
+     <i aria-hidden="true">
+     </i>
+     <span>
+      动态开启
+     </span>
+    </button>
+    <a class="header-download" download="" href="/api/app-update/download/v0.2.40-build.44/arm64-v8a">
+     下载 App
+     <span>
+      ↗
+     </span>
+    </a>
+    <button aria-controls="main-navigation" aria-expanded="false" aria-label="打开导航" class="menu-toggle" type="button">
+     <i>
+     </i>
+     <i>
+     </i>
+    </button>
+   </div>
+  </header>
+  <nav aria-label="章节导航" class="voyage-index">
+   <a aria-current="location" aria-label="启航" href="#home">
+    <i>
+    </i>
+    <span>
+     启航
+    </span>
+   </a>
+   <a aria-label="多模型对话" href="#conversation">
+    <i>
+    </i>
+    <span>
+     对话
+    </span>
+   </a>
+   <a aria-label="角色配置" href="#characters">
+    <i>
+    </i>
+    <span>
+     角色
+    </span>
+   </a>
+   <a aria-label="外观自定义" href="#appearance">
+    <i>
+    </i>
+    <span>
+     外观
+    </span>
+   </a>
+   <a aria-label="开放插件" href="#ecosystem">
+    <i>
+    </i>
+    <span>
+     生态
+    </span>
+   </a>
+   <a aria-label="下载 App" href="#download">
+    <i>
+    </i>
+    <span>
+     抵达
+    </span>
+   </a>
+  </nav>
+  <main id="main">
+   <section aria-labelledby="hero-title" class="scene home-scene" data-scene="0" id="home">
+    <div aria-hidden="true" class="hero-cinematic">
+    </div>
+    <div class="hero-title-block wrap">
+     <p class="eyebrow">
+      <span class="live-dot">
+      </span>
+      YOUR UNIVERSE. YOUR RULES.
+     </p>
+     <h1 id="hero-title">
+      <span class="wordmark">
+       Skivu
+      </span>
+      <span class="hero-tagline">
+       一个属于你的 AI 空间。
+      </span>
+     </h1>
+     <span class="hero-orbit-label">
+      BEYOND THE ORDINARY
+     </span>
+    </div>
+    <div class="hero-launch wrap">
+     <div>
+      <p class="hero-description">
+       让想象，
+       <br/>
+       <em>
+        穿过已知的边界。
+       </em>
+      </p>
+      <p class="hero-detail">
+       自由选择模型，定义角色与外观。
+       <br/>
+       从一句对话，开启自己的世界。
+      </p>
+     </div>
+     <div class="hero-launch-actions">
+      <a class="action primary" download="" href="/api/app-update/download/v0.2.40-build.44/arm64-v8a">
+       <span>
+        下载 Android 版
+        <small>
+         ENTER YOUR UNIVERSE
+        </small>
+       </span>
+       <b aria-hidden="true">
+        ↗
+       </b>
+      </a>
+      <a class="text-link" href="https://github.com/skyjjgw/skivu" rel="noopener noreferrer" target="_blank">
+       GitHub 开源
+       <span>
+        ↗
+       </span>
+      </a>
+     </div>
+    </div>
+    <a class="scroll-cue" href="#conversation">
+     <i>
+     </i>
+     <span>
+      开启探索
+     </span>
+     <b>
+      ↓
+     </b>
+    </a>
+    <span aria-hidden="true" class="hero-edge">
+     SKIVU · PERSONAL AI UNIVERSE / 2026
+    </span>
+   </section>
+   <div class="manifesto wrap">
+    <p class="section-code">
+     WHY WE CREATE
+    </p>
+    <p>
+     世界，不该只有一种答案。
+     <br/>
+     <strong>
+      你的 AI，也应该有自己的样子。
+     </strong>
+    </p>
+    <span aria-hidden="true" class="manifesto-star">
+     ✦
+    </span>
+   </div>
+   <div aria-label="属于你的灵感" class="thought-stream">
+    <div class="thought-track">
+     <span>
+      把灵感，变成开始。
+      <i>
+       ✦
+      </i>
+      让表达，有人回应。
+      <i>
+       ✦
+      </i>
+      把喜欢，留在界面里。
+      <i>
+       ✦
+      </i>
+      让可能，继续生长。
+      <i>
+       ✦
+      </i>
+     </span>
+     <span aria-hidden="true">
+      把灵感，变成开始。
+      <i>
+       ✦
+      </i>
+      让表达，有人回应。
+      <i>
+       ✦
+      </i>
+      把喜欢，留在界面里。
+      <i>
+       ✦
+      </i>
+      让可能，继续生长。
+      <i>
+       ✦
+      </i>
+     </span>
+    </div>
+   </div>
+   <section aria-labelledby="conversation-title" class="scene conversation-scene" data-scene="1" id="conversation">
+    <div class="wrap feature-grid">
+     <div class="stage-heading reveal">
+      <p class="eyebrow">
+       <span class="section-number">
+        01
+       </span>
+       THOUGHTS IN RESONANCE
+      </p>
+      <h2 id="conversation-title">
+       想法，
+       <em>
+        没有孤岛。
+       </em>
+      </h2>
+      <p class="lead">
+       一个入口，连接更多智慧。
+       <br/>
+       灵感、日常，或认真的思考，
+       <br/>
+       找到适合此刻的模型与节奏。
+      </p>
+     </div>
+     <div class="signal-visual reveal">
+      <div aria-hidden="true" class="signal-axis">
+       <i>
+       </i>
+       <i>
+       </i>
+       <i>
+       </i>
+       <b>
+        RESONANCE
+       </b>
+      </div>
+      <div class="transmission">
+       <span class="transmission-label">
+        YOUR THOUGHT / 发送
+       </span>
+       <p id="demo-question">
+        想把今天零散的灵感，
+        <br/>
+        整理成一个开始。
+       </p>
+       <i aria-hidden="true">
+        ↗
+       </i>
+      </div>
+      <div class="response">
+       <div class="response-label">
+        <span aria-hidden="true" class="brand-cloud">
+        </span>
+        <b>
+         Skivu
+        </b>
+        <span aria-hidden="true" class="waveform">
+         <i>
+         </i>
+         <i>
+         </i>
+         <i>
+         </i>
+         <i>
+         </i>
+         <i>
+         </i>
+        </span>
+       </div>
+       <p aria-live="off" id="demo-answer">
+        先选一个你最想实现的。我们把它拆成今天就能完成的第一步。
+       </p>
+       <span aria-live="polite" class="sr-only" id="chat-status">
+       </span>
+       <div class="response-footer">
+        <span>
+         灵感，有了回响。
+        </span>
+        <button aria-label="重播对话演示" id="replay-chat" type="button">
+         ↻
+        </button>
+       </div>
+      </div>
+      <p class="demo-note">
+       演示文案 · 不发起模型请求
+      </p>
+     </div>
+     <div class="conversation-controls">
+      <div aria-label="选择对话演示" class="scenario-select" role="group">
+       <button aria-pressed="true" data-scenario="idea" type="button">
+        灵感启程
+        <span>
+         ↗
+        </span>
+       </button>
+       <button aria-pressed="false" data-scenario="daily" type="button">
+        日常漫游
+        <span>
+         ↗
+        </span>
+       </button>
+       <button aria-pressed="false" data-scenario="think" type="button">
+        深入思考
+        <span>
+         ↗
+        </span>
+       </button>
+      </div>
+      <div class="feature-detail">
+       <span>
+        AI 对话
+       </span>
+       <span>
+        多模型选择
+       </span>
+       <span>
+        流式回应
+       </span>
+      </div>
+     </div>
+    </div>
+    <div class="chapter-foot wrap">
+     <span>
+      01 / CONNECT
+     </span>
+     <span>
+      让想法，遇见下一种可能。
+     </span>
+     <a aria-label="继续探索角色配置" href="#characters">
+      ↓
+     </a>
+    </div>
+   </section>
+   <section aria-labelledby="characters-title" class="scene character-scene" data-scene="2" id="characters">
+    <div class="wrap feature-grid reverse-grid">
+     <div class="character-system reveal">
+      <div class="persona-orbit orbit-one">
+      </div>
+      <div class="persona-orbit orbit-two">
+      </div>
+      <div class="persona-orbit orbit-three">
+      </div>
+      <span class="orbit-spark spark-one">
+       ✦
+      </span>
+      <span class="orbit-spark spark-two">
+       ✧
+      </span>
+      <div class="friend-star">
+       <svg aria-label="Skymoni 原创云朵伙伴" role="img" viewbox="210 145 805 835">
+        <image height="1254" href="/branding/skymoni-cloud-friend-transparent.png" width="1254"/>
+       </svg>
+      </div>
+      <span class="friend-coordinate">
+       A LITTLE CLOSER TO YOU
+      </span>
+      <div class="persona-message">
+       <span id="persona-label">
+        云朵 / 日常陪伴
+       </span>
+       <p aria-live="polite" id="persona-quote">
+        “慢慢说，我在这里。”
+       </p>
+       <i aria-hidden="true">
+        ✦
+       </i>
+      </div>
+     </div>
+     <div class="role-copy reveal">
+      <p class="eyebrow">
+       <span class="section-number">
+        02
+       </span>
+       A CONNECTION LIKE YOU
+      </p>
+      <h2 id="characters-title">
+       相遇之外。
+       <br/>
+       <em>
+        是你喜欢的相处方式。
+       </em>
+      </h2>
+      <p class="lead">
+       选择或配置角色，写下喜欢的设定。
+       <br/>
+       让语气、表达与相处方式，
+       <br/>
+       逐渐成为你期待的样子。
+      </p>
+      <div aria-label="切换角色风格演示" class="persona-select" role="group">
+       <button aria-pressed="true" data-persona="cloud" type="button">
+        <i>
+         ✦
+        </i>
+        <span>
+         日常陪伴
+         <small>
+          温柔地回应
+         </small>
+        </span>
+        <b>
+         01
+        </b>
+       </button>
+       <button aria-pressed="false" data-persona="idea" type="button">
+        <i>
+         ✳
+        </i>
+        <span>
+         灵感搭档
+         <small>
+          一起把想法展开
+         </small>
+        </span>
+        <b>
+         02
+        </b>
+       </button>
+       <button aria-pressed="false" data-persona="night" type="button">
+        <i>
+         ☾
+        </i>
+        <span>
+         深夜倾听
+         <small>
+          留一点安静的时间
+         </small>
+        </span>
+        <b>
+         03
+        </b>
+       </button>
+      </div>
+      <p class="demo-note">
+       角色风格示意 · 由你配置角色设定
+      </p>
+     </div>
+    </div>
+    <div class="chapter-foot wrap">
+     <span>
+      02 / COMPANION
+     </span>
+     <span>
+      每一段对话，都有自己的性格。
+     </span>
+     <a aria-label="继续探索外观自定义" href="#appearance">
+      ↓
+     </a>
+    </div>
+   </section>
+   <section aria-labelledby="appearance-title" class="scene appearance-scene" data-scene="3" data-theme="nebula" id="appearance">
+    <div class="wrap feature-grid">
+     <div class="section-copy reveal">
+      <p class="eyebrow">
+       <span class="section-number">
+        03
+       </span>
+       LIGHT, IN YOUR LANGUAGE
+      </p>
+      <h2 id="appearance-title">
+       把偏爱，
+       <br/>
+       <em>
+        调成你的光。
+       </em>
+      </h2>
+      <p class="lead">
+       壁纸、主题、字体与对话气泡。
+       <br/>
+       喜欢的颜色、恰好的透明，
+       <br/>
+       都可以成为你的表达。
+      </p>
+      <div aria-label="切换外观演示主题" class="theme-select" role="group">
+       <button aria-pressed="true" data-theme="nebula" type="button">
+        <i>
+        </i>
+        <span>
+         星云
+        </span>
+       </button>
+       <button aria-pressed="false" data-theme="aurora" type="button">
+        <i>
+        </i>
+        <span>
+         极光
+        </span>
+       </button>
+       <button aria-pressed="false" data-theme="dusk" type="button">
+        <i>
+        </i>
+        <span>
+         暮色
+        </span>
+       </button>
+      </div>
+      <div class="light-controls">
+       <label for="blur-control">
+        玻璃模糊
+        <output id="blur-value">
+         12 px
+        </output>
+       </label>
+       <input id="blur-control" max="28" min="0" type="range" value="12"/>
+       <label for="opacity-control">
+        透明程度
+        <output id="opacity-value">
+         78%
+        </output>
+       </label>
+       <input id="opacity-control" max="95" min="35" type="range" value="78"/>
+      </div>
+      <p class="demo-note">
+       外观交互示意 · 拖动，感受光影变化
+      </p>
+     </div>
+     <div class="light-laboratory reveal">
+      <div aria-hidden="true" class="light-disc">
+      </div>
+      <div aria-hidden="true" class="light-orbit">
+      </div>
+      <div aria-hidden="true" class="glass-slice slice-back">
+      </div>
+      <div class="glass-slice slice-front">
+       <div class="slice-head">
+        <span>
+         ✦　灵感空间
+        </span>
+        <span>
+         ···
+        </span>
+       </div>
+       <span class="slice-caption">
+        A LITTLE MORE YOU
+       </span>
+       <h3>
+        光，有了形状。
+        <br/>
+        <em>
+         空间，有了你的样子。
+        </em>
+       </h3>
+       <div aria-hidden="true" class="light-spectrum">
+        <i>
+        </i>
+        <i>
+        </i>
+        <i>
+        </i>
+        <i>
+        </i>
+        <i>
+        </i>
+        <i>
+        </i>
+        <i>
+        </i>
+        <i>
+        </i>
+        <i>
+        </i>
+        <i>
+        </i>
+        <i>
+        </i>
+        <i>
+        </i>
+        <i>
+        </i>
+        <i>
+        </i>
+        <i>
+        </i>
+       </div>
+       <div class="slice-footer">
+        <span>
+         此刻，想聊些什么？
+        </span>
+        <i>
+         ↑
+        </i>
+       </div>
+      </div>
+      <span class="material-label">
+       <i>
+       </i>
+       YOUR SPACE, REIMAGINED
+      </span>
+     </div>
+    </div>
+    <div class="chapter-foot wrap">
+     <span>
+      03 / EXPRESSION
+     </span>
+     <span>
+      从光影，到每一个细节。
+     </span>
+     <a aria-label="继续探索开放插件" href="#ecosystem">
+      ↓
+     </a>
+    </div>
+   </section>
+   <section aria-labelledby="ecosystem-title" class="scene ecosystem-scene" data-scene="4" id="ecosystem">
+    <div class="wrap ecosystem-layout">
+     <div class="section-copy reveal">
+      <p class="eyebrow">
+       <span class="section-number">
+        04
+       </span>
+       THE UNIVERSE IS OPEN
+      </p>
+      <h2 id="ecosystem-title">
+       别停在，
+       <br/>
+       <em>
+        已知的边界。
+       </em>
+      </h2>
+      <p class="lead">
+       独立插件，为自己的空间拓展可能。
+       <br/>
+       探索第三方目录，也可以本地导入。
+       <br/>
+       让新的想法，有自己的入口。
+      </p>
+      <a class="text-link sdk-link" href="https://github.com/skyjjgw/skivu-plugins/blob/main/docs/open-plugin-sdk.md" rel="noopener noreferrer" target="_blank">
+       探索开放 SDK
+       <span>
+        ↗
+       </span>
+      </a>
+     </div>
+     <div class="open-constellation reveal">
+      <svg aria-hidden="true" class="constellation-lines" viewbox="0 0 680 560">
+       <defs>
+        <lineargradient id="connection-light">
+         <stop stop-color="#8d7ce0">
+         </stop>
+         <stop offset="1" stop-color="#8de4ef">
+         </stop>
+        </lineargradient>
+       </defs>
+       <path d="M330 280 120 100 M330 280 545 150 M330 280 155 430 M330 280 535 420">
+       </path>
+       <path class="connection-pulse" d="M120 100 330 280 545 150 M155 430 330 280 535 420">
+       </path>
+       <ellipse cx="330" cy="280" rx="278" ry="185" transform="rotate(-22 330 280)">
+       </ellipse>
+      </svg>
+      <div class="constellation-core">
+       <div class="core-rings">
+       </div>
+       <span aria-hidden="true" class="brand-cloud">
+       </span>
+       <strong>
+        Skivu
+       </strong>
+       <small>
+        OPEN ECOSYSTEM
+       </small>
+      </div>
+      <button aria-pressed="true" class="constellation-node node-page" data-dock="web" type="button">
+       <i class="node-symbol">
+        ◫
+       </i>
+       <span>
+        <small>
+         01 / INTERFACE
+        </small>
+        <b>
+         独立页面
+        </b>
+       </span>
+       <em>
+        ↗
+       </em>
+      </button>
+      <button aria-pressed="false" class="constellation-node node-create" data-dock="canvas" type="button">
+       <i class="node-symbol">
+        ✳
+       </i>
+       <span>
+        <small>
+         02 / CREATION
+        </small>
+        <b>
+         自由创作
+        </b>
+       </span>
+       <em>
+        ↗
+       </em>
+      </button>
+      <button aria-pressed="false" class="constellation-node node-dialogue" data-dock="chat" type="button">
+       <i class="node-symbol">
+        ⌁
+       </i>
+       <span>
+        <small>
+         03 / CONNECTION
+        </small>
+        <b>
+         对话扩展
+        </b>
+       </span>
+       <em>
+        ↗
+       </em>
+      </button>
+      <button aria-pressed="false" class="constellation-node node-explore" data-dock="world" type="button">
+       <i class="node-symbol">
+        ⌘
+       </i>
+       <span>
+        <small>
+         04 / DISCOVERY
+        </small>
+        <b>
+         开放目录
+        </b>
+       </span>
+       <em>
+        ↗
+       </em>
+      </button>
+      <div class="constellation-status">
+       <i>
+       </i>
+       <p aria-live="polite" id="dock-status">
+        独立的页面与交互，让体验拥有更多形态。
+       </p>
+      </div>
+     </div>
+    </div>
+    <div class="chapter-foot wrap">
+     <span>
+      04 / POSSIBILITY
+     </span>
+     <span>
+      为你的创意，保留无限的余地。
+     </span>
+     <a aria-label="继续观看品牌故事" href="#film">
+      ↓
+     </a>
+    </div>
+   </section>
+   <section aria-labelledby="film-title" class="film-section" id="film">
+    <div class="wrap">
+     <div class="film-heading reveal">
+      <div>
+       <p class="eyebrow">
+        THE SKIVU STORY
+       </p>
+       <h2 id="film-title">
+        从一束微光，
+        <em>
+         到你的宇宙。
+        </em>
+       </h2>
+      </div>
+      <span>
+       BRAND FILM
+       <br/>
+       <b>
+        00:40
+       </b>
+      </span>
+     </div>
+     <div class="film-cinema reveal">
+      <span aria-hidden="true" class="cinema-corner corner-tl">
+      </span>
+      <span aria-hidden="true" class="cinema-corner corner-br">
+      </span>
+      <iframe allow="fullscreen" allowfullscreen="" id="brand-film" loading="lazy" src="film/index.html" title="Skivu 品牌宣传片，40 秒，默认静音">
+      </iframe>
+     </div>
+     <div class="film-caption">
+      <span>
+       一个属于你的 AI 空间。
+      </span>
+      <span>
+       默认静音 · 播放器内可开启声音
+      </span>
+     </div>
+    </div>
+   </section>
+   <section aria-labelledby="download-title" class="scene download-scene" data-scene="5" id="download">
+    <div aria-hidden="true" class="download-halo">
+    </div>
+    <div class="download-content wrap reveal">
+     <p class="eyebrow">
+      YOUR UNIVERSE BEGINS HERE
+     </p>
+     <span aria-hidden="true" class="brand-cloud download-cloud">
+     </span>
+     <h2 id="download-title">
+      下一站。
+      <br/>
+      <em>
+       由你定义。
+      </em>
+     </h2>
+     <p>
+      让想象，不止于此。
+     </p>
+     <div class="actions">
+      <a class="action primary" download="" href="/api/app-update/download/v0.2.40-build.44/arm64-v8a">
+       <span aria-hidden="true" class="action-icon">
+        ↓
+       </span>
+       <span>
+        下载 Android 版
+        <small>
+         开启你的世界
+        </small>
+       </span>
+       <b aria-hidden="true">
+        ↗
+       </b>
+      </a>
+      <a class="action secondary" href="/creators/skivu-beta">
+       前往内测中心
+       <span>
+        ↗
+       </span>
+      </a>
+     </div>
+     <p class="beta-note">
+      内测资格需管理员审核，App 专用体验额度由管理员手动分配。
+     </p>
+     <a class="text-link" href="https://github.com/skyjjgw/skivu" rel="noopener noreferrer" target="_blank">
+      GitHub 开源
+      <span>
+       ↗
+      </span>
+     </a>
+    </div>
+    <div aria-hidden="true" class="destination-word">
+     SKIVU
+    </div>
+   </section>
+  </main>
+  <footer class="site-footer wrap">
+   <div>
+    <a class="brand" href="#home">
+     <span aria-hidden="true" class="brand-cloud">
+     </span>
+     <strong>
+      Skivu
+     </strong>
+    </a>
+    <p>
+     一个属于你的 AI 空间。
+    </p>
+   </div>
+   <nav aria-label="页脚导航">
+    <a href="/creators">
+     社区 ↗
+    </a>
+    <a href="https://github.com/skyjjgw/skivu/releases" rel="noopener noreferrer" target="_blank">
+     更新记录 ↗
+    </a>
+    <a href="/open-source.html">
+     开源许可
+    </a>
+    <a href="assets/sources.html">
+     素材声明
+    </a>
+   </nav>
+   <a aria-label="回到顶部" class="back-top" href="#home">
+    ↑
+   </a>
+   <small>
+    宇宙视觉为艺术演绎 · 功能交互为示意
+   </small>
+  </footer>
+ </body>
 </html>

@@ -304,6 +304,11 @@ func TestSecurityLoginFactorStateDoesNotAddPasswordLoginQueries(t *testing.T) {
 	queries := 0
 	require.NoError(t, model.DB.Callback().Query().After("gorm:query").Register("login_query_count", func(tx *gorm.DB) {
 		if !tx.DryRun {
+			// Count primary credentials/factor availability independently of
+			// the newly required live security policy and account-state checks.
+			if strings.HasPrefix(tx.Statement.Table, "security_protection_") || strings.Join(tx.Statement.Selects, ",") == "id,role,status,deleted_at" {
+				return
+			}
 			queries++
 		}
 	}))

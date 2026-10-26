@@ -39,6 +39,7 @@ func TestSoftwareManagement(t *testing.T) {
 	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
 	require.NoError(t, err)
 	require.NoError(t, db.AutoMigrate(&model.User{}, &model.AuditLog{}))
+	require.NoError(t, model.InitSecurityProtection(db))
 	previousDB, previousLog, previousRedis, previousSecure, previousTrusted := model.DB, model.LOG_DB, common.RedisEnabled, common.SessionCookieSecure, common.SessionCookieTrustedURLs
 	mainType, logType := common.MainDatabaseType(), common.LogDatabaseType()
 	model.DB, model.LOG_DB, common.RedisEnabled, common.SessionCookieSecure = db, db, false, true

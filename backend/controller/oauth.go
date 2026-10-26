@@ -498,6 +498,13 @@ func findOrCreateOAuthUser(c *gin.Context, provider oauth.Provider, oauthUser *o
 	if !common.RegisterEnabled {
 		return nil, nil, &OAuthRegistrationDisabledError{}
 	}
+	decision, protectionErr := model.SecurityProtectionRegistrationGuard(c.ClientIP(), c.FullPath(), c.GetString(common.RequestIdKey))
+	if protectionErr != nil {
+		return nil, nil, errors.New("注册保护暂不可用，请稍后重试")
+	}
+	if decision != nil && !decision.Allowed {
+		return nil, nil, decision
+	}
 
 	// Set up new user
 	user.Username = provider.GetProviderPrefix() + strconv.Itoa(model.GetMaxUserId()+1)
@@ -594,6 +601,7 @@ func findOrCreateOAuthUser(c *gin.Context, provider oauth.Provider, oauthUser *o
 		user.FinalizeOAuthUserCreation(inviterId)
 	}
 
+	recordSecurityProtectionMetadata(c, user.Id, "registration")
 	return user, nil, nil
 }
 
@@ -637,6 +645,8 @@ func (e *OAuthLegacyBindingNotConfirmedError) Error() string {
 // handleOAuthError handles OAuth errors and returns translated message
 func handleOAuthError(c *gin.Context, err error) {
 	switch e := err.(type) {
+	case *model.SecurityProtectionDecision:
+		writeSecurityProtectionDecision(c, e, http.StatusTooManyRequests)
 	case *oauth.OAuthError:
 		if e.Params != nil {
 			common.ApiErrorI18n(c, e.MsgKey, e.Params)

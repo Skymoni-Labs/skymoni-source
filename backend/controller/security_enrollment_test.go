@@ -65,6 +65,7 @@ func setupSecurityEnrollmentTest(t *testing.T) (*model.User, service.AuthIdentit
 	require.NoError(t, db.Raw(versionQuery).Scan(&version).Error)
 	t.Logf("database: %s %s", dialect, version)
 	require.NoError(t, db.AutoMigrate(&model.User{}, &model.UserSession{}, &model.TwoFA{}, &model.TwoFABackupCode{}, &model.PasskeyCredential{}, &model.AuthFlow{}, &model.UserOAuthBinding{}, &model.Option{}))
+	require.NoError(t, model.InitSecurityProtection(db))
 	require.NoError(t, logDB.AutoMigrate(&model.AuditLog{}))
 	model.DB, model.LOG_DB = db, logDB
 	dbType := common.DatabaseTypeSQLite
@@ -88,6 +89,10 @@ func setupSecurityEnrollmentTest(t *testing.T) (*model.User, service.AuthIdentit
 		connection, err := db.DB()
 		if err == nil {
 			_ = connection.Close()
+		}
+		logConnection, err := logDB.DB()
+		if err == nil {
+			_ = logConnection.Close()
 		}
 	})
 	password, err := common.Password2Hash("enrollment-password")

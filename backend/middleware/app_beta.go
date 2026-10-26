@@ -73,6 +73,9 @@ func AppBetaDeviceAuth(requirePaired bool) gin.HandlerFunc {
 				return
 			}
 			c.Set("id", device.UserID)
+			if !securityProtectionAuthorize(c, device.UserID) {
+				return
+			}
 			c.Set("app_beta_user_group", user.Group)
 			if requirePaired {
 				cache, err := model.GetUserCache(device.UserID)

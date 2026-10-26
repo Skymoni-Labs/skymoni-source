@@ -41,6 +41,9 @@ func AppAccountAuth(relay bool) gin.HandlerFunc {
 		c.Set("app_account_session", *native)
 		c.Set("app_account_user", user)
 		c.Set("id", user.Id)
+		if !securityProtectionAuthorize(c, user.Id) {
+			return
+		}
 		c.Set("app_account_user_group", user.Group)
 		if !relay {
 			return

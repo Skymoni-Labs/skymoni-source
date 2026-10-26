@@ -113,6 +113,17 @@ func main() {
 
 	// 热更新配置
 	go model.SyncOptions(common.SyncFrequency)
+	if common.IsMasterNode {
+		go func() {
+			ticker := time.NewTicker(time.Hour)
+			defer ticker.Stop()
+			for range ticker.C {
+				if err := model.CleanupSecurityProtectionRecords(); err != nil {
+					common.SysError("security protection retention cleanup failed")
+				}
+			}
+		}()
+	}
 	go controller.SyncTaskPlugins()
 	controller.InitUpstreamWallet()
 
@@ -331,6 +342,9 @@ func InitResources() error {
 	if err = authz.Init(model.DB); err != nil {
 		common.FatalLog("failed to initialize authorization: " + err.Error())
 		return err
+	}
+	if err = model.InitSecurityProtection(model.DB); err != nil {
+		return fmt.Errorf("failed to initialize security protection: %w", err)
 	}
 	if common.PasswordLoginEncryptionEnabled {
 		if err = model.InitPasswordEncryption(); err != nil {

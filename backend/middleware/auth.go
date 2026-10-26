@@ -66,6 +66,9 @@ func authHelper(c *gin.Context, minRole int) {
 		return
 	}
 	setDashboardAuthContext(c, user, identity, useAccessToken)
+	if !securityProtectionAuthorize(c, user.Id) {
+		return
+	}
 
 	// 管理/root 写操作审计兜底：内聚在鉴权链路里，保证任何经过 AdminAuth/RootAuth
 	// 的写接口都会自动留痕（无需在路由上单独挂审计中间件，避免漏挂）。
@@ -92,6 +95,9 @@ func TryUserAuth() func(c *gin.Context) {
 		}
 		if credentialKind != dashboardCredentialUnmatched {
 			setDashboardAuthContext(c, user, identity, credentialKind == dashboardCredentialPAT)
+			if !securityProtectionAuthorize(c, user.Id) {
+				return
+			}
 		}
 		c.Next()
 	}
@@ -362,6 +368,9 @@ func TokenAuthReadOnly() func(c *gin.Context) {
 			return
 		}
 
+		if !securityProtectionAuthorize(c, token.UserId) {
+			return
+		}
 		c.Set("id", token.UserId)
 		c.Set("token_id", token.Id)
 		c.Set("token_key", token.Key)
@@ -463,6 +472,9 @@ func TokenAuth() func(c *gin.Context) {
 		}
 
 		userCache.WriteContext(c)
+		if !securityProtectionAuthorize(c, token.UserId) {
+			return
+		}
 
 		userGroup := userCache.Group
 		tokenGroup := token.Group

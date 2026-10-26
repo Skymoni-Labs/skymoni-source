@@ -440,6 +440,12 @@ func newAuditTestDatabase(t *testing.T, kind, dsn string) (*gorm.DB, string) {
 		path := t.TempDir() + "/audit.db"
 		db, err := gorm.Open(sqlite.Open(path), &gorm.Config{})
 		require.NoError(t, err)
+		t.Cleanup(func() {
+			connection, err := db.DB()
+			if err == nil {
+				_ = connection.Close()
+			}
+		})
 		return db, path
 	}
 	require.NotEmpty(t, dsn)
@@ -683,6 +689,19 @@ func TestAuditDatabaseMatrix(t *testing.T) {
 					for range 2 {
 						require.NoError(t, model.InitDB())
 						require.NoError(t, model.InitLogDB())
+						initializedMain, initializedLog := model.DB, model.LOG_DB
+						t.Cleanup(func() {
+							conn, e := initializedMain.DB()
+							if e == nil {
+								_ = conn.Close()
+							}
+							if initializedLog != initializedMain {
+								logConn, e := initializedLog.DB()
+								if e == nil {
+									_ = logConn.Close()
+								}
+							}
+						})
 					}
 					if !upgrade {
 						require.NoError(t, db.Create(&model.User{Username: "fresh-owner", Password: "placeholder", AffCode: "fresh-aff"}).Error)

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="国际空间站程序化交互式 3D 展馆。探索太阳翼、命运号、希望号、穹顶舱与加拿大臂。"
+    />
+    <meta name="theme-color" content="#03080d" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23030a10'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%2375e1ff' stroke-width='2'/%3E%3Cellipse cx='32' cy='32' rx='27' ry='9' fill='none' stroke='%2375e1ff' stroke-opacity='.7' stroke-width='1.5' transform='rotate(32 32 32)'/%3E%3Ccircle cx='32' cy='32' r='3' fill='%2375e1ff'/%3E%3C/svg%3E"
+    />
+    <title>国际空间站 · 地球之上，人类的另一扇窗</title>
+    <script type="module" crossorigin src="./station-pVB_D3jU.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/station-B7qRBM4x.css">
+  </head>
+  <body>
+    <div id="app">
+      <div class="compat-scene" aria-hidden="true">
+        <div class="compat-earth"></div>
+        <svg class="compat-station" viewBox="0 0 800 430" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="metal"><stop stop-color="#75909d"/><stop offset=".38" stop-color="#e6f0ed"/><stop offset=".7" stop-color="#a5b8bd"/><stop offset="1" stop-color="#495b6e"/></linearGradient>
+            <linearGradient id="solar"><stop stop-color="#223343"/><stop offset=".5" stop-color="#675037"/><stop offset="1" stop-color="#b1894f"/></linearGradient>
+            <pattern id="cells" width="8" height="12" patternUnits="userSpaceOnUse"><rect width="8" height="12" fill="url(#solar)"/><path d="M0 0H8V12" fill="none" stroke="#e8bc7459" stroke-width=".6"/></pattern>
+            <g id="wing"><rect width="51" height="128" fill="url(#cells)" stroke="#d8ba87"/><rect x="59" width="51" height="128" fill="url(#cells)" stroke="#d8ba87"/><path d="M55 0V128" stroke="#ccd9df" stroke-width="3"/></g>
+          </defs>
+          <g transform="translate(54 22) rotate(-10 350 200)">
+            <g><use href="#wing" x="5" y="0"/><use href="#wing" x="147" y="0"/><use href="#wing" x="435" y="0"/><use href="#wing" x="577" y="0"/><use href="#wing" x="5" y="246"/><use href="#wing" x="147" y="246"/><use href="#wing" x="435" y="246"/><use href="#wing" x="577" y="246"/></g>
+            <path d="M0 184H692M0 199H692M2 184L27 199L52 184L77 199L102 184L127 199L152 184L177 199L202 184L227 199L252 184L277 199L302 184L327 199L352 184L377 199L402 184L427 199L452 184L477 199L502 184L527 199L552 184L577 199L602 184L627 199L652 184L677 199" fill="none" stroke="#a7bcc8" stroke-width="3"/>
+            <path d="M60 128V246M202 128V246M490 128V246M632 128V246" stroke="#d9e4e3" stroke-width="4"/>
+            <g fill="url(#metal)" stroke="#596a79"><rect x="324" y="108" width="43" height="190" rx="16"/><rect x="265" y="218" width="63" height="34" rx="12"/><rect x="365" y="220" width="95" height="38" rx="11"/><rect x="329" y="296" width="32" height="43" rx="13"/><path d="M280 152H314V208H280ZM380 145H423V204H380Z"/><circle cx="348" cy="266" r="14"/></g>
+            <path d="M365 208L402 168L452 158L475 186" fill="none" stroke="#d3dfde" stroke-width="8" stroke-linejoin="round"/>
+            <g fill="#b0c5d0"><circle cx="403" cy="168" r="7"/><circle cx="452" cy="158" r="7"/></g>
+            <path d="M325 155H366M325 202H366M325 286H366" stroke="#5c748b" stroke-width="3"/>
+          </g>
+        </svg>
+      </div>
+      <canvas id="scene" aria-label="国际空间站三维交互场景"></canvas>
+
+      <div class="screen-glass" aria-hidden="true"></div>
+      <div class="vignette" aria-hidden="true"></div>
+      <div class="scanlines" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <div class="topbar-brand">
+          <span class="brand-mark" aria-hidden="true">
+            <i></i>
+          </span>
+          <span class="brand-copy">
+            <b>SKIVU ORBITAL EXPLORER</b>
+            <small>INTERNATIONAL SPACE STATION</small>
+          </span>
+        </div>
+        <div class="topbar-telemetry">
+          <span class="telemetry-item"><em>INC</em> 51.64°</span>
+          <span class="telemetry-item"><em>PERIOD</em> ≈90 MIN</span>
+          <span class="telemetry-item clock" id="utcClock">--:--:-- UTC</span>
+          <span class="link-status"><i></i>VISUALIZATION</span>
+        </div>
+      </header>
+
+      <aside class="left-panel" aria-label="空间站概览与模块信息">
+        <div class="corner corner-tl" aria-hidden="true"></div>
+        <div class="corner corner-br" aria-hidden="true"></div>
+        <div class="panel-scroll">
+          <div class="panel-kicker">
+            <span class="kicker-line"></span>
+            <span>LOW EARTH ORBIT / 408 KM</span>
+            <span class="kicker-index">01 — ISS</span>
+          </div>
+
+          <div class="title-row">
+            <h1>国际<br />空间站</h1>
+            <span class="iss-stamp" aria-hidden="true">ISS<span>1998</span></span>
+          </div>
+
+          <p class="subtitle">地球之上，人类的另一扇窗</p>
+          <p class="lede">
+            一座以每小时 27,600 公里掠过晨昏线的轨道前哨。拖动视角，靠近它的每一片太阳翼与每一扇舷窗。
+          </p>
+
+          <div class="stats-grid" aria-label="空间站统计数据">
+            <div class="stat">
+              <span class="stat-label">示意轨道高度</span>
+              <span class="stat-value">408<small>km</small></span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">空间站横跨</span>
+              <span class="stat-value">109<small>m</small></span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">主桁架长度</span>
+              <span class="stat-value">94<small>m</small></span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">首段入轨</span>
+              <span class="stat-value">1998<small>年</small></span>
+            </div>
+          </div>
+
+          <section class="module-card" id="infoCard" aria-live="polite">
+            <div class="module-card-head">
+              <span class="section-label" id="moduleCategory">LOW EARTH ORBIT · 408 KM</span>
+              <span class="module-code" id="moduleCode">ISS / 01</span>
+            </div>
+            <h2 id="moduleName">国际空间站</h2>
+            <p class="module-english" id="moduleEnglish">INTERNATIONAL SPACE STATION</p>
+            <p class="module-description" id="moduleDescription">
+              人类在近地轨道上建造的最大人造结构。由多个国家和航天机构共同建设，开展微重力科学实验与国际合作。
+            </p>
+            <dl class="module-meta">
+              <div>
+                <dt>功能</dt>
+                <dd id="moduleFunc">微重力科学实验、地球观测、技术验证与国际合作平台</dd>
+              </div>
+              <div>
+                <dt>建造时间</dt>
+                <dd id="moduleBuilt">1998 — 2011（持续扩建）</dd>
+              </div>
+              <div>
+                <dt>所属机构</dt>
+                <dd id="moduleAgency">NASA · Roscosmos · ESA · JAXA · CSA</dd>
+              </div>
+            </dl>
+          </section>
+
+          <div class="scale-note">
+            <span class="scale-rule" aria-hidden="true"></span>
+            <span>比例结构示意 · 非实时轨道 · 1 UNIT = 1 METRE</span>
+          </div>
+        </div>
+      </aside>
+
+      <nav class="right-nav" aria-label="空间站结构导航">
+        <div class="nav-heading">
+          <span class="nav-title">结构导航</span>
+          <span class="nav-subtitle">MODULE INDEX</span>
+        </div>
+        <div class="nav-items" id="navItems"></div>
+      </nav>
+
+      <div class="tooltip" id="tooltip" role="status" aria-live="polite">
+        <span class="tooltip-kicker" id="tooltipKicker">MODULE</span>
+        <strong id="tooltipName">太阳能阵列</strong>
+        <span id="tooltipEnglish">SOLAR ARRAY WINGS</span>
+        <span class="tooltip-action">单击查看结构数据 <i>↗</i></span>
+      </div>
+
+      <div class="control-hint" aria-hidden="true">
+        <span>DRAG TO ORBIT</span>
+        <span>SCROLL TO ZOOM</span>
+        <span>RIGHT DRAG TO PAN</span>
+      </div>
+
+      <footer class="control-dock" aria-label="场景控制">
+        <button class="dock-button is-active" id="autoRotateButton" type="button" aria-pressed="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.2 8.6A8.5 8.5 0 1 0 21 13" />
+            <path d="M20.4 4.7v4.2h-4.2" />
+          </svg>
+          <span>
+            <b>自动旋转</b>
+            <small>AUTO ORBIT</small>
+          </span>
+        </button>
+        <span class="dock-separator" aria-hidden="true"></span>
+        <button class="dock-button" id="resetButton" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4.2 9.1A8.4 8.4 0 1 1 4 14.4" />
+            <path d="M4 4.6v4.7h4.7" />
+            <path d="M12 8.2v4.5l3 1.8" />
+          </svg>
+          <span>
+            <b>重置视角</b>
+            <small>RESET VIEW</small>
+          </span>
+        </button>
+        <span class="dock-separator" aria-hidden="true"></span>
+        <button class="dock-button" id="fullscreenButton" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8.4 3.8H3.8v4.6" />
+            <path d="M15.6 3.8h4.6v4.6" />
+            <path d="M20.2 15.6v4.6h-4.6" />
+            <path d="M3.8 15.6v4.6h4.6" />
+          </svg>
+          <span>
+            <b id="fullscreenLabel">全屏模式</b>
+            <small>FULLSCREEN</small>
+          </span>
+        </button>
+      </footer>
+
+      <div class="loading-screen" id="loader" aria-label="正在构建空间站">
+        <div class="loader-grid" aria-hidden="true"></div>
+        <div class="loader-content">
+          <div class="loader-orbit" aria-hidden="true">
+            <span class="loader-core"></span>
+            <span class="loader-ring ring-a"><i></i></span>
+            <span class="loader-ring ring-b"><i></i></span>
+            <span class="loader-ring ring-c"></span>
+          </div>
+          <p class="loader-kicker">INTERNATIONAL SPACE STATION / 1998—PRESENT</p>
+          <h2>正在接入轨道</h2>
+          <div class="loader-progress"><span id="loaderBar"></span></div>
+          <div class="loader-row">
+            <span id="loaderStatus">INITIALIZING ORBITAL FRAME</span>
+            <span id="loaderPercent">0%</span>
+          </div>
+          <div class="loader-coordinates">51.64° INCLINATION · 408 KM · 7.66 KM/S</div>
+        </div>
+      </div>
+
+      <div class="error-panel" id="errorPanel" hidden>
+        <strong>场景初始化中止</strong>
+        <p id="errorMessage"></p>
+      </div>
+      <div class="compat-notice" role="status">
+        <strong>二维结构预览</strong><p id="compatStatus">当前浏览器暂未建立三维视图，可使用新版系统浏览器打开。</p>
+        <button type="button" id="retryScene">重新加载</button>
+      </div>
+    </div>
+
+    <button type="button" id="exitInteraction" class="exit-interaction" hidden>退出交互 · 继续浏览</button>
+    <p class="scene-disclaimer">公开资料比例建模 · 结构与地球纹理示意 · 非实时遥测</p>
+    <script>setTimeout(function(){var app=document.getElementById('app');if(!app.classList.contains('is-ready')){app.classList.add('is-compat');document.getElementById('loader').classList.add('is-complete');}},25000);</script>
+    <script nomodule>document.getElementById('app').className+=' is-compat';document.getElementById('loader').style.display='none';</script>
+  </body>
+</html>

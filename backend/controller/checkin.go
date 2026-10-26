@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -25,10 +26,7 @@ func GetCheckinStatus(c *gin.Context) {
 
 	stats, err := model.GetUserCheckinStats(userId, month)
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"success": false,
-			"message": err.Error(),
-		})
+		c.JSON(http.StatusServiceUnavailable, gin.H{"success": false, "message": "签到状态暂不可用，请稍后重试"})
 		return
 	}
 
@@ -53,12 +51,20 @@ func DoCheckin(c *gin.Context) {
 
 	userId := c.GetInt("id")
 
-	checkin, err := model.UserCheckin(userId)
+	checkin, err := model.UserCheckinProtected(userId, c.ClientIP(), c.FullPath(), c.GetString(common.RequestIdKey))
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"success": false,
-			"message": err.Error(),
-		})
+		var decision *model.SecurityProtectionDecision
+		if errors.As(err, &decision) {
+			writeSecurityProtectionDecision(c, decision, http.StatusTooManyRequests)
+			return
+		}
+		message := "签到暂时不可用，请稍后重试"
+		status := http.StatusServiceUnavailable
+		if errors.Is(err, model.ErrSecurityProtectionAlreadyCheckedIn) {
+			message = "今日已签到"
+			status = http.StatusOK
+		}
+		c.JSON(status, gin.H{"success": false, "message": message})
 		return
 	}
 	model.RecordLog(userId, model.LogTypeSystem, fmt.Sprintf("用户签到，获得额度 %s", logger.LogQuota(checkin.QuotaAwarded)))

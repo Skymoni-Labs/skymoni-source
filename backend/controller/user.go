@@ -149,6 +149,7 @@ func recordLoginAudit(user *model.User, c *gin.Context) {
 		params["verification_method"] = verifiedMethod
 	}
 	model.RecordLoginLog(user.Id, user.Role, user.Username, content, ip, "login", params, extra, c)
+	recordSecurityProtectionMetadata(c, user.Id, "login")
 }
 
 // setupLogin evaluates the shared login policy after primary authentication.
@@ -156,6 +157,9 @@ func recordLoginAudit(user *model.User, c *gin.Context) {
 // pending legacy GitHub binding rewrite travels inside the challenge and is
 // written only when the verification completes.
 func setupLogin(user *model.User, migration *service.LegacyGitHubMigration, c *gin.Context) {
+	if user != nil && !securityProtectionLoginAllowed(c, user.Id) {
+		return
+	}
 	if service.IsCommunityRequest(c) {
 		if err := model.AdmitCommunity(user.Id, c.GetHeader("X-Skymoni-Community-Invite")); err != nil {
 			communityAccessError(c, err)
@@ -178,6 +182,9 @@ func setupLogin(user *model.User, migration *service.LegacyGitHubMigration, c *g
 func setupLoginAtAuthVersion(user *model.User, expectedAuthVersion int64, c *gin.Context) {
 	if user == nil || user.Id <= 0 || user.Status != common.UserStatusEnabled {
 		common.ApiErrorI18n(c, i18n.MsgAuthUserBanned)
+		return
+	}
+	if !securityProtectionLoginAllowed(c, user.Id) {
 		return
 	}
 	currentUser, err := model.GetSelfUserById(user.Id)
@@ -291,6 +298,9 @@ func Register(c *gin.Context) {
 		common.ApiErrorI18n(c, i18n.MsgUserInputInvalid, map[string]any{"Error": err.Error()})
 		return
 	}
+	if !securityProtectionRegistrationAllowed(c) {
+		return
+	}
 	if common.EmailVerificationEnabled {
 		if user.Email == "" || user.VerificationCode == "" {
 			common.ApiErrorI18n(c, i18n.MsgUserEmailVerificationRequired)
@@ -354,6 +364,7 @@ func Register(c *gin.Context) {
 		common.ApiErrorI18n(c, i18n.MsgUserRegisterFailed)
 		return
 	}
+	recordSecurityProtectionMetadata(c, insertedUser.Id, "registration")
 	// 生成默认令牌
 	if constant.GenerateDefaultToken {
 		key, err := common.GenerateKey()
@@ -381,6 +392,7 @@ func Register(c *gin.Context) {
 			common.ApiErrorI18n(c, i18n.MsgCreateDefaultTokenErr)
 			return
 		}
+		recordSecurityProtectionMetadata(c, insertedUser.Id, "token_created")
 	}
 
 	c.JSON(http.StatusOK, gin.H{

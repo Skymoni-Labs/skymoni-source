@@ -1925,5 +1925,96 @@
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/app-update-catalog-20261024/source-skymoni-app-update-catalog-20261024.zip",
     "tag": "app-update-catalog-20261024",
     "source_commit": "7d851c479d1bd69cea52a8dd4ac08efc5ce197f0"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-site-20261025.zip",
+    "tag": "skivu-universe-site-20261025",
+    "bytes": 41655597,
+    "sha256": "83b915e4a456645101c409687c736bdb375dde2dbc0dee240cdf9c04f1c8a27c",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-site-20261025/source-skymoni-skivu-universe-site-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-interactive-20261025.zip",
+    "tag": "skivu-universe-interactive-20261025",
+    "bytes": 41850572,
+    "sha256": "2911be1890c4f7df390f16f66594b1c06a012ae0405361ce247d3b5431133aa7",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-interactive-20261025/source-skymoni-skivu-universe-interactive-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-interactive-r2-20261025.zip",
+    "tag": "skivu-universe-interactive-r2-20261025",
+    "bytes": 41850828,
+    "sha256": "5a548ebbf706eb8ec9ea9047dbd185630705f61a88a277dc1e5d0f22e4ff12f1",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-interactive-r2-20261025/source-skymoni-skivu-universe-interactive-r2-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-earth-r3-20261025.zip",
+    "tag": "skivu-universe-earth-r3-20261025",
+    "bytes": 43158912,
+    "sha256": "5fc7f1205319a4338e1c57e6116ddf4fed9bcd83acf8ea688d60f01a013cb2ef",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-earth-r3-20261025/source-skymoni-skivu-universe-earth-r3-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-observatory-r4-20261025.zip",
+    "tag": "skivu-universe-observatory-r4-20261025",
+    "bytes": 43462900,
+    "sha256": "135cfa193ff9927163fc6dcdb252b9f7b33dd542eb0a9a567e91dbce1fb2c97e",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-observatory-r4-20261025/source-skymoni-skivu-universe-observatory-r4-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-observatory-r4b-20261025.zip",
+    "tag": "skivu-universe-observatory-r4b-20261025",
+    "bytes": 43463078,
+    "sha256": "dc77ce7dd3b085828c567f5f4bf83c10afd8c1356ae3d78dea0ec05dc738590c",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-observatory-r4b-20261025/source-skymoni-skivu-universe-observatory-r4b-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-motion-mobile-r5-20261025.zip",
+    "tag": "skivu-universe-motion-mobile-r5-20261025",
+    "bytes": 43478174,
+    "sha256": "a686aeed1399eabd6d13bee60669b3104c66e4b79ed138ea0e46f79e3ab05513",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-motion-mobile-r5-20261025/source-skymoni-skivu-universe-motion-mobile-r5-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-thought-stream-r6-20261025.zip",
+    "tag": "skivu-universe-thought-stream-r6-20261025",
+    "bytes": 43479888,
+    "sha256": "655e20d53bc24e0448ffbe048cf6b035fadcab05752d906d776cbb61655d0773",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-thought-stream-r6-20261025/source-skymoni-skivu-universe-thought-stream-r6-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-station-tour-r7-20261025.zip",
+    "tag": "skivu-universe-station-tour-r7-20261025",
+    "bytes": 43487465,
+    "sha256": "5f53bf5099762eccf1b97f793c6a11dcff98783906133cf1e93b6830320611f7",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-station-tour-r7-20261025/source-skymoni-skivu-universe-station-tour-r7-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-station-focus-r8-20261025.zip",
+    "tag": "skivu-universe-station-focus-r8-20261025",
+    "bytes": 43492886,
+    "sha256": "fc3e512be1000361aec3edbf623595d2d11d3bf9a0078d40a42f9e2b7ee35ccc",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-station-focus-r8-20261025/source-skymoni-skivu-universe-station-focus-r8-20261025.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-cosmic-gravity-r9-20261026.zip",
+    "tag": "skivu-universe-cosmic-gravity-r9-20261026",
+    "bytes": 43511204,
+    "sha256": "d0a7e9dafbb76531670a6e3c789798d42e5a318334e2982216a2683e5c79fcd4",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-cosmic-gravity-r9-20261026/source-skymoni-skivu-universe-cosmic-gravity-r9-20261026.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-cosmic-gravity-r9b-20261026.zip",
+    "tag": "skivu-universe-cosmic-gravity-r9b-20261026",
+    "bytes": 43511561,
+    "sha256": "9a55d0b08fc2de774bcdf8111eb3ba883dda14d7070e03304676b4326796c979",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-cosmic-gravity-r9b-20261026/source-skymoni-skivu-universe-cosmic-gravity-r9b-20261026.zip"
+  },
+  {
+    "name": "source-skymoni-skivu-universe-voyage-r10-20261026.zip",
+    "tag": "skivu-universe-voyage-r10-20261026",
+    "bytes": 43754932,
+    "sha256": "b3ecf1b6760736c0c6e28bc22e38b11cc391c0b5b4329d438dcece9f42014fa1",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-universe-voyage-r10-20261026/source-skymoni-skivu-universe-voyage-r10-20261026.zip"
   }
 ]

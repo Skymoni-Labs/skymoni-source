@@ -1,0 +1,18 @@
+Skivu original stargate panorama · 2026-10-26
+
+Created with the built-in OpenAI image generation tool for this project. No external photographs, movie stills, stock art, logos or third-party model assets were supplied. This is fictional cosmic concept art, not an astronomical observation or a product capability claim. No NASA, space agency or film franchise endorsement is implied.
+
+Generation mode: brand-new image, opaque background.
+Original output: 1672 × 941 PNG, retained in the local private production archive.
+Web asset: stargate-panorama-20261026.webp, 1672 × 941, WebP quality88. Encoding only; no visual editing.
+Web asset SHA-256: 73c97149616eee1eae57e80f5388416087d6f9eee072c062c5c2162466101cab
+
+Final prompt:
+Use case: stylized-concept.
+Asset type: original cinematic ultra-wide website background artwork for the AI app brand Skivu; absolutely no typography.
+Primary request: a breathtaking, enormous tilted gravitational stargate, a deep elliptical wormhole accretion arc seen from immense distance in an original cosmic landscape. A vast elliptical river of exceptionally fine stardust curves across the middle and right of the image, with a dark center and real, layered depth. A tiny foreground crescent moon and very small stars establish overwhelming scale. An intricate silver-white rim with icy-blue and soft lavender stellar dust, and only one restrained warm-white sunlight glint.
+Composition: very wide landscape panoramic 16:9 framing, high resolution. Central 45 percent has usable dark negative space for a huge HTML wordmark added afterward. The luminous elliptical edges frame the negative space without obscuring it. The edge can extend outside the top-right frame. Lower and left edges descend naturally into near-black space. Peripheral nebula only, very restrained, no busy central clouds.
+Style: high-end original science-fiction cinematography, physically convincing scattered light, subtle volumetric depth, refined material detail, long-exposure cosmic atmosphere, elegant rather than noisy.
+Palette: desaturated midnight navy, near black, ice blue, silver white, soft lavender, tiny warm ivory highlight. Broad clean gradations with clear depth.
+Constraints: no text, no logo, no UI, no letters, no watermark, no phones, no waterdrops, no people, no characters. The hero subject is an open luminous tilted elliptical portal, not a solid planet ball. No recognizable franchise imagery, no neon HUD, no excessive lens flares, no chromatic aberration, no grain, no visual clutter.
+

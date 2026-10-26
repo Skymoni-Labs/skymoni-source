@@ -72,7 +72,7 @@ func TestCreatorGitHubSuccessfulCallbackUsesPKCEAndDoesNotChangeSiteLogin(t *tes
 func setupCreatorGitHubController(t *testing.T) service.AuthIdentity {
 	t.Helper()
 	_, identity := setupSecurityEnrollmentTest(t)
-	require.NoError(t, model.DB.AutoMigrate(&model.CreatorHomeCard{}, &model.CreatorHomeOrder{}, &model.CreatorHomeConfig{}, &model.CreatorHomeAuthor{}))
+	require.NoError(t, model.DB.AutoMigrate(&model.CommunityAccessConfig{}, &model.CommunityAdmission{}, &model.CommunityInvite{}, &model.CreatorHomeCard{}, &model.CreatorHomeOrder{}, &model.CreatorHomeConfig{}, &model.CreatorHomeAuthor{}))
 	logConnection, err := model.LOG_DB.DB()
 	require.NoError(t, err)
 	t.Cleanup(func() { _ = logConnection.Close() })

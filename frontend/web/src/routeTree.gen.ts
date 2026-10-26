@@ -74,6 +74,7 @@ import { Route as AuthenticatedPlaygroundIndexRouteImport } from './routes/_auth
 import { Route as AuthenticatedPopupNoticesIndexRouteImport } from './routes/_authenticated/popup-notices/index'
 import { Route as AuthenticatedProfileIndexRouteImport } from './routes/_authenticated/profile/index'
 import { Route as AuthenticatedRedemptionCodesIndexRouteImport } from './routes/_authenticated/redemption-codes/index'
+import { Route as AuthenticatedSecurityProtectionIndexRouteImport } from './routes/_authenticated/security-protection/index'
 import { Route as AuthenticatedSecurityIndexRouteImport } from './routes/_authenticated/security/index'
 import { Route as AuthenticatedStoreAdminRouteImport } from './routes/_authenticated/store/admin'
 import { Route as AuthenticatedStoreOrdersRouteImport } from './routes/_authenticated/store/orders'
@@ -449,6 +450,12 @@ const AuthenticatedRedemptionCodesIndexRoute =
     path: '/redemption-codes/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedSecurityProtectionIndexRoute =
+  AuthenticatedSecurityProtectionIndexRouteImport.update({
+    id: '/security-protection/',
+    path: '/security-protection/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSecurityIndexRoute =
   AuthenticatedSecurityIndexRouteImport.update({
     id: '/security/',
@@ -731,6 +738,7 @@ export interface FileRoutesByFullPath {
   '/popup-notices/': typeof AuthenticatedPopupNoticesIndexRoute
   '/profile/': typeof AuthenticatedProfileIndexRoute
   '/redemption-codes/': typeof AuthenticatedRedemptionCodesIndexRoute
+  '/security-protection/': typeof AuthenticatedSecurityProtectionIndexRoute
   '/security/': typeof AuthenticatedSecurityIndexRoute
   '/subscriptions/': typeof AuthenticatedSubscriptionsIndexRoute
   '/system-info/': typeof AuthenticatedSystemInfoIndexRoute
@@ -829,6 +837,7 @@ export interface FileRoutesByTo {
   '/popup-notices': typeof AuthenticatedPopupNoticesIndexRoute
   '/profile': typeof AuthenticatedProfileIndexRoute
   '/redemption-codes': typeof AuthenticatedRedemptionCodesIndexRoute
+  '/security-protection': typeof AuthenticatedSecurityProtectionIndexRoute
   '/security': typeof AuthenticatedSecurityIndexRoute
   '/subscriptions': typeof AuthenticatedSubscriptionsIndexRoute
   '/system-info': typeof AuthenticatedSystemInfoIndexRoute
@@ -933,6 +942,7 @@ export interface FileRoutesById {
   '/_authenticated/popup-notices/': typeof AuthenticatedPopupNoticesIndexRoute
   '/_authenticated/profile/': typeof AuthenticatedProfileIndexRoute
   '/_authenticated/redemption-codes/': typeof AuthenticatedRedemptionCodesIndexRoute
+  '/_authenticated/security-protection/': typeof AuthenticatedSecurityProtectionIndexRoute
   '/_authenticated/security/': typeof AuthenticatedSecurityIndexRoute
   '/_authenticated/subscriptions/': typeof AuthenticatedSubscriptionsIndexRoute
   '/_authenticated/system-info/': typeof AuthenticatedSystemInfoIndexRoute
@@ -1036,6 +1046,7 @@ export interface FileRouteTypes {
     | '/popup-notices/'
     | '/profile/'
     | '/redemption-codes/'
+    | '/security-protection/'
     | '/security/'
     | '/subscriptions/'
     | '/system-info/'
@@ -1134,6 +1145,7 @@ export interface FileRouteTypes {
     | '/popup-notices'
     | '/profile'
     | '/redemption-codes'
+    | '/security-protection'
     | '/security'
     | '/subscriptions'
     | '/system-info'
@@ -1237,6 +1249,7 @@ export interface FileRouteTypes {
     | '/_authenticated/popup-notices/'
     | '/_authenticated/profile/'
     | '/_authenticated/redemption-codes/'
+    | '/_authenticated/security-protection/'
     | '/_authenticated/security/'
     | '/_authenticated/subscriptions/'
     | '/_authenticated/system-info/'
@@ -1749,6 +1762,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRedemptionCodesIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/security-protection/': {
+      id: '/_authenticated/security-protection/'
+      path: '/security-protection'
+      fullPath: '/security-protection/'
+      preLoaderRoute: typeof AuthenticatedSecurityProtectionIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/security/': {
       id: '/_authenticated/security/'
       path: '/security'
@@ -2122,6 +2142,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPopupNoticesIndexRoute: typeof AuthenticatedPopupNoticesIndexRoute
   AuthenticatedProfileIndexRoute: typeof AuthenticatedProfileIndexRoute
   AuthenticatedRedemptionCodesIndexRoute: typeof AuthenticatedRedemptionCodesIndexRoute
+  AuthenticatedSecurityProtectionIndexRoute: typeof AuthenticatedSecurityProtectionIndexRoute
   AuthenticatedSecurityIndexRoute: typeof AuthenticatedSecurityIndexRoute
   AuthenticatedSubscriptionsIndexRoute: typeof AuthenticatedSubscriptionsIndexRoute
   AuthenticatedSystemInfoIndexRoute: typeof AuthenticatedSystemInfoIndexRoute
@@ -2157,6 +2178,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedProfileIndexRoute: AuthenticatedProfileIndexRoute,
   AuthenticatedRedemptionCodesIndexRoute:
     AuthenticatedRedemptionCodesIndexRoute,
+  AuthenticatedSecurityProtectionIndexRoute:
+    AuthenticatedSecurityProtectionIndexRoute,
   AuthenticatedSecurityIndexRoute: AuthenticatedSecurityIndexRoute,
   AuthenticatedSubscriptionsIndexRoute: AuthenticatedSubscriptionsIndexRoute,
   AuthenticatedSystemInfoIndexRoute: AuthenticatedSystemInfoIndexRoute,

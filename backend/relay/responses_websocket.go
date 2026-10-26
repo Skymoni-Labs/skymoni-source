@@ -894,6 +894,17 @@ func buildResponsesWSErrorPayload(eventID, streamID string, apiErr *types.NewAPI
 // persistent connection keeps serving the model after the pin was resolved.
 func checkResponsesWSModelAccess(c *gin.Context, modelName string) *types.NewAPIError {
 	// Runs for every response.create, including an already connected session.
+	userID := common.GetContextKeyInt(c, appconstant.ContextKeyUserId)
+	if userID <= 0 {
+		userID = c.GetInt("id")
+	}
+	if userID > 0 {
+		decision, err := appmodel.SecurityProtectionAccess(userID, c.ClientIP(), "account")
+		if err == nil && decision != nil && !decision.Allowed {
+			_ = appmodel.RecordSecurityProtectionDenial(userID, c.ClientIP(), c.FullPath(), "account", decision, c.GetString(common.RequestIdKey))
+			return types.NewErrorWithStatusCode(errors.New(decision.Message), types.ErrorCodeAccessDenied, http.StatusForbidden, types.ErrOptionWithSkipRetry())
+		}
+	}
 	published, policyErr := appmodel.IsModelPublished(modelName)
 	if policyErr != nil {
 		return types.NewErrorWithStatusCode(errors.New(i18n.T(c, i18n.MsgDistributorModelPolicyUnavailable)), types.ErrorCodeGetChannelFailed, http.StatusServiceUnavailable, types.ErrOptionWithSkipRetry())
