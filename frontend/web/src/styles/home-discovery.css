@@ -2020,37 +2020,3 @@
     transition: none;
   }
 }
-
-/* Four service cards keep Git discoverable alongside existing resources. */
-.hn-more-grid-with-git {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-@media (max-width: 1100px) {
-  .hn-more-grid-with-git {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (max-width: 767px) {
-  .hn-more-grid-with-git > div:last-child {
-    grid-column: auto;
-  }
-  .hn-more-grid-with-git > div:last-child .hn-resource-card {
-    min-height: 225px;
-    padding: 23px 18px;
-  }
-  .hn-more-grid-with-git > div:last-child .hn-path-icon {
-    position: static;
-  }
-  .hn-more-grid-with-git > div:last-child .hn-resource-title {
-    margin-top: 15px;
-  }
-}
-@media (max-width: 480px) {
-  .hn-more-grid-with-git {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .hn-more-grid-with-git .hn-resource-card,
-  .hn-more-grid-with-git > div:last-child .hn-resource-card {
-    min-height: 190px;
-  }
-}

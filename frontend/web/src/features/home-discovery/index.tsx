@@ -469,17 +469,8 @@ function MorePossibilities() {
             让工具、资源与日常，自然地连在一起。
           </span>
         </AnimateInView>
-        <div className='hn-more-grid hn-more-grid-with-git'>
+        <div className='hn-more-grid'>
           {[
-            {
-              title: 'Skymoni Git · 代码托管',
-              label: '把代码与协作，放在一起。',
-              description:
-                '免费 200 MB，支持各种语言。中转站账号登录，可网页上传、团队协作或导入 GitHub 仓库。',
-              href: 'https://git.skymoni.com/class-git/',
-              icon: Code2,
-              tone: 'blue',
-            },
             {
               title: '数字商城',
               label: '为工具箱，添一点。',

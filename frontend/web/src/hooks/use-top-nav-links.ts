@@ -91,13 +91,6 @@ export function useTopNavLinks(): TopNavLink[] {
   }
 
   links.push({
-    title: t('Code hosting'),
-    href: 'https://git.skymoni.com/class-git/',
-    external: true,
-    requiresAuth: false,
-  })
-
-  links.push({
     title: t('skymoni Community'),
     href: '/creators',
     external: true,

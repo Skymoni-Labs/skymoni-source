@@ -26,7 +26,6 @@ import {
   ClipboardList,
   CreditCard,
   FileText,
-  GitBranch,
   FlaskConical,
   Key,
   LayoutDashboard,
@@ -128,12 +127,6 @@ export function useSidebarData(): SidebarData {
             title: t('Store'),
             url: '/store',
             icon: ShoppingBag,
-          },
-          {
-            title: t('Code hosting'),
-            url: 'https://git.skymoni.com/class-git/',
-            external: true,
-            icon: GitBranch,
           },
           {
             title: t('My warehouse'),

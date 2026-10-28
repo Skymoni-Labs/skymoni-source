@@ -44,8 +44,6 @@ const footerGroups = [
   {
     title: 'Developer resources',
     links: [
-      { title: 'Code hosting', href: 'https://git.skymoni.com/class-git/' },
-      { title: 'Git beginner guide', href: 'https://git.skymoni.com/class-git/assets/classgit/guide.html' },
       { title: 'Setup guides', href: '/about' },
       { title: 'API Keys', href: '/keys' },
       { title: 'Playground', href: '/playground' },

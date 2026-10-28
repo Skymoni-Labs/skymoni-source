@@ -22,7 +22,6 @@ import {
   ArrowDown,
   ArrowRight,
   Boxes,
-  GitBranch,
   Mail,
   Palette,
   ShoppingBag,
@@ -211,25 +210,6 @@ export function PreviewHero({
             <ArrowRight
               size={13}
               className='hp-floating-arrow'
-              aria-hidden='true'
-            />
-          </FloatingServiceCard>
-          <FloatingServiceCard
-            className='hp-floating-card hp-floating-warehouse'
-            href='https://git.skymoni.com/class-git/'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <div className='hp-floating-icon hp-violet'>
-              <GitBranch size={20} />
-            </div>
-            <div>
-              <strong>Skymoni Git</strong>
-              <p>{t('Free 200 MB · Team collaboration')}</p>
-            </div>
-            <ArrowRight
-              size={15}
-              className='hp-floating-key'
               aria-hidden='true'
             />
           </FloatingServiceCard>

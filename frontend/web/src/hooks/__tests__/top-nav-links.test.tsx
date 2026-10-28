@@ -104,7 +104,6 @@ describe('store top navigation', () => {
       '/pricing',
       '/store',
       '/software',
-      'https://git.skymoni.com/class-git/',
       '/creators',
       '/rankings',
       '/app',
