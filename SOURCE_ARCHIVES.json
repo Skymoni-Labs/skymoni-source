@@ -2044,5 +2044,12 @@
     "sha256": "eda10e7478ce13dc19abd8f581756917e9ad07e658c7eb2a9a246184d79439d5",
     "url": "https://github.com/skyjjgw/skymoni-source/releases/download/security-protection-20261027-frontend-runtime/source-skymoni-security-protection-20261027-frontend-runtime.zip",
     "source_commit": "db7218ba2e4241a17338a1cdf47a714cd4e775ad"
+  },
+  {
+    "name": "source-skymoni-skivu-galaxy-flow-r11-20261029.zip",
+    "tag": "skivu-galaxy-flow-r11-20261029",
+    "bytes": 43840582,
+    "sha256": "c2f955af65e5395f02ae023f075a1276e21e80521ed46353e8d52e05f0dcef57",
+    "url": "https://github.com/skyjjgw/skymoni-source/releases/download/skivu-galaxy-flow-r11-20261029/source-skymoni-skivu-galaxy-flow-r11-20261029.zip"
   }
 ]
