@@ -1,4 +1,5 @@
 import * as T from 'three';
+import { createGalaxyFlow } from './galaxy-flow';
 
 // Skivu / Stargate: six original, deterministic light sculptures. No external models.
 const host = document.getElementById('gate-viewport');
@@ -16,6 +17,11 @@ if (host) {
   let sceneIndex = Math.max(0, Math.min(5, Number(document.documentElement.dataset.gateScene) || 0));
   let progress = 0, time = 0, previous = 0, budgetAt = 0, frameId = 0;
   let initialized = false, failed = false, visible = true, pointerX = 0, pointerY = 0, smoothX = 0, smoothY = 0;
+  const galaxyFlow = createGalaxyFlow(host, () => {
+    if (renderer && !failed && !document.hidden) {
+      try { paint(0, paused()); } catch { fail(); }
+    }
+  });
   let seed = 10102628;
   const random = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
   const gaussian = () => Math.sqrt(-2 * Math.log(Math.max(.00001, random()))) * Math.cos(random() * Math.PI * 2);
@@ -192,9 +198,9 @@ if (host) {
   }
   function paint(dt: number, snap = false) {
     const blend = snap ? 1 : 1 - Math.exp(-dt * 2.4);
-    for (let i = 0; i < 6; i++) { visibility[i] = T.MathUtils.lerp(visibility[i], i === sceneIndex ? 1 : 0, blend); sculptures[i].visible = visibility[i] > .002; }
-    opacityUniforms.forEach(item => { item.uniform.value = visibility[item.group] * item.maximum; });
-    ordinaryMaterials.forEach(item => { item.material.opacity = visibility[item.group] * item.maximum; });
+    for (let i = 0; i < 6; i++) { visibility[i] = T.MathUtils.lerp(visibility[i], i === sceneIndex ? 1 : 0, blend); sculptures[i].visible = visibility[i] > .002 && !(i === 0 && galaxyFlow.ready); }
+    opacityUniforms.forEach(item => { item.uniform.value = visibility[item.group] * item.maximum * (item.group === 0 && galaxyFlow.ready ? 0 : 1); });
+    ordinaryMaterials.forEach(item => { item.material.opacity = visibility[item.group] * item.maximum * (item.group === 0 && galaxyFlow.ready ? 0 : 1); });
     smoothX = T.MathUtils.lerp(smoothX, pointerX, blend * .6); smoothY = T.MathUtils.lerp(smoothY, pointerY, blend * .6);
     cameraTarget.set(smoothX * .22, -smoothY * .15, sceneIndex === 5 ? 15.5 : 14.5);
     camera.position.lerp(cameraTarget, blend); camera.lookAt(0, 0, 0);
@@ -209,6 +215,11 @@ if (host) {
     constellation.rotation.y = Math.sin(time * .035) * .12;
     constellation.rotation.z = Math.sin(time * .018) * .035;
     stars.rotation.y = smoothX * .003 + Math.sin(time * .009) * .004;
+    renderer!.clear();
+    if (galaxyFlow.update(time, Math.max(visibility[0], visibility[5]))) {
+      renderer!.render(galaxyFlow.scene, galaxyFlow.camera);
+      renderer!.clearDepth();
+    }
     renderer!.render(scene, camera);
   }
   function size() {
@@ -220,7 +231,7 @@ if (host) {
   }
   function fail() {
     failed = true; cancelAnimationFrame(frameId); frameId = 0;
-    renderer?.domElement.remove(); renderer?.dispose(); host!.classList.remove('webgl-ready'); host!.classList.add('webgl-failed');
+    renderer?.domElement.remove(); renderer?.dispose(); galaxyFlow.dispose(); host!.classList.remove('webgl-ready'); host!.classList.add('webgl-failed');
   }
   function frame(now: number) {
     frameId = 0; if (!visible || paused() || failed) return;
@@ -237,7 +248,7 @@ if (host) {
     if (new URLSearchParams(location.search).get('gate') === 'css') { host!.classList.add('webgl-failed'); return; }
     try {
       renderer = new T.WebGLRenderer({ alpha: true, antialias: !mobile(), powerPreference: 'low-power' });
-      renderer.setClearColor(0, 0); renderer.outputColorSpace = T.SRGBColorSpace;
+      renderer.setClearColor(0, 0); renderer.outputColorSpace = T.SRGBColorSpace; renderer.autoClear = false;
       renderer.debug.onShaderError = () => { throw new Error('Stargate shader unavailable'); };
       renderer.domElement.setAttribute('aria-hidden', 'true'); host!.append(renderer.domElement); renderer.domElement.addEventListener('webglcontextlost', fail);
       camera.position.set(0, 0, 14.5); size(); host!.classList.add('webgl-ready'); document.dispatchEvent(new Event('gate:ready')); resume();
@@ -250,7 +261,14 @@ if (host) {
     // Progress is reserved for timing; every section retains a stable composition.
     if (paused() && renderer && !failed) paint(0, true); resume();
   });
-  const sync = () => { if (paused()) { cancelAnimationFrame(frameId); frameId = 0; } else { if (visible) init(); resume(); } };
+  const sync = () => {
+    if (paused()) {
+      cancelAnimationFrame(frameId); frameId = 0;
+      // The page recentres its CSS parallax after dispatching the pause event.
+      // Repaint once afterwards, with frozen time, to keep the image mask aligned.
+      Promise.resolve().then(() => { if (renderer && !failed && !document.hidden && paused()) paint(0); });
+    } else { if (visible) init(); resume(); }
+  };
   new ResizeObserver(size).observe(host);
   new IntersectionObserver(entries => { visible = entries[0].isIntersecting; if (visible) { init(); resume(); } else { cancelAnimationFrame(frameId); frameId = 0; } }, { rootMargin: '100px' }).observe(host);
   ['visibilitychange', 'skivu-motion-change', 'skivu:motion'].forEach(name => document.addEventListener(name, sync)); reduced.addEventListener('change', sync);
