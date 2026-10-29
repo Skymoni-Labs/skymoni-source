@@ -23,7 +23,8 @@ func registerAppAccountAPIs(api *gin.RouterGroup) {
 	native.DELETE("/session", controller.AppAccountLogout)
 }
 func registerAppAccountRelay(router *gin.Engine) {
-	app := router.Group("/api/app-account", middleware.RouteTag("relay"), middleware.DisableCache(), middleware.SystemPerformanceCheck(), middleware.AppAccountRequestRateLimit(), middleware.AppAccountAuth(true), middleware.AppAccountFunding, middleware.AppAccountChatPolicy, middleware.ModelRequestRateLimit(), middleware.Distribute())
-	app.POST("/chat/completions", controller.AppBetaRelay)
-	app.POST("/responses", controller.AppBetaRelay)
+	app := router.Group("/api/app-account", middleware.RouteTag("relay"), middleware.DisableCache(), middleware.SystemPerformanceCheck(), middleware.AppAccountRequestRateLimit(), middleware.AppAccountAuth(true), middleware.AppAccountFunding)
+	app.POST("/chat/completions", middleware.AppAccountChatPolicy, middleware.ModelRequestRateLimit(), middleware.Distribute(), controller.AppBetaRelay)
+	app.POST("/responses", middleware.AppAccountChatPolicy, middleware.ModelRequestRateLimit(), middleware.Distribute(), controller.AppBetaRelay)
+	app.POST("/agent/chat/completions", middleware.AppAccountAgentChatPolicy, middleware.ModelRequestRateLimit(), middleware.Distribute(), controller.AppBetaRelay)
 }
