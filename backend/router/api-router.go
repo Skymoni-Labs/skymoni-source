@@ -13,6 +13,8 @@ import (
 )
 
 func SetApiRouter(router *gin.Engine) {
+	router.GET("/api/app-runtime/download/:package/:release/:abi", middleware.RouteTag("api"), middleware.AppUpdateDownloadRateLimit(), controller.DownloadAppRuntime)
+	router.HEAD("/api/app-runtime/download/:package/:release/:abi", middleware.RouteTag("api"), middleware.AppUpdateDownloadRateLimit(), controller.DownloadAppRuntime)
 	router.GET("/api/app-update/download/:release/:abi", middleware.RouteTag("api"), middleware.AppUpdateDownloadRateLimit(), controller.DownloadAppUpdate)
 	router.HEAD("/api/app-update/download/:release/:abi", middleware.RouteTag("api"), middleware.AppUpdateDownloadRateLimit(), controller.DownloadAppUpdate)
 	router.GET("/api/software/files/:id/:name", controller.DownloadSoftwareFile)
@@ -30,6 +32,7 @@ func SetApiRouter(router *gin.Engine) {
 	registerAppBetaAPIs(apiRouter)
 	registerAppAccountAPIs(apiRouter)
 	apiRouter.GET("/app-update/latest", middleware.AppAccountRequestRateLimit(), controller.GetAppUpdate)
+	apiRouter.GET("/app-runtime/latest", middleware.DisableCache(), middleware.AppAccountRequestRateLimit(), controller.GetAppRuntime)
 	{
 		apiRouter.GET("/setup", controller.GetSetup)
 		apiRouter.POST("/setup", anonymousRequestBodyLimit, controller.PostSetup)
