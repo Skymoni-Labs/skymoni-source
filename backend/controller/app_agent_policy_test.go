@@ -55,6 +55,16 @@ func TestAppAgentPolicyPublicationAndCanonicalToolForwarding(t *testing.T) {
 	w, _, _ = run(true)
 	assert.Equal(t, 404, w.Code)
 	assert.Contains(t, w.Body.String(), "model_not_available")
+	// Larger programming bodies must still hit publication policy before relay.
+	w = httptest.NewRecorder()
+	c, _ := gin.CreateTestContext(w)
+	large := strings.Replace(body, `"content":"hi"`, `"content":"`+strings.Repeat("history ", 40000)+`"`, 1)
+	c.Request = httptest.NewRequest("POST", "/api/app-account/agent/chat/completions", strings.NewReader(large))
+	c.Set("app_account_authenticated", true)
+	c.Set("app_account_user_group", "default")
+	middleware.AppAccountAgentChatPolicy(c)
+	assert.Equal(t, 404, w.Code)
+	assert.Contains(t, w.Body.String(), "model_not_available")
 }
 
 func TestAppAgentFullRelayAgainstSyntheticUpstream(t *testing.T) {

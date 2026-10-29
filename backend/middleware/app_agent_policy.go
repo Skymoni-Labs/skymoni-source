@@ -14,15 +14,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// This route is development-only until its account, model-publication,
-// funding, relay and streaming integration tests pass. It does not execute
-// tools: it only forwards their definitions and conversation records.
+// Forwards bounded tool definitions and records through the existing account,
+// model-publication, funding and relay guards. Never executes client tools.
 func AppAccountAgentChatPolicy(c *gin.Context) {
 	if !c.GetBool("app_account_authenticated") {
 		c.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
-	data, err := io.ReadAll(http.MaxBytesReader(c.Writer, c.Request.Body, 256<<10))
+	data, err := io.ReadAll(http.MaxBytesReader(c.Writer, c.Request.Body, appAgentMaxBodyBytes))
 	var modelField struct {
 		Model string `json:"model"`
 	}

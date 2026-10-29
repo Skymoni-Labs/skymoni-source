@@ -7,9 +7,9 @@ import (
 	"regexp"
 )
 
-// Development-only contract for the candidate authenticated agent route.
-// The worktree must not be deployed until routing, billing, publication and
-// streaming have been tested together.
+// Closed payload contract for the authenticated programming route.
+const appAgentMaxBodyBytes = 4 << 20
+
 type appAgentFunction struct {
 	Name        string          `json:"name"`
 	Description string          `json:"description,omitempty"`
@@ -57,16 +57,16 @@ func appAgentObject(raw []byte) bool {
 // published-model checks are the responsibility of the authenticated caller.
 func parseAppAgentPayload(data []byte) (appAgentPayload, error) {
 	var p appAgentPayload
-	if len(data) == 0 || len(data) > 256<<10 || json.Unmarshal(data, &p) != nil ||
+	if len(data) == 0 || len(data) > appAgentMaxBodyBytes || json.Unmarshal(data, &p) != nil ||
 		p.Model == "" || len(p.Model) > 200 || p.MaxTokens < 1 || p.MaxTokens > 4096 ||
-		len(p.Messages) == 0 || len(p.Messages) > 128 || len(p.Tools) > 64 {
+		len(p.Messages) == 0 {
 		return p, errAppAgentPayload
 	}
 	toolNames := make(map[string]bool)
 	for _, tool := range p.Tools {
 		f := tool.Function
 		if tool.Type != "function" || !appAgentName.MatchString(f.Name) || toolNames[f.Name] ||
-			len(f.Description) > 8192 || !appAgentObject(f.Parameters) || f.Arguments != "" {
+			!appAgentObject(f.Parameters) || f.Arguments != "" {
 			return p, errAppAgentPayload
 		}
 		toolNames[f.Name] = true
@@ -94,9 +94,6 @@ func parseAppAgentPayload(data []byte) (appAgentPayload, error) {
 				return p, errAppAgentPayload
 			}
 			delete(pending, m.ToolCallID)
-		}
-		if len(m.ToolCalls) > 16 {
-			return p, errAppAgentPayload
 		}
 		for _, call := range m.ToolCalls {
 			f := call.Function
