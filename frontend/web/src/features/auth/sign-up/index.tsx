@@ -60,6 +60,14 @@ export function SignUp() {
             </CommunityAccessDescription>
           </p>
         )}
+        <p
+          role='note'
+          className='rounded-xl border border-sky-400/20 bg-sky-400/5 p-3 text-sm leading-6'
+        >
+          收不到邮箱验证码或无法完成注册？请添加售后 QQ：
+          <span className='font-semibold select-all'>792521914</span>
+          ，申请人工协助注册及账号绑定。
+        </p>
         <SignUpForm />
 
         <TermsFooter
