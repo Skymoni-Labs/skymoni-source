@@ -71,7 +71,7 @@ func TestFixedPriceQuotaBoundariesAndUnsupportedTaskSnapshots(t *testing.T) {
 		{"normal group", `tier("request", fixed(0.01))`, 1.5, 7500, false},
 		{"free group", `tier("request", fixed(0.01))`, 0, 0, false},
 		{"explicit free price", `tier("free", fixed(0))`, 1, 0, false},
-		{"oversized price saturates instead of crediting", `tier("huge", fixed(1e20))`, 1, math.MaxInt32, true},
+		{"oversized price saturates instead of crediting", `tier("huge", fixed(1e20))`, 1, common.MaxQuota, true},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			snap := &billingexpr.BillingSnapshot{ExprString: tc.expression, ExprHash: billingexpr.ExprHashString(tc.expression), GroupRatio: tc.group, QuotaPerUnit: 500000}

@@ -8,12 +8,13 @@ import (
 )
 
 // Quota conversions are centralized here so every billing path shares one
-// saturation + logging policy. Single-request charges stay bounded to int32;
-// top-ups and wallet-priced purchases use a JavaScript-safe 64-bit domain.
+// saturation + logging policy. Requests and wallets share the exact-integer
+// domain supported by 64-bit storage, Redis Lua, and JSON/JavaScript numbers.
+// This is a representation boundary, not a per-request spending limit.
 const (
-	MaxQuota       = math.MaxInt32
-	MinQuota       = math.MinInt32
 	MaxWalletQuota = 1<<53 - 1
+	MaxQuota       = MaxWalletQuota
+	MinQuota       = -MaxQuota
 )
 
 // ValidateWalletQuota enforces the upper bound shared by wallet mutations.
@@ -162,7 +163,7 @@ func QuotaFromDecimalChecked(d decimal.Decimal) (int, *QuotaClamp) {
 }
 
 // QuotaFromDecimalStrict converts an in-range single-request quota and rejects
-// a value that would otherwise be saturated at the int32 boundary.
+// a value that would otherwise exceed the shared exact-integer domain.
 func QuotaFromDecimalStrict(d decimal.Decimal) (int, error) {
 	return strictQuota(QuotaFromDecimalChecked(d))
 }

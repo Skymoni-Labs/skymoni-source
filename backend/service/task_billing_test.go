@@ -60,6 +60,7 @@ func TestMain(m *testing.M) {
 		&model.CreatorHomeOrder{},
 		&model.CreatorHomeConfig{},
 		&model.CreatorHomeAuthor{},
+		&model.CommunityAccessConfig{},
 	); err != nil {
 		panic("failed to migrate: " + err.Error())
 	}

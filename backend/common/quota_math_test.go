@@ -22,7 +22,7 @@ func TestQuotaFromFloat(t *testing.T) {
 	assert.Equal(t, 42, QuotaFromFloat(42.4))
 	assert.Equal(t, 42, QuotaFromFloat(42.9))
 	assert.Equal(t, -42, QuotaFromFloat(-42.9))
-	assert.Equal(t, MaxQuota, QuotaFromFloat(float64(math.MaxInt32)+42))
+	assert.Equal(t, int(math.MaxInt32)+42, QuotaFromFloat(float64(math.MaxInt32)+42))
 	assert.Equal(t, MaxQuota, QuotaFromFloat(overflowingProduct))
 	assert.Equal(t, MinQuota, QuotaFromFloat(-overflowingProduct))
 	assert.Equal(t, MaxQuota, QuotaFromFloat(math.Inf(1)))
@@ -36,7 +36,7 @@ func TestQuotaRound(t *testing.T) {
 	assert.Equal(t, 42, QuotaRound(41.5))
 	assert.Equal(t, 43, QuotaRound(42.5))
 	assert.Equal(t, -43, QuotaRound(-42.5))
-	assert.Equal(t, MaxQuota, QuotaRound(float64(math.MaxInt32)+0.5))
+	assert.Equal(t, int(math.MaxInt32)+1, QuotaRound(float64(math.MaxInt32)+0.5))
 	assert.Equal(t, MaxQuota, QuotaRound(overflowingProduct))
 	assert.Equal(t, MinQuota, QuotaRound(-overflowingProduct))
 	assert.Equal(t, 0, QuotaRound(math.NaN()))
@@ -49,6 +49,36 @@ func TestQuotaFromDecimal(t *testing.T) {
 	assert.Equal(t, 42, QuotaFromDecimal(decimal.NewFromFloat(41.7)))
 	assert.Equal(t, MaxQuota, QuotaFromDecimal(decimal.NewFromInt(2000).Mul(decimal.NewFromFloat(1.8446744073686647e19))))
 	assert.Equal(t, MinQuota, QuotaFromDecimal(decimal.NewFromInt(-2000).Mul(decimal.NewFromFloat(1.8446744073686647e19))))
+}
+
+func TestRequestQuotaPreservesLargeCharges(t *testing.T) {
+	for _, want := range []int{2_147_483_648, 2_750_000_001, 10_000_000_000, MaxQuota} {
+		t.Run(fmt.Sprint(want), func(t *testing.T) {
+			quota, clamp := QuotaFromFloatChecked(float64(want))
+			require.Equal(t, want, quota)
+			require.Nil(t, clamp)
+			quota, clamp = QuotaRoundChecked(float64(want))
+			require.Equal(t, want, quota)
+			require.Nil(t, clamp)
+			quota, clamp = QuotaFromDecimalChecked(decimal.NewFromInt(int64(want)))
+			require.Equal(t, want, quota)
+			require.Nil(t, clamp)
+			quota, err := QuotaRoundStrict(float64(want))
+			require.NoError(t, err)
+			require.Equal(t, want, quota)
+			quota, err = QuotaFromDecimalStrict(decimal.NewFromInt(int64(want)))
+			require.NoError(t, err)
+			require.Equal(t, want, quota)
+		})
+	}
+}
+
+func TestRequestQuotaRejectsValuesOutsideExactIntegerDomain(t *testing.T) {
+	for _, value := range []float64{float64(MaxQuota + 1), float64(MinQuota - 1), math.Inf(1), math.Inf(-1), math.NaN()} {
+		quota, err := QuotaRoundStrict(value)
+		require.Zero(t, quota)
+		require.Error(t, err)
+	}
 }
 
 // TestQuotaFromFloatChecked verifies the clamp descriptor is nil in range and

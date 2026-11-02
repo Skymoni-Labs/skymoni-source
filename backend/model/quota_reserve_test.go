@@ -138,14 +138,15 @@ func TestRedisBatchReserveNeverFallsBackToStaleDatabaseBalance(t *testing.T) {
 	assert.Equal(t, 7, reloadedToken.UsedQuota)
 }
 
-func TestBatchUpdateAccumulatesTwoMaximumRequestCharges(t *testing.T) {
+func TestBatchUpdateAccumulatesChargesAboveInt32(t *testing.T) {
 	truncateTables(t)
 	resetBatchUpdateTestState(t)
 	common.BatchUpdateEnabled = true
 
-	user := createReserveTestUser(t, common.MaxQuota*2+100)
-	require.NoError(t, DecreaseUserQuota(user.Id, common.MaxQuota, false))
-	require.NoError(t, DecreaseUserQuota(user.Id, common.MaxQuota, false))
+	const requestQuota = 2_750_000_000
+	user := createReserveTestUser(t, requestQuota*2+100)
+	require.NoError(t, DecreaseUserQuota(user.Id, requestQuota, false))
+	require.NoError(t, DecreaseUserQuota(user.Id, requestQuota, false))
 
 	batchUpdate()
 	assert.Equal(t, 100, getUserQuotaFromDB(t, user.Id))
