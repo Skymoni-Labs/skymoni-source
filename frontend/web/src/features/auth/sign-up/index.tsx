@@ -64,7 +64,8 @@ export function SignUp() {
           role='note'
           className='rounded-xl border border-sky-400/20 bg-sky-400/5 p-3 text-sm leading-6'
         >
-          收不到邮箱验证码或无法完成注册？请添加售后 QQ：
+          收不到验证码？请先检查邮箱的垃圾箱（垃圾邮件），验证码邮件可能被归类到那里。
+          若仍收不到验证码或无法完成注册，请添加售后 QQ：
           <span className='font-semibold select-all'>792521914</span>
           ，申请人工协助注册及账号绑定。
         </p>
