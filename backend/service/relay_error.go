@@ -16,11 +16,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const relayRetryBudget = 2 * time.Minute
+
 // DecideRelayRetry is the single retry decision for relay attempts. The reason
 // is recorded in the request policy decision events of the log details.
 func DecideRelayRetry(c *gin.Context, err *types.NewAPIError, retryTimes int) PolicyDecision {
 	if err == nil {
 		return PolicyDecision{Action: "stop", Reason: "request_completed", Source: "system"}
+	}
+	if c != nil && c.Request != nil && c.Request.Context().Err() != nil {
+		return PolicyDecision{Action: "stop", Reason: "client_gone", Source: "system"}
+	}
+	// Stop adding attempts after a slow failure. An attempt already in progress
+	// keeps its existing timeout and may finish normally.
+	if time.Since(RequestPolicy(c).StartedAt) >= relayRetryBudget {
+		return PolicyDecision{Action: "stop", Reason: "retry_time_budget_exhausted", Source: "global"}
 	}
 	if ShouldSkipRetryAfterChannelAffinityFailure(c) {
 		source := RequestPolicy(c).SessionModeSource

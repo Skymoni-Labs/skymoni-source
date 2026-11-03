@@ -103,6 +103,11 @@ func Relay(c *gin.Context, relayFormat types.RelayFormat) {
 					"error": newAPIError.ToClaudeError(),
 				})
 			default:
+				if c.Writer.Written() && c.GetBool("event_stream_headers_set") {
+					_ = helper.ObjectData(c, gin.H{"error": newAPIError.ToOpenAIError()})
+					return
+				}
+				c.Header("Content-Type", "application/json")
 				c.JSON(newAPIError.StatusCode, gin.H{
 					"error": newAPIError.ToOpenAIError(),
 				})

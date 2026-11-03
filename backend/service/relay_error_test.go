@@ -153,6 +153,17 @@ func TestDecideRelayRetryReasons(t *testing.T) {
 			RequestPolicy(c).SessionModeSource = "global"
 		}, want: PolicyDecision{Action: "stop", Reason: "strict_session", Source: "global"}},
 		{name: "nil error", retries: 1, want: PolicyDecision{Action: "stop", Reason: "request_completed", Source: "system"}},
+		{name: "slow failure stops new attempts", err: upstream(http.StatusBadGateway), retries: 3, setup: func(c *gin.Context) {
+			RequestPolicy(c).StartedAt = time.Now().Add(-relayRetryBudget)
+		}, want: PolicyDecision{Action: "stop", Reason: "retry_time_budget_exhausted", Source: "global"}},
+		{name: "fast failure can retry", err: upstream(http.StatusBadGateway), retries: 3, setup: func(c *gin.Context) {
+			RequestPolicy(c).StartedAt = time.Now().Add(-time.Minute)
+		}, want: PolicyDecision{Action: "retry", Reason: "retry_status_matched", Source: "global"}},
+		{name: "disconnected client never retries", err: upstream(http.StatusBadGateway), retries: 3, setup: func(c *gin.Context) {
+			ctx, cancel := context.WithCancel(context.Background())
+			cancel()
+			c.Request = httptest.NewRequest(http.MethodPost, "/v1/chat/completions", nil).WithContext(ctx)
+		}, want: PolicyDecision{Action: "stop", Reason: "client_gone", Source: "system"}},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			c, _ := gin.CreateTestContext(httptest.NewRecorder())

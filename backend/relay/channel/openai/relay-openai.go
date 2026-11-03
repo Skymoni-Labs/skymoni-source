@@ -143,6 +143,11 @@ func OaiStreamHandler(c *gin.Context, info *relaycommon.RelayInfo, resp *http.Re
 	})
 
 	info.StreamStatus.RequireTerminal()
+	// An empty upstream stream provides neither output nor authoritative usage.
+	// Return through the common failure/refund path before estimating input usage.
+	if info.ReceivedResponseCount == 0 {
+		return nil, types.NewOpenAIError(fmt.Errorf("upstream stream ended before any response"), types.ErrorCodeEmptyResponse, http.StatusBadGateway, types.ErrOptionWithSkipRetry())
+	}
 
 	// 处理最后的响应
 	shouldSendLastResp := true
