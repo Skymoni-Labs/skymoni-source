@@ -170,9 +170,9 @@ func ApplyChannelHealth(pool ChannelHealthPool, enable bool) (int, error) {
 				continue
 			}
 			reason := "sample-health:" + pool.ID
-			status := 3
+			status := common.ChannelStatusManuallyDisabled
 			if enable {
-				if c.Status != 3 || c.GetOtherInfo()["status_reason"] != reason {
+				if c.Status != common.ChannelStatusManuallyDisabled || c.GetOtherInfo()["status_reason"] != reason {
 					continue
 				}
 				status = 1
@@ -181,6 +181,9 @@ func ApplyChannelHealth(pool ChannelHealthPool, enable bool) (int, error) {
 			}
 			info := c.GetOtherInfo()
 			info["status_reason"] = reason
+			if enable {
+				info["status_reason"] = ""
+			}
 			c.SetOtherInfo(info)
 			values := map[string]any{"status": status, "other_info": c.OtherInfo}
 			if enable {
@@ -210,6 +213,12 @@ func ApplyChannelHealth(pool ChannelHealthPool, enable bool) (int, error) {
 		InitChannelCache()
 	}
 	return changed, err
+}
+
+func RecentChannelHealthLogs(ids []int, since int64) ([]Log, error) {
+	var rows []Log
+	err := LOG_DB.Select("id", "type", "content", "other", "completion_tokens", "token_name", "use_time").Where("channel_id IN ? AND created_at > ? AND type IN ?", ids, since, []int{LogTypeConsume, LogTypeError}).Order("id DESC").Limit(500).Find(&rows).Error
+	return rows, err
 }
 
 // Never treat a refunded/empty stream as healthy merely because it has a

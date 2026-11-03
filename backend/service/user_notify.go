@@ -13,7 +13,17 @@ import (
 	"github.com/QuantumNous/new-api/setting/system_setting"
 )
 
+func channelStatusNotificationSuppressed(t string) bool {
+	common.OptionMapRWMutex.RLock()
+	silent := common.OptionMap["SkymoniChannelStatusNotifyEnabled"] == "false"
+	common.OptionMapRWMutex.RUnlock()
+	return silent && (strings.HasPrefix(t, dto.NotifyTypeChannelUpdate) || t == dto.NotifyTypeChannelTest)
+}
+
 func NotifyRootUser(t string, subject string, content string) {
+	if channelStatusNotificationSuppressed(t) {
+		return
+	}
 	user := model.GetRootUser().ToBaseUser()
 	err := NotifyUser(user.Id, user.Email, user.GetSetting(), dto.NewNotify(t, subject, content, nil))
 	if err != nil {

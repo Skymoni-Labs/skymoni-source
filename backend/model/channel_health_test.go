@@ -50,3 +50,18 @@ func TestHealthLogRejectsEmptyAndFailedStreams(t *testing.T) {
 	_, count = ChannelHealthLogOutcome(Log{Type: LogTypeConsume, TokenName: "线路抽样检测"})
 	require.False(t, count)
 }
+
+func TestHealthRecentLogsUseStoredChannelColumn(t *testing.T) {
+	require.NoError(t, DB.AutoMigrate(&Log{}))
+	old := LOG_DB
+	LOG_DB = DB
+	t.Cleanup(func() { LOG_DB = old; DB.Where("token_name = ?", "health-query-fixture").Delete(&Log{}) })
+	row := Log{ChannelId: 991234, CreatedAt: 12345, Type: LogTypeConsume, TokenName: "health-query-fixture", CompletionTokens: 1}
+	require.NoError(t, DB.Create(&row).Error)
+	rows, err := RecentChannelHealthLogs([]int{991234}, 12000)
+	require.NoError(t, err)
+	require.Len(t, rows, 1)
+	rows, err = RecentChannelHealthLogs([]int{991235}, 12000)
+	require.NoError(t, err)
+	require.Empty(t, rows)
+}

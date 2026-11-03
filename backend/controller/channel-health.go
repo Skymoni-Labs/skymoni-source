@@ -95,8 +95,7 @@ func runChannelHealthRound() {
 		for _, c := range channels {
 			ids = append(ids, c.Id)
 		}
-		var logs []model.Log
-		err = model.LOG_DB.Select("id", "type", "content", "other", "completion_tokens", "token_name", "use_time").Where("channel IN ? AND created_at > ? AND type IN ?", ids, now-300, []int{model.LogTypeConsume, model.LogTypeError}).Order("id DESC").Limit(500).Find(&logs).Error
+		logs, err := model.RecentChannelHealthLogs(ids, now-300)
 		if err != nil {
 			continue
 		} // A storage failure must not disable upstreams.
