@@ -265,8 +265,14 @@ func ListModels(c *gin.Context, modelType int) {
 		ownerByModel = getPreferredModelOwners(userModelNames, ownerGroups)
 	}
 	userOpenAiModels := make([]dto.OpenAIModels, 0, len(userModelNames))
+	descriptionByModel := make(map[string]string)
+	for _, pricing := range model.GetPricing() {
+		descriptionByModel[pricing.ModelName] = pricing.Description
+	}
 	for _, modelName := range userModelNames {
-		userOpenAiModels = append(userOpenAiModels, buildOpenAIModel(modelName, ownerByModel))
+		item := buildOpenAIModel(modelName, ownerByModel)
+		item.Description = descriptionByModel[modelName]
+		userOpenAiModels = append(userOpenAiModels, item)
 	}
 
 	switch modelType {
@@ -285,6 +291,7 @@ func ListModels(c *gin.Context, modelType int) {
 				ID:          model.Id,
 				CreatedAt:   time.Unix(int64(model.Created), 0).UTC().Format(time.RFC3339),
 				DisplayName: model.Id,
+				Description: model.Description,
 				Type:        "model",
 			}
 		}
@@ -306,6 +313,7 @@ func ListModels(c *gin.Context, modelType int) {
 			userGeminiModels[i] = dto.GeminiModel{
 				Name:        model.Id,
 				DisplayName: model.Id,
+				Description: model.Description,
 			}
 		}
 		c.JSON(200, gin.H{
