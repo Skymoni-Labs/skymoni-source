@@ -127,6 +127,10 @@ export function UpstreamWalletPanel() {
       ).data,
   })
   const data = query.data
+  const visibleWallets =
+    data?.wallets.filter(
+      (wallet) => wallet.provider.trim().toLowerCase() !== 'typesafe'
+    ) ?? []
   const current = data?.wallets.find((w) => w.id === selected?.id) ?? selected
   const channels = useMemo(
     () => data?.channels.filter((ch) => ch.wallet_id === current?.id) ?? [],
@@ -270,14 +274,15 @@ export function UpstreamWalletPanel() {
           日志使用独立数据库，自动补记不可用；遇到记录失败时请核验余额。
         </p>
       )}
-      {data && !data.wallets.length && (
+      {data && !visibleWallets.length && (
         <div className='text-muted-foreground rounded-xl border border-dashed p-5 text-sm'>
           录入一次上游余额并绑定对应渠道，后续消耗会自动扣减。充值后补记到账金额即可。
         </div>
       )}
       <div className='grid gap-3 sm:grid-cols-2 xl:grid-cols-4'>
-        {data?.wallets.map((w) => {
-          const bound = data.channels.filter((ch) => ch.wallet_id === w.id)
+        {visibleWallets.map((w) => {
+          const bound =
+            data?.channels.filter((ch) => ch.wallet_id === w.id) ?? []
           const names = [
             ...new Set(
               bound.flatMap((ch) => ch.models.split(',').filter(Boolean))
