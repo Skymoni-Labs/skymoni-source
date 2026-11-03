@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-	"sort"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/QuantumNous/new-api/common"
@@ -22,6 +20,23 @@ const (
 )
 
 type healthProbeContextKey struct{}
+
+func channelHealthInterval(pool model.ChannelHealthPool, state model.ChannelHealthState) int64 {
+	if pool.Auto && state.Failures >= channelHealthFailureRounds {
+		switch state.Failures - channelHealthFailureRounds {
+		case 0:
+			return 900
+		case 1:
+			return 1800
+		default:
+			return 3600
+		}
+	}
+	if state.Failures > 0 {
+		return 300
+	}
+	return 1800
+}
 
 // A shared upstream pool may serve more than one published site alias.
 func channelHealthProbeModel(pool model.ChannelHealthPool, channel model.Channel) string {
@@ -46,10 +61,11 @@ func channelHealthProbeModel(pool model.ChannelHealthPool, channel model.Channel
 type healthProbeLimits struct {
 	MaxOutputTokens    int
 	OutputBudgetTokens int
+	LogLabel           string
 }
 
 func channelHealthProbeLimits(pool model.ChannelHealthPool) healthProbeLimits {
-	limits := healthProbeLimits{MaxOutputTokens: 8, OutputBudgetTokens: 8}
+	limits := healthProbeLimits{MaxOutputTokens: 1, OutputBudgetTokens: 8}
 	if pool.ProbeMaxOutputTokens >= 1 && pool.ProbeMaxOutputTokens <= 8 {
 		limits.MaxOutputTokens = pool.ProbeMaxOutputTokens
 	}
@@ -70,7 +86,7 @@ func minimalHealthProbeBody(raw []byte, maxTokens int) ([]byte, error) {
 	}
 	body["max_tokens"] = maxTokens
 	body["stream"] = false
-	body["messages"] = []map[string]string{{"role": "user", "content": "Reply with exactly OK."}}
+	body["messages"] = []map[string]string{{"role": "user", "content": channelTestGreeting}}
 	body["thinking"] = map[string]string{"type": "disabled"}
 	delete(body, "max_completion_tokens")
 	delete(body, "stream_options")
@@ -82,6 +98,7 @@ func InitChannelHealth() {
 	if !common.IsMasterNode {
 		return
 	}
+	go runModelHealthWorker()
 	go func() {
 		time.Sleep(30 * time.Second)
 		for {
@@ -119,7 +136,7 @@ func runChannelHealthRound() {
 				continue
 			}
 		}
-		if now-max(state.LastAt, state.LastAttemptAt) < 300 {
+		if now-max(state.LastAt, state.LastAttemptAt) < channelHealthInterval(pool, state) {
 			continue
 		}
 		channels, err := model.ValidChannelHealthChannels(pool)
@@ -175,7 +192,13 @@ func runChannelHealthRound() {
 		if err != nil {
 			continue
 		} // A storage failure must not disable upstreams.
+		budgetDeferred := false
 		point, complete := collectChannelHealthSamples(&state, channels, logs, now, pool.ChannelAccounts, func(channel model.Channel) healthSample {
+			reserved, err := model.ReserveHealthProbe(time.Now().Unix())
+			if err != nil || !reserved {
+				budgetDeferred = true
+				return healthSample{skipped: true}
+			}
 			ctx, cancel := context.WithTimeout(context.WithValue(context.Background(), healthProbeContextKey{}, channelHealthProbeLimits(pool)), 45*time.Second)
 			defer cancel()
 			started := time.Now()
@@ -213,6 +236,9 @@ func runChannelHealthRound() {
 		if state.BudgetPaused {
 			state.Action += "；上游计量超出预算，暂停付费探测，等待真实请求"
 		}
+		if budgetDeferred {
+			state.Action = "主动检测预算暂不可用，继续复用真实请求，次日自动恢复日预算"
+		}
 		if err := model.SaveChannelHealthState(pool.ID, state); err != nil {
 			common.SysError("sample channel health state save failed")
 		}
@@ -225,6 +251,7 @@ type healthSample struct {
 	success    bool
 	latency    int64
 	overBudget bool
+	skipped    bool
 }
 
 func collectChannelHealthSamples(state *model.ChannelHealthState, channels []model.Channel, logs []model.Log, now int64, accounts map[int]string, probe func(model.Channel) healthSample) (model.ChannelHealthPoint, bool) {
@@ -283,6 +310,9 @@ func collectChannelHealthSamples(state *model.ChannelHealthState, channels []mod
 			continue
 		}
 		sample := probe(channel)
+		if sample.skipped {
+			break
+		}
 		add(channel, sample, index)
 		probeCount++
 		state.BudgetPaused = sample.overBudget
@@ -360,119 +390,36 @@ func GetUpstreamChannelHealth(c *gin.Context) {
 		}
 		state := model.ReadChannelHealthState(p.ID)
 		limits := channelHealthProbeLimits(p)
-		if time.Now().Unix()-state.LastAt > 900 {
+		if time.Now().Unix()-state.LastAt > max(channelHealthInterval(p, state)*3, 900) {
 			state.Status = "unknown"
 		}
-		rows = append(rows, gin.H{"id": p.ID, "provider": p.Provider, "account": p.Account, "upstream_model": p.UpstreamModel, "upstream_group": p.UpstreamGroup, "multiplier": p.Multiplier, "auto": p.Auto, "probe_max_output_tokens": limits.MaxOutputTokens, "probe_output_budget_tokens": limits.OutputBudgetTokens, "channels": len(p.Channels), "matched": len(channels), "enabled": enabled, "state": state})
+		rows = append(rows, gin.H{"id": p.ID, "provider": p.Provider, "account": p.Account, "upstream_model": p.UpstreamModel, "upstream_group": p.UpstreamGroup, "multiplier": p.Multiplier, "auto": p.Auto, "interval_seconds": channelHealthInterval(p, state), "probe_max_output_tokens": limits.MaxOutputTokens, "probe_output_budget_tokens": limits.OutputBudgetTokens, "channels": len(p.Channels), "matched": len(channels), "enabled": enabled, "state": state})
 	}
-	c.JSON(http.StatusOK, gin.H{"success": true, "data": gin.H{"enabled": config.Enabled, "interval_seconds": 300, "sample_size": channelHealthSampleSize, "enable_success_rate": 0.5, "disable_rounds": channelHealthFailureRounds, "max_output_tokens": 8, "pools": rows, "server_time": time.Now().Unix()}})
-}
-
-func GetDeepSeekChannelHealth(c *gin.Context) {
-	// Only published logical names reach the user response. No upstream pool DTO
-	// is reused here, so account/group/credential information cannot leak.
-	var metadata []model.Model
-	if err := model.DB.Select("model_name").Where("status = ?", 1).Find(&metadata).Error; err != nil {
+	budget, err := model.ReadHealthProbeBudget(time.Now().Unix())
+	if err != nil {
 		c.JSON(500, gin.H{"success": false})
 		return
 	}
-	names := map[string]bool{}
-	for _, m := range metadata {
-		if strings.Contains(strings.ToLower(m.ModelName), "deepseek") {
-			names[m.ModelName] = true
-		}
+	c.JSON(http.StatusOK, gin.H{"success": true, "data": gin.H{"enabled": config.Enabled, "interval_seconds": 1800, "sample_size": channelHealthSampleSize, "enable_success_rate": 0.5, "disable_rounds": channelHealthFailureRounds, "max_output_tokens": 1, "probe_budget": budget, "pools": rows, "server_time": time.Now().Unix()}})
+}
+
+func GetDeepSeekChannelHealth(c *gin.Context) {
+	names, err := publishedDeepSeekHealthModels()
+	if err != nil {
+		c.JSON(500, gin.H{"success": false, "message": "读取模型状态失败"})
+		return
 	}
-	var config model.ChannelHealthConfig
-	_ = model.ReadChannelHealthJSON(model.ChannelHealthConfigKey, &config)
 	rows := make([]gin.H, 0, len(names))
 	now := time.Now().Unix()
-	for name := range names {
-		published, err := model.IsModelPublished(name)
-		if err != nil || !published {
-			continue
+	for _, name := range names {
+		state := model.ReadModelHealthState(name)
+		status := state.Status
+		lastSource := ""
+		if len(state.History) > 0 {
+			lastSource = state.History[len(state.History)-1].Source
 		}
-		metrics, err := perfmetrics.Query(perfmetrics.QueryParams{Model: name, Hours: 24})
-		if err != nil {
-			c.JSON(500, gin.H{"success": false, "message": "读取模型状态失败"})
-			return
-		}
-		status := "unknown"
-		last := int64(0)
-		// Metric buckets may be hourly; their start timestamp is not the time
-		// of the last request. Use bounded recent observations for freshness.
-		var recent []model.Log
-		if err := model.LOG_DB.Select("created_at", "type", "content", "other", "completion_tokens", "token_name").Where("model_name = ? AND created_at > ? AND type IN ?", name, now-900, []int{model.LogTypeConsume, model.LogTypeError}).Order("id DESC").Limit(30).Find(&recent).Error; err != nil {
-			c.JSON(500, gin.H{"success": false})
-			return
-		}
-		good, bad := false, false
-		for _, log := range recent {
-			ok, count := model.ChannelHealthLogOutcome(log)
-			if !count {
-				continue
-			}
-			if log.CreatedAt > last {
-				last = log.CreatedAt
-			}
-			if ok {
-				good = true
-			} else {
-				bad = true
-			}
-		}
-		if good {
-			status = "available"
-		}
-		if bad {
-			status = "unavailable"
-			if good {
-				status = "degraded"
-			}
-		}
-		probes := make([]model.ChannelHealthPoint, 0)
-		if last == 0 {
-			good, bad := false, false
-			for _, p := range config.Pools {
-				channels, err := model.ValidChannelHealthChannels(p)
-				if err != nil {
-					continue
-				}
-				active := false
-				for _, ch := range channels {
-					for _, alias := range ch.GetModels() {
-						if alias == name && ch.Status == 1 {
-							active = true
-						}
-					}
-				}
-				if !active {
-					continue
-				}
-				s := model.ReadChannelHealthState(p.ID)
-				if now-s.LastAt > 900 || len(s.History) == 0 {
-					continue
-				}
-				point := s.History[len(s.History)-1]
-				probes = append(probes, point)
-				if point.At > last {
-					last = point.At
-				}
-				if point.Count > point.Failures {
-					good = true
-				}
-				if point.Failures > 0 {
-					bad = true
-				}
-			}
-			if good {
-				status = "available"
-			}
-			if bad {
-				status = "unavailable"
-				if good {
-					status = "degraded"
-				}
-			}
+		if state.LastAt == 0 || now-state.LastAt > modelHealthIntervalSeconds*3 || (state.BudgetPaused && lastSource != "real") {
+			status = "unknown"
 		}
 		var routes int64
 		if err := model.DB.Model(&model.Ability{}).Where("model = ? AND enabled = ?", name, true).Count(&routes).Error; err != nil {
@@ -482,8 +429,22 @@ func GetDeepSeekChannelHealth(c *gin.Context) {
 		if routes == 0 {
 			status = "unavailable"
 		}
-		rows = append(rows, gin.H{"model": name, "status": status, "last_at": last, "metrics": gin.H{"summary": metrics.Summary, "series": metrics.Series}, "samples": probes})
+		// Preserve the metrics shape for already-loaded frontend versions.
+		metrics, err := perfmetrics.Query(perfmetrics.QueryParams{Model: name, Hours: 24})
+		if err != nil {
+			c.JSON(500, gin.H{"success": false, "message": "读取模型状态失败"})
+			return
+		}
+		samples := state.History
+		if samples == nil {
+			samples = []model.ChannelHealthPoint{}
+		}
+		rows = append(rows, gin.H{"model": name, "status": status, "last_at": state.LastAt, "interval_seconds": modelHealthInterval(state), "probe_paused": state.BudgetPaused, "metrics": gin.H{"summary": metrics.Summary, "series": metrics.Series}, "samples": samples})
 	}
-	sort.Slice(rows, func(i, j int) bool { return rows[i]["model"].(string) < rows[j]["model"].(string) })
-	c.JSON(200, gin.H{"success": true, "data": gin.H{"models": rows, "server_time": now, "refresh_seconds": 60}})
+	budget, err := model.ReadHealthProbeBudget(now)
+	if err != nil {
+		c.JSON(500, gin.H{"success": false})
+		return
+	}
+	c.JSON(200, gin.H{"success": true, "data": gin.H{"models": rows, "server_time": now, "refresh_seconds": 60, "probe_interval_seconds": modelHealthIntervalSeconds, "probe_daily_limit": budget.Limit, "probe_budget_exhausted": budget.Used >= budget.Limit, "sample_size": 1, "max_output_tokens": 1}})
 }

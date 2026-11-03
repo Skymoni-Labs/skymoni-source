@@ -15,7 +15,7 @@ func TestMinimalHealthProbeCapsOverriddenRequest(t *testing.T) {
 	require.Equal(t, float64(8), body["max_tokens"])
 	require.Equal(t, false, body["stream"])
 	require.NotContains(t, body, "max_completion_tokens")
-	require.Contains(t, string(raw), "Reply with exactly OK.")
+	require.Equal(t, []any{map[string]any{"role": "user", "content": "hello"}}, body["messages"])
 }
 
 func TestHealthHysteresisAndBoundedHistory(t *testing.T) {
@@ -125,7 +125,7 @@ func TestHealthProbeUsageBudget(t *testing.T) {
 
 func TestHealthPoolProbeLimitsAndMinimalRequest(t *testing.T) {
 	defaults := channelHealthProbeLimits(model.ChannelHealthPool{})
-	require.Equal(t, healthProbeLimits{MaxOutputTokens: 8, OutputBudgetTokens: 8}, defaults)
+	require.Equal(t, healthProbeLimits{MaxOutputTokens: 1, OutputBudgetTokens: 8}, defaults)
 	require.Equal(t, defaults, channelHealthProbeLimits(model.ChannelHealthPool{ProbeMaxOutputTokens: 1000, ProbeOutputBudgetTokens: 1000}))
 	limits := channelHealthProbeLimits(model.ChannelHealthPool{ProbeMaxOutputTokens: 1, ProbeOutputBudgetTokens: 16})
 	raw, err := minimalHealthProbeBody([]byte(`{"max_tokens":10000,"stream":true}`), limits.MaxOutputTokens)

@@ -94,7 +94,7 @@ func TestChannelTestOpenAIChatCompatibility(t *testing.T) {
 			encoded := convertChatCompatibilityRequest(t, request, tt.channelType, map[string]string{tt.model: tt.upstream})
 			want := map[string]any{
 				"model":      tt.upstream,
-				"messages":   []dto.Message{{Role: "user", Content: "hi"}},
+				"messages":   []dto.Message{{Role: "user", Content: "hello"}},
 				"stream":     tt.stream,
 				tt.wantLimit: 16,
 			}

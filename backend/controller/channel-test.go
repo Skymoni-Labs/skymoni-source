@@ -42,6 +42,11 @@ type testResult struct {
 	healthBudgetExceeded bool
 }
 
+const (
+	channelTestGreeting        = "hello"
+	channelTestMaxOutputTokens = 16
+)
+
 func normalizeChannelTestEndpoint(channel *model.Channel, endpointType string) string {
 	normalized := strings.TrimSpace(endpointType)
 	if normalized != "" {
@@ -524,6 +529,9 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 	testLabel := "模型测试"
 	if healthProbe {
 		testLabel = "线路抽样检测"
+		if probeLimits.LogLabel != "" {
+			testLabel = probeLimits.LogLabel
+		}
 	}
 	model.RecordConsumeLog(c, testUserID, model.RecordConsumeLogParams{
 		ChannelId:        channel.Id,
@@ -723,7 +731,7 @@ func detectErrorMessageFromJSONBytes(jsonBytes []byte) string {
 }
 
 func buildTestRequest(model string, endpointType string, channel *model.Channel, isStream bool) dto.Request {
-	testResponsesInput := json.RawMessage(`[{"role":"user","content":"hi"}]`)
+	testResponsesInput := json.RawMessage(`[{"role":"user","content":"hello"}]`)
 
 	// 根据端点类型构建不同的测试请求
 	if endpointType != "" {
@@ -732,7 +740,7 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 			// 返回 EmbeddingRequest
 			return &dto.EmbeddingRequest{
 				Model: model,
-				Input: []any{"hello world"},
+				Input: []any{"hello"},
 			}
 		case constant.EndpointTypeImageGeneration:
 			// 返回 ImageRequest
@@ -753,9 +761,10 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 		case constant.EndpointTypeOpenAIResponse:
 			// 返回 OpenAIResponsesRequest
 			return &dto.OpenAIResponsesRequest{
-				Model:  model,
-				Input:  json.RawMessage(`[{"role":"user","content":"hi"}]`),
-				Stream: lo.ToPtr(isStream),
+				Model:           model,
+				Input:           json.RawMessage(`[{"role":"user","content":"hello"}]`),
+				Stream:          lo.ToPtr(isStream),
+				MaxOutputTokens: lo.ToPtr(uint(channelTestMaxOutputTokens)),
 			}
 		case constant.EndpointTypeOpenAIResponseCompact:
 			// 返回 OpenAIResponsesCompactionRequest
@@ -767,11 +776,11 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 			return &dto.ClaudeRequest{
 				Model:     model,
 				Stream:    lo.ToPtr(isStream),
-				MaxTokens: lo.ToPtr(uint(16)),
+				MaxTokens: lo.ToPtr(uint(channelTestMaxOutputTokens)),
 				Messages: []dto.ClaudeMessage{
 					{
 						Role:    "user",
-						Content: "hi",
+						Content: "hello",
 					},
 				},
 			}
@@ -780,11 +789,11 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 				Contents: []dto.GeminiChatContent{
 					{
 						Role:  "user",
-						Parts: []dto.GeminiPart{{Text: "hi"}},
+						Parts: []dto.GeminiPart{{Text: "hello"}},
 					},
 				},
 				GenerationConfig: dto.GeminiChatGenerationConfig{
-					MaxOutputTokens: lo.ToPtr(uint(3000)),
+					MaxOutputTokens: lo.ToPtr(uint(channelTestMaxOutputTokens)),
 				},
 			}
 		case constant.EndpointTypeOpenAI:
@@ -794,10 +803,10 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 				Messages: []dto.Message{
 					{
 						Role:    "user",
-						Content: "hi",
+						Content: "hello",
 					},
 				},
-				MaxTokens: lo.ToPtr(uint(16)),
+				MaxTokens: lo.ToPtr(uint(channelTestMaxOutputTokens)),
 			}
 			if isStream {
 				req.StreamOptions = &dto.StreamOptions{IncludeUsage: true}
@@ -823,16 +832,17 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 		// 返回 EmbeddingRequest
 		return &dto.EmbeddingRequest{
 			Model: model,
-			Input: []any{"hello world"},
+			Input: []any{"hello"},
 		}
 	}
 
 	// Responses-only models (e.g. codex series)
 	if strings.Contains(strings.ToLower(model), "codex") {
 		return &dto.OpenAIResponsesRequest{
-			Model:  model,
-			Input:  json.RawMessage(`[{"role":"user","content":"hi"}]`),
-			Stream: lo.ToPtr(isStream),
+			Model:           model,
+			Input:           json.RawMessage(`[{"role":"user","content":"hello"}]`),
+			Stream:          lo.ToPtr(isStream),
+			MaxOutputTokens: lo.ToPtr(uint(channelTestMaxOutputTokens)),
 		}
 	}
 
@@ -843,7 +853,7 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 		Messages: []dto.Message{
 			{
 				Role:    "user",
-				Content: "hi",
+				Content: "hello",
 			},
 		},
 	}
@@ -852,15 +862,9 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 	}
 
 	if dto.IsOpenAIReasoningOModel(model) {
-		testRequest.MaxCompletionTokens = lo.ToPtr(uint(16))
-	} else if strings.Contains(model, "thinking") {
-		if !strings.Contains(model, "claude") {
-			testRequest.MaxTokens = lo.ToPtr(uint(50))
-		}
-	} else if strings.Contains(model, "gemini") {
-		testRequest.MaxTokens = lo.ToPtr(uint(3000))
+		testRequest.MaxCompletionTokens = lo.ToPtr(uint(channelTestMaxOutputTokens))
 	} else {
-		testRequest.MaxTokens = lo.ToPtr(uint(16))
+		testRequest.MaxTokens = lo.ToPtr(uint(channelTestMaxOutputTokens))
 	}
 
 	return testRequest

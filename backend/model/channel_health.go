@@ -78,11 +78,15 @@ func ReadChannelHealthJSON(key string, target any) error {
 }
 
 func SaveChannelHealthState(id string, state ChannelHealthState) error {
+	return saveHealthState("SkymoniChannelHealthState:"+id, state)
+}
+
+func saveHealthState(key string, state ChannelHealthState) error {
 	b, err := json.Marshal(state)
 	if err != nil {
 		return err
 	}
-	return DB.Clauses(clause.OnConflict{Columns: []clause.Column{{Name: "key"}}, DoUpdates: clause.AssignmentColumns([]string{"value"})}).Create(&Option{Key: "SkymoniChannelHealthState:" + id, Value: string(b)}).Error
+	return DB.Clauses(clause.OnConflict{Columns: []clause.Column{{Name: "key"}}, DoUpdates: clause.AssignmentColumns([]string{"value"})}).Create(&Option{Key: key, Value: string(b)}).Error
 }
 
 func ReadChannelHealthState(id string) ChannelHealthState {
@@ -93,7 +97,10 @@ func ReadChannelHealthState(id string) ChannelHealthState {
 
 // Lease prevents two master processes from spending quota on the same round.
 func ClaimChannelHealthRound(now int64) bool {
-	key := "SkymoniChannelHealthLease"
+	return claimHealthRound("SkymoniChannelHealthLease", now, channelHealthLeaseSeconds)
+}
+
+func claimHealthRound(key string, now, leaseSeconds int64) bool {
 	_ = DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&Option{Key: key, Value: "0"}).Error
 	var o Option
 	if DB.Where("key = ?", key).First(&o).Error != nil {
@@ -103,11 +110,15 @@ func ClaimChannelHealthRound(now int64) bool {
 	if err != nil || until > now {
 		return false
 	}
-	return DB.Model(&Option{}).Where("key = ? AND value = ?", key, o.Value).Update("value", strconv.FormatInt(now+channelHealthLeaseSeconds, 10)).RowsAffected == 1
+	return DB.Model(&Option{}).Where("key = ? AND value = ?", key, o.Value).Update("value", strconv.FormatInt(now+leaseSeconds, 10)).RowsAffected == 1
 }
 
 func ReleaseChannelHealthRound(now int64) {
-	DB.Model(&Option{}).Where("key = ? AND value = ?", "SkymoniChannelHealthLease", strconv.FormatInt(now+channelHealthLeaseSeconds, 10)).Update("value", "0")
+	releaseHealthRound("SkymoniChannelHealthLease", now, channelHealthLeaseSeconds)
+}
+
+func releaseHealthRound(key string, now, leaseSeconds int64) {
+	DB.Model(&Option{}).Where("key = ? AND value = ?", key, strconv.FormatInt(now+leaseSeconds, 10)).Update("value", "0")
 }
 
 func ValidChannelHealthChannels(pool ChannelHealthPool) ([]Channel, error) {
@@ -243,7 +254,7 @@ func RecentChannelHealthLogs(ids []int, since int64) ([]Log, error) {
 // Never treat a refunded/empty stream as healthy merely because it has a
 // consume log. Client/business rejections do not decide upstream availability.
 func ChannelHealthLogOutcome(log Log) (success bool, counted bool) {
-	if log.TokenName == "线路抽样检测" || log.TokenName == "模型测试" {
+	if log.TokenName == "线路抽样检测" || log.TokenName == "模型状态检测" || log.TokenName == "模型测试" {
 		return false, false
 	}
 	var other map[string]any
