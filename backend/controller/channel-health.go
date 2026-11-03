@@ -23,14 +23,32 @@ const (
 
 type healthProbeContextKey struct{}
 
-func healthProbeUsageOverBudget(input, output int) bool { return input > 128 || output > 8 }
+type healthProbeLimits struct {
+	MaxOutputTokens    int
+	OutputBudgetTokens int
+}
 
-func minimalHealthProbeBody(raw []byte) ([]byte, error) {
+func channelHealthProbeLimits(pool model.ChannelHealthPool) healthProbeLimits {
+	limits := healthProbeLimits{MaxOutputTokens: 8, OutputBudgetTokens: 8}
+	if pool.ProbeMaxOutputTokens >= 1 && pool.ProbeMaxOutputTokens <= 8 {
+		limits.MaxOutputTokens = pool.ProbeMaxOutputTokens
+	}
+	if pool.ProbeOutputBudgetTokens >= limits.MaxOutputTokens && pool.ProbeOutputBudgetTokens <= 16 {
+		limits.OutputBudgetTokens = pool.ProbeOutputBudgetTokens
+	}
+	return limits
+}
+
+func healthProbeUsageOverBudget(input, output, outputBudget int) bool {
+	return input > 128 || output > outputBudget
+}
+
+func minimalHealthProbeBody(raw []byte, maxTokens int) ([]byte, error) {
 	var body map[string]any
 	if err := json.Unmarshal(raw, &body); err != nil {
 		return nil, err
 	}
-	body["max_tokens"] = 8
+	body["max_tokens"] = maxTokens
 	body["stream"] = false
 	body["messages"] = []map[string]string{{"role": "user", "content": "Reply with exactly OK."}}
 	body["thinking"] = map[string]string{"type": "disabled"}
@@ -112,7 +130,7 @@ func runChannelHealthRound() {
 			continue
 		} // A storage failure must not disable upstreams.
 		point, complete := collectChannelHealthSamples(&state, channels, logs, now, func(channel model.Channel) healthSample {
-			ctx, cancel := context.WithTimeout(context.WithValue(context.Background(), healthProbeContextKey{}, true), 45*time.Second)
+			ctx, cancel := context.WithTimeout(context.WithValue(context.Background(), healthProbeContextKey{}, channelHealthProbeLimits(pool)), 45*time.Second)
 			defer cancel()
 			started := time.Now()
 			result := testChannel(ctx, &channel, userID, pool.Model, "", false)
@@ -134,7 +152,7 @@ func runChannelHealthRound() {
 					} else if n == 0 {
 						state.Action = "已完成分组判断，维持当前渠道状态（保留人工关闭）"
 					} else if enable {
-						state.Action = "本轮成功率达到50%，恢复为备用（本轮变更 " + strconv.Itoa(n) + " 条）"
+						state.Action = "本轮成功率达到50%，已启用该组（本轮变更 " + strconv.Itoa(n) + " 条）"
 					} else {
 						state.Action = "连续三轮成功率低于50%，已关闭该组（本轮变更 " + strconv.Itoa(n) + " 条）"
 					}
@@ -283,10 +301,11 @@ func GetUpstreamChannelHealth(c *gin.Context) {
 			}
 		}
 		state := model.ReadChannelHealthState(p.ID)
+		limits := channelHealthProbeLimits(p)
 		if time.Now().Unix()-state.LastAt > 900 {
 			state.Status = "unknown"
 		}
-		rows = append(rows, gin.H{"id": p.ID, "provider": p.Provider, "account": p.Account, "upstream_model": p.UpstreamModel, "upstream_group": p.UpstreamGroup, "multiplier": p.Multiplier, "auto": p.Auto, "channels": len(p.Channels), "matched": len(channels), "enabled": enabled, "state": state})
+		rows = append(rows, gin.H{"id": p.ID, "provider": p.Provider, "account": p.Account, "upstream_model": p.UpstreamModel, "upstream_group": p.UpstreamGroup, "multiplier": p.Multiplier, "auto": p.Auto, "probe_max_output_tokens": limits.MaxOutputTokens, "probe_output_budget_tokens": limits.OutputBudgetTokens, "channels": len(p.Channels), "matched": len(channels), "enabled": enabled, "state": state})
 	}
 	c.JSON(http.StatusOK, gin.H{"success": true, "data": gin.H{"enabled": config.Enabled, "interval_seconds": 300, "sample_size": channelHealthSampleSize, "enable_success_rate": 0.5, "disable_rounds": channelHealthFailureRounds, "max_output_tokens": 8, "pools": rows, "server_time": time.Now().Unix()}})
 }

@@ -20,16 +20,18 @@ const channelHealthLeaseSeconds = 1800 // 16 pools * 2 probes * 45 seconds, plus
 // Pool configuration contains no credentials. A signature pins the exact route
 // approved by the owner; editing a route removes it from automatic management.
 type ChannelHealthPool struct {
-	ID            string         `json:"id"`
-	Provider      string         `json:"provider"`
-	Account       string         `json:"account"`
-	UpstreamModel string         `json:"upstream_model"`
-	UpstreamGroup string         `json:"upstream_group"`
-	GroupID       int            `json:"group_id"`
-	Multiplier    float64        `json:"multiplier"`
-	Model         string         `json:"model"`
-	Auto          bool           `json:"auto"`
-	Channels      map[int]string `json:"channels"`
+	ID                      string         `json:"id"`
+	Provider                string         `json:"provider"`
+	Account                 string         `json:"account"`
+	UpstreamModel           string         `json:"upstream_model"`
+	UpstreamGroup           string         `json:"upstream_group"`
+	GroupID                 int            `json:"group_id"`
+	Multiplier              float64        `json:"multiplier"`
+	Model                   string         `json:"model"`
+	Auto                    bool           `json:"auto"`
+	ProbeMaxOutputTokens    int            `json:"probe_max_output_tokens,omitempty"`
+	ProbeOutputBudgetTokens int            `json:"probe_output_budget_tokens,omitempty"`
+	Channels                map[int]string `json:"channels"`
 }
 
 type ChannelHealthConfig struct {
@@ -131,7 +133,7 @@ func ValidChannelHealthChannels(pool ChannelHealthPool) ([]Channel, error) {
 // Change status and abilities together. Never publish model metadata, and never
 // reverse a manual disable: only rows bearing our reason may be restored.
 func ApplyChannelHealth(pool ChannelHealthPool, enable bool) (int, error) {
-	if !pool.Auto || pool.Provider != "starway" || pool.Multiplier != 0.3 {
+	if !pool.Auto || pool.Provider != "starway" || pool.GroupID <= 0 {
 		return 0, nil
 	}
 	if enable {
@@ -190,14 +192,16 @@ func ApplyChannelHealth(pool ChannelHealthPool, enable bool) (int, error) {
 			}
 			c.SetOtherInfo(info)
 			values := map[string]any{"status": status, "other_info": c.OtherInfo}
-			if enable {
+			// Business recovery uses the owner's standby priority. Other groups
+			// retain their existing route priorities when availability changes.
+			if enable && pool.Multiplier == 0.3 {
 				values["priority"] = int64(100)
 			}
 			if err := tx.Model(&Channel{}).Where("id = ?", id).Updates(values).Error; err != nil {
 				return err
 			}
 			ability := map[string]any{"enabled": enable}
-			if enable {
+			if enable && pool.Multiplier == 0.3 {
 				ability["priority"] = int64(100)
 			}
 			if err := tx.Model(&Ability{}).Where("channel_id = ?", id).Updates(ability).Error; err != nil {

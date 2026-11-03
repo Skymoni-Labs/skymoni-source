@@ -74,6 +74,7 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 	if ctx == nil {
 		ctx = context.Background()
 	}
+	probeLimits, healthProbe := ctx.Value(healthProbeContextKey{}).(healthProbeLimits)
 	if channel.Type == constant.ChannelTypeTaskPlugin && channel.GetSetting().TaskPluginKey == "typesafe" {
 		return testTypeSafeChannel(ctx, channel, testModel, isStream)
 	}
@@ -435,9 +436,9 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 		}
 	}
 
-	if ctx.Value(healthProbeContextKey{}) == true {
+	if healthProbe {
 		// Enforce the spend cap after channel parameter overrides, too.
-		jsonData, err = minimalHealthProbeBody(jsonData)
+		jsonData, err = minimalHealthProbeBody(jsonData, probeLimits.MaxOutputTokens)
 		if err != nil {
 			return testResult{context: c, localErr: err}
 		}
@@ -506,8 +507,12 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 			newAPIError: types.NewOpenAIError(bodyErr, types.ErrorCodeBadResponseBody, http.StatusInternalServerError),
 		}
 	}
-	if ctx.Value(healthProbeContextKey{}) == true && strings.TrimSpace(gjson.GetBytes(respBody, "choices.0.message.content").String()) == "" {
-		return testResult{context: c, localErr: errors.New("health probe returned empty content")}
+	if healthProbe && strings.TrimSpace(gjson.GetBytes(respBody, "choices.0.message.content").String()) == "" {
+		return testResult{
+			context:              c,
+			localErr:             errors.New("health probe returned empty content"),
+			healthBudgetExceeded: healthProbeUsageOverBudget(usage.PromptTokens, usage.CompletionTokens, probeLimits.OutputBudgetTokens),
+		}
 	}
 	info.SetEstimatePromptTokens(usage.PromptTokens)
 
@@ -517,7 +522,7 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 	consumedTime := float64(milliseconds) / 1000.0
 	other := buildTestLogOther(c, info, priceData, usage, tieredResult)
 	testLabel := "模型测试"
-	if ctx.Value(healthProbeContextKey{}) == true {
+	if healthProbe {
 		testLabel = "线路抽样检测"
 	}
 	model.RecordConsumeLog(c, testUserID, model.RecordConsumeLogParams{
@@ -538,7 +543,7 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 		context:              c,
 		localErr:             nil,
 		newAPIError:          nil,
-		healthBudgetExceeded: ctx.Value(healthProbeContextKey{}) == true && healthProbeUsageOverBudget(usage.PromptTokens, usage.CompletionTokens),
+		healthBudgetExceeded: healthProbe && healthProbeUsageOverBudget(usage.PromptTokens, usage.CompletionTokens, probeLimits.OutputBudgetTokens),
 	}
 }
 

@@ -13,7 +13,7 @@ func TestHealthAutomaticRestoreProtectsManualAndChangedRoutes(t *testing.T) {
 	ch := Channel{Name: "health", Key: "private", Models: "health-deepseek", Group: "default", Status: 1}
 	require.NoError(t, DB.Create(&ch).Error)
 	require.NoError(t, DB.Create(&Ability{ChannelId: ch.Id, Model: ch.Models, Group: "default", Enabled: true}).Error)
-	p := ChannelHealthPool{ID: "test", Provider: "starway", Multiplier: 0.3, Model: ch.Models, Auto: true, Channels: map[int]string{ch.Id: ChannelHealthSignature(&ch)}}
+	p := ChannelHealthPool{ID: "test", Provider: "starway", Multiplier: 0.3, GroupID: 4, Model: ch.Models, Auto: true, Channels: map[int]string{ch.Id: ChannelHealthSignature(&ch)}}
 	raw, _ := json.Marshal(ChannelHealthConfig{Enabled: true, Pools: []ChannelHealthPool{p}})
 	require.NoError(t, DB.Create(&Option{Key: ChannelHealthConfigKey, Value: string(raw)}).Error)
 	n, err := ApplyChannelHealth(p, false)
@@ -65,4 +65,45 @@ func TestHealthRecentLogsUseStoredChannelColumn(t *testing.T) {
 	rows, err = RecentChannelHealthLogs([]int{991235}, 12000)
 	require.NoError(t, err)
 	require.Empty(t, rows)
+}
+
+func TestHealthStarwayLowGroupOptIn(t *testing.T) {
+	setupChannelStatusTest(t)
+	require.NoError(t, DB.AutoMigrate(&Option{}, &Model{}, &AuditLog{}))
+	require.NoError(t, DB.Where("key LIKE ?", "SkymoniChannelHealth%").Delete(&Option{}).Error)
+	priority := int64(321)
+	ch := Channel{Name: "low-group-health", Key: "private", Models: "test-low-health", Group: "default", Status: 1, Priority: &priority}
+	require.NoError(t, DB.Create(&ch).Error)
+	require.NoError(t, DB.Create(&Ability{ChannelId: ch.Id, Model: ch.Models, Group: "default", Enabled: true, Priority: &priority}).Error)
+	meta := Model{ModelName: ch.Models, Status: 1}
+	require.NoError(t, DB.Create(&meta).Error)
+	t.Cleanup(func() { DB.Unscoped().Delete(&meta); DB.Where("key LIKE ?", "SkymoniChannelHealth%").Delete(&Option{}) })
+	p := ChannelHealthPool{ID: "low", Provider: "starway", GroupID: 34, Multiplier: 0.003, Model: ch.Models, Auto: true, Channels: map[int]string{ch.Id: ChannelHealthSignature(&ch)}}
+	for _, variant := range []ChannelHealthPool{
+		{Auto: true, Provider: "oranexa", GroupID: 34},
+		{Auto: false, Provider: "starway", GroupID: 34},
+		{Auto: true, Provider: "starway", GroupID: 0},
+	} {
+		variant.Channels = p.Channels
+		n, err := ApplyChannelHealth(variant, false)
+		require.NoError(t, err)
+		require.Zero(t, n)
+	}
+	raw, err := json.Marshal(ChannelHealthConfig{Enabled: true, Pools: []ChannelHealthPool{p}})
+	require.NoError(t, err)
+	require.NoError(t, DB.Create(&Option{Key: ChannelHealthConfigKey, Value: string(raw)}).Error)
+	n, err := ApplyChannelHealth(p, false)
+	require.NoError(t, err)
+	require.Equal(t, 1, n)
+	n, err = ApplyChannelHealth(p, true)
+	require.NoError(t, err)
+	require.Equal(t, 1, n)
+	var restored Channel
+	require.NoError(t, DB.First(&restored, ch.Id).Error)
+	require.Equal(t, 1, restored.Status)
+	require.Equal(t, priority, *restored.Priority)
+	var ability Ability
+	require.NoError(t, DB.Where("channel_id = ?", ch.Id).First(&ability).Error)
+	require.True(t, ability.Enabled)
+	require.Equal(t, priority, *ability.Priority)
 }

@@ -8,7 +8,7 @@ import (
 )
 
 func TestMinimalHealthProbeCapsOverriddenRequest(t *testing.T) {
-	raw, err := minimalHealthProbeBody([]byte(`{"max_tokens":100000,"max_completion_tokens":99999,"stream":true,"messages":[{"role":"user","content":"expensive"}]}`))
+	raw, err := minimalHealthProbeBody([]byte(`{"max_tokens":100000,"max_completion_tokens":99999,"stream":true,"messages":[{"role":"user","content":"expensive"}]}`), 8)
 	require.NoError(t, err)
 	var body map[string]any
 	require.NoError(t, json.Unmarshal(raw, &body))
@@ -118,7 +118,22 @@ func TestHealthProbeRotationAndBudgetIncompleteRound(t *testing.T) {
 }
 
 func TestHealthProbeUsageBudget(t *testing.T) {
-	require.False(t, healthProbeUsageOverBudget(14, 8))
-	require.True(t, healthProbeUsageOverBudget(845, 514))
-	require.True(t, healthProbeUsageOverBudget(14, 9))
+	require.False(t, healthProbeUsageOverBudget(14, 8, 8))
+	require.True(t, healthProbeUsageOverBudget(845, 514, 8))
+	require.True(t, healthProbeUsageOverBudget(14, 9, 8))
+}
+
+func TestHealthPoolProbeLimitsAndMinimalRequest(t *testing.T) {
+	defaults := channelHealthProbeLimits(model.ChannelHealthPool{})
+	require.Equal(t, healthProbeLimits{MaxOutputTokens: 8, OutputBudgetTokens: 8}, defaults)
+	require.Equal(t, defaults, channelHealthProbeLimits(model.ChannelHealthPool{ProbeMaxOutputTokens: 1000, ProbeOutputBudgetTokens: 1000}))
+	limits := channelHealthProbeLimits(model.ChannelHealthPool{ProbeMaxOutputTokens: 1, ProbeOutputBudgetTokens: 16})
+	raw, err := minimalHealthProbeBody([]byte(`{"max_tokens":10000,"stream":true}`), limits.MaxOutputTokens)
+	require.NoError(t, err)
+	var body map[string]any
+	require.NoError(t, json.Unmarshal(raw, &body))
+	require.Equal(t, float64(1), body["max_tokens"])
+	require.False(t, healthProbeUsageOverBudget(35, 11, limits.OutputBudgetTokens))
+	require.True(t, healthProbeUsageOverBudget(35, 17, limits.OutputBudgetTokens))
+	require.True(t, healthProbeUsageOverBudget(129, 1, limits.OutputBudgetTokens))
 }
