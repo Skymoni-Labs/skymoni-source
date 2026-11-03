@@ -47,8 +47,41 @@ func TestHealthLogRejectsEmptyAndFailedStreams(t *testing.T) {
 	require.True(t, count)
 	_, count = ChannelHealthLogOutcome(Log{Type: LogTypeError, Content: "context_length_exceeded"})
 	require.False(t, count)
+	_, count = ChannelHealthLogOutcome(Log{Type: LogTypeConsume, CompletionTokens: 3, Other: `{"stream_status":{"status":"error","end_reason":"client_gone"}}`})
+	require.False(t, count)
+	_, count = ChannelHealthLogOutcome(Log{Type: LogTypeError, Content: "status_code=403, 内容审计命中风险规则，请调整输入后重试"})
+	require.False(t, count)
 	_, count = ChannelHealthLogOutcome(Log{Type: LogTypeConsume, TokenName: "线路抽样检测"})
 	require.False(t, count)
+}
+
+func TestHealthOranexaGroupAutoManagement(t *testing.T) {
+	setupChannelStatusTest(t)
+	require.NoError(t, DB.AutoMigrate(&Option{}, &Model{}, &AuditLog{}))
+	require.NoError(t, DB.Where("key LIKE ?", "SkymoniChannelHealth%").Delete(&Option{}).Error)
+	ch := Channel{Name: "oranexa-group", Key: "private", Models: "test-oranexa-health", Group: "default", Status: 1}
+	require.NoError(t, DB.Create(&ch).Error)
+	require.NoError(t, DB.Create(&Ability{ChannelId: ch.Id, Model: ch.Models, Group: "default", Enabled: true}).Error)
+	meta := Model{ModelName: ch.Models, Status: 1}
+	require.NoError(t, DB.Create(&meta).Error)
+	t.Cleanup(func() { DB.Unscoped().Delete(&meta); DB.Where("key LIKE ?", "SkymoniChannelHealth%").Delete(&Option{}) })
+	p := ChannelHealthPool{ID: "oranexa", Provider: "oranexa", GroupID: 29, Multiplier: 0.07, Model: ch.Models, Auto: true, Channels: map[int]string{ch.Id: ChannelHealthSignature(&ch)}, ChannelAccounts: map[int]string{ch.Id: "account"}}
+	raw, err := json.Marshal(ChannelHealthConfig{Enabled: true, Pools: []ChannelHealthPool{p}})
+	require.NoError(t, err)
+	require.NoError(t, DB.Create(&Option{Key: ChannelHealthConfigKey, Value: string(raw)}).Error)
+	valid, err := ValidChannelHealthChannels(p)
+	require.NoError(t, err)
+	require.Len(t, valid, 1)
+	p.ChannelAccounts = map[int]string{ch.Id: ""}
+	_, err = ValidChannelHealthChannels(p)
+	require.Error(t, err)
+	p.ChannelAccounts[ch.Id] = "account"
+	n, err := ApplyChannelHealth(p, false)
+	require.NoError(t, err)
+	require.Equal(t, 1, n)
+	n, err = ApplyChannelHealth(p, true)
+	require.NoError(t, err)
+	require.Equal(t, 1, n)
 }
 
 func TestHealthRecentLogsUseStoredChannelColumn(t *testing.T) {
@@ -80,7 +113,7 @@ func TestHealthStarwayLowGroupOptIn(t *testing.T) {
 	t.Cleanup(func() { DB.Unscoped().Delete(&meta); DB.Where("key LIKE ?", "SkymoniChannelHealth%").Delete(&Option{}) })
 	p := ChannelHealthPool{ID: "low", Provider: "starway", GroupID: 34, Multiplier: 0.003, Model: ch.Models, Auto: true, Channels: map[int]string{ch.Id: ChannelHealthSignature(&ch)}}
 	for _, variant := range []ChannelHealthPool{
-		{Auto: true, Provider: "oranexa", GroupID: 34},
+		{Auto: true, Provider: "unapproved-provider", GroupID: 34},
 		{Auto: false, Provider: "starway", GroupID: 34},
 		{Auto: true, Provider: "starway", GroupID: 0},
 	} {

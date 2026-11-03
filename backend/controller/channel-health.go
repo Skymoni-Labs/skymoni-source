@@ -23,6 +23,26 @@ const (
 
 type healthProbeContextKey struct{}
 
+// A shared upstream pool may serve more than one published site alias.
+func channelHealthProbeModel(pool model.ChannelHealthPool, channel model.Channel) string {
+	mapping := map[string]string{}
+	if channel.ModelMapping != nil && *channel.ModelMapping != "" {
+		if json.Unmarshal([]byte(*channel.ModelMapping), &mapping) != nil {
+			return ""
+		}
+	}
+	for _, alias := range channel.GetModels() {
+		upstream := alias
+		if mapped, ok := mapping[alias]; ok {
+			upstream = mapped
+		}
+		if upstream == pool.UpstreamModel {
+			return alias
+		}
+	}
+	return ""
+}
+
 type healthProbeLimits struct {
 	MaxOutputTokens    int
 	OutputBudgetTokens int
@@ -122,22 +142,49 @@ func runChannelHealthRound() {
 			continue
 		}
 		ids := make([]int, 0, len(channels))
+		probeModels := make(map[int]string, len(channels))
+		publishedAliases := map[string]bool{}
+		probeModelsValid := true
 		for _, c := range channels {
 			ids = append(ids, c.Id)
+			alias := channelHealthProbeModel(pool, c)
+			open, checked := publishedAliases[alias]
+			if !checked && alias != "" {
+				var err error
+				open, err = model.IsModelPublished(alias)
+				if err != nil {
+					probeModelsValid = false
+					break
+				}
+				publishedAliases[alias] = open
+			}
+			if !open {
+				probeModelsValid = false
+				break
+			}
+			probeModels[c.Id] = alias
+		}
+		if !probeModelsValid {
+			state.Status = "unknown"
+			state.Action = "模型未发布或上游映射不匹配，暂停该池检测与恢复"
+			state.LastAttemptAt = now
+			_ = model.SaveChannelHealthState(pool.ID, state)
+			continue
 		}
 		logs, err := model.RecentChannelHealthLogs(ids, now-300)
 		if err != nil {
 			continue
 		} // A storage failure must not disable upstreams.
-		point, complete := collectChannelHealthSamples(&state, channels, logs, now, func(channel model.Channel) healthSample {
+		point, complete := collectChannelHealthSamples(&state, channels, logs, now, pool.ChannelAccounts, func(channel model.Channel) healthSample {
 			ctx, cancel := context.WithTimeout(context.WithValue(context.Background(), healthProbeContextKey{}, channelHealthProbeLimits(pool)), 45*time.Second)
 			defer cancel()
 			started := time.Now()
-			result := testChannel(ctx, &channel, userID, pool.Model, "", false)
+			probeModel := probeModels[channel.Id]
+			result := testChannel(ctx, &channel, userID, probeModel, "", false)
 			sample := healthSample{success: result.localErr == nil && result.newAPIError == nil, latency: time.Since(started).Milliseconds(), overBudget: result.healthBudgetExceeded}
 			if !sample.success && result.context != nil {
 				// Unknown upstream charges remain pending in the normal wallet ledger.
-				model.RecordErrorLog(result.context, userID, channel.Id, pool.Model, "线路抽样检测", "线路抽样检测失败（上游费用待核对）", 0, int(sample.latency/1000), false, result.context.GetString("group"), model.NewLogOther())
+				model.RecordErrorLog(result.context, userID, channel.Id, probeModel, "线路抽样检测", "线路抽样检测失败（上游费用待核对）", 0, int(sample.latency/1000), false, result.context.GetString("group"), model.NewLogOther())
 			}
 			return sample
 		})
@@ -180,7 +227,7 @@ type healthSample struct {
 	overBudget bool
 }
 
-func collectChannelHealthSamples(state *model.ChannelHealthState, channels []model.Channel, logs []model.Log, now int64, probe func(model.Channel) healthSample) (model.ChannelHealthPoint, bool) {
+func collectChannelHealthSamples(state *model.ChannelHealthState, channels []model.Channel, logs []model.Log, now int64, accounts map[int]string, probe func(model.Channel) healthSample) (model.ChannelHealthPoint, bool) {
 	point := model.ChannelHealthPoint{At: now}
 	state.LastAttemptAt = now
 	if len(channels) == 0 {
@@ -197,10 +244,18 @@ func collectChannelHealthSamples(state *model.ChannelHealthState, channels []mod
 		}
 	}
 	selected := map[int]bool{}
+	selectedAccounts := map[string]bool{}
+	accountOf := func(id int) string {
+		if account := accounts[id]; account != "" {
+			return account
+		}
+		return strconv.Itoa(id)
+	}
 	var latency int64
 	realCount, probeCount := 0, 0
 	add := func(channel model.Channel, sample healthSample, index int) {
 		selected[channel.Id] = true
+		selectedAccounts[accountOf(channel.Id)] = true
 		point.Count++
 		if !sample.success {
 			point.Failures++
@@ -212,6 +267,9 @@ func collectChannelHealthSamples(state *model.ChannelHealthState, channels []mod
 	for offset := 0; offset < len(channels) && point.Count < target; offset++ {
 		index := (start + offset) % len(channels)
 		channel := channels[index]
+		if selectedAccounts[accountOf(channel.Id)] {
+			continue
+		}
 		if sample, exists := recent[channel.Id]; exists {
 			add(channel, sample, index)
 			realCount++
@@ -221,7 +279,7 @@ func collectChannelHealthSamples(state *model.ChannelHealthState, channels []mod
 	for offset := 0; offset < len(channels) && point.Count < target && !state.BudgetPaused; offset++ {
 		index := (start + offset) % len(channels)
 		channel := channels[index]
-		if selected[channel.Id] {
+		if selected[channel.Id] || selectedAccounts[accountOf(channel.Id)] {
 			continue
 		}
 		sample := probe(channel)

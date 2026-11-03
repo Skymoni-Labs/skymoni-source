@@ -62,7 +62,7 @@ func TestHealthSamplesUseDistinctKeysAndPreferRealTraffic(t *testing.T) {
 		{ChannelId: 2, Type: model.LogTypeError},
 	}
 	var state model.ChannelHealthState
-	point, complete := collectChannelHealthSamples(&state, channels, logs, 1000, func(model.Channel) healthSample {
+	point, complete := collectChannelHealthSamples(&state, channels, logs, 1000, nil, func(model.Channel) healthSample {
 		t.Fatal("two real keys should require no paid probes")
 		return healthSample{}
 	})
@@ -73,7 +73,7 @@ func TestHealthSamplesUseDistinctKeysAndPreferRealTraffic(t *testing.T) {
 	require.Equal(t, int64(1000), point.LatencyMs)
 	require.Equal(t, 2, state.Cursor)
 	var probed []int
-	point, complete = collectChannelHealthSamples(&state, channels, logs[:2], 1300, func(ch model.Channel) healthSample {
+	point, complete = collectChannelHealthSamples(&state, channels, logs[:2], 1300, nil, func(ch model.Channel) healthSample {
 		probed = append(probed, ch.Id)
 		return healthSample{success: true, latency: 3000}
 	})
@@ -88,28 +88,28 @@ func TestHealthProbeRotationAndBudgetIncompleteRound(t *testing.T) {
 	channels := []model.Channel{{Id: 1}, {Id: 2}, {Id: 3}}
 	state := model.ChannelHealthState{Cursor: 2}
 	var probed []int
-	point, complete := collectChannelHealthSamples(&state, channels, nil, 1000, func(ch model.Channel) healthSample {
+	point, complete := collectChannelHealthSamples(&state, channels, nil, 1000, nil, func(ch model.Channel) healthSample {
 		probed = append(probed, ch.Id)
 		return healthSample{success: true}
 	})
 	require.True(t, complete)
 	require.Equal(t, []int{3, 1}, probed)
 	require.Equal(t, "probe", point.Source)
-	point, complete = collectChannelHealthSamples(&state, channels, nil, 1300, func(ch model.Channel) healthSample {
+	point, complete = collectChannelHealthSamples(&state, channels, nil, 1300, nil, func(ch model.Channel) healthSample {
 		return healthSample{success: true, overBudget: true}
 	})
 	require.False(t, complete) // One of the required two is never a full round.
 	require.Equal(t, 1, point.Count)
 	require.True(t, state.BudgetPaused)
 	require.Empty(t, state.History)
-	_, complete = collectChannelHealthSamples(&state, channels, nil, 1600, func(model.Channel) healthSample {
+	_, complete = collectChannelHealthSamples(&state, channels, nil, 1600, nil, func(model.Channel) healthSample {
 		t.Fatal("budget pause must prevent further paid probes")
 		return healthSample{}
 	})
 	require.False(t, complete)
 	// Paused paid probes can still recover using two distinct real requests.
 	logs := []model.Log{{ChannelId: 1, Type: model.LogTypeConsume, CompletionTokens: 1}, {ChannelId: 2, Type: model.LogTypeError}}
-	point, complete = collectChannelHealthSamples(&state, channels, logs, 1900, nil)
+	point, complete = collectChannelHealthSamples(&state, channels, logs, 1900, nil, nil)
 	require.True(t, complete)
 	require.True(t, advanceChannelHealth(&state, point))
 	enable, apply := channelHealthTransition(state)
@@ -136,4 +136,36 @@ func TestHealthPoolProbeLimitsAndMinimalRequest(t *testing.T) {
 	require.False(t, healthProbeUsageOverBudget(35, 11, limits.OutputBudgetTokens))
 	require.True(t, healthProbeUsageOverBudget(35, 17, limits.OutputBudgetTokens))
 	require.True(t, healthProbeUsageOverBudget(129, 1, limits.OutputBudgetTokens))
+}
+
+func TestHealthSharedPoolSamplesDifferentAccounts(t *testing.T) {
+	channels := []model.Channel{{Id: 1}, {Id: 2}, {Id: 3}, {Id: 4}}
+	accounts := map[int]string{1: "first", 2: "first", 3: "second", 4: "second"}
+	logs := []model.Log{{ChannelId: 1, Type: model.LogTypeConsume, CompletionTokens: 1}, {ChannelId: 2, Type: model.LogTypeError}}
+	var state model.ChannelHealthState
+	var probed []int
+	point, complete := collectChannelHealthSamples(&state, channels, logs, 1000, accounts, func(channel model.Channel) healthSample {
+		probed = append(probed, channel.Id)
+		return healthSample{success: true}
+	})
+	require.True(t, complete)
+	require.Equal(t, []int{3}, probed)
+	require.Equal(t, 2, point.Count)
+	require.Zero(t, point.Failures)
+	require.Equal(t, "mixed", point.Source)
+	probed = nil
+	_, complete = collectChannelHealthSamples(&state, channels, nil, 1300, accounts, func(channel model.Channel) healthSample {
+		probed = append(probed, channel.Id)
+		return healthSample{success: true}
+	})
+	require.True(t, complete)
+	require.Equal(t, []int{4, 1}, probed)
+}
+
+func TestHealthProbeUsesEachChannelsPublishedAlias(t *testing.T) {
+	pool := model.ChannelHealthPool{UpstreamModel: "deepseek-v4.1-flash"}
+	mapping := `{"deepseek-v4.1-flash-low":"deepseek-v4.1-flash","deepseek-v4-pro":"deepseek-v4-pro"}`
+	require.Equal(t, "deepseek-v4.1-flash-low", channelHealthProbeModel(pool, model.Channel{Models: "deepseek-v4-pro,deepseek-v4.1-flash-low", ModelMapping: &mapping}))
+	require.Equal(t, "deepseek-v4.1-flash", channelHealthProbeModel(pool, model.Channel{Models: "deepseek-v4.1-flash"}))
+	require.Empty(t, channelHealthProbeModel(pool, model.Channel{Models: "deepseek-v4-pro"}))
 }

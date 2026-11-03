@@ -32,6 +32,7 @@ type ChannelHealthPool struct {
 	ProbeMaxOutputTokens    int            `json:"probe_max_output_tokens,omitempty"`
 	ProbeOutputBudgetTokens int            `json:"probe_output_budget_tokens,omitempty"`
 	Channels                map[int]string `json:"channels"`
+	ChannelAccounts         map[int]string `json:"channel_accounts,omitempty"`
 }
 
 type ChannelHealthConfig struct {
@@ -110,6 +111,16 @@ func ReleaseChannelHealthRound(now int64) {
 }
 
 func ValidChannelHealthChannels(pool ChannelHealthPool) ([]Channel, error) {
+	if len(pool.ChannelAccounts) > 0 {
+		if len(pool.ChannelAccounts) != len(pool.Channels) {
+			return nil, errors.New("incomplete health pool account identities")
+		}
+		for id := range pool.Channels {
+			if pool.ChannelAccounts[id] == "" {
+				return nil, errors.New("missing health pool account identity")
+			}
+		}
+	}
 	ids := make([]int, 0, len(pool.Channels))
 	for id := range pool.Channels {
 		ids = append(ids, id)
@@ -133,7 +144,7 @@ func ValidChannelHealthChannels(pool ChannelHealthPool) ([]Channel, error) {
 // Change status and abilities together. Never publish model metadata, and never
 // reverse a manual disable: only rows bearing our reason may be restored.
 func ApplyChannelHealth(pool ChannelHealthPool, enable bool) (int, error) {
-	if !pool.Auto || pool.Provider != "starway" || pool.GroupID <= 0 {
+	if !pool.Auto || (pool.Provider != "starway" && pool.Provider != "oranexa") || pool.GroupID <= 0 {
 		return 0, nil
 	}
 	if enable {
@@ -239,6 +250,9 @@ func ChannelHealthLogOutcome(log Log) (success bool, counted bool) {
 	_ = json.Unmarshal([]byte(log.Other), &other)
 	stream, _ := other["stream_status"].(string)
 	if detail, ok := other["stream_status"].(map[string]any); ok {
+		if detail["end_reason"] == "client_gone" {
+			return false, false
+		}
 		stream, _ = detail["status"].(string)
 	}
 	if log.Type == LogTypeConsume {
@@ -248,7 +262,7 @@ func ChannelHealthLogOutcome(log Log) (success bool, counted bool) {
 		return false, false
 	}
 	text := strings.ToLower(log.Content)
-	for _, excluded := range []string{"context_length", "context length", "cancel", "client disconnected", "insufficient_user_quota", "model_not_available", "invalid_request", "sensitive"} {
+	for _, excluded := range []string{"context_length", "context length", "cancel", "client disconnected", "insufficient_user_quota", "model_not_available", "invalid_request", "sensitive", "内容审计", "内容审核", "风险规则"} {
 		if strings.Contains(text, excluded) {
 			return false, false
 		}

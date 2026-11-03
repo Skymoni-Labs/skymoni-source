@@ -178,7 +178,7 @@ export function ChannelStatus({ admin = false }: { admin?: boolean }) {
             </div>
             <p className='text-muted-foreground text-sm leading-6'>
               {admin
-                ? '按上游模型、分组、账号汇总。每 5 分钟抽样 2 把不同密钥，优先复用真实请求，不足时补充小请求，输出上限 8 Token，计量超限即暂停付费探测。纳入自动管理的 Starway 分组，本轮成功率达到 50%（含）即启用渠道；连续 3 轮低于 50% 才关闭，达标即清零连续低于阈值的轮数。'
+                ? '按上游模型和原生分组汇总，跨账号共享组会优先抽不同账号。每 5 分钟抽样 2 把不同密钥，优先复用真实请求，不足时补充小请求，输出上限 8 Token，计量超限即暂停付费探测。纳入自动管理的上游分组，本轮成功率达到 50%（含）即启用渠道；连续 3 轮低于 50% 才关闭，达标即清零连续低于阈值的轮数。'
                 : '展示本站已开放的 DeepSeek 模型。状态优先依据近期真实请求，缺少流量时参考线路抽样；短请求可用不代表大上下文请求稳定。'}
             </p>
             <p className='text-muted-foreground mt-2 text-xs'>
