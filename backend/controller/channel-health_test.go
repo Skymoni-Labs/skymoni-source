@@ -15,7 +15,7 @@ func TestMinimalHealthProbeCapsOverriddenRequest(t *testing.T) {
 	require.Equal(t, float64(8), body["max_tokens"])
 	require.Equal(t, false, body["stream"])
 	require.NotContains(t, body, "max_completion_tokens")
-	require.Contains(t, string(raw), "Reply 1.")
+	require.Contains(t, string(raw), "Reply with exactly OK.")
 }
 
 func TestHealthHysteresisAndBoundedHistory(t *testing.T) {
@@ -34,4 +34,10 @@ func TestHealthHysteresisAndBoundedHistory(t *testing.T) {
 	}
 	require.Len(t, state.History, 60)
 	require.Equal(t, "degraded", state.Status)
+}
+
+func TestHealthProbeUsageBudget(t *testing.T) {
+	require.False(t, healthProbeUsageOverBudget(14, 8))
+	require.True(t, healthProbeUsageOverBudget(845, 514))
+	require.True(t, healthProbeUsageOverBudget(14, 9))
 }

@@ -17,6 +17,8 @@ import (
 
 type healthProbeContextKey struct{}
 
+func healthProbeUsageOverBudget(input, output int) bool { return input > 128 || output > 8 }
+
 func minimalHealthProbeBody(raw []byte) ([]byte, error) {
 	var body map[string]any
 	if err := json.Unmarshal(raw, &body); err != nil {
@@ -24,7 +26,7 @@ func minimalHealthProbeBody(raw []byte) ([]byte, error) {
 	}
 	body["max_tokens"] = 8
 	body["stream"] = false
-	body["messages"] = []map[string]string{{"role": "user", "content": "Reply 1."}}
+	body["messages"] = []map[string]string{{"role": "user", "content": "Reply with exactly OK."}}
 	body["thinking"] = map[string]string{"type": "disabled"}
 	delete(body, "max_completion_tokens")
 	delete(body, "stream_options")
@@ -115,6 +117,11 @@ func runChannelHealthRound() {
 			point.Success = point.Failures == 0
 			point.LatencyMs = latency / int64(point.Count)
 		} else {
+			if state.BudgetPaused {
+				state.Action = "上游计量超出探测预算，已暂停付费探测；等待真实请求"
+				_ = model.SaveChannelHealthState(pool.ID, state)
+				continue
+			}
 			channel := channels[state.Cursor%len(channels)]
 			state.Cursor = (state.Cursor + 1) % len(channels)
 			ctx, cancel := context.WithTimeout(context.WithValue(context.Background(), healthProbeContextKey{}, true), 45*time.Second)
@@ -125,6 +132,7 @@ func runChannelHealthRound() {
 			point.Count = 1
 			point.LatencyMs = time.Since(started).Milliseconds()
 			point.Success = result.localErr == nil && result.newAPIError == nil
+			state.BudgetPaused = result.healthBudgetExceeded
 			if !point.Success {
 				point.Failures = 1
 				// Unknown upstream charges remain pending in the normal wallet ledger.
@@ -135,7 +143,7 @@ func runChannelHealthRound() {
 		}
 		advanceChannelHealth(&state, point)
 		state.Action = "仅抽样观察"
-		if pool.Auto {
+		if pool.Auto && !(state.BudgetPaused && point.Source == "probe") {
 			enable := state.Successes >= 3
 			if enable || state.Failures >= 2 {
 				n, err := model.ApplyChannelHealth(pool, enable)
@@ -151,6 +159,9 @@ func runChannelHealthRound() {
 			} else {
 				state.Action = "等待连续两轮失败 / 三轮成功"
 			}
+		}
+		if state.BudgetPaused {
+			state.Action = "上游计量超出探测预算，已暂停付费探测；等待真实请求"
 		}
 		if err := model.SaveChannelHealthState(pool.ID, state); err != nil {
 			common.SysError("sample channel health state save failed")

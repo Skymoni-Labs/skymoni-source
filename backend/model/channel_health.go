@@ -46,13 +46,14 @@ type ChannelHealthPoint struct {
 }
 
 type ChannelHealthState struct {
-	LastAt    int64                `json:"last_at"`
-	Cursor    int                  `json:"cursor"`
-	Successes int                  `json:"successes"`
-	Failures  int                  `json:"failures"`
-	Status    string               `json:"status"`
-	Action    string               `json:"action"`
-	History   []ChannelHealthPoint `json:"history"`
+	BudgetPaused bool                 `json:"budget_paused"`
+	LastAt       int64                `json:"last_at"`
+	Cursor       int                  `json:"cursor"`
+	Successes    int                  `json:"successes"`
+	Failures     int                  `json:"failures"`
+	Status       string               `json:"status"`
+	Action       string               `json:"action"`
+	History      []ChannelHealthPoint `json:"history"`
 }
 
 func ChannelHealthSignature(c *Channel) string {

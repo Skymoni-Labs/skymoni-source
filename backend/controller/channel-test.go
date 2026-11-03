@@ -36,9 +36,10 @@ import (
 )
 
 type testResult struct {
-	context     *gin.Context
-	localErr    error
-	newAPIError *types.NewAPIError
+	context              *gin.Context
+	localErr             error
+	newAPIError          *types.NewAPIError
+	healthBudgetExceeded bool
 }
 
 func normalizeChannelTestEndpoint(channel *model.Channel, endpointType string) string {
@@ -534,9 +535,10 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 	})
 	common.SysLog(fmt.Sprintf("testing channel #%d, response: \n%s", channel.Id, string(respBody)))
 	return testResult{
-		context:     c,
-		localErr:    nil,
-		newAPIError: nil,
+		context:              c,
+		localErr:             nil,
+		newAPIError:          nil,
+		healthBudgetExceeded: ctx.Value(healthProbeContextKey{}) == true && healthProbeUsageOverBudget(usage.PromptTokens, usage.CompletionTokens),
 	}
 }
 
