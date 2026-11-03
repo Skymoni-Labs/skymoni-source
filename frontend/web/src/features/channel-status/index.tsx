@@ -70,10 +70,13 @@ const date = (n: number) =>
 
 const sampleDescription = (p?: Point) => {
   if (!p) return '等待首轮检测'
-  if (p.source === 'real') {
-    return `真实请求 ${p.count} 笔，异常 ${p.failures} 笔`
+  const sources: Record<string, string> = {
+    real: '真实请求',
+    mixed: '真实请求＋主动抽样',
   }
-  return '轮换密钥抽样 1 次'
+  const source = sources[p.source] ?? '主动抽样'
+  const successes = p.count - p.failures
+  return `${source} · 成功 ${successes}/${p.count}（${p.count ? ((successes / p.count) * 100).toFixed(0) : 0}%）`
 }
 const modelSource = (probe: Point | undefined, last: number) => {
   if (probe) return '线路抽样参考'
@@ -173,8 +176,8 @@ export function ChannelStatus({ admin = false }: { admin?: boolean }) {
             </div>
             <p className='text-muted-foreground text-sm leading-6'>
               {admin
-                ? '按上游模型、分组、账号汇总。每 5 分钟轮换一把密钥，优先复用真实请求；无流量时请求 8 Token 输出上限，计量超限即暂停主动探测。0.3 组连续两轮失败关闭，连续三轮成功恢复为备用。'
-                  : '展示本站已开放的 DeepSeek 模型。状态优先依据近期真实请求，缺少流量时参考线路抽样；短请求可用不代表大上下文请求稳定。'}
+                ? '按上游模型、分组、账号汇总。每 5 分钟抽样 2 把不同密钥，优先复用真实请求，不足时补充小请求，输出上限 8 Token，计量超限即暂停付费探测。0.3 组本轮成功率达到 50%（含）即恢复为备用；连续 3 轮低于 50% 才关闭，达标即清零连续低于阈值的轮数。'
+                : '展示本站已开放的 DeepSeek 模型。状态优先依据近期真实请求，缺少流量时参考线路抽样；短请求可用不代表大上下文请求稳定。'}
             </p>
             <p className='text-muted-foreground mt-2 text-xs'>
               页面每 60 秒刷新 · 数据时间 {data ? date(data.server_time) : '—'}

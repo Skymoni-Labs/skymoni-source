@@ -61,6 +61,7 @@ func TestHealthRecentLogsUseStoredChannelColumn(t *testing.T) {
 	rows, err := RecentChannelHealthLogs([]int{991234}, 12000)
 	require.NoError(t, err)
 	require.Len(t, rows, 1)
+	require.Equal(t, row.ChannelId, rows[0].ChannelId)
 	rows, err = RecentChannelHealthLogs([]int{991235}, 12000)
 	require.NoError(t, err)
 	require.Empty(t, rows)

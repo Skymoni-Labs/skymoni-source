@@ -15,6 +15,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const (
+	channelHealthSampleSize    = 2
+	channelHealthFailureRounds = 3
+	channelHealthPolicyVersion = 2
+)
+
 type healthProbeContextKey struct{}
 
 func healthProbeUsageOverBudget(input, output int) bool { return input > 128 || output > 8 }
@@ -70,7 +76,12 @@ func runChannelHealthRound() {
 	}
 	for _, pool := range config.Pools {
 		state := model.ReadChannelHealthState(pool.ID)
-		if now-state.LastAt < 300 {
+		if resetChannelHealthPolicy(&state) {
+			if model.SaveChannelHealthState(pool.ID, state) != nil {
+				continue
+			}
+		}
+		if now-max(state.LastAt, state.LastAttemptAt) < 300 {
 			continue
 		}
 		channels, err := model.ValidChannelHealthChannels(pool)
@@ -92,7 +103,6 @@ func runChannelHealthRound() {
 			_ = model.SaveChannelHealthState(pool.ID, state)
 			continue
 		}
-		point := model.ChannelHealthPoint{At: now, Source: "real"}
 		ids := make([]int, 0, len(channels))
 		for _, c := range channels {
 			ids = append(ids, c.Id)
@@ -101,67 +111,42 @@ func runChannelHealthRound() {
 		if err != nil {
 			continue
 		} // A storage failure must not disable upstreams.
-		var latency int64
-		for _, log := range logs {
-			ok, count := model.ChannelHealthLogOutcome(log)
-			if !count {
-				continue
-			}
-			point.Count++
-			if !ok {
-				point.Failures++
-			}
-			latency += int64(log.UseTime) * 1000
-		}
-		if point.Count > 0 {
-			point.Success = point.Failures == 0
-			point.LatencyMs = latency / int64(point.Count)
-		} else {
-			if state.BudgetPaused {
-				state.Action = "上游计量超出探测预算，已暂停付费探测；等待真实请求"
-				_ = model.SaveChannelHealthState(pool.ID, state)
-				continue
-			}
-			channel := channels[state.Cursor%len(channels)]
-			state.Cursor = (state.Cursor + 1) % len(channels)
+		point, complete := collectChannelHealthSamples(&state, channels, logs, now, func(channel model.Channel) healthSample {
 			ctx, cancel := context.WithTimeout(context.WithValue(context.Background(), healthProbeContextKey{}, true), 45*time.Second)
+			defer cancel()
 			started := time.Now()
 			result := testChannel(ctx, &channel, userID, pool.Model, "", false)
-			cancel()
-			point.Source = "probe"
-			point.Count = 1
-			point.LatencyMs = time.Since(started).Milliseconds()
-			point.Success = result.localErr == nil && result.newAPIError == nil
-			state.BudgetPaused = result.healthBudgetExceeded
-			if !point.Success {
-				point.Failures = 1
+			sample := healthSample{success: result.localErr == nil && result.newAPIError == nil, latency: time.Since(started).Milliseconds(), overBudget: result.healthBudgetExceeded}
+			if !sample.success && result.context != nil {
 				// Unknown upstream charges remain pending in the normal wallet ledger.
-				if result.context != nil {
-					model.RecordErrorLog(result.context, userID, channel.Id, pool.Model, "线路抽样检测", "线路抽样检测失败（上游费用待核对）", 0, int(point.LatencyMs/1000), false, result.context.GetString("group"), model.NewLogOther())
-				}
+				model.RecordErrorLog(result.context, userID, channel.Id, pool.Model, "线路抽样检测", "线路抽样检测失败（上游费用待核对）", 0, int(sample.latency/1000), false, result.context.GetString("group"), model.NewLogOther())
 			}
-		}
-		advanceChannelHealth(&state, point)
-		state.Action = "仅抽样观察"
-		if pool.Auto && !(state.BudgetPaused && point.Source == "probe") {
-			enable := state.Successes >= 3
-			if enable || state.Failures >= 2 {
-				n, err := model.ApplyChannelHealth(pool, enable)
-				if err != nil {
-					state.Action = "自动启停未完成，将重试"
-				} else if n == 0 {
-					state.Action = "已完成分组判断，维持当前渠道状态（保留人工关闭）"
-				} else if enable {
-					state.Action = "连续三轮通过，恢复为备用（本轮变更 " + strconv.Itoa(n) + " 条）"
+			return sample
+		})
+		if complete && advanceChannelHealth(&state, point) {
+			state.Action = "仅抽样观察"
+			if pool.Auto {
+				enable, apply := channelHealthTransition(state)
+				if apply {
+					n, err := model.ApplyChannelHealth(pool, enable)
+					if err != nil {
+						state.Action = "自动启停未完成，将重试"
+					} else if n == 0 {
+						state.Action = "已完成分组判断，维持当前渠道状态（保留人工关闭）"
+					} else if enable {
+						state.Action = "本轮成功率达到50%，恢复为备用（本轮变更 " + strconv.Itoa(n) + " 条）"
+					} else {
+						state.Action = "连续三轮成功率低于50%，已关闭该组（本轮变更 " + strconv.Itoa(n) + " 条）"
+					}
 				} else {
-					state.Action = "连续两轮失败，已关闭该组（本轮变更 " + strconv.Itoa(n) + " 条）"
+					state.Action = "成功率低于50%：连续 " + strconv.Itoa(state.Failures) + "/3 轮，暂不关闭"
 				}
-			} else {
-				state.Action = "等待连续两轮失败 / 三轮成功"
 			}
+		} else {
+			state.Action = "有效样本不足，本轮不计入启停判断"
 		}
 		if state.BudgetPaused {
-			state.Action = "上游计量超出探测预算，已暂停付费探测；等待真实请求"
+			state.Action += "；上游计量超出预算，暂停付费探测，等待真实请求"
 		}
 		if err := model.SaveChannelHealthState(pool.ID, state); err != nil {
 			common.SysError("sample channel health state save failed")
@@ -169,24 +154,116 @@ func runChannelHealthRound() {
 	}
 }
 
-func advanceChannelHealth(state *model.ChannelHealthState, point model.ChannelHealthPoint) {
+// Each round contains at most two distinct keys. Recent real observations are
+// preferred; only missing keys incur a tiny probe. Logs arrive newest first.
+type healthSample struct {
+	success    bool
+	latency    int64
+	overBudget bool
+}
+
+func collectChannelHealthSamples(state *model.ChannelHealthState, channels []model.Channel, logs []model.Log, now int64, probe func(model.Channel) healthSample) (model.ChannelHealthPoint, bool) {
+	point := model.ChannelHealthPoint{At: now}
+	state.LastAttemptAt = now
+	if len(channels) == 0 {
+		return point, false
+	}
+	target := min(channelHealthSampleSize, len(channels))
+	recent := map[int]healthSample{}
+	for _, log := range logs {
+		if _, exists := recent[log.ChannelId]; exists {
+			continue
+		}
+		if ok, counted := model.ChannelHealthLogOutcome(log); counted {
+			recent[log.ChannelId] = healthSample{success: ok, latency: int64(log.UseTime) * 1000}
+		}
+	}
+	selected := map[int]bool{}
+	var latency int64
+	realCount, probeCount := 0, 0
+	add := func(channel model.Channel, sample healthSample, index int) {
+		selected[channel.Id] = true
+		point.Count++
+		if !sample.success {
+			point.Failures++
+		}
+		latency += sample.latency
+		state.Cursor = (index + 1) % len(channels)
+	}
+	start := ((state.Cursor % len(channels)) + len(channels)) % len(channels)
+	for offset := 0; offset < len(channels) && point.Count < target; offset++ {
+		index := (start + offset) % len(channels)
+		channel := channels[index]
+		if sample, exists := recent[channel.Id]; exists {
+			add(channel, sample, index)
+			realCount++
+		}
+	}
+	start = state.Cursor
+	for offset := 0; offset < len(channels) && point.Count < target && !state.BudgetPaused; offset++ {
+		index := (start + offset) % len(channels)
+		channel := channels[index]
+		if selected[channel.Id] {
+			continue
+		}
+		sample := probe(channel)
+		add(channel, sample, index)
+		probeCount++
+		state.BudgetPaused = sample.overBudget
+	}
+	point.Source = "real"
+	if probeCount > 0 {
+		point.Source = "probe"
+		if realCount > 0 {
+			point.Source = "mixed"
+		}
+	}
+	if point.Count > 0 {
+		point.LatencyMs = latency / int64(point.Count)
+	}
+	return point, point.Count == target
+}
+
+func resetChannelHealthPolicy(state *model.ChannelHealthState) bool {
+	if state.PolicyVersion == channelHealthPolicyVersion {
+		return false
+	}
+	state.PolicyVersion = channelHealthPolicyVersion
+	state.Successes, state.Failures = 0, 0
+	state.Action = "已切换50%规则，等待新一轮抽样"
+	return true
+}
+
+func channelHealthTransition(state model.ChannelHealthState) (enable, apply bool) {
+	return state.Successes > 0, state.Successes > 0 || state.Failures >= channelHealthFailureRounds
+}
+
+func advanceChannelHealth(state *model.ChannelHealthState, point model.ChannelHealthPoint) bool {
+	if point.Count <= 0 || point.Failures < 0 || point.Failures > point.Count {
+		return false
+	}
+	resetChannelHealthPolicy(state)
+	point.Success = (point.Count-point.Failures)*2 >= point.Count
 	state.LastAt = point.At
 	if point.Success {
 		state.Successes++
 		state.Failures = 0
-		state.Status = "available"
 	} else {
 		state.Successes = 0
 		state.Failures++
+	}
+	state.Status = "degraded"
+	if point.Failures == 0 {
+		state.Status = "available"
+	}
+	if point.Failures == point.Count {
 		state.Status = "unavailable"
-		if point.Failures < point.Count {
-			state.Status = "degraded"
-		}
 	}
 	state.History = append(state.History, point)
 	if len(state.History) > 60 {
 		state.History = state.History[len(state.History)-60:]
 	}
+	return true
 }
 
 func GetUpstreamChannelHealth(c *gin.Context) {
@@ -211,7 +288,7 @@ func GetUpstreamChannelHealth(c *gin.Context) {
 		}
 		rows = append(rows, gin.H{"id": p.ID, "provider": p.Provider, "account": p.Account, "upstream_model": p.UpstreamModel, "upstream_group": p.UpstreamGroup, "multiplier": p.Multiplier, "auto": p.Auto, "channels": len(p.Channels), "matched": len(channels), "enabled": enabled, "state": state})
 	}
-	c.JSON(http.StatusOK, gin.H{"success": true, "data": gin.H{"enabled": config.Enabled, "interval_seconds": 300, "max_output_tokens": 8, "pools": rows, "server_time": time.Now().Unix()}})
+	c.JSON(http.StatusOK, gin.H{"success": true, "data": gin.H{"enabled": config.Enabled, "interval_seconds": 300, "sample_size": channelHealthSampleSize, "enable_success_rate": 0.5, "disable_rounds": channelHealthFailureRounds, "max_output_tokens": 8, "pools": rows, "server_time": time.Now().Unix()}})
 }
 
 func GetDeepSeekChannelHealth(c *gin.Context) {
@@ -303,9 +380,10 @@ func GetDeepSeekChannelHealth(c *gin.Context) {
 				if point.At > last {
 					last = point.At
 				}
-				if point.Success {
+				if point.Count > point.Failures {
 					good = true
-				} else {
+				}
+				if point.Failures > 0 {
 					bad = true
 				}
 			}

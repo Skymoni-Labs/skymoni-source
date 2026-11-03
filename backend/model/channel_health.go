@@ -15,6 +15,7 @@ import (
 )
 
 const ChannelHealthConfigKey = "SkymoniChannelHealthConfig"
+const channelHealthLeaseSeconds = 1800 // 16 pools * 2 probes * 45 seconds, plus storage overhead.
 
 // Pool configuration contains no credentials. A signature pins the exact route
 // approved by the owner; editing a route removes it from automatic management.
@@ -46,14 +47,16 @@ type ChannelHealthPoint struct {
 }
 
 type ChannelHealthState struct {
-	BudgetPaused bool                 `json:"budget_paused"`
-	LastAt       int64                `json:"last_at"`
-	Cursor       int                  `json:"cursor"`
-	Successes    int                  `json:"successes"`
-	Failures     int                  `json:"failures"`
-	Status       string               `json:"status"`
-	Action       string               `json:"action"`
-	History      []ChannelHealthPoint `json:"history"`
+	PolicyVersion int                  `json:"policy_version"`
+	LastAttemptAt int64                `json:"last_attempt_at"`
+	BudgetPaused  bool                 `json:"budget_paused"`
+	LastAt        int64                `json:"last_at"`
+	Cursor        int                  `json:"cursor"`
+	Successes     int                  `json:"successes"`
+	Failures      int                  `json:"failures"`
+	Status        string               `json:"status"`
+	Action        string               `json:"action"`
+	History       []ChannelHealthPoint `json:"history"`
 }
 
 func ChannelHealthSignature(c *Channel) string {
@@ -97,11 +100,11 @@ func ClaimChannelHealthRound(now int64) bool {
 	if err != nil || until > now {
 		return false
 	}
-	return DB.Model(&Option{}).Where("key = ? AND value = ?", key, o.Value).Update("value", strconv.FormatInt(now+900, 10)).RowsAffected == 1
+	return DB.Model(&Option{}).Where("key = ? AND value = ?", key, o.Value).Update("value", strconv.FormatInt(now+channelHealthLeaseSeconds, 10)).RowsAffected == 1
 }
 
 func ReleaseChannelHealthRound(now int64) {
-	DB.Model(&Option{}).Where("key = ? AND value = ?", "SkymoniChannelHealthLease", strconv.FormatInt(now+900, 10)).Update("value", "0")
+	DB.Model(&Option{}).Where("key = ? AND value = ?", "SkymoniChannelHealthLease", strconv.FormatInt(now+channelHealthLeaseSeconds, 10)).Update("value", "0")
 }
 
 func ValidChannelHealthChannels(pool ChannelHealthPool) ([]Channel, error) {
@@ -218,7 +221,7 @@ func ApplyChannelHealth(pool ChannelHealthPool, enable bool) (int, error) {
 
 func RecentChannelHealthLogs(ids []int, since int64) ([]Log, error) {
 	var rows []Log
-	err := LOG_DB.Select("id", "type", "content", "other", "completion_tokens", "token_name", "use_time").Where("channel_id IN ? AND created_at > ? AND type IN ?", ids, since, []int{LogTypeConsume, LogTypeError}).Order("id DESC").Limit(500).Find(&rows).Error
+	err := LOG_DB.Select("id", "channel_id", "type", "content", "other", "completion_tokens", "token_name", "use_time").Where("channel_id IN ? AND created_at > ? AND type IN ?", ids, since, []int{LogTypeConsume, LogTypeError}).Order("id DESC").Limit(500).Find(&rows).Error
 	return rows, err
 }
 

@@ -19,21 +19,102 @@ func TestMinimalHealthProbeCapsOverriddenRequest(t *testing.T) {
 }
 
 func TestHealthHysteresisAndBoundedHistory(t *testing.T) {
-	var state model.ChannelHealthState
+	state := model.ChannelHealthState{Successes: 17, Failures: 2, BudgetPaused: true}
+	// Historical single-key streaks must not carry into the new policy.
+	require.True(t, resetChannelHealthPolicy(&state))
+	require.Zero(t, state.Failures)
+	require.Zero(t, state.Successes)
+	require.True(t, state.BudgetPaused)
 	for i := 0; i < 2; i++ {
-		advanceChannelHealth(&state, model.ChannelHealthPoint{At: int64(i + 1), Count: 1, Failures: 1})
+		advanceChannelHealth(&state, model.ChannelHealthPoint{At: int64(i + 1), Count: 2, Failures: 2})
+		_, apply := channelHealthTransition(state)
+		require.False(t, apply)
 	}
 	require.Equal(t, 2, state.Failures)
-	for i := 0; i < 3; i++ {
-		advanceChannelHealth(&state, model.ChannelHealthPoint{At: int64(i + 3), Success: true, Count: 1})
-	}
-	require.Equal(t, 3, state.Successes)
+	advanceChannelHealth(&state, model.ChannelHealthPoint{At: 3, Count: 2, Failures: 1})
+	enable, apply := channelHealthTransition(state)
+	require.True(t, enable) // Exactly half succeeds: immediate enable.
+	require.True(t, apply)
 	require.Zero(t, state.Failures)
+	require.Equal(t, "degraded", state.Status)
+	require.True(t, state.History[len(state.History)-1].Success)
+	for i := 0; i < 3; i++ {
+		advanceChannelHealth(&state, model.ChannelHealthPoint{At: int64(i + 4), Count: 2, Failures: 2})
+	}
+	enable, apply = channelHealthTransition(state)
+	require.False(t, enable)
+	require.True(t, apply)
+	require.Equal(t, 3, state.Failures)
+	require.False(t, advanceChannelHealth(&state, model.ChannelHealthPoint{At: 99}))
+	require.Equal(t, 3, state.Failures)
 	for i := 0; i < 100; i++ {
-		advanceChannelHealth(&state, model.ChannelHealthPoint{At: int64(i + 6), Count: 2, Failures: 1})
+		advanceChannelHealth(&state, model.ChannelHealthPoint{At: int64(i + 7), Count: 2, Failures: 1})
 	}
 	require.Len(t, state.History, 60)
 	require.Equal(t, "degraded", state.Status)
+}
+
+func TestHealthSamplesUseDistinctKeysAndPreferRealTraffic(t *testing.T) {
+	channels := []model.Channel{{Id: 1}, {Id: 2}, {Id: 3}}
+	logs := []model.Log{
+		{ChannelId: 1, Type: model.LogTypeConsume, CompletionTokens: 3, UseTime: 2},
+		{ChannelId: 1, Type: model.LogTypeError}, // Older duplicate does not vote again.
+		{ChannelId: 2, Type: model.LogTypeError},
+	}
+	var state model.ChannelHealthState
+	point, complete := collectChannelHealthSamples(&state, channels, logs, 1000, func(model.Channel) healthSample {
+		t.Fatal("two real keys should require no paid probes")
+		return healthSample{}
+	})
+	require.True(t, complete)
+	require.Equal(t, 2, point.Count)
+	require.Equal(t, 1, point.Failures)
+	require.Equal(t, "real", point.Source)
+	require.Equal(t, int64(1000), point.LatencyMs)
+	require.Equal(t, 2, state.Cursor)
+	var probed []int
+	point, complete = collectChannelHealthSamples(&state, channels, logs[:2], 1300, func(ch model.Channel) healthSample {
+		probed = append(probed, ch.Id)
+		return healthSample{success: true, latency: 3000}
+	})
+	require.True(t, complete)
+	require.Equal(t, []int{2}, probed)
+	require.Equal(t, "mixed", point.Source)
+	require.Equal(t, 2, point.Count)
+	require.Zero(t, point.Failures)
+}
+
+func TestHealthProbeRotationAndBudgetIncompleteRound(t *testing.T) {
+	channels := []model.Channel{{Id: 1}, {Id: 2}, {Id: 3}}
+	state := model.ChannelHealthState{Cursor: 2}
+	var probed []int
+	point, complete := collectChannelHealthSamples(&state, channels, nil, 1000, func(ch model.Channel) healthSample {
+		probed = append(probed, ch.Id)
+		return healthSample{success: true}
+	})
+	require.True(t, complete)
+	require.Equal(t, []int{3, 1}, probed)
+	require.Equal(t, "probe", point.Source)
+	point, complete = collectChannelHealthSamples(&state, channels, nil, 1300, func(ch model.Channel) healthSample {
+		return healthSample{success: true, overBudget: true}
+	})
+	require.False(t, complete) // One of the required two is never a full round.
+	require.Equal(t, 1, point.Count)
+	require.True(t, state.BudgetPaused)
+	require.Empty(t, state.History)
+	_, complete = collectChannelHealthSamples(&state, channels, nil, 1600, func(model.Channel) healthSample {
+		t.Fatal("budget pause must prevent further paid probes")
+		return healthSample{}
+	})
+	require.False(t, complete)
+	// Paused paid probes can still recover using two distinct real requests.
+	logs := []model.Log{{ChannelId: 1, Type: model.LogTypeConsume, CompletionTokens: 1}, {ChannelId: 2, Type: model.LogTypeError}}
+	point, complete = collectChannelHealthSamples(&state, channels, logs, 1900, nil)
+	require.True(t, complete)
+	require.True(t, advanceChannelHealth(&state, point))
+	enable, apply := channelHealthTransition(state)
+	require.True(t, enable)
+	require.True(t, apply)
 }
 
 func TestHealthProbeUsageBudget(t *testing.T) {
