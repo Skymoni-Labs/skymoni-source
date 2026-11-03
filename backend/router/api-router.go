@@ -42,6 +42,8 @@ func SetApiRouter(router *gin.Engine) {
 		apiRouter.PUT("/creators/community-access", middleware.RootAuth(), middleware.SessionCookieOriginGuard(), middleware.CriticalRateLimit(), controller.ManageCommunityAccess)
 		apiRouter.GET("/uptime/status", controller.GetUptimeKumaStatus)
 		apiRouter.GET("/models", middleware.UserAuth(), controller.DashboardListModels)
+		apiRouter.GET("/channel-health/models", middleware.UserAuth(), middleware.DisableCache(), controller.GetDeepSeekChannelHealth)
+		apiRouter.GET("/channel-health/upstreams", middleware.RootAuth(), middleware.DisableCache(), controller.GetUpstreamChannelHealth)
 		apiRouter.GET("/status/test", middleware.AdminAuth(), controller.TestStatus)
 		apiRouter.GET("/notice", controller.GetNotice)
 		apiRouter.GET("/user-agreement", controller.GetUserAgreement)

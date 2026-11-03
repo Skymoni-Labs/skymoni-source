@@ -60,6 +60,7 @@ import { Route as StoreIndexRouteImport } from './routes/store/index'
 import { Route as authUserResetRouteImport } from './routes/(auth)/user/reset'
 import { Route as AuthenticatedAppAuthorizeRouteImport } from './routes/_authenticated/app/authorize'
 import { Route as AuthenticatedBenefitsIndexRouteImport } from './routes/_authenticated/benefits/index'
+import { Route as AuthenticatedChannelStatusIndexRouteImport } from './routes/_authenticated/channel-status/index'
 import { Route as AuthenticatedChannelsIndexRouteImport } from './routes/_authenticated/channels/index'
 import { Route as AuthenticatedChatChatIdRouteImport } from './routes/_authenticated/chat/$chatId'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
@@ -82,6 +83,7 @@ import { Route as AuthenticatedSubscriptionsIndexRouteImport } from './routes/_a
 import { Route as AuthenticatedSystemInfoIndexRouteImport } from './routes/_authenticated/system-info/index'
 import { Route as AuthenticatedSystemSettingsIndexRouteImport } from './routes/_authenticated/system-settings/index'
 import { Route as AuthenticatedTaskPluginsIndexRouteImport } from './routes/_authenticated/task-plugins/index'
+import { Route as AuthenticatedUpstreamStatusIndexRouteImport } from './routes/_authenticated/upstream-status/index'
 import { Route as AuthenticatedUsageLogsIndexRouteImport } from './routes/_authenticated/usage-logs/index'
 import { Route as AuthenticatedUsageLogsSectionRouteImport } from './routes/_authenticated/usage-logs/$section'
 import { Route as AuthenticatedUsageLogsAuditRouteImport } from './routes/_authenticated/usage-logs/audit'
@@ -368,6 +370,12 @@ const AuthenticatedBenefitsIndexRoute =
     path: '/benefits/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedChannelStatusIndexRoute =
+  AuthenticatedChannelStatusIndexRouteImport.update({
+    id: '/channel-status/',
+    path: '/channel-status/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedChannelsIndexRoute =
   AuthenticatedChannelsIndexRouteImport.update({
     id: '/channels/',
@@ -495,6 +503,12 @@ const AuthenticatedTaskPluginsIndexRoute =
   AuthenticatedTaskPluginsIndexRouteImport.update({
     id: '/task-plugins/',
     path: '/task-plugins/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedUpstreamStatusIndexRoute =
+  AuthenticatedUpstreamStatusIndexRouteImport.update({
+    id: '/upstream-status/',
+    path: '/upstream-status/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedUsageLogsIndexRoute =
@@ -728,6 +742,7 @@ export interface FileRoutesByFullPath {
   '/creators/topics/$topicId': typeof CreatorsTopicsTopicIdRouteWithChildren
   '/creators/works/$workId': typeof CreatorsWorksWorkIdRoute
   '/benefits/': typeof AuthenticatedBenefitsIndexRoute
+  '/channel-status/': typeof AuthenticatedChannelStatusIndexRoute
   '/channels/': typeof AuthenticatedChannelsIndexRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/email-messages/': typeof AuthenticatedEmailMessagesIndexRoute
@@ -744,6 +759,7 @@ export interface FileRoutesByFullPath {
   '/system-info/': typeof AuthenticatedSystemInfoIndexRoute
   '/system-settings/': typeof AuthenticatedSystemSettingsIndexRoute
   '/task-plugins/': typeof AuthenticatedTaskPluginsIndexRoute
+  '/upstream-status/': typeof AuthenticatedUpstreamStatusIndexRoute
   '/usage-logs/': typeof AuthenticatedUsageLogsIndexRoute
   '/users/': typeof AuthenticatedUsersIndexRoute
   '/wallet/': typeof AuthenticatedWalletIndexRoute
@@ -827,6 +843,7 @@ export interface FileRoutesByTo {
   '/creators/topics/$topicId': typeof CreatorsTopicsTopicIdRouteWithChildren
   '/creators/works/$workId': typeof CreatorsWorksWorkIdRoute
   '/benefits': typeof AuthenticatedBenefitsIndexRoute
+  '/channel-status': typeof AuthenticatedChannelStatusIndexRoute
   '/channels': typeof AuthenticatedChannelsIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/email-messages': typeof AuthenticatedEmailMessagesIndexRoute
@@ -843,6 +860,7 @@ export interface FileRoutesByTo {
   '/system-info': typeof AuthenticatedSystemInfoIndexRoute
   '/system-settings': typeof AuthenticatedSystemSettingsIndexRoute
   '/task-plugins': typeof AuthenticatedTaskPluginsIndexRoute
+  '/upstream-status': typeof AuthenticatedUpstreamStatusIndexRoute
   '/usage-logs': typeof AuthenticatedUsageLogsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
   '/wallet': typeof AuthenticatedWalletIndexRoute
@@ -932,6 +950,7 @@ export interface FileRoutesById {
   '/creators/topics/$topicId': typeof CreatorsTopicsTopicIdRouteWithChildren
   '/creators/works/$workId': typeof CreatorsWorksWorkIdRoute
   '/_authenticated/benefits/': typeof AuthenticatedBenefitsIndexRoute
+  '/_authenticated/channel-status/': typeof AuthenticatedChannelStatusIndexRoute
   '/_authenticated/channels/': typeof AuthenticatedChannelsIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/email-messages/': typeof AuthenticatedEmailMessagesIndexRoute
@@ -948,6 +967,7 @@ export interface FileRoutesById {
   '/_authenticated/system-info/': typeof AuthenticatedSystemInfoIndexRoute
   '/_authenticated/system-settings/': typeof AuthenticatedSystemSettingsIndexRoute
   '/_authenticated/task-plugins/': typeof AuthenticatedTaskPluginsIndexRoute
+  '/_authenticated/upstream-status/': typeof AuthenticatedUpstreamStatusIndexRoute
   '/_authenticated/usage-logs/': typeof AuthenticatedUsageLogsIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
   '/_authenticated/wallet/': typeof AuthenticatedWalletIndexRoute
@@ -1036,6 +1056,7 @@ export interface FileRouteTypes {
     | '/creators/topics/$topicId'
     | '/creators/works/$workId'
     | '/benefits/'
+    | '/channel-status/'
     | '/channels/'
     | '/dashboard/'
     | '/email-messages/'
@@ -1052,6 +1073,7 @@ export interface FileRouteTypes {
     | '/system-info/'
     | '/system-settings/'
     | '/task-plugins/'
+    | '/upstream-status/'
     | '/usage-logs/'
     | '/users/'
     | '/wallet/'
@@ -1135,6 +1157,7 @@ export interface FileRouteTypes {
     | '/creators/topics/$topicId'
     | '/creators/works/$workId'
     | '/benefits'
+    | '/channel-status'
     | '/channels'
     | '/dashboard'
     | '/email-messages'
@@ -1151,6 +1174,7 @@ export interface FileRouteTypes {
     | '/system-info'
     | '/system-settings'
     | '/task-plugins'
+    | '/upstream-status'
     | '/usage-logs'
     | '/users'
     | '/wallet'
@@ -1239,6 +1263,7 @@ export interface FileRouteTypes {
     | '/creators/topics/$topicId'
     | '/creators/works/$workId'
     | '/_authenticated/benefits/'
+    | '/_authenticated/channel-status/'
     | '/_authenticated/channels/'
     | '/_authenticated/dashboard/'
     | '/_authenticated/email-messages/'
@@ -1255,6 +1280,7 @@ export interface FileRouteTypes {
     | '/_authenticated/system-info/'
     | '/_authenticated/system-settings/'
     | '/_authenticated/task-plugins/'
+    | '/_authenticated/upstream-status/'
     | '/_authenticated/usage-logs/'
     | '/_authenticated/users/'
     | '/_authenticated/wallet/'
@@ -1664,6 +1690,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBenefitsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/channel-status/': {
+      id: '/_authenticated/channel-status/'
+      path: '/channel-status'
+      fullPath: '/channel-status/'
+      preLoaderRoute: typeof AuthenticatedChannelStatusIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/channels/': {
       id: '/_authenticated/channels/'
       path: '/channels'
@@ -1816,6 +1849,13 @@ declare module '@tanstack/react-router' {
       path: '/task-plugins'
       fullPath: '/task-plugins/'
       preLoaderRoute: typeof AuthenticatedTaskPluginsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/upstream-status/': {
+      id: '/_authenticated/upstream-status/'
+      path: '/upstream-status'
+      fullPath: '/upstream-status/'
+      preLoaderRoute: typeof AuthenticatedUpstreamStatusIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/usage-logs/': {
@@ -2132,6 +2172,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedUsageLogsSectionRoute: typeof AuthenticatedUsageLogsSectionRoute
   AuthenticatedUsageLogsAuditRoute: typeof AuthenticatedUsageLogsAuditRoute
   AuthenticatedBenefitsIndexRoute: typeof AuthenticatedBenefitsIndexRoute
+  AuthenticatedChannelStatusIndexRoute: typeof AuthenticatedChannelStatusIndexRoute
   AuthenticatedChannelsIndexRoute: typeof AuthenticatedChannelsIndexRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedEmailMessagesIndexRoute: typeof AuthenticatedEmailMessagesIndexRoute
@@ -2147,6 +2188,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedSubscriptionsIndexRoute: typeof AuthenticatedSubscriptionsIndexRoute
   AuthenticatedSystemInfoIndexRoute: typeof AuthenticatedSystemInfoIndexRoute
   AuthenticatedTaskPluginsIndexRoute: typeof AuthenticatedTaskPluginsIndexRoute
+  AuthenticatedUpstreamStatusIndexRoute: typeof AuthenticatedUpstreamStatusIndexRoute
   AuthenticatedUsageLogsIndexRoute: typeof AuthenticatedUsageLogsIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
   AuthenticatedWalletIndexRoute: typeof AuthenticatedWalletIndexRoute
@@ -2167,6 +2209,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedUsageLogsSectionRoute: AuthenticatedUsageLogsSectionRoute,
   AuthenticatedUsageLogsAuditRoute: AuthenticatedUsageLogsAuditRoute,
   AuthenticatedBenefitsIndexRoute: AuthenticatedBenefitsIndexRoute,
+  AuthenticatedChannelStatusIndexRoute: AuthenticatedChannelStatusIndexRoute,
   AuthenticatedChannelsIndexRoute: AuthenticatedChannelsIndexRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   AuthenticatedEmailMessagesIndexRoute: AuthenticatedEmailMessagesIndexRoute,
@@ -2184,6 +2227,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSubscriptionsIndexRoute: AuthenticatedSubscriptionsIndexRoute,
   AuthenticatedSystemInfoIndexRoute: AuthenticatedSystemInfoIndexRoute,
   AuthenticatedTaskPluginsIndexRoute: AuthenticatedTaskPluginsIndexRoute,
+  AuthenticatedUpstreamStatusIndexRoute: AuthenticatedUpstreamStatusIndexRoute,
   AuthenticatedUsageLogsIndexRoute: AuthenticatedUsageLogsIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
   AuthenticatedWalletIndexRoute: AuthenticatedWalletIndexRoute,

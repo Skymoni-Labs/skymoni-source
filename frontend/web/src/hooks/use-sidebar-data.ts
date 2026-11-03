@@ -96,6 +96,11 @@ export function useSidebarData(): SidebarData {
             icon: Key,
           },
           {
+            title: '渠道状态',
+            url: '/channel-status',
+            icon: Radio,
+          },
+          {
             title: t('Usage Logs'),
             url: '/usage-logs/common',
             icon: FileText,
@@ -164,6 +169,12 @@ export function useSidebarData(): SidebarData {
             title: t('Channels'),
             url: '/channels',
             icon: Radio,
+          },
+          {
+            title: '上游渠道状态',
+            url: '/upstream-status',
+            icon: Activity,
+            requiredRole: ROLE.SUPER_ADMIN,
           },
           {
             title: t('Models'),

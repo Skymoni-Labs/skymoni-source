@@ -434,6 +434,13 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 		}
 	}
 
+	if ctx.Value(healthProbeContextKey{}) == true {
+		// Enforce the spend cap after channel parameter overrides, too.
+		jsonData, err = minimalHealthProbeBody(jsonData)
+		if err != nil {
+			return testResult{context: c, localErr: err}
+		}
+	}
 	requestBody := bytes.NewBuffer(jsonData)
 	c.Request.Body = io.NopCloser(bytes.NewBuffer(jsonData))
 	resp, err := adaptor.DoRequest(c, info, requestBody)
@@ -498,6 +505,9 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 			newAPIError: types.NewOpenAIError(bodyErr, types.ErrorCodeBadResponseBody, http.StatusInternalServerError),
 		}
 	}
+	if ctx.Value(healthProbeContextKey{}) == true && strings.TrimSpace(gjson.GetBytes(respBody, "choices.0.message.content").String()) == "" {
+		return testResult{context: c, localErr: errors.New("health probe returned empty content")}
+	}
 	info.SetEstimatePromptTokens(usage.PromptTokens)
 
 	quota, tieredResult := settleTestQuota(info, priceData, usage)
@@ -505,14 +515,18 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 	milliseconds := tok.Sub(tik).Milliseconds()
 	consumedTime := float64(milliseconds) / 1000.0
 	other := buildTestLogOther(c, info, priceData, usage, tieredResult)
+	testLabel := "模型测试"
+	if ctx.Value(healthProbeContextKey{}) == true {
+		testLabel = "线路抽样检测"
+	}
 	model.RecordConsumeLog(c, testUserID, model.RecordConsumeLogParams{
 		ChannelId:        channel.Id,
 		PromptTokens:     usage.PromptTokens,
 		CompletionTokens: usage.CompletionTokens,
 		ModelName:        info.OriginModelName,
-		TokenName:        "模型测试",
+		TokenName:        testLabel,
 		Quota:            quota,
-		Content:          "模型测试",
+		Content:          testLabel,
 		UseTimeSeconds:   int(consumedTime),
 		IsStream:         info.IsStream,
 		Group:            info.UsingGroup,
