@@ -38,7 +38,8 @@ For commercial licensing, please contact support@quantumnous.com
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { getBusinessGroupLabel } from '@/lib/business-group-display'
+import { usePricingGroupLabel } from '@/features/pricing/hooks/use-pricing-group-label'
+import { usePricingGroupSelection } from '@/features/pricing/hooks/use-pricing-group-selection'
 import { handleServerError } from '@/lib/handle-server-error'
 import { requireServerSuccess } from '@/lib/server-error-message'
 
@@ -69,6 +70,8 @@ export function usePlaygroundOptions({
   updateConfig,
 }: UsePlaygroundOptionsParams) {
   const { t } = useTranslation()
+  const groupLabel = usePricingGroupLabel()
+  const groupSelection = usePricingGroupSelection()
 
   const {
     data: modelsData,
@@ -127,19 +130,31 @@ export function usePlaygroundOptions({
   useEffect(() => {
     if (!groupsData) return
 
+    const visibleGroups = groupSelection
+      ? groupSelection.flatMap((value) =>
+          groupsData.filter((group) => group.value === value)
+        )
+      : groupsData
     setGroups(
-      groupsData.map((group) => ({
+      visibleGroups.map((group) => ({
         ...group,
-        label: getBusinessGroupLabel(group.value, t),
+        label: groupLabel(group.value),
         desc: group.desc === group.value ? undefined : group.desc,
       }))
     )
-    const fallback = getGroupFallback(groupsData, currentGroup)
+    const fallback = getGroupFallback(visibleGroups, currentGroup)
 
     if (fallback) {
       updateConfig('group', fallback)
     }
-  }, [groupsData, currentGroup, setGroups, updateConfig, t])
+  }, [
+    groupsData,
+    currentGroup,
+    setGroups,
+    updateConfig,
+    groupLabel,
+    groupSelection,
+  ])
 
   return {
     isLoadingModels,

@@ -27,8 +27,95 @@ import { api } from '@/lib/api'
 
 import { usePlaygroundOptions } from '../use-playground-options'
 
+const statusMock = vi.hoisted(() => ({
+  value: null as Record<string, unknown> | null,
+}))
+
+vi.mock('@/hooks/use-status', () => ({
+  useStatus: () => ({ status: statusMock.value, loading: false, error: null }),
+}))
+
 afterEach(() => {
+  statusMock.value = null
   vi.restoreAllMocks()
+})
+
+it('orders public groups, applies their labels and retains the default selection', async () => {
+  const selection = [
+    'default',
+    'per-request',
+    'moni-gpt-017',
+    '015gpt',
+    'deepseek',
+    '025兜底ds',
+    'Anthropic',
+    'Google',
+    'Grok',
+    'typesafe',
+  ]
+  const labels = {
+    'per-request': '按次gpt',
+    deepseek: 'DeepSeek',
+    typesafe: 'TypeSafe',
+  }
+  statusMock.value = {
+    pricing_visible_groups: JSON.stringify(selection),
+    pricing_group_labels: JSON.stringify(labels),
+  }
+  const data = Object.fromEntries(
+    [...[...selection].reverse(), 'selfhosted', '低价区', '025兜底'].map(
+      (name) => [name, { desc: name, ratio: 1 }]
+    )
+  )
+  vi.spyOn(api, 'get').mockImplementation(async (url) => ({
+    data: { success: true, data: url.includes('/groups') ? data : [] },
+  }))
+  const i18n = createInstance()
+  await i18n.use(initReactI18next).init({
+    lng: 'zhCN',
+    resources: { zhCN: { translation: { Default: '默认' } } },
+  })
+  const client = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  })
+  const setGroups = vi.fn()
+  const updateConfig = vi.fn()
+  function wrapper(props: { children: ReactNode }) {
+    return (
+      <QueryClientProvider client={client}>
+        <I18nextProvider i18n={i18n}>{props.children}</I18nextProvider>
+      </QueryClientProvider>
+    )
+  }
+  renderHook(
+    () =>
+      usePlaygroundOptions({
+        currentGroup: 'default',
+        currentModel: '',
+        setGroups,
+        setModels: vi.fn(),
+        updateConfig,
+      }),
+    { wrapper }
+  )
+  await waitFor(() => expect(setGroups).toHaveBeenCalled())
+  const groups = setGroups.mock.lastCall?.[0]
+  expect(groups.map((group: { value: string }) => group.value)).toEqual(
+    selection
+  )
+  expect(groups.map((group: { label: string }) => group.label)).toEqual([
+    '默认',
+    '按次gpt',
+    'GPT · 0.17×',
+    '015gpt',
+    'DeepSeek',
+    '025兜底ds',
+    'Anthropic',
+    'Google',
+    'Grok',
+    'TypeSafe',
+  ])
+  expect(updateConfig).not.toHaveBeenCalledWith('group', expect.anything())
 })
 
 it('shows the four public group labels while selecting the raw default key', async () => {

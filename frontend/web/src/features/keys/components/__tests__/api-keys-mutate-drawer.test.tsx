@@ -165,14 +165,17 @@ function installApiFixtures(
   }
 }
 
-async function renderDrawer(currentRow?: ApiKey): Promise<void> {
+async function renderDrawer(
+  currentRow?: ApiKey,
+  status: Record<string, unknown> = {}
+): Promise<void> {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
   })
   const freshAt = Date.now() + 60_000
   queryClient.setQueryData(
     ['status'],
-    { default_use_auto_group: true },
+    { default_use_auto_group: true, ...status },
     { updatedAt: freshAt }
   )
   queryClient.setQueryData(
@@ -305,6 +308,31 @@ afterEach(async () => {
 })
 
 describe('API keys mutate drawer Auto group integration', () => {
+  test('new keys show only the configured public group selection', async () => {
+    installApiFixtures([])
+    await renderDrawer(undefined, {
+      pricing_visible_groups: JSON.stringify(['default', 'per-request']),
+      pricing_group_labels: JSON.stringify({ 'per-request': '按次gpt' }),
+    })
+    fireEvent.click(getControlByLabel('API model group'))
+    const options = [...document.querySelectorAll('[data-slot="command-item"]')]
+    expect(options).toHaveLength(2)
+    expect(options[1].textContent).toContain('按次gpt')
+  })
+
+  test('editing a legacy key retains its hidden group when saving', async () => {
+    const updates: Array<Record<string, unknown>> = []
+    installApiFixtures([], updates)
+    await renderDrawer(existingKey, {
+      pricing_visible_groups: JSON.stringify(['default', 'per-request']),
+    })
+    expect(getControlByLabel('API model group').textContent).toContain('Jev')
+    await waitFor(() => expect(findButton('Save changes', true)).toBeEnabled())
+    fireEvent.click(findButton('Save changes', true))
+    await waitFor(() => expect(updates).toHaveLength(1))
+    expect(updates[0]).toMatchObject({ group: 'typesafe' })
+  })
+
   test('reordering the same Auto groups preserves existing model restrictions', async () => {
     const updates: Array<Record<string, unknown>> = []
     installApiFixtures([], updates)
