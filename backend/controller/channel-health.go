@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/QuantumNous/new-api/common"
@@ -40,22 +41,31 @@ func channelHealthInterval(pool model.ChannelHealthPool, state model.ChannelHeal
 
 // A shared upstream pool may serve more than one published site alias.
 func channelHealthProbeModel(pool model.ChannelHealthPool, channel model.Channel) string {
+	aliases := channelHealthProbeModels(pool, channel)
+	if len(aliases) > 0 {
+		return aliases[0]
+	}
+	return ""
+}
+
+func channelHealthProbeModels(pool model.ChannelHealthPool, channel model.Channel) []string {
 	mapping := map[string]string{}
 	if channel.ModelMapping != nil && *channel.ModelMapping != "" {
 		if json.Unmarshal([]byte(*channel.ModelMapping), &mapping) != nil {
-			return ""
+			return nil
 		}
 	}
+	aliases := []string{}
 	for _, alias := range channel.GetModels() {
 		upstream := alias
 		if mapped, ok := mapping[alias]; ok {
 			upstream = mapped
 		}
 		if upstream == pool.UpstreamModel {
-			return alias
+			aliases = append(aliases, alias)
 		}
 	}
-	return ""
+	return aliases
 }
 
 type healthProbeLimits struct {
@@ -90,6 +100,12 @@ func minimalHealthProbeBody(raw []byte, maxTokens int) ([]byte, error) {
 	body["thinking"] = map[string]string{"type": "disabled"}
 	delete(body, "max_completion_tokens")
 	delete(body, "stream_options")
+	if name, _ := body["model"].(string); strings.HasPrefix(name, "gpt-6") {
+		body["max_completion_tokens"] = maxTokens
+		body["reasoning_effort"] = "low"
+		delete(body, "max_tokens")
+		delete(body, "thinking")
+	}
 	return json.Marshal(body)
 }
 
@@ -192,6 +208,7 @@ func runChannelHealthRound() {
 		if err != nil {
 			continue
 		} // A storage failure must not disable upstreams.
+		logs = channelHealthModelLogs(pool, channels, logs)
 		budgetDeferred := false
 		point, complete := collectChannelHealthSamples(&state, channels, logs, now, pool.ChannelAccounts, func(channel model.Channel) healthSample {
 			reserved, err := model.ReserveHealthProbe(time.Now().Unix())
@@ -234,7 +251,11 @@ func runChannelHealthRound() {
 			state.Action = "有效样本不足，本轮不计入启停判断"
 		}
 		if state.BudgetPaused {
-			state.Action += "；上游计量超出预算，暂停付费探测，等待真实请求"
+			if state.PauseReason == "owner_real_traffic_only" {
+				state.Action += "；按用户设置，仅复用真实请求"
+			} else {
+				state.Action += "；上游计量超出预算，暂停付费探测，等待真实请求"
+			}
 		}
 		if budgetDeferred {
 			state.Action = "主动检测预算暂不可用，继续复用真实请求，次日自动恢复日预算"
@@ -243,6 +264,23 @@ func runChannelHealthRound() {
 			common.SysError("sample channel health state save failed")
 		}
 	}
+}
+
+func channelHealthModelLogs(pool model.ChannelHealthPool, channels []model.Channel, logs []model.Log) []model.Log {
+	aliases := map[int]map[string]bool{}
+	for _, channel := range channels {
+		aliases[channel.Id] = map[string]bool{}
+		for _, name := range channelHealthProbeModels(pool, channel) {
+			aliases[channel.Id][name] = true
+		}
+	}
+	filtered := make([]model.Log, 0, len(logs))
+	for _, log := range logs {
+		if aliases[log.ChannelId][log.ModelName] {
+			filtered = append(filtered, log)
+		}
+	}
+	return filtered
 }
 
 // Each round contains at most two distinct keys. Recent real observations are

@@ -175,12 +175,12 @@ export function ChannelStatus({ admin = false }: { admin?: boolean }) {
           <div className='bg-card rounded-xl border p-5'>
             <div className='mb-2 flex items-center gap-2 font-medium'>
               <Activity className='size-4' />
-              {admin ? '分组抽样检测' : 'DeepSeek 模型运行状态'}
+              {admin ? '分组抽样检测' : 'DeepSeek 与 015gpt 模型运行状态'}
             </div>
             <p className='text-muted-foreground text-sm leading-6'>
               {admin
-                ? '按上游模型和原生分组汇总，每轮抽样 2 把不同密钥，跨账号共享组优先抽不同账号。优先复用真实请求，正常间隔 30 分钟，异常确认间隔 5 分钟，关闭后按 15、30、60 分钟退避。主动请求使用 hello 短对话，默认输出上限 1 Token。成功率达到 50%（含）启用，连续 3 轮低于 50% 关闭，达标清零。'
-                : '优先复用近期真实请求，缺少流量时为每个模型随机抽取 1 条启用渠道，用 hello 短对话检测，输出上限 1 Token。正常间隔 30 分钟，异常确认间隔 5 分钟。两个检测页面共用每日 300 次主动请求上限，计量超限会暂停付费检测。'}
+                ? '按上游模型和原生分组汇总，每轮最多观察 2 把不同密钥，跨账号共享组优先不同账号。015gpt 仅复用真实请求，主动付费探测已暂停。正常间隔 30 分钟，异常确认间隔 5 分钟，关闭后按 15、30、60 分钟退避。成功率达到 50%（含）启用，连续 3 轮低于 50% 关闭。共用同一批密钥的模型全部恢复后联合启用，样本不足时保持当前状态。'
+                : '015gpt 仅复用近期真实请求，主动付费探测已暂停。DeepSeek 优先复用真实请求，缺少流量时随机抽取 1 条启用渠道，用 hello 短对话检测，输出上限 1 Token。正常间隔 30 分钟，异常确认间隔 5 分钟。两个检测页面共用每日 300 次主动请求上限，计量超限会暂停付费检测。'}
             </p>
             <p className='text-muted-foreground mt-2 text-xs'>
               页面每 60 秒刷新 · 数据时间 {data ? date(data.server_time) : '—'}
@@ -313,7 +313,7 @@ export function ChannelStatus({ admin = false }: { admin?: boolean }) {
                     }
                   }
                   if (m.probe_paused) {
-                    sourceText = '计量超出预算，已暂停付费检测'
+                    sourceText = '主动付费检测已暂停，等待真实请求'
                   }
                   return (
                     <article
@@ -323,14 +323,16 @@ export function ChannelStatus({ admin = false }: { admin?: boolean }) {
                       <div className='flex items-start justify-between gap-3'>
                         <div className='flex min-w-0 items-center gap-3'>
                           <div className='flex size-10 shrink-0 items-center justify-center rounded-full bg-teal-500/10 text-sm font-bold text-teal-600'>
-                            DS
+                            {m.model.startsWith('gpt-') ? 'GPT' : 'DS'}
                           </div>
                           <div className='min-w-0'>
                             <h2 className='text-sm font-semibold break-all'>
                               {m.model}
                             </h2>
                             <p className='text-muted-foreground mt-1 text-xs'>
-                              DeepSeek
+                              {m.model.startsWith('gpt-')
+                                ? '015gpt'
+                                : 'DeepSeek'}
                             </p>
                           </div>
                         </div>
@@ -381,7 +383,7 @@ export function ChannelStatus({ admin = false }: { admin?: boolean }) {
               </div>
               {data && !data.models?.length && (
                 <p className='text-muted-foreground p-6 text-sm'>
-                  暂无已开放的 DeepSeek 模型。
+                  暂无已开放的监测模型。
                 </p>
               )}
             </>

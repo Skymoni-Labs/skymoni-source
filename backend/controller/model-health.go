@@ -2,6 +2,7 @@ package controller
 
 import (
 	"context"
+	"slices"
 	"sort"
 	"strings"
 	"sync"
@@ -30,8 +31,9 @@ func publishedDeepSeekHealthModels() ([]string, error) {
 		return nil, err
 	}
 	names := make([]string, 0)
+	gptModels, _ := model.RoutingModelGroupModels("015gpt")
 	for _, item := range metadata {
-		if !strings.Contains(strings.ToLower(item.ModelName), "deepseek") {
+		if !strings.Contains(strings.ToLower(item.ModelName), "deepseek") && !slices.Contains(gptModels, item.ModelName) {
 			continue
 		}
 		published, err := model.IsModelPublished(item.ModelName)
@@ -147,7 +149,11 @@ func runModelHealthProbe(name string, state model.ChannelHealthState, userID int
 		_ = model.SaveModelHealthState(name, state)
 		return
 	}
-	limits := healthProbeLimits{MaxOutputTokens: 1, OutputBudgetTokens: 8, LogLabel: "模型状态检测"}
+	limits := channelHealthProbeLimits(model.ChannelHealthPool{})
+	limits.LogLabel = "模型状态检测"
+	if strings.HasPrefix(name, "gpt-6") {
+		limits.OutputBudgetTokens = 16
+	}
 	ctx, cancel := context.WithTimeout(context.WithValue(context.Background(), healthProbeContextKey{}, limits), 45*time.Second)
 	defer cancel()
 	started := time.Now()

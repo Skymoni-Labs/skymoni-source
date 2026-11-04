@@ -138,6 +138,48 @@ func TestHealthPoolProbeLimitsAndMinimalRequest(t *testing.T) {
 	require.True(t, healthProbeUsageOverBudget(129, 1, limits.OutputBudgetTokens))
 }
 
+func TestGPTHealthProbeUsesSupportedCapsAndBoundedUsage(t *testing.T) {
+	limits := channelHealthProbeLimits(model.ChannelHealthPool{ProbeOutputBudgetTokens: 16})
+	require.True(t, healthProbeUsageOverBudget(22424, 13, limits.OutputBudgetTokens))
+	for _, name := range []string{"gpt-6-astra", "gpt-6.1-sol"} {
+		raw, err := minimalHealthProbeBody([]byte(`{"model":"`+name+`","max_tokens":1000,"thinking":{"type":"enabled"},"reasoning_effort":"high"}`), 1)
+		require.NoError(t, err)
+		var body map[string]any
+		require.NoError(t, json.Unmarshal(raw, &body))
+		require.Equal(t, float64(1), body["max_completion_tokens"])
+		require.Equal(t, "low", body["reasoning_effort"])
+		require.NotContains(t, body, "max_tokens")
+		require.NotContains(t, body, "thinking")
+	}
+}
+
+func TestHealthRealLogsStayWithinTheirUpstreamModel(t *testing.T) {
+	mapping := `{"astra":"gpt-6-astra","astra-legacy":"gpt-6-astra","sol":"gpt-6.1-sol"}`
+	channels := []model.Channel{{Id: 1, Models: "astra,astra-legacy,sol", ModelMapping: &mapping}}
+	logs := []model.Log{{Id: 1, ChannelId: 1, ModelName: "sol"}, {Id: 2, ChannelId: 1, ModelName: "astra"}, {Id: 3, ChannelId: 1, ModelName: "astra-legacy"}}
+	filtered := channelHealthModelLogs(model.ChannelHealthPool{UpstreamModel: "gpt-6-astra"}, channels, logs)
+	require.Len(t, filtered, 2)
+	require.Equal(t, 2, filtered[0].Id)
+	require.Equal(t, 3, filtered[1].Id)
+}
+
+func TestGPTRealTrafficOnlyNeverAddsPaidSamples(t *testing.T) {
+	state := model.ChannelHealthState{BudgetPaused: true, PauseReason: "owner_real_traffic_only"}
+	require.True(t, resetChannelHealthPolicy(&state))
+	require.True(t, state.BudgetPaused)
+	require.Equal(t, "owner_real_traffic_only", state.PauseReason)
+	channels := []model.Channel{{Id: 1}, {Id: 2}}
+	probe := func(model.Channel) healthSample { t.Fatal("owner paused paid probing"); return healthSample{} }
+	_, complete := collectChannelHealthSamples(&state, channels, nil, 1000, nil, probe)
+	require.False(t, complete)
+	logs := []model.Log{{ChannelId: 1, Type: model.LogTypeConsume, CompletionTokens: 1}, {ChannelId: 2, Type: model.LogTypeConsume, CompletionTokens: 1}}
+	point, complete := collectChannelHealthSamples(&state, channels, logs, 1300, nil, probe)
+	require.True(t, complete)
+	require.True(t, advanceChannelHealth(&state, point))
+	require.True(t, state.BudgetPaused)
+	require.False(t, modelHealthDue(state, 10000))
+}
+
 func TestHealthSharedPoolSamplesDifferentAccounts(t *testing.T) {
 	channels := []model.Channel{{Id: 1}, {Id: 2}, {Id: 3}, {Id: 4}}
 	accounts := map[int]string{1: "first", 2: "first", 3: "second", 4: "second"}

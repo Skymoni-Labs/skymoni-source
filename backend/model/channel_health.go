@@ -53,6 +53,7 @@ type ChannelHealthState struct {
 	PolicyVersion int                  `json:"policy_version"`
 	LastAttemptAt int64                `json:"last_attempt_at"`
 	BudgetPaused  bool                 `json:"budget_paused"`
+	PauseReason   string               `json:"pause_reason,omitempty"`
 	LastAt        int64                `json:"last_at"`
 	Cursor        int                  `json:"cursor"`
 	Successes     int                  `json:"successes"`
@@ -200,7 +201,11 @@ func ApplyChannelHealth(pool ChannelHealthPool, enable bool) (int, error) {
 			reason := "sample-health:" + pool.ID
 			status := common.ChannelStatusManuallyDisabled
 			if enable {
-				if c.Status != common.ChannelStatusManuallyDisabled || c.GetOtherInfo()["status_reason"] != reason {
+				owned, ready, err := sharedChannelHealthRecovery(tx, config, pool, c, signature)
+				if err != nil {
+					return err
+				}
+				if c.Status != common.ChannelStatusManuallyDisabled || !owned || !ready {
 					continue
 				}
 				status = 1
@@ -245,9 +250,36 @@ func ApplyChannelHealth(pool ChannelHealthPool, enable bool) (int, error) {
 	return changed, err
 }
 
+// A key can serve multiple monitored models. Every overlapping model pool must
+// recover before another pool can reopen the same upstream key.
+func sharedChannelHealthRecovery(tx *gorm.DB, config ChannelHealthConfig, pool ChannelHealthPool, channel Channel, signature string) (bool, bool, error) {
+	owned := channel.GetOtherInfo()["status_reason"] == "sample-health:"+pool.ID
+	ready := true
+	for _, peer := range config.Pools {
+		if peer.ID == pool.ID || !peer.Auto || peer.Provider != pool.Provider || peer.Account != pool.Account || peer.GroupID != pool.GroupID || peer.Channels[channel.Id] != signature {
+			continue
+		}
+		owned = owned || channel.GetOtherInfo()["status_reason"] == "sample-health:"+peer.ID
+		var option Option
+		err := tx.Where("key = ?", "SkymoniChannelHealthState:"+peer.ID).First(&option).Error
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			ready = false
+			continue
+		}
+		if err != nil {
+			return false, false, err
+		}
+		var state ChannelHealthState
+		if json.Unmarshal([]byte(option.Value), &state) != nil || state.Successes == 0 || state.Failures != 0 || state.LastAt == 0 || time.Now().Unix()-state.LastAt > 5400 {
+			ready = false
+		}
+	}
+	return owned, ready, nil
+}
+
 func RecentChannelHealthLogs(ids []int, since int64) ([]Log, error) {
 	var rows []Log
-	err := LOG_DB.Select("id", "channel_id", "type", "content", "other", "completion_tokens", "token_name", "use_time").Where("channel_id IN ? AND created_at > ? AND type IN ?", ids, since, []int{LogTypeConsume, LogTypeError}).Order("id DESC").Limit(500).Find(&rows).Error
+	err := LOG_DB.Select("id", "channel_id", "model_name", "type", "content", "other", "completion_tokens", "token_name", "use_time").Where("channel_id IN ? AND created_at > ? AND type IN ?", ids, since, []int{LogTypeConsume, LogTypeError}).Order("id DESC").Limit(500).Find(&rows).Error
 	return rows, err
 }
 

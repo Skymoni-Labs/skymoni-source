@@ -4,7 +4,51 @@ import (
 	"encoding/json"
 	"github.com/stretchr/testify/require"
 	"testing"
+	"time"
 )
+
+func TestHealthSharedModelPoolsRecoverTogether(t *testing.T) {
+	setupChannelStatusTest(t)
+	require.NoError(t, DB.AutoMigrate(&Option{}, &Model{}, &AuditLog{}))
+	require.NoError(t, DB.Where("key LIKE ?", "SkymoniChannelHealth%").Delete(&Option{}).Error)
+	t.Cleanup(func() { DB.Where("key LIKE ?", "SkymoniChannelHealth%").Delete(&Option{}) })
+	ch := Channel{Name: "shared-gpt", Key: "private", Models: "health-astra,health-sol", Group: "default", Status: 1}
+	require.NoError(t, DB.Create(&ch).Error)
+	for _, name := range []string{"health-astra", "health-sol"} {
+		require.NoError(t, DB.Create(&Model{ModelName: name, Status: 1}).Error)
+		require.NoError(t, DB.Create(&Ability{ChannelId: ch.Id, Model: name, Group: "default", Enabled: true}).Error)
+	}
+	t.Cleanup(func() {
+		DB.Unscoped().Where("model_name IN ?", []string{"health-astra", "health-sol"}).Delete(&Model{})
+	})
+	astra := ChannelHealthPool{ID: "shared-astra", Provider: "oranexa", Account: "shared", GroupID: 28, Model: "health-astra", Auto: true, Channels: map[int]string{ch.Id: ChannelHealthSignature(&ch)}}
+	sol := astra
+	sol.ID, sol.Model = "shared-sol", "health-sol"
+	raw, err := json.Marshal(ChannelHealthConfig{Enabled: true, Pools: []ChannelHealthPool{astra, sol}})
+	require.NoError(t, err)
+	require.NoError(t, DB.Create(&Option{Key: ChannelHealthConfigKey, Value: string(raw)}).Error)
+	n, err := ApplyChannelHealth(astra, false)
+	require.NoError(t, err)
+	require.Equal(t, 1, n)
+	n, err = ApplyChannelHealth(sol, true)
+	require.NoError(t, err)
+	require.Zero(t, n, "an unobserved peer cannot reopen shared keys")
+	require.NoError(t, SaveChannelHealthState(astra.ID, ChannelHealthState{Failures: 3, LastAt: time.Now().Unix()}))
+	n, err = ApplyChannelHealth(sol, true)
+	require.NoError(t, err)
+	require.Zero(t, n, "another model's failures retain the shared-key shutdown")
+	require.NoError(t, SaveChannelHealthState(astra.ID, ChannelHealthState{Successes: 1, LastAt: time.Now().Unix()}))
+	n, err = ApplyChannelHealth(sol, true)
+	require.NoError(t, err)
+	require.Equal(t, 1, n, "the recovered model can restore a peer-owned shutdown")
+	var restored Channel
+	require.NoError(t, DB.First(&restored, ch.Id).Error)
+	require.Equal(t, 1, restored.Status)
+	require.NoError(t, DB.Model(&Channel{}).Where("id = ?", ch.Id).Updates(map[string]any{"status": 2, "other_info": `{"status_reason":"manual operation"}`}).Error)
+	n, err = ApplyChannelHealth(sol, true)
+	require.NoError(t, err)
+	require.Zero(t, n, "manual shutdown stays protected")
+}
 
 func TestHealthAutomaticRestoreProtectsManualAndChangedRoutes(t *testing.T) {
 	setupChannelStatusTest(t)
