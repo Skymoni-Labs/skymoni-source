@@ -27,6 +27,7 @@ function mount(options = {}) {
   Object.defineProperty(window, 'innerHeight', { value: 844 })
   Object.defineProperty(window.document.documentElement, 'clientWidth', {
     value: options.mobile ? 375 : 1265,
+    configurable: true,
   })
   window.matchMedia = (media) => {
     const query = new window.EventTarget()
@@ -215,6 +216,113 @@ test('loading the entry twice mounts one companion and one click counter', () =>
       app.get('character-button').click()
     }
     assert.equal(app.get('reward-panel').hidden, true)
+  } finally {
+    app.dom.window.close()
+  }
+})
+
+function dragRestore(app, pointerType, destination, endEvent = 'pointerup') {
+  const button = app.get('restore-companion')
+  button.getBoundingClientRect = () => ({
+    left: Number.parseFloat(button.style.left) || 200,
+    top: Number.parseFloat(button.style.top) || 600,
+    width: 48,
+    height: 48,
+  })
+  for (const [name, point] of [
+    ['pointerdown', [220, 620]],
+    ['pointermove', destination],
+    [endEvent, destination],
+  ]) {
+    const event = new app.window.MouseEvent(name, {
+      bubbles: true,
+      composed: true,
+      clientX: point[0],
+      clientY: point[1],
+      button: 0,
+    })
+    Object.defineProperties(event, {
+      pointerId: { value: 2 },
+      isPrimary: { value: true },
+      pointerType: { value: pointerType },
+    })
+    button.dispatchEvent(event)
+  }
+}
+
+test('mouse and touch can move the restore entry without opening the mascot or counting a reward click', async () => {
+  for (const pointerType of ['mouse', 'touch']) {
+    const app = mount({ mobile: pointerType === 'touch' })
+    let saved
+    try {
+      assert.equal(app.get('companion-close'), null)
+      app
+        .get('character-button')
+        .dispatchEvent(
+          new app.window.KeyboardEvent('keydown', { key: 'Escape' })
+        )
+      assert.equal(app.get('restore-companion').hidden, false)
+      dragRestore(app, pointerType, [120, 320])
+      app.get('restore-companion').click()
+      assert.equal(app.get('companion').hidden, true)
+      assert.equal(app.get('restore-companion').style.left, '100px')
+      assert.equal(app.get('restore-companion').style.top, '300px')
+      const layout = pointerType === 'touch' ? 'mobile' : 'desktop'
+      saved = app.window.localStorage.getItem(
+        `skymoni:cloud-companion:${layout}:v1`
+      )
+      assert.deepEqual(JSON.parse(saved).restorePosition, {
+        left: 100,
+        top: 300,
+      })
+      await new Promise((resolve) => app.window.setTimeout(resolve, 0))
+      app.get('restore-companion').click()
+      assert.equal(app.get('companion').hidden, false)
+      for (let click = 0; click < 4; click += 1) {
+        app.get('character-button').click()
+      }
+      assert.equal(app.get('reward-panel').hidden, true)
+    } finally {
+      app.dom.window.close()
+    }
+    const layout = pointerType === 'touch' ? 'mobile' : 'desktop'
+    const restored = mount({
+      mobile: pointerType === 'touch',
+      saved: { [`skymoni:cloud-companion:${layout}:v1`]: saved },
+    })
+    try {
+      restored
+        .get('character-button')
+        .dispatchEvent(
+          new restored.window.KeyboardEvent('keydown', { key: 'Escape' })
+        )
+      assert.equal(restored.get('restore-companion').style.left, '100px')
+      assert.equal(restored.get('restore-companion').style.top, '300px')
+    } finally {
+      restored.dom.window.close()
+    }
+  }
+})
+
+test('compact entry movement remains within the viewport after cancellation and resize', () => {
+  const app = mount({ mobile: true })
+  try {
+    app.get('compact-button').click()
+    dragRestore(app, 'touch', [900, -500], 'pointercancel')
+    assert.equal(app.get('companion').hidden, true)
+    assert.equal(app.get('restore-companion').style.left, '315px')
+    assert.equal(app.get('restore-companion').style.top, '12px')
+    Object.defineProperty(app.window.document.documentElement, 'clientWidth', {
+      value: 280,
+    })
+    app.window.dispatchEvent(new app.window.Event('resize'))
+    assert.equal(app.get('restore-companion').style.left, '220px')
+    app
+      .get('restore-companion')
+      .dispatchEvent(
+        new app.window.KeyboardEvent('keydown', { key: 'ArrowDown' })
+      )
+    assert.equal(app.get('restore-companion').style.top, '32px')
   } finally {
     app.dom.window.close()
   }

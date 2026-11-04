@@ -160,29 +160,6 @@ input[type='range'] {
   transform: translate(-50%, 0);
 }
 
-.companion-close {
-  position: absolute;
-  right: -4px;
-  top: 12px;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  background: var(--surface);
-  color: var(--muted);
-  font-size: 17px;
-  line-height: 20px;
-  padding: 0;
-  opacity: 0;
-  transition: opacity 0.2s;
-  z-index: 4;
-}
-
-.companion:hover .companion-close,
-.companion:focus-within .companion-close {
-  opacity: 1;
-}
-
 .companion-size-button {
   position: absolute;
   width: 30px;
@@ -538,6 +515,9 @@ input[type='range'] {
 }
 
 .restore-companion {
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
   position: fixed;
   right: 22px;
   bottom: 22px;
@@ -820,21 +800,13 @@ input[type='range'] {
     right: 16px;
     bottom: calc(18px + env(safe-area-inset-bottom, 0px));
   }
-  .companion-close {
-    opacity: 0.75;
-    width: 28px;
-    height: 28px;
-    font-size: 17px;
-    right: 0;
-    top: 0;
-  }
+
   .companion-size-button {
     width: 28px;
     height: 28px;
     opacity: 0.9;
   }
-  .companion-size-button:before,
-  .companion-close:before {
+  .companion-size-button:before {
     content: '';
     position: absolute;
     inset: -8px;
@@ -884,4 +856,8 @@ input[type='range'] {
   .blink-lids {
     display: none;
   }
+}
+
+.restore-companion.is-dragging {
+  cursor: grabbing;
 }

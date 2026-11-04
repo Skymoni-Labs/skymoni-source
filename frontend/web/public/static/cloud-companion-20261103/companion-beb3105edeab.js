@@ -10,7 +10,7 @@
   const stylesheet = document.createElement('link')
   stylesheet.rel = 'stylesheet'
   stylesheet.href =
-    '/static/cloud-companion-20261103/companion-b662c5496304.css'
+    '/static/cloud-companion-20261103/companion-0bfc8df20690.css'
   const template = document.createElement('template')
   // The template is a static, bundled asset. No user or server HTML is inserted.
   template.innerHTML = String.raw`  <aside class="companion" id="companion" aria-label="云朵伙伴">
@@ -61,7 +61,6 @@
       <p class="reward-feedback" id="reward-feedback" role="status" aria-live="polite">谢谢你来陪小云玩 ✧</p>
     </section>
     <button class="companion-size-button" id="companion-size-button" type="button" aria-label="调整小云大小" aria-controls="size-panel" aria-haspopup="dialog" aria-expanded="false">⚙</button>
-    <button class="companion-close" id="companion-close" type="button" aria-label="收起云朵伙伴">×</button>
     <button class="character-button" id="character-button" type="button" aria-label="小云，点击打招呼，也可以拖动位置，方向键移动">
       <span class="character-shadow" aria-hidden="true"></span>
       <span class="character-motion" id="character-motion">
@@ -93,7 +92,7 @@
     </button>
     <span class="greeting-spark spark-a" aria-hidden="true">✦</span><span class="greeting-spark spark-b" aria-hidden="true">✧</span>
   </aside>
-  <button class="restore-companion" id="restore-companion" type="button" aria-label="展开云朵伙伴" title="展开小云" hidden><span aria-hidden="true">☁</span><span class="restore-label">叫小云回来</span></button>`
+  <button class="restore-companion" id="restore-companion" type="button" aria-label="展开云朵伙伴，也可以拖动位置，方向键移动" title="点击展开小云，拖动调整位置" hidden><span aria-hidden="true">☁</span><span class="restore-label">叫小云回来</span></button>`
   shadow.append(stylesheet, template.content.cloneNode(true))
   document.body.append(host)
   const legacyStyle = document.createElement('style')
@@ -170,6 +169,7 @@
   let suppressClick = false
   let manuallyPositioned = false
   let preferredSize = null
+  let restorePosition = null
   let compactMode = false
   let activeLayout = mobileLayout.matches ? 'mobile' : 'desktop'
 
@@ -177,7 +177,11 @@
     try {
       localStorage.setItem(
         `skymoni:cloud-companion:${activeLayout}:v1`,
-        JSON.stringify({ size: preferredSize, compact: compactMode })
+        JSON.stringify({
+          size: preferredSize,
+          compact: compactMode,
+          restorePosition,
+        })
       )
     } catch {
       // Size controls remain available when device storage is unavailable.
@@ -217,6 +221,7 @@
   function loadPreferences() {
     activeLayout = mobileLayout.matches ? 'mobile' : 'desktop'
     preferredSize = null
+    restorePosition = null
     compactMode = false
     try {
       const saved = JSON.parse(
@@ -226,6 +231,12 @@
         preferredSize = saved.size
       }
       compactMode = saved?.compact === true
+      if (
+        Number.isFinite(saved?.restorePosition?.left) &&
+        Number.isFinite(saved?.restorePosition?.top)
+      ) {
+        restorePosition = saved.restorePosition
+      }
     } catch {
       // Invalid or unavailable stored preferences use the responsive defaults.
     }
@@ -233,6 +244,10 @@
     restoreButton.hidden = !compactMode
     restoreButton.classList.toggle('is-compact', compactMode)
     applySize(preferredSize ?? defaultSize(), false)
+    for (const property of ['left', 'top', 'right', 'bottom']) {
+      restoreButton.style.removeProperty(property)
+    }
+    positionRestoreButton()
   }
 
   function positionFloatingContent() {
@@ -323,6 +338,7 @@
     hideCompanion()
     compactMode = true
     restoreButton.classList.add('is-compact')
+    positionRestoreButton()
     savePreferences()
   }
 
@@ -416,6 +432,7 @@
     closeReward(false)
     closeSizeSettings(false)
     closeSupport(false)
+    positionRestoreButton()
     restoreButton.focus({ preventScroll: true })
   }
 
@@ -437,6 +454,29 @@
     positionFloatingContent()
   }
 
+  function moveRestoreTo(left, top) {
+    const bounds = restoreButton.getBoundingClientRect()
+    const safeLeft = Math.max(
+      12,
+      Math.min(left, document.documentElement.clientWidth - bounds.width - 12)
+    )
+    const safeTop = Math.max(
+      12,
+      Math.min(top, window.innerHeight - bounds.height - 12)
+    )
+    restoreButton.style.left = `${safeLeft}px`
+    restoreButton.style.top = `${safeTop}px`
+    restoreButton.style.right = 'auto'
+    restoreButton.style.bottom = 'auto'
+    restorePosition = { left: safeLeft, top: safeTop }
+  }
+
+  function positionRestoreButton() {
+    if (restorePosition && !restoreButton.hidden) {
+      moveRestoreTo(restorePosition.left, restorePosition.top)
+    }
+  }
+
   function scheduleBlink() {
     clearTimeout(blinkTimer)
     if (document.hidden || motionPreference.matches) return
@@ -455,10 +495,8 @@
     )
   }
 
-  shadow
-    .querySelector('#companion-close')
-    .addEventListener('click', hideCompanion)
   restoreButton.addEventListener('click', () => {
+    if (suppressClick) return
     greet()
     character.focus({ preventScroll: true })
   })
@@ -530,10 +568,13 @@
     }
   })
 
-  character.addEventListener('pointerdown', (event) => {
-    if (event.button !== 0 || !event.isPrimary) return
-    const bounds = companion.getBoundingClientRect()
+  function startDrag(event) {
+    if (event.button !== 0 || !event.isPrimary || drag) return
+    const handle = event.currentTarget
+    const element = handle === restoreButton ? restoreButton : companion
+    const bounds = element.getBoundingClientRect()
     drag = {
+      handle,
       pointerId: event.pointerId,
       x: event.clientX,
       y: event.clientY,
@@ -541,26 +582,35 @@
       top: bounds.top,
       moved: false,
     }
-    character.setPointerCapture(event.pointerId)
-  })
+    handle.setPointerCapture(event.pointerId)
+  }
 
-  character.addEventListener('pointermove', (event) => {
+  function updateDrag(event) {
     if (!drag || drag.pointerId !== event.pointerId) return
     const dx = event.clientX - drag.x
     const dy = event.clientY - drag.y
     if (!drag.moved && Math.hypot(dx, dy) < 6) return
-    if (!drag.moved) stopAction()
+    if (!drag.moved && drag.handle === character) stopAction()
     drag.moved = true
-    companion.classList.add('is-dragging')
-    moveTo(drag.left + dx, drag.top + dy)
-  })
+    drag.handle.classList.add('is-dragging')
+    if (drag.handle === restoreButton) {
+      moveRestoreTo(drag.left + dx, drag.top + dy)
+    } else {
+      companion.classList.add('is-dragging')
+      moveTo(drag.left + dx, drag.top + dy)
+    }
+  }
 
   function finishDrag(event) {
     if (!drag || drag.pointerId !== event.pointerId) return
     suppressClick = drag.moved
-    if (drag.moved && event.type === 'pointerup') {
-      speak('这个位置也很棒，我就在这里啦。')
+    if (drag.moved) {
+      if (drag.handle === restoreButton) savePreferences()
+      else if (event.type === 'pointerup') {
+        speak('这个位置也很棒，我就在这里啦。')
+      }
     }
+    drag.handle.classList.remove('is-dragging')
     drag = null
     companion.classList.remove('is-dragging')
     setTimeout(() => {
@@ -568,26 +618,39 @@
     }, 0)
   }
 
-  character.addEventListener('pointerup', finishDrag)
-  character.addEventListener('pointercancel', finishDrag)
-  character.addEventListener('lostpointercapture', finishDrag)
-  character.addEventListener('keydown', (event) => {
+  function moveWithKeyboard(event) {
     const directions = {
       ArrowLeft: [-20, 0],
       ArrowRight: [20, 0],
       ArrowUp: [0, -20],
       ArrowDown: [0, 20],
     }
-    if (event.key === 'Escape') {
+    if (event.key === 'Escape' && event.currentTarget === character) {
       hideCompanion()
       return
     }
     if (!directions[event.key]) return
     event.preventDefault()
-    const bounds = companion.getBoundingClientRect()
+    const element =
+      event.currentTarget === restoreButton ? restoreButton : companion
+    const bounds = element.getBoundingClientRect()
     const [dx, dy] = directions[event.key]
-    moveTo(bounds.left + dx, bounds.top + dy)
-  })
+    if (element === restoreButton) {
+      moveRestoreTo(bounds.left + dx, bounds.top + dy)
+      savePreferences()
+    } else {
+      moveTo(bounds.left + dx, bounds.top + dy)
+    }
+  }
+
+  for (const handle of [character, restoreButton]) {
+    handle.addEventListener('pointerdown', startDrag)
+    handle.addEventListener('pointermove', updateDrag)
+    handle.addEventListener('pointerup', finishDrag)
+    handle.addEventListener('pointercancel', finishDrag)
+    handle.addEventListener('lostpointercapture', finishDrag)
+    handle.addEventListener('keydown', moveWithKeyboard)
+  }
 
   document.addEventListener(
     'pointermove',
@@ -614,6 +677,7 @@
       loadPreferences()
       return
     }
+    positionRestoreButton()
     applySize(preferredSize ?? defaultSize(), false)
   })
 
