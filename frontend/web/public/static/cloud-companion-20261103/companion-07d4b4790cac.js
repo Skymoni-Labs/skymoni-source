@@ -10,7 +10,7 @@
   const stylesheet = document.createElement('link')
   stylesheet.rel = 'stylesheet'
   stylesheet.href =
-    '/static/cloud-companion-20261103/companion-38baf36978f9.css'
+    '/static/cloud-companion-20261103/companion-e09cba21866a.css'
   const template = document.createElement('template')
   // The template is a static, bundled asset. No user or server HTML is inserted.
   template.innerHTML = String.raw`  <aside class="companion" id="companion" aria-label="云朵伙伴">
@@ -26,6 +26,12 @@
         <div><h2 id="support-title">小云 · 网站助手</h2><span>一起把下一步弄明白</span></div>
         <button id="chat-new" type="button" aria-label="开始新对话" title="开始新对话">↺</button>
         <button class="support-close" id="support-close" type="button" aria-label="关闭小云对话">×</button>
+      </div>
+      <div id="chat-auth-gate" class="chat-auth-gate">
+        <strong id="chat-auth-title">正在确认登录状态…</strong>
+        <a id="chat-login" hidden>登录后开始对话 ↗</a>
+        <button id="chat-auth-retry" type="button" hidden>重新检查</button>
+        <a href="https://skymoni.com/docs" target="_blank" rel="noopener">查看使用文档 ↗</a>
       </div>
       <div class="chat-transcript" id="chat-transcript" role="log" aria-label="与小云的对话" aria-live="polite" aria-relevant="additions text"></div>
       <div class="chat-suggestions" id="chat-suggestions">
@@ -728,6 +734,37 @@
   let chatPending = null
   let chatPartialBubble = null
   let chatBusy = false
+  let chatIdentity = ''
+  let chatAccess = 'checking'
+  let chatAbort = null
+  let chatAuthEpoch = 0
+
+  function setChatAccess(state) {
+    chatAccess = state
+    const allowed = state === 'authenticated'
+    shadow.querySelector('#chat-auth-gate').hidden = allowed
+    const titles = {
+      anonymous: '登录后才能和小云对话',
+      error: '暂时无法确认登录状态，请重试',
+    }
+    shadow.querySelector('#chat-auth-title').textContent =
+      titles[state] ?? '正在确认登录状态…'
+    const login = shadow.querySelector('#chat-login')
+    login.hidden = state !== 'anonymous'
+    login.href = `/sign-in?redirect=${encodeURIComponent(
+      window.location.pathname + window.location.search + window.location.hash
+    )}`
+    shadow.querySelector('#chat-auth-retry').hidden = state !== 'error'
+    transcript.hidden = !allowed
+    chatForm.hidden = !allowed
+    chatSuggestions.hidden = !allowed || chatHistory.length > 0 || chatBusy
+    chatRetryRow.hidden = true
+    chatNew.disabled = !allowed || chatBusy
+    if (allowed && !supportPanel.hidden && !chatBusy) {
+      chatInput.focus({ preventScroll: true })
+    }
+    positionFloatingContent()
+  }
 
   function safeChatLink(value) {
     try {
@@ -874,15 +911,32 @@
   async function loadChatStatus() {
     if (typeof window.fetch !== 'function') return
     if (!chatSession) {
-      const controller = new AbortController()
-      const timer = setTimeout(() => controller.abort(), 10000)
-      chatSession = window
-        .fetch('/api/cloud-assistant/status', {
-          credentials: 'same-origin',
-          cache: 'no-store',
-          signal: controller.signal,
-        })
-        .then(async (response) => {
+      chatSession = (async () => {
+        const auth = await window.skymoniCloudAssistantAuth?.resolve()
+        if (!auth || auth.kind === 'unavailable') {
+          setChatAccess('error')
+          return null
+        }
+        if (auth.kind !== 'authenticated') {
+          setChatAccess('anonymous')
+          return null
+        }
+        chatIdentity = auth.identity
+        const epoch = chatAuthEpoch
+        const controller = new AbortController()
+        const timer = setTimeout(() => controller.abort(), 10000)
+        try {
+          const response = await window.fetch('/api/cloud-assistant/status', {
+            credentials: 'same-origin',
+            cache: 'no-store',
+            signal: controller.signal,
+            headers: auth.headers,
+          })
+          if (epoch !== chatAuthEpoch) return null
+          if (response.status === 401 || response.status === 403) {
+            setChatAccess('anonymous')
+            return null
+          }
           if (!response.ok) {
             throw new Error('小云暂时无法准备咨询，请稍后再试。')
           }
@@ -893,13 +947,19 @@
           if (Number.isInteger(status.remaining)) {
             chatQuota.textContent = `今天还可提问 ${status.remaining} 次`
           }
-          return status
+          setChatAccess('authenticated')
+          return { ...status, headers: auth.headers }
+        } finally {
+          clearTimeout(timer)
+        }
+      })()
+        .catch(() => {
+          setChatAccess('error')
+          return null
         })
-        .catch((error) => {
+        .finally(() => {
           chatSession = null
-          throw error
         })
-        .finally(() => clearTimeout(timer))
     }
     try {
       return await chatSession
@@ -939,34 +999,38 @@
     chatFeedback.textContent = '小云正在查阅使用说明…'
     chatRetryRow.hidden = true
     chatSuggestions.hidden = true
-    if (!retry || !chatPending) {
-      chatPending = {
-        request_id: crypto.randomUUID(),
-        message: question,
-        history: chatHistory.slice(-6).map((message) => ({
-          ...message,
-          content: message.content.slice(0, 1000),
-        })),
-        page: window.location.pathname,
-      }
-      chatMessage('user', question)
-      chatInput.value = ''
-    }
-    if (retry) chatPartialBubble?.remove()
-    chatPartialBubble = null
     let timer
     try {
       const status = await loadChatStatus()
       if (!status) {
-        throw new Error('小云暂时无法连接，请稍后重试，或查看使用文档。')
+        chatFeedback.textContent = ''
+        return
       }
+      if (!retry || !chatPending) {
+        chatPending = {
+          request_id: crypto.randomUUID(),
+          message: question,
+          history: chatHistory.slice(-6).map((message) => ({
+            ...message,
+            content: message.content.slice(0, 1000),
+          })),
+          page: window.location.pathname,
+        }
+        chatMessage('user', question)
+        chatInput.value = ''
+      }
+      if (retry) chatPartialBubble?.remove()
+      chatPartialBubble = null
       const controller = new AbortController()
+      chatAbort = controller
+      const identity = chatIdentity
       timer = setTimeout(() => controller.abort(), 47000)
       const response = await window.fetch('/api/cloud-assistant/chat', {
         method: 'POST',
         credentials: 'same-origin',
         signal: controller.signal,
         headers: {
+          ...status.headers,
           'Content-Type': 'application/json',
           Accept: 'text/event-stream',
           'X-Skymoni-Assistant': '1',
@@ -978,6 +1042,7 @@
         response.headers?.get('Content-Type')?.includes('text/event-stream')
       const result = streaming
         ? await readChatStream(response, (text) => {
+            if (identity !== chatIdentity) return
             if (!chatPartialBubble) {
               chatPartialBubble = chatMessage('assistant', '')
               chatPartialBubble.classList.add('is-streaming')
@@ -994,7 +1059,13 @@
             chatFeedback.textContent = '小云正在回复…'
           })
         : await response.json()
+      if (identity !== chatIdentity) return
       if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+          setChatAccess('anonymous')
+          chatFeedback.textContent = ''
+          return
+        }
         if (['provider_unavailable', 'request_failed'].includes(result.error)) {
           chatPending.request_id = crypto.randomUUID()
         }
@@ -1024,7 +1095,14 @@
       chatPending = null
       chatFeedback.textContent = ''
     } catch (error) {
-      if (['provider_unavailable', 'request_failed'].includes(error.code)) {
+      if (chatAccess !== 'authenticated') {
+        chatFeedback.textContent = ''
+        return
+      }
+      if (
+        chatPending &&
+        ['provider_unavailable', 'request_failed'].includes(error.code)
+      ) {
         chatPending.request_id = crypto.randomUUID()
       }
       if (chatPartialBubble) {
@@ -1036,12 +1114,13 @@
         error.name === 'AbortError'
           ? '等待回复有点久，可以点击重试获取这条问题的结果。'
           : error.message
-      chatRetryRow.hidden = false
+      chatRetryRow.hidden = chatAccess !== 'authenticated'
     } finally {
       clearTimeout(timer)
       chatBusy = false
+      chatAbort = null
       chatSend.disabled = false
-      chatNew.disabled = false
+      chatNew.disabled = chatAccess !== 'authenticated'
       chatForm.removeAttribute('aria-busy')
       positionFloatingContent()
     }
@@ -1084,6 +1163,33 @@
     .addEventListener('toggle', positionFloatingContent)
   window.visualViewport?.addEventListener('resize', positionFloatingContent)
   welcomeChat()
+  setChatAccess('checking')
+  shadow.querySelector('#chat-auth-retry').addEventListener('click', () => {
+    setChatAccess('checking')
+    void loadChatStatus()
+  })
+  window.addEventListener('skymoni:cloud-auth-ready', () => {
+    if (!supportPanel.hidden) void loadChatStatus()
+  })
+  window.addEventListener('skymoni:cloud-auth-change', (event) => {
+    const identity = typeof event.detail === 'string' ? event.detail : ''
+    if (identity === chatIdentity) return
+    chatAuthEpoch += 1
+    chatAbort?.abort()
+    if (chatIdentity) {
+      chatHistory.length = 0
+      chatPending = null
+      chatPartialBubble = null
+      transcript.replaceChildren()
+      welcomeChat()
+      chatInput.value = ''
+    }
+    chatIdentity = identity
+    chatSession = null
+    chatFeedback.textContent = ''
+    setChatAccess(identity ? 'checking' : 'anonymous')
+    if (identity && !supportPanel.hidden && !chatBusy) void loadChatStatus()
+  })
 
   loadPreferences()
   scheduleBlink()

@@ -9,6 +9,8 @@ import tempfile
 import threading
 import unittest
 import uuid
+import base64
+import urllib.error
 
 import server
 
@@ -16,6 +18,10 @@ import server
 CONFIG = dict(api_key='sk-unit-test-secret-only', signing_secret='s' * 64,
               model='deepseek-flash', daily_requests=200, visitor_daily_requests=20,
               daily_tokens=300000, max_output_tokens=900, requests_per_minute=3)
+
+def session_header(user=1):
+    claims = dict(iss='new-api', token_use='access', sid='test-session', sub=str(user), aud=['new-api-dashboard'])
+    return 'Bearer x.' + base64.urlsafe_b64encode(json.dumps(claims).encode()).decode().rstrip('=') + '.signature'
 
 
 class FakeResponse:
@@ -53,6 +59,36 @@ class AssistantTest(unittest.TestCase):
 
     def payload(self, text='我想创建 API 密钥'):
         return dict(request_id=str(uuid.uuid4()), message=text, page='/keys')
+
+    def test_auth_rejects_anonymous_cookie_hints_and_api_keys(self):
+        with patch.object(self.app.opener, 'open') as upstream:
+            for token in [None, '', 'Bearer sk-site-api-key', 'Bearer garbage', 'Bearer x.e30.signature']:
+                with self.assertRaises(server.AssistantError) as caught:
+                    self.app.authenticate(token, 'relay', '127.0.0.1')
+                self.assertEqual(caught.exception.status, 401)
+        upstream.assert_not_called()
+
+    def test_auth_checks_main_site_and_binds_usage_to_account(self):
+        def verify(request, timeout):
+            self.assertEqual(request.full_url, 'http://127.0.0.1:8081/api/user/self')
+            self.assertEqual(request.get_header('Authorization'), session_header())
+            return FakeResponse(dict(success=True, data=dict(id=1, email='private@example.com')))
+        with patch.object(self.app.opener, 'open', side_effect=verify):
+            first = self.app.authenticate(session_header(), 'relay', '127.0.0.1')
+            second = self.app.authenticate(session_header(), 'community', '127.0.0.1')
+        self.assertEqual(first, second)
+        self.assertNotIn('private', first)
+        self.assertNotIn('1', first[:0])
+
+    def test_revoked_expired_forged_and_unavailable_auth_fail_closed(self):
+        for status, expected in [(401, 401), (403, 401), (500, 503), (429, 503)]:
+            with patch.object(self.app.opener, 'open', side_effect=urllib.error.HTTPError('url', status, '', {}, None)):
+                with self.assertRaises(server.AssistantError) as caught:
+                    self.app.authenticate(session_header(), 'relay', '127.0.0.1')
+                self.assertEqual(caught.exception.status, expected)
+        with patch.object(self.app.opener, 'open', return_value=FakeResponse(dict(success=True, data=dict(id=2)))):
+            with self.assertRaises(server.AssistantError):
+                self.app.authenticate(session_header(), 'relay', '127.0.0.1')
 
     def test_grounding_and_follow_up(self):
         sources = self.app.knowledge.retrieve('怎么创建 API 密钥', [])
@@ -227,7 +263,13 @@ class BudgetTest(unittest.TestCase):
 
 
 class HttpTest(unittest.TestCase):
-    setUp = AssistantTest.setUp
+    def setUp(self):
+        AssistantTest.setUp(self)
+        self.auth_patch = patch.object(self.app, 'authenticate', side_effect=lambda authorization, scope, ip: 'account' if authorization == session_header() else self.deny())
+        self.auth_patch.start()
+        self.addCleanup(self.auth_patch.stop)
+    def deny(self):
+        raise server.AssistantError(401, 'login_required', '登录后才能和小云对话。')
     tearDown = AssistantTest.tearDown
     payload = AssistantTest.payload
     def test_http_flushes_partial_text_before_final_result(self):
@@ -247,7 +289,7 @@ class HttpTest(unittest.TestCase):
         try:
             with patch.object(self.app.opener, 'open', return_value=GatedStream(['第一步', '然后保存'])):
                 connection.request('POST', '/api/cloud-assistant/chat', json.dumps(self.payload()),
-                    {'Content-Type': 'application/json', 'X-Skymoni-Assistant': '1', 'Accept': 'text/event-stream', 'Cookie': cookie.split(';')[0]})
+                    {'Authorization': session_header(), 'Content-Type': 'application/json', 'X-Skymoni-Assistant': '1', 'Accept': 'text/event-stream', 'Cookie': cookie.split(';')[0]})
                 response = connection.getresponse()
                 self.assertEqual(response.getheader('Content-Type'), 'text/event-stream; charset=utf-8')
                 self.assertEqual(response.getheader('X-Accel-Buffering'), 'no')
@@ -276,12 +318,19 @@ class HttpTest(unittest.TestCase):
             connection.close()
             return result
         try:
-            status, headers, result = request('GET', '/api/cloud-assistant/status')
+            self.assertEqual(request('GET', '/api/cloud-assistant/status')[0], 401)
+            self.assertEqual(request('GET', '/api/cloud-assistant/status', headers={'Cookie': 'new_api_has_session=1'})[0], 401)
+            status, headers, result = request('GET', '/api/cloud-assistant/status', headers={'Authorization': session_header()})
             self.assertEqual(status, 200)
             self.assertNotIn('api_key', result)
             cookie = headers['Set-Cookie'].split(';')[0]
-            base = {'Content-Type': 'application/json', 'X-Skymoni-Assistant': '1', 'Cookie': cookie}
+            base = {'Authorization': session_header(), 'Content-Type': 'application/json', 'X-Skymoni-Assistant': '1', 'Cookie': cookie}
             body = json.dumps(self.payload())
+            with patch.object(self.app.opener, 'open') as provider:
+                anonymous = {k:v for k,v in base.items() if k != 'Authorization'}
+                self.assertEqual(request('POST', '/api/cloud-assistant/chat', body, anonymous)[0], 401)
+                provider.assert_not_called()
+            self.assertEqual(self.app.budget.remaining('account', self.app.ip_hash('127.0.0.1')), 20)
             self.assertEqual(request('POST', '/api/cloud-assistant/chat', body, base | dict(Origin='https://evil.example'))[0], 403)
             self.assertEqual(request('POST', '/api/cloud-assistant/chat', body, {'Content-Type': 'application/json'})[0], 403)
             self.assertEqual(request('POST', '/api/cloud-assistant/chat', 'x' * 24577, base)[0], 413)

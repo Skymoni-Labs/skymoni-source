@@ -24,6 +24,7 @@ import ReactDOM from 'react-dom/client'
 import { communityViewTransition } from '@/features/community/module-transition-options'
 import { SiteVoidBackdrop } from '@/features/home-discovery/void-backdrop'
 import { installBuildMetadata } from '@/lib/build-metadata'
+import { installCloudAssistantAuth } from '@/lib/cloud-assistant-auth'
 import { applyFaviconToDom } from '@/lib/dom-utils'
 import '@/lib/dayjs'
 import { initializeFrontendCache } from '@/lib/frontend-cache'
@@ -46,6 +47,7 @@ import './styles/site-glass.css'
 // VChart theme is driven by our ThemeProvider (html.light/html.dark) via per-chart `theme` prop.
 initializeFrontendCache()
 installBuildMetadata()
+installCloudAssistantAuth()
 
 const queryClient = createAppQueryClient(() => {
   void router.navigate({ to: '/500' })

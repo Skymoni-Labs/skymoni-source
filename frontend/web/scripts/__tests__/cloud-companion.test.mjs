@@ -38,6 +38,15 @@ function mount(options = {}) {
   window.SVGElement.prototype.endElement = () => {}
   window.HTMLElement.prototype.setPointerCapture = () => {}
   window.TextDecoder = TextDecoder
+  window.skymoniCloudAssistantAuth = {
+    resolve:
+      options.auth ??
+      (async () => ({
+        kind: 'authenticated',
+        identity: 'relay:1',
+        headers: { Authorization: 'Bearer test-session' },
+      })),
+  }
   if (options.fetch) window.fetch = options.fetch
   for (const [key, value] of Object.entries(options.saved ?? {})) {
     window.localStorage.setItem(key, value)
@@ -58,6 +67,72 @@ function mount(options = {}) {
 
 const settle = () => new Promise((resolve) => setTimeout(resolve, 20))
 const reply = (data, ok = true) => ({ ok, json: async () => data })
+
+test('anonymous visitors see a login link and cannot submit, even with local login hints', async () => {
+  const requests = []
+  const app = mount({
+    auth: async () => ({ kind: 'anonymous' }),
+    saved: { user: '{"id":1}' },
+    fetch: async (...args) => {
+      requests.push(args)
+      return reply({ ready: true })
+    },
+  })
+  try {
+    app.get('support-hint').click()
+    await settle()
+    assert.equal(app.get('chat-form').hidden, true)
+    assert.equal(app.get('chat-login').hidden, false)
+    assert.ok(app.get('chat-login').href.includes('/sign-in?redirect='))
+    app.get('chat-input').value = '不应该发送'
+    app
+      .get('chat-form')
+      .dispatchEvent(new app.window.Event('submit', { cancelable: true }))
+    await settle()
+    assert.equal(requests.length, 0)
+    assert.equal(app.get('chat-input').value, '不应该发送')
+  } finally {
+    app.dom.window.close()
+  }
+})
+
+test('a revoked session blocks chat and a logout clears previous messages', async () => {
+  let revoked = false
+  const app = mount({
+    fetch: async (url, options) => {
+      assert.equal(options.headers.Authorization, 'Bearer test-session')
+      if (url.endsWith('/status')) return reply({ ready: true, remaining: 20 })
+      if (revoked) {
+        return { ...reply({ error: 'login_required' }, false), status: 401 }
+      }
+      return reply({ answer: '账户原有回复', remaining: 19 })
+    },
+  })
+  try {
+    app.get('support-hint').click()
+    await settle()
+    app.get('chat-input').value = '首次问题'
+    app
+      .get('chat-form')
+      .dispatchEvent(new app.window.Event('submit', { cancelable: true }))
+    await settle()
+    assert.ok(app.get('chat-transcript').textContent.includes('账户原有回复'))
+    revoked = true
+    app.get('chat-input').value = '会话已过期'
+    app
+      .get('chat-form')
+      .dispatchEvent(new app.window.Event('submit', { cancelable: true }))
+    await settle()
+    assert.equal(app.get('chat-form').hidden, true)
+    assert.equal(app.get('chat-login').hidden, false)
+    app.window.dispatchEvent(
+      new app.window.CustomEvent('skymoni:cloud-auth-change', { detail: '' })
+    )
+    assert.ok(!app.get('chat-transcript').textContent.includes('账户原有回复'))
+  } finally {
+    app.dom.window.close()
+  }
+})
 
 test('streaming text appears before completion, then renders the final links', async () => {
   let controller
@@ -205,6 +280,7 @@ test('chat sends redacted messages and follow-ups with safe document links', asy
     app.get('companion-size-button').click()
     assert.equal(app.get('size-panel').hidden, false)
     app.get('widget-open-chat').click()
+    await settle()
     assert.equal(app.get('size-panel').hidden, true)
     assert.equal(app.get('support-panel').hidden, false)
     assert.equal(app.root.activeElement, app.get('chat-input'))

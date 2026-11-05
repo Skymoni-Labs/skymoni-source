@@ -11,6 +11,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlsplit
 import hashlib
+import base64
 import hmac
 import ipaddress
 import json
@@ -301,6 +302,53 @@ class Assistant:
             address = 'unknown'
         return hmac.new(self.secret, ('ip:' + address).encode(), hashlib.sha256).hexdigest()
 
+    def authenticate(self, authorization, scope, address):
+        """The main site verifies the signature, live session, user and scope.
+
+        Decoding here only rejects non-session credentials before that check;
+        unverified claims never grant access on their own.
+        """
+        denied = AssistantError(401, 'login_required', '登录后才能和小云对话。')
+        if scope not in ['relay', 'community'] or not isinstance(authorization, str) or len(authorization) > 8192:
+            raise denied
+        try:
+            if not authorization.startswith('Bearer '):
+                raise ValueError('Missing session')
+            token = authorization[7:]
+            parts = token.split('.')
+            if len(parts) != 3:
+                raise ValueError('Not a session token')
+            claims = json.loads(base64.urlsafe_b64decode(parts[1] + '=' * (-len(parts[1]) % 4)))
+            if not isinstance(claims, dict):
+                raise ValueError('Invalid session claims')
+            if (claims.get('iss') != 'new-api' or claims.get('token_use') != 'access'
+                    or not claims.get('sid') or not str(claims.get('sub', '')).isdigit()
+                    or 'new-api-dashboard' not in ([claims.get('aud')] if isinstance(claims.get('aud'), str) else claims.get('aud', []))):
+                raise ValueError('Not a dashboard session')
+        except (ValueError, TypeError, KeyError):
+            raise denied from None
+        request = urllib.request.Request('http://127.0.0.1:8081/api/user/self', headers={
+            'Authorization': authorization, 'X-Skymoni-Auth-Scope': scope, 'X-Real-IP': address,
+        })
+        try:
+            with self.opener.open(request, timeout=8) as response:
+                raw = response.read(1024 * 1024 + 1)
+                if len(raw) > 1024 * 1024:
+                    raise ValueError('Invalid auth response')
+                result = json.loads(raw)
+            user = result.get('data') or {}
+            user_id = user.get('id')
+            if result.get('success') is not True or type(user_id) is not int or user_id <= 0 or str(user_id) != str(claims['sub']):
+                raise denied
+            # Retain only a keyed account identifier, never profile data or tokens.
+            return hmac.new(self.secret, ('account:' + str(user_id)).encode(), hashlib.sha256).hexdigest()
+        except urllib.error.HTTPError as error:
+            if error.code in [401, 403]:
+                raise denied from None
+            raise AssistantError(503, 'auth_unavailable', '暂时无法确认登录状态，请稍后再试。') from None
+        except (OSError, ValueError, TypeError, KeyError):
+            raise AssistantError(503, 'auth_unavailable', '暂时无法确认登录状态，请稍后再试。') from None
+
     def local_json(self, path):
         request = urllib.request.Request('http://127.0.0.1:8081' + path)
         with self.opener.open(request, timeout=5) as response:
@@ -504,6 +552,8 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             self.get_status()
+        except AssistantError as error:
+            self.respond(error.status, {'error': error.code, 'message': error.message})
         except Exception:
             logging.exception('Assistant status unavailable')
             self.close_connection = True
@@ -516,7 +566,8 @@ class Handler(BaseHTTPRequestHandler):
         if self.path != '/api/cloud-assistant/status':
             self.respond(404, {'error': 'not_found'})
             return
-        visitor, cookie = self.server.assistant.visitor_cookie(self.headers.get('Cookie'))
+        visitor = self.authenticate()
+        _, cookie = self.server.assistant.visitor_cookie(self.headers.get('Cookie'))
         ip = self.server.assistant.ip_hash(self.headers.get('X-Real-IP', self.client_address[0]))
         self.respond(200, self.server.assistant.status(visitor, ip), cookie)
 
@@ -536,14 +587,15 @@ class Handler(BaseHTTPRequestHandler):
             length = int(self.headers.get('Content-Length', '0'))
             if not 1 <= length <= 24576 or self.headers.get('Transfer-Encoding'):
                 raise AssistantError(413, 'body_size', '消息过长，请缩短内容后再试。')
-            visitor, cookie = self.server.assistant.visitor_cookie(self.headers.get('Cookie'))
+            raw = self.rfile.read(length)
+            if len(raw) != length:
+                raise AssistantError(400, 'incomplete_body', '消息未发送完整，请重试。')
+            visitor = self.authenticate()
+            _, cookie = self.server.assistant.visitor_cookie(self.headers.get('Cookie'))
             if cookie:
                 self.close_connection = True
                 self.respond(409, {'error': 'session_required', 'message': '正在准备咨询，请重新点击发送。'}, cookie)
                 return
-            raw = self.rfile.read(length)
-            if len(raw) != length:
-                raise AssistantError(400, 'incomplete_body', '消息未发送完整，请重试。')
             data = json.loads(raw)
             if not isinstance(data, dict):
                 raise AssistantError(400, 'body', '消息格式不正确。')
@@ -570,6 +622,10 @@ class Handler(BaseHTTPRequestHandler):
             self.event('error', data)
         else:
             self.respond(status, data)
+
+    def authenticate(self):
+        return self.server.assistant.authenticate(self.headers.get('Authorization'),
+            self.headers.get('X-Skymoni-Auth-Scope', 'relay'), self.headers.get('X-Real-IP', self.client_address[0]))
 
     def event(self, kind, data):
         if not self.streaming:
