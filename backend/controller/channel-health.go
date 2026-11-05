@@ -15,9 +15,10 @@ import (
 )
 
 const (
-	channelHealthSampleSize    = 2
-	channelHealthFailureRounds = 3
-	channelHealthPolicyVersion = 2
+	channelHealthSampleSize     = 2
+	channelHealthFailureRounds  = 3
+	channelHealthPolicyVersion  = 2
+	healthProbeOutputTokenLimit = 64
 )
 
 type healthProbeContextKey struct{}
@@ -76,10 +77,11 @@ type healthProbeLimits struct {
 
 func channelHealthProbeLimits(pool model.ChannelHealthPool) healthProbeLimits {
 	limits := healthProbeLimits{MaxOutputTokens: 1, OutputBudgetTokens: 8}
-	if pool.ProbeMaxOutputTokens >= 1 && pool.ProbeMaxOutputTokens <= 8 {
+	if pool.ProbeMaxOutputTokens >= 1 && pool.ProbeMaxOutputTokens <= healthProbeOutputTokenLimit {
 		limits.MaxOutputTokens = pool.ProbeMaxOutputTokens
 	}
-	if pool.ProbeOutputBudgetTokens >= limits.MaxOutputTokens && pool.ProbeOutputBudgetTokens <= 16 {
+	limits.OutputBudgetTokens = max(limits.OutputBudgetTokens, limits.MaxOutputTokens)
+	if pool.ProbeOutputBudgetTokens >= limits.MaxOutputTokens && pool.ProbeOutputBudgetTokens <= healthProbeOutputTokenLimit {
 		limits.OutputBudgetTokens = pool.ProbeOutputBudgetTokens
 	}
 	return limits
@@ -96,7 +98,7 @@ func minimalHealthProbeBody(raw []byte, maxTokens int) ([]byte, error) {
 	}
 	body["max_tokens"] = maxTokens
 	body["stream"] = false
-	body["messages"] = []map[string]string{{"role": "user", "content": channelTestGreeting}}
+	body["messages"] = []map[string]string{{"role": "user", "content": "reply ok"}}
 	body["thinking"] = map[string]string{"type": "disabled"}
 	delete(body, "max_completion_tokens")
 	delete(body, "stream_options")

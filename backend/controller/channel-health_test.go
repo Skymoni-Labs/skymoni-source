@@ -15,7 +15,7 @@ func TestMinimalHealthProbeCapsOverriddenRequest(t *testing.T) {
 	require.Equal(t, float64(8), body["max_tokens"])
 	require.Equal(t, false, body["stream"])
 	require.NotContains(t, body, "max_completion_tokens")
-	require.Equal(t, []any{map[string]any{"role": "user", "content": "hello"}}, body["messages"])
+	require.Equal(t, []any{map[string]any{"role": "user", "content": "reply ok"}}, body["messages"])
 }
 
 func TestHealthHysteresisAndBoundedHistory(t *testing.T) {
@@ -136,6 +136,36 @@ func TestHealthPoolProbeLimitsAndMinimalRequest(t *testing.T) {
 	require.False(t, healthProbeUsageOverBudget(35, 11, limits.OutputBudgetTokens))
 	require.True(t, healthProbeUsageOverBudget(35, 17, limits.OutputBudgetTokens))
 	require.True(t, healthProbeUsageOverBudget(129, 1, limits.OutputBudgetTokens))
+}
+
+func TestReasoningHealthProbeHasRoomForVisibleReply(t *testing.T) {
+	for _, budget := range []int{0, 8, 64, 1000} {
+		limits := channelHealthProbeLimits(model.ChannelHealthPool{ProbeMaxOutputTokens: 64, ProbeOutputBudgetTokens: budget})
+		require.Equal(t, healthProbeLimits{MaxOutputTokens: 64, OutputBudgetTokens: 64}, limits)
+		raw, err := minimalHealthProbeBody([]byte(`{"model":"deepseek-v4.1-flash","max_tokens":1,"messages":[{"role":"user","content":"hello"}]}`), limits.MaxOutputTokens)
+		require.NoError(t, err)
+		var body map[string]any
+		require.NoError(t, json.Unmarshal(raw, &body))
+		require.Equal(t, float64(64), body["max_tokens"])
+		require.Equal(t, []any{map[string]any{"role": "user", "content": "reply ok"}}, body["messages"])
+		require.False(t, healthProbeUsageOverBudget(31, 64, limits.OutputBudgetTokens))
+		require.True(t, healthProbeUsageOverBudget(31, 65, limits.OutputBudgetTokens))
+	}
+	require.Equal(t, healthProbeLimits{MaxOutputTokens: 1, OutputBudgetTokens: 8}, channelHealthProbeLimits(model.ChannelHealthPool{ProbeMaxOutputTokens: 65, ProbeOutputBudgetTokens: 65}))
+}
+
+func TestModelHealthUsesLimitsForExactUpstreamRoute(t *testing.T) {
+	mapping := `{"low":"deepseek-v4.1-flash","pro":"deepseek-v4-pro"}`
+	channel := &model.Channel{Id: 349, Key: "test-key", Models: "low,pro", ModelMapping: &mapping}
+	pool := model.ChannelHealthPool{UpstreamModel: "deepseek-v4.1-flash", ProbeMaxOutputTokens: 64, ProbeOutputBudgetTokens: 64, Channels: map[int]string{349: model.ChannelHealthSignature(channel)}}
+	config := model.ChannelHealthConfig{Pools: []model.ChannelHealthPool{pool}}
+	require.Equal(t, healthProbeLimits{MaxOutputTokens: 64, OutputBudgetTokens: 64}, modelHealthProbeLimits("low", channel, config))
+	defaults := healthProbeLimits{MaxOutputTokens: 1, OutputBudgetTokens: 8}
+	require.Equal(t, defaults, modelHealthProbeLimits("pro", channel, config))
+	channel.Key = "changed-key"
+	require.Equal(t, defaults, modelHealthProbeLimits("low", channel, config))
+	channel.Id = 350
+	require.Equal(t, defaults, modelHealthProbeLimits("low", channel, config))
 }
 
 func TestGPTHealthProbeUsesSupportedCapsAndBoundedUsage(t *testing.T) {

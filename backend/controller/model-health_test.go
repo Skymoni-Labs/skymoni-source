@@ -46,16 +46,19 @@ func TestGroupHealthAdaptiveBackoffAndSkippedBudget(t *testing.T) {
 func TestModelHealthProbeUsesOneGreetingRequestAndNoFallback(t *testing.T) {
 	fixture := newResponsesWSBillingTest(t, `tier("request", fixed(0.002))`, func(*websocket.Conn, *http.Request) {})
 	require.NoError(t, model.DB.AutoMigrate(&model.Option{}))
+	require.NoError(t, model.DB.Create(&model.Option{Key: model.ChannelHealthConfigKey, Value: `{"enabled":true,"pools":[]}`}).Error)
 	var calls atomic.Int32
 	var fail atomic.Bool
 	var completionTokens atomic.Int32
 	completionTokens.Store(1)
+	var maxTokens atomic.Int32
+	maxTokens.Store(1)
 	fixture.httpUpstream = func(w http.ResponseWriter, r *http.Request) {
 		calls.Add(1)
 		var body map[string]any
 		require.NoError(t, json.NewDecoder(r.Body).Decode(&body))
-		require.Equal(t, float64(1), body["max_tokens"])
-		require.Equal(t, []any{map[string]any{"role": "user", "content": "hello"}}, body["messages"])
+		require.Equal(t, float64(maxTokens.Load()), body["max_tokens"])
+		require.Equal(t, []any{map[string]any{"role": "user", "content": "reply ok"}}, body["messages"])
 		if fail.Load() {
 			w.WriteHeader(http.StatusBadGateway)
 			_, _ = fmt.Fprint(w, `{"error":{"message":"upstream unavailable"}}`)
@@ -88,7 +91,19 @@ func TestModelHealthProbeUsesOneGreetingRequestAndNoFallback(t *testing.T) {
 	saved = model.ReadModelHealthState("ws-billing")
 	require.True(t, saved.BudgetPaused)
 	require.Equal(t, "unknown", saved.Status)
+	// The model worker must inherit the same larger cap as the upstream pool.
+	config, err := json.Marshal(model.ChannelHealthConfig{Enabled: true, Pools: []model.ChannelHealthPool{{UpstreamModel: "gpt-4o", ProbeMaxOutputTokens: 64, ProbeOutputBudgetTokens: 64, Channels: map[int]string{fixture.channel.Id: model.ChannelHealthSignature(fixture.channel)}}}})
+	require.NoError(t, err)
+	require.NoError(t, model.DB.Model(&model.Option{}).Where("key = ?", model.ChannelHealthConfigKey).Update("value", string(config)).Error)
+	maxTokens.Store(64)
+	completionTokens.Store(36)
+	saved.LastAttemptAt += 180
+	runModelHealthProbe("ws-billing", model.ChannelHealthState{LastAttemptAt: saved.LastAttemptAt}, fixture.user.Id)
+	require.EqualValues(t, 4, calls.Load())
+	saved = model.ReadModelHealthState("ws-billing")
+	require.Equal(t, "available", saved.Status)
+	require.False(t, saved.BudgetPaused)
 	require.NoError(t, model.DB.Model(&model.Model{}).Where("model_name = ?", "ws-billing").Update("status", 0).Error)
 	runModelHealthProbe("ws-billing", saved, fixture.user.Id)
-	require.EqualValues(t, 3, calls.Load(), "unpublished models must not spend probe quota")
+	require.EqualValues(t, 4, calls.Load(), "unpublished models must not spend probe quota")
 }

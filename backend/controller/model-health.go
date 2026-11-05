@@ -143,16 +143,17 @@ func runModelHealthProbe(name string, state model.ChannelHealthState, userID int
 		_ = model.SaveModelHealthState(name, state)
 		return
 	}
+	var config model.ChannelHealthConfig
+	if model.ReadChannelHealthJSON(model.ChannelHealthConfigKey, &config) != nil {
+		return
+	}
+	limits := modelHealthProbeLimits(name, channel, config)
+	limits.LogLabel = "模型状态检测"
 	reserved, err := model.ReserveHealthProbe(time.Now().Unix())
 	if err != nil || !reserved {
 		state.Action = "主动检测预算暂不可用，继续复用真实请求，次日自动恢复日预算"
 		_ = model.SaveModelHealthState(name, state)
 		return
-	}
-	limits := channelHealthProbeLimits(model.ChannelHealthPool{})
-	limits.LogLabel = "模型状态检测"
-	if strings.HasPrefix(name, "gpt-6") {
-		limits.OutputBudgetTokens = 16
 	}
 	ctx, cancel := context.WithTimeout(context.WithValue(context.Background(), healthProbeContextKey{}, limits), 45*time.Second)
 	defer cancel()
@@ -174,6 +175,24 @@ func runModelHealthProbe(name string, state model.ChannelHealthState, userID int
 	if err := model.SaveModelHealthState(name, state); err != nil {
 		common.SysError("model health state save failed")
 	}
+}
+
+// Both health workers must use the approved limits for this exact upstream route.
+func modelHealthProbeLimits(name string, channel *model.Channel, config model.ChannelHealthConfig) healthProbeLimits {
+	limits := channelHealthProbeLimits(model.ChannelHealthPool{})
+	signature := model.ChannelHealthSignature(channel)
+	for _, pool := range config.Pools {
+		if pool.Channels[channel.Id] != signature || !slices.Contains(channelHealthProbeModels(pool, *channel), name) {
+			continue
+		}
+		poolLimits := channelHealthProbeLimits(pool)
+		limits.MaxOutputTokens = max(limits.MaxOutputTokens, poolLimits.MaxOutputTokens)
+		limits.OutputBudgetTokens = max(limits.OutputBudgetTokens, poolLimits.OutputBudgetTokens)
+	}
+	if strings.HasPrefix(name, "gpt-6") {
+		limits.OutputBudgetTokens = max(limits.OutputBudgetTokens, 16)
+	}
+	return limits
 }
 
 func advanceModelHealth(state *model.ChannelHealthState, point model.ChannelHealthPoint) {
