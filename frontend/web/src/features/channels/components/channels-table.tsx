@@ -44,7 +44,10 @@ import {
 } from '@/components/ui/tooltip'
 import { useMediaQuery } from '@/hooks'
 import { useTableUrlState } from '@/hooks/use-table-url-state'
-import { requireServerSuccess } from '@/lib/server-error-message'
+import {
+  getServerErrorMessage,
+  requireServerSuccess,
+} from '@/lib/server-error-message'
 
 import { getChannels, searchChannels, getGroups } from '../api'
 import {
@@ -220,7 +223,7 @@ export function ChannelsTable() {
 
   // Fetch channels data
   // eslint-disable-next-line @tanstack/query/exhaustive-deps
-  const { data, isLoading, isFetching } = useQuery({
+  const { data, isLoading, isFetching, isError, error, refetch } = useQuery({
     queryKey: channelsQueryKeys.list({
       keyword: globalFilter,
       model: modelFilter,
@@ -416,10 +419,27 @@ export function ChannelsTable() {
       columns={columns}
       isLoading={isLoading}
       isFetching={isFetching}
-      emptyTitle={t('No Channels Found')}
-      emptyDescription={t(
-        'No channels available. Create your first channel to get started.'
-      )}
+      emptyTitle={
+        isError ? t('Failed to load channel') : t('No Channels Found')
+      }
+      emptyDescription={
+        isError
+          ? getServerErrorMessage(error)
+          : t(
+              'No channels available. Create your first channel to get started.'
+            )
+      }
+      emptyAction={
+        isError ? (
+          <Button
+            variant='outline'
+            disabled={isFetching}
+            onClick={() => void refetch()}
+          >
+            {t('Retry')}
+          </Button>
+        ) : undefined
+      }
       skeletonKeyPrefix='channel-skeleton'
       enableCardView
       viewModeStorageKey={CHANNELS_VIEW_MODE_STORAGE_KEY}
