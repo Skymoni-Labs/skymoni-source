@@ -12,6 +12,7 @@ type DomesticReference = {
   currency: string
   kind: string
   source: string
+  reference_period?: string
   tiers: Record<
     string,
     { p: number; c: number; cr: number; cc?: number; cc1h?: number }
@@ -49,6 +50,7 @@ export type MatrixRow = {
     write?: number
     write1h?: number
     source: string
+    referencePeriod?: string
   }
 }
 
@@ -173,6 +175,7 @@ export function matrixRows(
           write1h:
             reference.cc1h === undefined ? undefined : reference.cc1h * toUSD,
           source: domestic.source,
+          referencePeriod: domestic.reference_period,
         }
       }
     }

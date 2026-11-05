@@ -3,6 +3,44 @@ import { describe, expect, it } from 'vitest'
 import domesticPolicy from '../../../../moni/domestic-official-pricing.json'
 import { matrixRows } from '../lib/matrix-price'
 import type { PricingModel } from '../types'
+import routeModels from './deepseek-route-pricing.fixture.json'
+
+it.each(routeModels)(
+  'resolves the live $model_name quote and its explicit reference currency',
+  (route) => {
+    for (const fx of [6.672317387059554, 7.3]) {
+      const [row] = matrixRows(route as PricingModel, 0.1 / fx)
+      const isFlash = route.model_name.includes('flash')
+      const isS = route.model_name.endsWith('-s')
+      expect(row.unit).toBe('token')
+      expect(row.input).toBeGreaterThan(0)
+      expect(row.output).toBeGreaterThan(0)
+      expect(row.read).toBeGreaterThan(0)
+      expect(row.official?.referencePeriod).toBe(isS ? 'off_peak' : 'peak')
+      if (isS) {
+        expect((row.input ?? 0) * fx).toBeCloseTo(isFlash ? 0.5 : 2.25, 10)
+        expect((row.output ?? 0) * fx).toBeCloseTo(isFlash ? 2 : 6.75, 10)
+        expect(row.write).toBe(row.input)
+        expect(row.write1h).toBe(row.input)
+      }
+      const expectedMultiplier = isS ? 0.5 : (0.25 * 6.6482703281027105) / fx
+      for (const field of ['input', 'output', 'read'] as const) {
+        expect(
+          (row[field] ?? Number.NaN) / (row.official?.[field] ?? Number.NaN)
+        ).toBeCloseTo(expectedMultiplier, 9)
+      }
+      expect(
+        matrixRows(
+          {
+            ...route,
+            billing_expr: 'tier("custom", p * 1 + c * 4)',
+          } as PricingModel,
+          0.1 / fx
+        )[0].official
+      ).toBeUndefined()
+    }
+  }
+)
 
 it('compares Gemini 3.8 Flash with current standard prices at the approved 0.24x quote', () => {
   const rows = matrixRows(

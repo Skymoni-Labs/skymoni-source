@@ -4,6 +4,49 @@ import { expect, it, vi } from 'vitest'
 
 import { PricingMatrix } from '../components/pricing-matrix'
 import type { PricingModel } from '../types'
+import routeModels from './deepseek-route-pricing.fixture.json'
+
+it.each(routeModels)(
+  'renders $model_name prices and multiplier from the live expression',
+  (route) => {
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    })
+    client.setQueryData(['status'], { reference_usd_cny: 6.672317387059554 })
+    render(
+      <QueryClientProvider client={client}>
+        <PricingMatrix
+          models={[route as PricingModel]}
+          vendors={[]}
+          groups={['default']}
+          vendor='all'
+          group='all'
+          search=''
+          onVendor={() => {}}
+          onGroup={() => {}}
+          onSearch={() => {}}
+          onClear={() => {}}
+          onModelClick={() => {}}
+        />
+      </QueryClientProvider>
+    )
+    const isS = route.model_name.endsWith('-s')
+    expect(
+      screen.getByRole('link', { name: isS ? '0.5×' : '0.25×' })
+    ).toHaveAttribute(
+      'href',
+      isS
+        ? 'https://api-docs.deepseek.com/zh-cn/quick_start/pricing/'
+        : 'https://api-docs.deepseek.com/quick_start/pricing/'
+    )
+    expect(screen.getByRole('table')).toHaveTextContent(
+      isS ? 'Off-peak price' : 'Peak price'
+    )
+    expect(screen.queryByText('Unknown')).toBeNull()
+    expect(screen.queryByText('See details for pricing')).toBeNull()
+    client.clear()
+  }
+)
 
 it('shows Gemini official prices and 0.24x instead of unknown, with cache write not separately priced', () => {
   const client = new QueryClient({

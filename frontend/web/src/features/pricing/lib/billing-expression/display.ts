@@ -138,6 +138,23 @@ function tokenTier(
       if (price === null) return null
       input = term.right
     }
+    // A shared coefficient, e.g. (p + cc + cc1h) * 5, prices each
+    // listed token category independently. Reject non-linear terms in full.
+    const grouped = flattenBinary(input, '+')
+    if (grouped.length > 1) {
+      for (const part of grouped) {
+        if (
+          part.kind !== 'variable' ||
+          part.name === 'len' ||
+          part.name === 'image_count' ||
+          Object.hasOwn(prices, part.name)
+        ) {
+          return null
+        }
+        prices[part.name] = price
+      }
+      continue
+    }
     let variable: TokenVariable
     if (
       input.kind === 'variable' &&

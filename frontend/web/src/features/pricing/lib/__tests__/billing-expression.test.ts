@@ -58,6 +58,32 @@ const extras: ExtraTokenValues = {
   audioOutputTokens: 0,
 }
 
+test('reads shared linear token coefficients without accepting partial nonlinear or duplicate prices', () => {
+  const read = (source: string) => {
+    const compiled = compileBillingExpression(source)
+    assert(compiled.status === 'ready')
+    return readTokenTierChain(compiled.ast)
+  }
+  expect(
+    read('tier("s", (p + cc + cc1h) * 5 + c * 20 + cr * 0.1)')?.[0].prices
+  ).toEqual({ p: 5, cc: 5, cc1h: 5, c: 20, cr: 0.1 })
+  expect(read('tier("s", 5 * (p + cc + cc1h) + c * 20)')?.[0].prices).toEqual({
+    p: 5,
+    cc: 5,
+    cc1h: 5,
+    c: 20,
+  })
+  for (const term of [
+    '(p + cc + p) * 5',
+    '(p + cc * c) * 5',
+    '(p + len) * 5',
+    '(p + image_count) * 5',
+    '(p + cc) * 5 + p * 2',
+  ]) {
+    expect(read(`tier("s", ${term})`)).toBeNull()
+  }
+})
+
 test('evaluates and round-trips separate image cache prices including an explicit zero', () => {
   const source =
     'tier("standard", p * 5 + cr * 1.25 + img * 8 + img_cr * 2 + c * 30)'

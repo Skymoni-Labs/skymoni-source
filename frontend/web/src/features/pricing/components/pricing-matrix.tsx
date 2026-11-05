@@ -244,6 +244,12 @@ export function PricingMatrix(props: {
             'deepseek-flash',
             'deepseek-flash-low',
             'deepseek-v4-pro',
+            'deepseek-v4.1-flash',
+            'deepseek-v4.1-flash-low',
+            'deepseek-v4.1-flash-d',
+            'deepseek-v4-pro-d',
+            'deepseek-v4.1-flash-s',
+            'deepseek-v4-pro-s',
             'glm-5.3',
             'glm-5.3-flash',
             'minimax-m3',
@@ -253,8 +259,7 @@ export function PricingMatrix(props: {
           {price.write1h !== undefined && (
             <>
               {' (1h '}
-              {priceCompare(price.write1h, original?.write1h)}
-              {')'}
+              {priceCompare(price.write1h, original?.write1h)})
             </>
           )}
         </span>
@@ -756,8 +761,14 @@ export function PricingMatrix(props: {
                                 <TableCell className='text-muted-foreground py-2 font-mono text-[11px]'>
                                   {price.official && (
                                     <span className='mr-2 font-sans text-[11px]'>
-                                      {timePricing
-                                        ? t(timeTierLabel(price.label))
+                                      {price.official.referencePeriod ||
+                                      timePricing
+                                        ? t(
+                                            timeTierLabel(
+                                              price.official.referencePeriod ??
+                                                price.label
+                                            )
+                                          )
                                         : price.label}
                                     </span>
                                   )}

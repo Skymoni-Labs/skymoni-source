@@ -22,7 +22,7 @@
     },
     "deepseek-flash-low": {
       "currency": "USD",
-      "multiplier": 0.1,
+      "multiplier": 0.09,
       "kind": "peak",
       "source": "https://api-docs.deepseek.com/quick_start/pricing/",
       "tiers": {
@@ -120,7 +120,7 @@
     },
     "deepseek-v4.1-flash-low": {
       "currency": "USD",
-      "multiplier": 0.1,
+      "multiplier": 0.09,
       "kind": "peak",
       "source": "https://api-docs.deepseek.com/quick_start/pricing/",
       "tiers": {
@@ -155,16 +155,60 @@
       }
     },
     "deepseek-v4.1-flash-s": {
-      "currency": "USD",
-      "multiplier": 0.45,
+      "currency": "CNY",
+      "multiplier": 0.5,
       "kind": "flat",
-      "note": "Dedicated self-hosted route with a fixed price based on the official standard-time reference.",
+      "reference_period": "off_peak",
+      "note": "Mixed upstream route; fixed quote compared with the DeepSeek official CNY off-peak reference, not a guarantee of the routed model.",
+      "source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "tiers": {
+        "ds_offpeak_half_flash_gpt": {
+          "p": 1,
+          "c": 4,
+          "cr": 0.02
+        }
+      }
+    },
+    "deepseek-v4.1-flash-d": {
+      "currency": "USD",
+      "multiplier": 0.25,
+      "kind": "flat",
+      "reference_period": "peak",
       "source": "https://api-docs.deepseek.com/quick_start/pricing/",
       "tiers": {
-        "base": {
+        "fixed_peak_ref_025_d": {
           "p": 0.3,
           "c": 1.2,
           "cr": 0.006
+        }
+      }
+    },
+    "deepseek-v4-pro-d": {
+      "currency": "USD",
+      "multiplier": 0.25,
+      "kind": "flat",
+      "reference_period": "peak",
+      "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "tiers": {
+        "fixed_peak_ref_025_d": {
+          "p": 1.32,
+          "c": 3.96,
+          "cr": 0.044
+        }
+      }
+    },
+    "deepseek-v4-pro-s": {
+      "currency": "CNY",
+      "multiplier": 0.5,
+      "kind": "flat",
+      "reference_period": "off_peak",
+      "note": "Mixed upstream route; fixed quote compared with the DeepSeek official CNY off-peak reference, not a guarantee of the routed model.",
+      "source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "tiers": {
+        "ds_offpeak_half_pro_gpt": {
+          "p": 4.5,
+          "c": 13.5,
+          "cr": 0.15
         }
       }
     }
