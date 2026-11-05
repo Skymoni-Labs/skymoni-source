@@ -53,6 +53,15 @@ input[type='range'] {
   color: var(--text);
   font-size: 12px;
 }
+.chat-open-control {
+  margin-top: 8px;
+  border-color: var(--button);
+  background: var(--button);
+  color: var(--button-ink);
+}
+.chat-open-control > span {
+  margin-left: 8px;
+}
 .companion {
   --size: 178px;
   position: fixed;

@@ -10,7 +10,7 @@
   const stylesheet = document.createElement('link')
   stylesheet.rel = 'stylesheet'
   stylesheet.href =
-    '/static/cloud-companion-20261103/companion-f706d450b467.css'
+    '/static/cloud-companion-20261103/companion-38baf36978f9.css'
   const template = document.createElement('template')
   // The template is a static, bundled asset. No user or server HTML is inserted.
   template.innerHTML = String.raw`  <aside class="companion" id="companion" aria-label="云朵伙伴">
@@ -53,6 +53,7 @@
         <button class="support-close" id="size-panel-close" type="button" aria-label="关闭大小设置">×</button>
       </div>
       <button class="wave-control" id="widget-wave" type="button">挥挥手 ✋</button>
+      <button class="wave-control chat-open-control" id="widget-open-chat" type="button" aria-controls="support-panel" aria-haspopup="dialog">和小云对话 <span aria-hidden="true">↗</span></button>
       <label class="widget-size-label" for="widget-size-control">自由调整 <output id="widget-size-value" for="widget-size-control">178 px</output></label>
       <input id="widget-size-control" class="widget-size-control" type="range" min="64" max="300" value="178">
       <div class="size-range-labels" aria-hidden="true"><span>更小巧</span><span>更显眼</span></div>
@@ -1091,4 +1092,7 @@
   shadow
     .querySelector('#widget-wave')
     .addEventListener('click', () => greet('wave'))
+  shadow
+    .querySelector('#widget-open-chat')
+    .addEventListener('click', openSupport)
 })()
