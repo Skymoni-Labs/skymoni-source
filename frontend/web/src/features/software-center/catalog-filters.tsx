@@ -18,17 +18,26 @@ import {
   softwareTopic,
   type CatalogFilters,
 } from './catalog-browsing'
-import type { SoftwareEntry } from './types'
+import type { PublicCatalogEntry } from './skivu-plugins'
 
 const kinds = [
   { value: 'all', label: 'All apps', icon: GridViewIcon },
   { value: 'software', label: 'Software', icon: ComputerIcon },
   { value: 'tool', label: 'Companion tools', icon: ToolsIcon },
+  { value: 'plugin', label: 'Skivu plugins', icon: GridViewIcon },
 ] as const
-const platforms = ['Windows', 'Android', 'macOS', 'Linux', 'iOS', 'Web']
+const platforms = [
+  'Windows',
+  'Android',
+  'macOS',
+  'Linux',
+  'iOS',
+  'Web',
+  'Skivu',
+]
 
 export function SoftwareCatalogFilters(props: {
-  entries: SoftwareEntry[]
+  entries: PublicCatalogEntry[]
   filters: CatalogFilters
   onChange: (filters: CatalogFilters) => void
 }) {
@@ -50,7 +59,12 @@ export function SoftwareCatalogFilters(props: {
           value={[props.filters.kind]}
           onValueChange={(values) => {
             const kind = values[0]
-            if (kind === 'all' || kind === 'software' || kind === 'tool') {
+            if (
+              kind === 'all' ||
+              kind === 'software' ||
+              kind === 'tool' ||
+              kind === 'plugin'
+            ) {
               props.onChange({
                 ...props.filters,
                 kind,

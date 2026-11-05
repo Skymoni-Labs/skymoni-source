@@ -6,6 +6,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { api } from '@/lib/api'
 
 import { SoftwareCenter } from '..'
+import * as skivuPlugins from '../skivu-plugins'
 import type { SoftwareEntry } from '../types'
 import { SoftwareTestRouter } from './router-fixture'
 
@@ -88,6 +89,11 @@ function renderCenter() {
   return client
 }
 beforeEach(() => {
+  vi.spyOn(skivuPlugins, 'loadSkivuPlugins').mockResolvedValue({
+    items: [],
+    unavailableSources: [],
+    rejectedItems: 0,
+  })
   vi.stubGlobal(
     'IntersectionObserver',
     class {

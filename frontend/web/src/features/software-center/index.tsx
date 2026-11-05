@@ -4,6 +4,7 @@ import {
   Check,
   Info,
   LayoutGrid,
+  Puzzle,
   Search,
   Sparkles,
   Wrench,
@@ -34,9 +35,14 @@ import {
 import { SoftwareCatalogFilters } from './catalog-filters'
 import { SoftwareCatalogSection } from './catalog-section'
 import { SoftwareFeatured } from './featured'
-import type { SoftwareEntry } from './types'
+import {
+  loadSkivuPlugins,
+  skivuPluginQueryKey,
+  type PublicCatalogEntry,
+} from './skivu-plugins'
 
 import '@/styles/software-center.css'
+import '@/styles/software-plugins.css'
 
 export function SoftwareCenter() {
   const { t, i18n } = useTranslation()
@@ -49,7 +55,18 @@ export function SoftwareCenter() {
     refetchOnWindowFocus: true,
     meta: { errorToast: false },
   })
-  const entries = catalog.data?.items ?? []
+  const plugins = useQuery({
+    queryKey: skivuPluginQueryKey,
+    queryFn: ({ signal }) => loadSkivuPlugins(signal),
+    staleTime: 60_000,
+    retry: 1,
+    meta: { errorToast: false },
+  })
+  const softwareEntries = catalog.data?.items ?? []
+  const entries: PublicCatalogEntry[] = [
+    ...softwareEntries,
+    ...(plugins.data?.items ?? []),
+  ]
   const query = filters.search.trim().toLocaleLowerCase()
   const filtered = entries.filter((entry) => {
     const kindMatches = filters.kind === 'all' || entry.kind === filters.kind
@@ -66,6 +83,7 @@ export function SoftwareCenter() {
       entry.platform,
       entry.details?.category,
       t(entry.details?.category || ''),
+      ...(entry.kind === 'plugin' ? [entry.pluginId, entry.author] : []),
     ]
       .join(' ')
       .toLocaleLowerCase()
@@ -81,7 +99,7 @@ export function SoftwareCenter() {
     filters.kind !== 'all' ||
     filters.platform !== 'all' ||
     filters.topic !== 'all'
-  const viewAll = (kind: SoftwareEntry['kind']) => {
+  const viewAll = (kind: PublicCatalogEntry['kind']) => {
     setFilters({ ...defaultCatalogFilters, kind })
     requestAnimationFrame(() => {
       browse.current?.focus({ preventScroll: true })
@@ -112,6 +130,12 @@ export function SoftwareCenter() {
               icon: Wrench,
               href: '#community-tools',
               filter: 'tool' as const,
+            },
+            {
+              label: 'Skivu plugins',
+              icon: Puzzle,
+              href: '#skivu-plugins',
+              filter: 'plugin' as const,
             },
           ].map((item) => (
             <Button
@@ -166,7 +190,7 @@ export function SoftwareCenter() {
               <InputGroupInput
                 type='search'
                 aria-label={t('Search apps and tools')}
-                placeholder={t('Search apps and tools')}
+                placeholder={t('Search apps, tools and plugins')}
                 value={filters.search}
                 onChange={(event) =>
                   setFilters({ ...filters, search: event.target.value })
@@ -189,9 +213,9 @@ export function SoftwareCenter() {
           {!catalog.isPending &&
             !catalog.isError &&
             !isFiltered &&
-            entries.length > 0 && (
+            softwareEntries.length > 0 && (
               <SoftwareFeatured
-                entries={entries}
+                entries={softwareEntries}
                 config={catalog.data?.featured}
               />
             )}
@@ -205,7 +229,11 @@ export function SoftwareCenter() {
           </div>
 
           <div className='sc-catalog-status' aria-live='polite'>
-            <span>{t('Official downloads and web apps, in one place.')}</span>
+            <span>
+              {t(
+                'Official downloads, web apps and Skivu plugins, in one place.'
+              )}
+            </span>
             {isFiltered && (
               <span>
                 {t('Results: {{total}}', {
@@ -225,8 +253,38 @@ export function SoftwareCenter() {
           {catalog.isError && (
             <ErrorState onRetry={() => void catalog.refetch()} />
           )}
+          {plugins.isPending && (
+            <p className='sc-plugin-status' role='status'>
+              {t('Loading Skivu plugins…')}
+            </p>
+          )}
+          {(plugins.isError ||
+            Boolean(plugins.data?.unavailableSources.length) ||
+            Boolean(plugins.data?.rejectedItems)) && (
+            <div className='sc-plugin-status' role='status'>
+              <span>
+                {t(
+                  plugins.isError
+                    ? 'Skivu plugins could not be loaded.'
+                    : 'Some Skivu plugins could not be loaded.'
+                )}
+              </span>
+              <Button
+                variant='ghost'
+                size='sm'
+                disabled={plugins.isFetching}
+                onClick={() => void plugins.refetch()}
+              >
+                {t('Retry')}
+              </Button>
+            </div>
+          )}
           {!catalog.isPending &&
+            !plugins.isPending &&
             !catalog.isError &&
+            !plugins.isError &&
+            !plugins.data?.unavailableSources.length &&
+            !plugins.data?.rejectedItems &&
             isFiltered &&
             !filtered.length && (
               <EmptyState
@@ -248,9 +306,12 @@ export function SoftwareCenter() {
               />
             )}
 
-          {!catalog.isPending && !catalog.isError && (
+          {(!catalog.isPending || !plugins.isPending) && (
             <div className='sc-catalog'>
-              {(['software', 'tool'] as const).map((kind) => {
+              {(['software', 'tool', 'plugin'] as const).map((kind) => {
+                if (kind === 'plugin' ? !plugins.data : !catalog.data) {
+                  return null
+                }
                 const matches = filtered.filter((entry) => entry.kind === kind)
                 if (!matches.length && (isFiltered || entries.length > 0)) {
                   return null

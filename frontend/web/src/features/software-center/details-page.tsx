@@ -23,13 +23,24 @@ import { ProductImages } from '@/features/shop-preview/components/product-images
 import { loadPublicSoftware } from './api'
 import { SoftwareArtwork } from './artwork'
 import { softwareDownloadHeading, softwareDownloadNote } from './download-links'
+import { SkivuPluginDetailsPage } from './skivu-plugin-details'
+import { skivuPluginPrefix } from './skivu-plugins'
 import { SoftwareAction, SoftwareStoreAction } from './software-card'
 import type { SoftwareEntry } from './types'
 
 import '@/styles/software-center.css'
 import '@/styles/software-details.css'
+import '@/styles/software-plugins.css'
 
 export function SoftwareDetailsPage(props: { softwareId: string }) {
+  return props.softwareId.startsWith(skivuPluginPrefix) ? (
+    <SkivuPluginDetailsPage softwareId={props.softwareId} />
+  ) : (
+    <ExistingSoftwareDetailsPage softwareId={props.softwareId} />
+  )
+}
+
+function ExistingSoftwareDetailsPage(props: { softwareId: string }) {
   const { t } = useTranslation()
   const catalog = useQuery({
     queryKey: ['software', 'public'],

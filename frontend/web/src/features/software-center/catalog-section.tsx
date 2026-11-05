@@ -15,16 +15,17 @@ import { formatNumber } from '@/lib/format'
 import { getPageNumbers } from '@/lib/utils'
 
 import { SoftwareEntryCard } from './entry-card'
-import type { SoftwareEntry } from './types'
+import { SkivuPluginCard } from './skivu-plugin-card'
+import type { PublicCatalogEntry } from './skivu-plugins'
 
 const previewSize = 6
 const pageSize = 12
 
 export function SoftwareCatalogSection(props: {
-  kind: SoftwareEntry['kind']
-  entries: SoftwareEntry[]
+  kind: PublicCatalogEntry['kind']
+  entries: PublicCatalogEntry[]
   preview: boolean
-  onViewAll: (kind: SoftwareEntry['kind']) => void
+  onViewAll: (kind: PublicCatalogEntry['kind']) => void
 }) {
   const { t, i18n } = useTranslation()
   const locale = toIntlLocale(i18n.resolvedLanguage || i18n.language)
@@ -37,9 +38,30 @@ export function SoftwareCatalogSection(props: {
     start,
     start + (props.preview ? previewSize : pageSize)
   )
-  const sectionId =
-    props.kind === 'software' ? 'skymoni-software' : 'community-tools'
-  const title = props.kind === 'software' ? t('Software') : t('Companion tools')
+  const section = {
+    software: {
+      id: 'skymoni-software',
+      title: t('Software'),
+      description: t('Download and make it yours.'),
+      empty: t('No software published yet'),
+    },
+    tool: {
+      id: 'community-tools',
+      title: t('Companion tools'),
+      description: t('AI clients, coding assistants and everyday tools.'),
+      empty: t('No tools published yet'),
+    },
+    plugin: {
+      id: 'skivu-plugins',
+      title: t('Skivu plugins'),
+      description: t(
+        'Extend Skivu with interfaces, skills and interactive plugins.'
+      ),
+      empty: t('No plugins published yet'),
+    },
+  }[props.kind]
+  const sectionId = section.id
+  const title = section.title
   const goToPage = (next: number) => {
     setPage(next)
     heading.current?.focus({ preventScroll: true })
@@ -76,26 +98,20 @@ export function SoftwareCatalogSection(props: {
             {formatNumber(props.entries.length, locale)}
           </span>
         </div>
-        <span>
-          {props.kind === 'software'
-            ? t('Download and make it yours.')
-            : t('AI clients, coding assistants and everyday tools.')}
-        </span>
+        <span>{section.description}</span>
       </div>
       {visible.length > 0 ? (
         <div className='sc-app-grid'>
-          {visible.map((entry) => (
-            <SoftwareEntryCard key={entry.id} entry={entry} />
-          ))}
+          {visible.map((entry) =>
+            entry.kind === 'plugin' ? (
+              <SkivuPluginCard key={entry.id} entry={entry} />
+            ) : (
+              <SoftwareEntryCard key={entry.id} entry={entry} />
+            )
+          )}
         </div>
       ) : (
-        <EmptyState
-          title={
-            props.kind === 'software'
-              ? t('No software published yet')
-              : t('No tools published yet')
-          }
-        />
+        <EmptyState title={section.empty} />
       )}
       {props.preview && props.entries.length > previewSize && (
         <Button

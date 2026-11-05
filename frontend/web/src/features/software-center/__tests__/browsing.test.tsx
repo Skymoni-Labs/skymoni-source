@@ -12,6 +12,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { api } from '@/lib/api'
 
 import { SoftwareCenter } from '..'
+import * as skivuPlugins from '../skivu-plugins'
 import type { SoftwareEntry } from '../types'
 import { SoftwareTestRouter } from './router-fixture'
 
@@ -80,6 +81,11 @@ beforeEach(() => {
     value: vi.fn(),
   })
   vi.spyOn(api, 'get')
+  vi.spyOn(skivuPlugins, 'loadSkivuPlugins').mockResolvedValue({
+    items: [],
+    unavailableSources: [],
+    rejectedItems: 0,
+  })
   respond([...software, ...tools])
 })
 afterEach(() => {

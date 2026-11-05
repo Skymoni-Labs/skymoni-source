@@ -1,7 +1,7 @@
-import type { SoftwareEntry } from './types'
+import type { PublicCatalogEntry } from './skivu-plugins'
 
 export type CatalogFilters = {
-  kind: 'all' | SoftwareEntry['kind']
+  kind: 'all' | PublicCatalogEntry['kind']
   platform: string
   topic: string
   search: string
@@ -14,6 +14,6 @@ export const defaultCatalogFilters: CatalogFilters = {
   search: '',
 }
 
-export function softwareTopic(entry: SoftwareEntry): string {
+export function softwareTopic(entry: PublicCatalogEntry): string {
   return `category:${entry.details?.category?.trim() || ''}`
 }

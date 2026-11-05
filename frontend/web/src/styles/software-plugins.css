@@ -1,0 +1,73 @@
+.sc-catalog-section#skivu-plugins {
+  scroll-margin-top: 100px;
+}
+.sc-plugin-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+  color: var(--hp-muted);
+  font-size: 13px;
+}
+.sc-plugin-install {
+  max-width: min(520px, calc(100% - 2rem));
+  padding: 28px;
+  line-height: 1.8;
+}
+.sc-plugin-install [data-slot='dialog-title'] {
+  padding-right: 24px;
+  line-height: 1.6;
+}
+.sc-plugin-steps {
+  list-style: decimal;
+  padding-left: 22px;
+}
+.sc-plugin-steps li + li {
+  margin-top: 10px;
+}
+.sc-plugin-note {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.sc-plugin-permissions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.sc-plugin-permissions li {
+  padding: 6px 12px;
+  border: 1px solid var(--sc-border);
+  border-radius: 8px;
+  color: var(--hp-muted);
+  font-size: 13px;
+}
+.sc-plugin-checksum {
+  display: block;
+  margin: 6px 0 12px;
+  overflow-wrap: anywhere;
+  color: var(--hp-muted);
+  font-size: 12px;
+}
+.sc-plugin-info > div + div {
+  margin-top: 18px;
+}
+.sc-plugin-info dt {
+  color: var(--hp-muted);
+  font-size: 12px;
+}
+.sc-plugin-info dd {
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+  color: var(--hp-ink);
+  font-size: 14px;
+}
+@media (max-width: 767px) {
+  .sc-kind-tabs[data-slot='toggle-group'] {
+    flex-wrap: wrap;
+  }
+  .sc-kind-tabs [data-slot='toggle-group-item'] {
+    flex: 1 1 calc(50% - 4px);
+  }
+}
