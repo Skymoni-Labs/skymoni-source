@@ -1,0 +1,36 @@
+[Unit]
+Description=Skymoni cloud companion website help
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+StateDirectory=skymoni-cloud-assistant
+StateDirectoryMode=0700
+WorkingDirectory=/opt/skymoni-cloud-assistant
+LoadCredential=config.json:/etc/skymoni-cloud-assistant/config.json
+Environment=SKYMONI_ASSISTANT_CONFIG=%d/config.json
+ExecStart=/usr/bin/python3 -B /opt/skymoni-cloud-assistant/server.py
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=55
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+LockPersonality=yes
+MemoryMax=256M
+TasksMax=32
+LimitNOFILE=128
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,3801 @@
+{
+  "published_articles": [
+    {
+      "id": "quick-start",
+      "title": "skymoni 快速开始",
+      "category": "入门指南",
+      "summary": "第一次用，只需要准备自己的 API 密钥和一个模型，再把地址填进软件。按下面五步做，先完成一条简单对话。",
+      "url": "https://skymoni.com/docs?doc=quick-start&edit=false",
+      "published_at": 1791653840,
+      "blocks": [
+        {
+          "id": "513ee1ad-068b-4250-968c-88308ef42b5d",
+          "type": "heading",
+          "text": "1. 登录，看看可用额度",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "fa830701-4a7d-4a65-97c2-2708ebc926d8",
+          "type": "text",
+          "text": "打开 [skymoni](https://skymoni.com)，登录自己的账户。在「钱包」查看可用额度；需要购买或兑换时，按钱包当前入口操作。\n\n钱包余额与 API 密钥的限额都会影响调用。账户有余额，也要确认这把密钥没有到期、被停用或用完限额。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "30177c96-2028-47fc-ab8b-d8918609e03a",
+          "type": "heading",
+          "text": "2. 创建 API 密钥",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "b27292d1-ab84-4b8e-b8cb-0fbb6b774180",
+          "type": "text",
+          "text": "进入「API 密钥」，创建一把密钥，名称填自己好认的用途，例如「手机聊天」。选择自己可以使用的分组，按需要设置限额和过期时间，保存后复制。\n\n软件中的 API Key 填这把密钥。步骤见 [创建和管理 API 密钥](/docs?doc=api-keys&edit=false)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "51f5afb2-dff9-4834-8a3e-e7ef00a83e1d",
+          "type": "heading",
+          "text": "3. 复制一个模型 ID",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "7455670e-5928-4eea-a87d-02299775cd36",
+          "type": "text",
+          "text": "在「模型广场」选择支持普通对话的模型，确认分组和价格，复制完整模型 ID。\n\n保留名称中的后缀，不要用厂商名、显示标题或自己缩写的名称代替。选型说明见 [模型怎么选](/docs?doc=model-selection&edit=false)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "ff6b1031-1cc3-4cab-ad33-ddb88af70014",
+          "type": "heading",
+          "text": "4. 选软件，填三项信息",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "3ce40591-93b2-46ae-ae73-8e80a7a166f8",
+          "type": "text",
+          "text": "不知道用哪个软件，先看 [客户端选择](/docs?doc=client-overview&edit=false)。手机或电脑聊天可以看 Chatbox、Kelivo；角色聊天看单独的 [角色扮演教程](/docs?doc=roleplay-mobile&edit=false)。\n\n| 软件里的字段 | 填什么 |\n| --- | --- |\n| API Key / API 密钥 | 自己在 skymoni 创建的完整密钥 |\n| Model / 模型 ID | 模型广场中的完整 ID |\n| API 地址 | 按对应软件教程复制 |\n\n普通 OpenAI 兼容 Base URL 常用：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "8b8aba65-4257-4d0a-ae39-a06da5369dca",
+          "type": "code",
+          "text": "https://skymoni.com/v1",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "e8b56abf-56ab-4470-8350-6118e1effa47",
+          "type": "text",
+          "text": "Cherry Studio 的 New API 服务商填 `https://skymoni.com`；要求完整请求 URL 的软件则可能填到 `/v1/chat/completions`。先看 [API 地址怎么填](/docs?doc=api-address&edit=false)，再照对应教程设置。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "2ebce971-5504-41d7-9cba-b84dc7dc15a0",
+          "type": "heading",
+          "text": "5. 发一句话，看看日志",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "b27a2487-835a-4e12-943b-d03795ce0d1c",
+          "type": "text",
+          "text": "保存后回到聊天界面，选中刚添加的服务商和模型，发送「请只回复：连接成功」。\n\n收到回复后，到「使用日志」核对时间、模型、用量和费用。先完成普通文本对话，再开启图片、联网、工具等功能。\n\n失败时保留具体错误，按 [常见错误和使用日志](/docs?doc=troubleshooting&edit=false) 排查。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "2baf3aad-6706-4c4e-aa24-0404b6a7af14",
+          "type": "heading",
+          "text": "接好之后",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "0b0864cd-5827-4861-ae16-7aed197d3931",
+          "type": "text",
+          "text": "- 想控制花费：看 [用量和费用怎么看](/docs?doc=usage-costs&edit=false)。\n- 给程序接接口：看 [开发者首次调用](/docs?doc=developer-quickstart&edit=false)。\n- 领取或购买资源：看 [钱包充值与资源领取](/docs?doc=wallet-and-warehouse&edit=false)。\n- 找软件下载：看 [软件中心教程](/docs?doc=software-center&edit=false)。\n- 展示自己的项目：看 [创作者中心教程](/docs?doc=creator-center&edit=false)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "33693ceb595aeb0efe88f9a9e78616053a7b323cefcbe447d306ec83df116d72"
+    },
+    {
+      "id": "api-keys",
+      "title": "创建和管理 API 密钥",
+      "category": "入门指南",
+      "summary": "API 密钥相当于软件调用模型的凭证。给每个软件分别创建一把，方便控制限额、核对用量和单独停用。",
+      "url": "https://skymoni.com/docs?doc=api-keys&edit=false",
+      "published_at": 1791653841,
+      "blocks": [
+        {
+          "id": "338573e4-bee7-44f3-bb82-b5c435703338",
+          "type": "heading",
+          "text": "创建一把自己的密钥",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "7dedc1be-265b-4fcc-bce0-4aead7e49bf4",
+          "type": "text",
+          "text": "1. 登录 skymoni，进入「API 密钥」。\n2. 点击创建，名称按用途填写，例如「Kelivo 手机」。\n3. 选择自己可用的分组。\n4. 设置消费限额和过期时间。\n5. 按需设置模型限制、IP 白名单，保存后复制密钥。\n\n首次测试，先确认分组包含你要用的模型。不了解高级限制时，保持默认，再按自己的预算设置限额即可。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "83e7e783-e82d-4825-b7fd-03c95bfabe24",
+          "type": "heading",
+          "text": "各项设置是什么意思",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "bc32e84c-6fc3-403c-aa11-9e57f9a5b6e7",
+          "type": "text",
+          "text": "| 设置 | 对调用的影响 |\n| --- | --- |\n| 密钥额度 | 限制这把密钥允许消耗的额度 |\n| 无限额度 | 不设密钥自身的上限，仍受账户额度和其他限制约束 |\n| 过期时间 | 到期后不能继续使用 |\n| 模型限制 | 留空允许所属分组内的全部模型；选了则只允许选中的模型 |\n| IP 白名单 | 只允许指定来源 IP；留空不限制来源 IP |\n| 分组 | 决定这把密钥的可用模型范围；价格核对对应分组价卡 |\n\n模型限制留空，不会获得其他分组的模型权限。更换分组后，原模型限制可能会被清空，需要重新核对并选择。\n\n手机网络、代理和服务器的出口 IP 可能不同；不确定出口时，不要随意填写白名单，以免自己的请求被拦住。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "9f33b94b-822c-4445-a467-c86e10225ee9",
+          "type": "heading",
+          "text": "填进软件时注意什么",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "736e40c6-d88e-4945-8066-ad6a008b72ce",
+          "type": "text",
+          "text": "将完整密钥填进 API Key 栏，前后不要带空格、换行或额外引号。普通客户端只填密钥本身；编程请求的鉴权头写法见 [开发者首次调用](/docs?doc=developer-quickstart&edit=false)。\n\n「安全与访问」中的账户管理访问令牌用于管理接口。模型调用使用「API 密钥」页面创建的密钥。\n\n密钥、地址和模型必须一起核对。其他平台生成的密钥，应在那个平台的接口使用；skymoni 接入使用自己的 skymoni 密钥。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "7f1da501-f03a-4f06-98fa-88c34e5926f9",
+          "type": "heading",
+          "text": "修改、停用和更换",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "e7aa2170-cef6-46fb-b898-cfa4b0ef19b8",
+          "type": "text",
+          "text": "在密钥列表找到目标项，编辑限额、分组、过期时间或访问限制。临时不用可以禁用；删除后，使用旧密钥的软件需要更换密钥。\n\n改完后重新做一次短测试。只更新了密钥，但聊天中仍选着旧服务商时，配置可能不会生效。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "1c6e412b-ab5b-4c78-b37d-feb32c179286",
+          "type": "heading",
+          "text": "想看某个软件花了多少",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "e286c35e-fe5c-4ce7-a159-c24b1d907ff5",
+          "type": "text",
+          "text": "为它使用独立密钥，到「使用日志」按时间、模型和密钥等当前支持的条件筛选。字段和费用说明见 [用量和费用怎么看](/docs?doc=usage-costs&edit=false)。\n\n设置限额不会另外给密钥充值，也不会增加钱包余额。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "95d3a0da-a304-4774-ba71-a84388475da8",
+          "type": "heading",
+          "text": "密钥泄露怎么办",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "2442d9b8-1f7f-4450-927d-2b69c7deac03",
+          "type": "text",
+          "text": "停用或删除泄露的密钥，创建新密钥，再更新对应软件。检查泄露期间的使用日志。\n\n分享截图时遮住完整密钥；公开代码只写占位符。保存在自己的私有配置或环境变量中，不要将带密钥的配置二维码公开分享。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "49c899c4fc59e2d5ecebc98e2bcf84988cfaadb1f927b9c03c219f78ccb8817a"
+    },
+    {
+      "id": "model-selection",
+      "title": "模型怎么选",
+      "category": "入门指南",
+      "summary": "第一次接入，先选一个支持普通对话的模型。确认能收到回复，再按写作、看图或编程等用途换模型。",
+      "url": "https://skymoni.com/docs?doc=model-selection&edit=false",
+      "published_at": 1791653841,
+      "blocks": [
+        {
+          "id": "a9034f14-3bc7-4d96-9b3d-e0c099a9d176",
+          "type": "heading",
+          "text": "先看自己要做什么",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "3254defd-7cf2-4937-8781-e53b7f990d32",
+          "type": "text",
+          "text": "| 用途 | 在模型说明中确认 |\n| --- | --- |\n| 日常聊天、翻译 | 支持对话，价格和速度适合自己 |\n| 写文章、整理长文本 | 文本生成能力、上下文长度 |\n| 看图、读截图 | 支持图片输入，客户端也能上传图片 |\n| 编程助手 | 支持客户端所需的接口和工具调用 |\n| 生成图片 | 支持图片输出或图片生成接口 |\n| 语音、视频 | 对应的输入输出能力和专用接口 |\n\n「能看图」和「能画图」是两种能力。聊天模型也不一定支持联网、读取文件或操作电脑，这些功能还需要客户端或工具配合。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "7d91a833-30ec-4861-a7e9-1a06694207a6",
+          "type": "heading",
+          "text": "复制完整模型 ID",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "45be4ce0-e6f0-4e09-989d-634f65bbe348",
+          "type": "text",
+          "text": "进入 skymoni 的「模型广场」，找到模型后复制完整 ID。客户端中的「模型 ID」「Model」填写这一项；昵称可以自己取，例如「日常聊天」。\n\n保留大小写、日期、斜杠和后缀。不要把模型的介绍标题或厂商名称当作 ID，也不要照抄其他中转站教程里的模型名。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "03d590cb-e924-44db-8806-8405e6e231ae",
+          "type": "heading",
+          "text": "后缀要不要保留",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "a0cdedd7-aca5-4f60-9b8b-527a29199b1b",
+          "type": "text",
+          "text": "要保留。skymoni 当前默认的模型命名说明中：\n\n| 后缀 | 默认说明 |\n| --- | --- |\n| `-token` | 按实际输入、输出及缓存 Token 用量计费 |\n| `-token-pro` | 同一基础模型，带备用支持；按 Token 计费 |\n\n具体模型若有单独说明，以它的模型卡片为准。不同后缀的 ID 不要互相替换；价格、可用分组和接口也要分别核对。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "c6f0f5f4-cd64-4540-a7ac-e5a4f261dd31",
+          "type": "heading",
+          "text": "选好模型还要看分组",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "8d8299a4-4e62-4b12-b7bd-83fe8ff254f2",
+          "type": "text",
+          "text": "API 密钥只能调用它所属分组允许的模型。网站展示了某个模型，不代表你的这把密钥一定能用。\n\n在「API 密钥」核对分组和模型限制，再查看该分组对应的模型与价卡。出现「无可用渠道」「模型不存在」时，先检查这一点。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "8ffd026e-6082-499b-bd4d-fdf04d160845",
+          "type": "heading",
+          "text": "第一次先用默认参数",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "6b0b3171-5241-4564-bbed-4ef6b24112b2",
+          "type": "text",
+          "text": "先发送「请只回复：连接成功」。暂时关闭联网、工具、知识库和复杂提示词，确认基础对话能用，再逐项开启。\n\n温度、思考强度和最大回复长度没有统一的最佳值。先保持客户端默认；需要调整时，只改一个设置并重新测试。\n\n地址设置见 [API 地址怎么填](/docs?doc=api-address&edit=false)，费用说明见 [用量和费用怎么看](/docs?doc=usage-costs&edit=false)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "8f31ab0363674a38256f6e0180a5e752aea9ef53d1f06154a8f2a42caf0f8901"
+    },
+    {
+      "id": "api-address",
+      "title": "API 地址怎么填",
+      "category": "入门指南",
+      "summary": "接入 skymoni 要填三样：地址、自己的 API 密钥、完整模型 ID。地址的长短取决于软件会自动补哪一段路径。",
+      "url": "https://skymoni.com/docs?doc=api-address&edit=false",
+      "published_at": 1791653841,
+      "blocks": [
+        {
+          "id": "3dd5b988-618e-4776-9b9a-32ec5ce3676b",
+          "type": "heading",
+          "text": "普通 Base URL：带 /v1",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "a588a01a-2101-4935-8bfc-d715a1c9d044",
+          "type": "text",
+          "text": "软件让你填写「Base URL」，并自动追加 `/chat/completions` 时，填：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "1eb155a1-1119-4c88-ad1f-b38afae4e7fc",
+          "type": "code",
+          "text": "https://skymoni.com/v1",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "5b1040ae-351f-4693-af44-e4b14bbf7f94",
+          "type": "text",
+          "text": "Kelivo 的 OpenAI 兼容配置、Cline 的 OpenAI Compatible、Open WebUI 的 OpenAI 兼容连接，以及常见 OpenAI 兼容 SDK，通常使用这种写法。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "d9150e8f-3e0b-4697-a394-87849b04154f",
+          "type": "heading",
+          "text": "主机地址和路径分开：填根地址",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "30836489-abdd-49d7-b3c0-91e911c4913a",
+          "type": "text",
+          "text": "如果软件分别提供「API Host」和「API Path」两个输入框，主机地址填：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "9de640af-f28e-4e86-bc6e-f76edaf8161e",
+          "type": "code",
+          "text": "https://skymoni.com",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "1b8eb702-aad2-46bd-a09a-b7a2b0b98f3b",
+          "type": "text",
+          "text": "普通对话的路径填：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "6abd04be-f8a9-4582-926a-fad57130749d",
+          "type": "code",
+          "text": "/v1/chat/completions",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "924334f1-eeff-4df4-b905-889e79ee6c7b",
+          "type": "text",
+          "text": "Cherry Studio 的 New API 服务商也填站点根地址，它会按协议补全路径。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "bf27948b-5006-4f55-8b87-59145017a3f4",
+          "type": "heading",
+          "text": "要求完整请求 URL：填到接口末尾",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "ebea1e26-31f8-4771-a438-63d5179c5420",
+          "type": "text",
+          "text": "软件明确要求「完整请求地址」，或者直接向填写的 URL 发送请求时，填：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "8ecaf524-0843-45a8-b7b6-c5f2acde3d2b",
+          "type": "code",
+          "text": "https://skymoni.com/v1/chat/completions",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "bb146b59-3071-4458-a29f-460b585be8c1",
+          "type": "text",
+          "text": "沉浸式翻译的 OpenAI 自定义 URL 使用完整地址。TRAE 开启“完整 URL”、WorkBuddy 开启“自定义协议”时，也填写完整请求地址。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "2facac70-6afa-4015-8701-1896d461cab3",
+          "type": "heading",
+          "text": "最后拼出来应该是什么",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "37db7eae-e6a5-4ea1-a430-c7acb7b5843d",
+          "type": "text",
+          "text": "普通聊天请求的最终地址应为 `https://skymoni.com/v1/chat/completions`。\n\n常见的错误是多了一段 `/v1`，或重复出现 `/chat/completions`。遇到 404，先看软件显示的请求地址，确认它实际补了哪一段，再修改输入框。\n\n浏览器直接打开 API 地址，可能显示需要密钥、方法不允许或错误信息。网页能否打开，不能代替客户端中的对话测试。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "720a4bb0-c95a-4e29-abb6-9873d81f8d7b",
+          "type": "heading",
+          "text": "Claude、Gemini 和 Responses",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "0e4d81e0-6bbc-4ea6-8d25-da026e00bf09",
+          "type": "text",
+          "text": "只有客户端和模型都支持对应协议时，才改用下列接口：\n\n| 协议 | skymoni 请求路径 |\n| --- | --- |\n| OpenAI Chat Completions | `/v1/chat/completions` |\n| Anthropic Messages | `/v1/messages` |\n| Google Gemini 原生 | `/v1beta/models/模型ID:generateContent` |\n| OpenAI Responses | `/v1/responses` |\n\n这些是请求路径，不是让所有软件都填进 Base URL 的内容。协议、鉴权和请求格式都要配套；Gemini 路径中的「模型ID」需替换。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "e33fb9fb-6887-470c-9a4f-86c984a0ca27",
+          "type": "heading",
+          "text": "编程软件按协议填写",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "5547552d-71ec-405f-b9a0-c51c042fbfea",
+          "type": "text",
+          "text": "| 软件或字段 | 填写地址 | 协议 |\n| --- | --- | --- |\n| Claude Code 的 ANTHROPIC_BASE_URL | `https://skymoni.com` | Messages |\n| Codex 的 base_url | `https://skymoni.com/v1` | Responses |\n| Cline / Continue 的 OpenAI 兼容 Base URL | `https://skymoni.com/v1` | Chat Completions |\n| TRAE 开启完整 URL 的普通对话 | `https://skymoni.com/v1/chat/completions` | Chat Completions |\n| TRAE 开启完整 URL 的 Messages | `https://skymoni.com/v1/messages` | Messages |\n| WorkBuddy 开启自定义协议 | `https://skymoni.com/v1/chat/completions` | Chat Completions |\n\n同一个域名支持多个路由，不代表每个模型都支持全部协议。编程工具还需要模型支持工具调用和软件要求的流式格式。\n\n无法判断时，优先照 [对应客户端教程](/docs?doc=client-overview&edit=false) 或 [编程软件教程](/docs?doc=programming-overview&edit=false) 填写。协议与模型能力按本站模型卡片核对。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "f01a799f4d5106e21292a3eb8eaa2e5a26de9255f316e5be69e11b1097d70d75"
+    },
+    {
+      "id": "roleplay-mobile",
+      "title": "手机角色扮演接入",
+      "category": "角色扮演",
+      "summary": "先找到软件里的「自定义 API」，准备密钥和模型，再按下面的顺序试地址。平台网址用来打开软件；API 设置填写 skymoni 的接入地址。",
+      "url": "https://skymoni.com/docs?doc=roleplay-mobile&edit=false",
+      "published_at": 1791653841,
+      "blocks": [
+        {
+          "id": "c0f8934d-c1d5-4beb-9333-764dbf43f1e6",
+          "type": "heading",
+          "text": "1. 准备三样信息",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "cde207d6-3466-47c8-b178-5ae1b18b94d4",
+          "type": "text",
+          "text": "打开 [skymoni](https://skymoni.com)，登录自己的账户：\n\n- **API 密钥**：进入「API 密钥」，创建并复制自己的密钥。\n- **模型名称**：进入「模型广场」，选择对话模型，复制完整名称。\n- **接入地址**：从下面对应的方式复制。\n\n在「钱包」确认有可用额度。密钥填自己的 API 密钥，模型填完整名称；角色名字和性格稍后再设置。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "c7db884b-cd49-4b26-b000-70f6ccd383c2",
+          "type": "heading",
+          "text": "2. 优先试 OpenAI 兼容",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "b765797a-017d-4c0d-8af8-608d05b552ad",
+          "type": "text",
+          "text": "打开角色软件的设置，找「模型」「API」「服务商」或「自定义接口」。格式选 **OpenAI 兼容 / OpenAI Compatible**，密钥和模型填上面准备的两项。\n\n下面是建议尝试顺序。先看软件要求的字段；连接失败时，每次只换地址，密钥和模型保持不变。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "4429c669-b638-475c-8ce4-d451f10edefa",
+          "type": "heading",
+          "text": "第一种 带 v1 的基础地址",
+          "url": "",
+          "level": 3
+        },
+        {
+          "id": "746c2a12-2cbd-45ac-a7f2-51b2e7a69285",
+          "type": "text",
+          "text": "字段叫 **Base URL / API 基础地址** 时，优先试这一行：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "cfa942e9-1eb1-4631-8c07-8a2bf6b89711",
+          "type": "code",
+          "text": "https://skymoni.com/v1",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "2096909c-4f21-4fa3-be3a-217502982437",
+          "type": "heading",
+          "text": "第二种 网站根地址",
+          "url": "",
+          "level": 3
+        },
+        {
+          "id": "a92369f5-24f3-4ce4-a62b-53ce0a5f0b95",
+          "type": "text",
+          "text": "软件会自动补上 `/v1`，或者第一种出现重复路径时，试这一行：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "f2548ed1-41d2-4b50-a40f-300fe52d2002",
+          "type": "code",
+          "text": "https://skymoni.com",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "b4e8c140-839b-43a5-a670-2f7d81ebe89f",
+          "type": "heading",
+          "text": "第三种 完整聊天地址",
+          "url": "",
+          "level": 3
+        },
+        {
+          "id": "e110dbef-6a43-4ea1-b25a-6aacd9106eec",
+          "type": "text",
+          "text": "字段要求 **完整接口 / 请求 URL / 自定义请求地址** 时，试这一行。RisuAI 的 Custom API 可以用这一种：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "ea470043-f438-4696-82a7-e9587ae0ce37",
+          "type": "code",
+          "text": "https://skymoni.com/v1/chat/completions",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "84a04b4e-3c87-4019-a347-c06e8bb613f2",
+          "type": "text",
+          "text": "点击「保存」「测试连接」或发一句「你好」。能收到回复就保留当前配置，不用继续换地址。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "fe712daa-f761-43bb-ba1a-fd62894bfdc8",
+          "type": "heading",
+          "text": "3. 软件指定其他格式时",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "96802d7f-da7f-465b-876d-5609b1dec497",
+          "type": "text",
+          "text": "先试上面的 OpenAI 兼容。只有软件明确要求下面的接口格式时，才使用对应地址；模型也要支持这种格式。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "2e6408ef-7ff2-4bd4-898f-328f07ef4eeb",
+          "type": "heading",
+          "text": "Claude 或 Anthropic 原生",
+          "url": "",
+          "level": 3
+        },
+        {
+          "id": "43bcfa56-a7ed-445e-a626-6f165456dd8e",
+          "type": "text",
+          "text": "基础地址先用第二种根地址。若软件要求完整的 **Messages 请求地址**，填：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "35b3e775-9cca-42df-8c22-44850c0d64c0",
+          "type": "code",
+          "text": "https://skymoni.com/v1/messages",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "ff49e8bb-d564-473a-8b2c-cbb4a39cf4bb",
+          "type": "heading",
+          "text": "Gemini 原生",
+          "url": "",
+          "level": 3
+        },
+        {
+          "id": "5b6e1bf5-f4a0-47f7-a97e-6fbb42619912",
+          "type": "text",
+          "text": "基础地址先用第二种根地址。若字段要求包含 API 版本的地址，试：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "f7f22ce9-657f-45fa-9043-d52eb7403203",
+          "type": "code",
+          "text": "https://skymoni.com/v1beta",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "11cc3616-d3fc-4518-88b5-fbda84fdc976",
+          "type": "text",
+          "text": "只有字段明确要求完整的生成地址时，才用下面这一行，并把 `模型名称` 换成你复制的完整名称：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "584553f0-cc80-4577-b92a-52a9928e082c",
+          "type": "code",
+          "text": "https://skymoni.com/v1beta/models/模型名称:generateContent",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "53be2c56-0a12-47bc-82af-7cff20dc59ff",
+          "type": "heading",
+          "text": "OpenAI Responses",
+          "url": "",
+          "level": 3
+        },
+        {
+          "id": "18b09593-ddc5-4834-966b-1e89b4ff68b2",
+          "type": "text",
+          "text": "基础地址用第一种。若软件要求完整的 **Responses 请求地址**，填：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "829915a0-0317-44c4-89d8-d35e6e26568c",
+          "type": "code",
+          "text": "https://skymoni.com/v1/responses",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "cc27e0fb-79bc-49b3-8494-b170019f3b84",
+          "type": "heading",
+          "text": "旧版文本补全 Completions",
+          "url": "",
+          "level": 3
+        },
+        {
+          "id": "4c807fe8-abc9-453d-a8c2-fea971c9cf7e",
+          "type": "text",
+          "text": "只在软件明确选择 **Text Completion / 文本补全** 时尝试，模型也须支持文本补全。基础地址用第一种；完整地址是：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "68533d58-b51e-49fd-a03a-f62e180d56c6",
+          "type": "code",
+          "text": "https://skymoni.com/v1/completions",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "d8db5ef7-db6c-4b4f-82e1-e9e6faf5ed20",
+          "type": "heading",
+          "text": "4. 角色平台从这里打开",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "c16afd29-3021-4eb3-a891-609d8c16f144",
+          "type": "text",
+          "text": "- [夜色 AI](https://www.yeseai.cn/)\n- [鲸岛 AI](https://jdai.art/#platforms)\n- [故事客栈](http://www.gstory.online/)\n- [Lumeow 噜喵](https://www.lumiao.ai/home)：官网说明为纯网页版，没有 APP。\n\n这些是平台入口。**这四个平台能否外接自己的 API 尚未确认**，请先在设置里找「自定义 API」。只有平台内充值或模型选择时，需要继续确认是否提供外部接口设置；换地址本身不能增加接入功能。\n\n手机和 Windows 浏览器都可以打开 [RisuAI 网页版](https://risuai.xyz/)。它的设置方式是：\n\n- 选择中文；模型选「其他／自行设置」。\n- 点设置齿轮，进入「聊天机器人」→「模型」→ **Custom API**。\n- URL 填上面的第三种完整聊天地址。\n- 「代理密钥/密码」填自己的 API 密钥，「请求模型」填完整模型名称。\n- 格式选 **OpenAI Compatible**。如果看到「辅助模型」，也选 **Custom API**。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "0567d559-b506-4fe5-928c-ab2671a31f45",
+          "type": "heading",
+          "text": "5. 选角色并排查连接",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "fc5bcf12-82a0-440b-8475-338e404536bd",
+          "type": "text",
+          "text": "选择已有角色，或自己填写名字、性格和背景。不知道怎么写人设，可以先用这一句：\n\n> 你叫小云，是一位温柔的旅行伙伴。用简短自然的话和我聊天，陪我探索一个幻想世界。\n\n发送「你好」试一下。没回复时，按提示检查：\n\n- **404 / 找不到接口**：检查地址是否多了 `/v1` 或 `/chat/completions`，再按上面顺序换地址。\n- **401 / 密钥无效**：重新复制自己的 API 密钥。\n- **模型不存在 / 无权限**：核对完整模型名称和密钥允许使用的模型。\n- **额度不足**：查看钱包余额、密钥额度和有效期。\n\n更多错误可看 [常见错误和使用日志](/docs?doc=troubleshooting&edit=false)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "8e2b13904d91886f817736ad482735cbaee9d14e35273398031d582a69071076"
+    },
+    {
+      "id": "client-overview",
+      "title": "选一个客户端开始用",
+      "category": "客户端接入",
+      "summary": "客户端是聊天界面，skymoni 提供模型接口。先选一个能填写自定义 API 的软件，再填 skymoni 地址、密钥和模型。",
+      "url": "https://skymoni.com/docs?doc=client-overview&edit=false",
+      "published_at": 1791653841,
+      "blocks": [
+        {
+          "id": "50b01cd7-82ac-48fb-8bbc-559dd26289bc",
+          "type": "heading",
+          "text": "按用途选教程",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "535dccb1-b118-4109-92da-7233e7cb2b74",
+          "type": "text",
+          "text": "| 想做什么 | 对应教程 |\n| --- | --- |\n| 电脑上聊天、写作 | [Cherry Studio](/docs?doc=cherry-studio&edit=false) |\n| 手机或电脑上聊天 | [Chatbox](/docs?doc=chatbox&edit=false)、[Kelivo](/docs?doc=kelivo&edit=false) |\n| 和角色聊天、写剧情 | [手机角色扮演接入](/docs?doc=roleplay-mobile&edit=false) |\n| 翻译网页或短文本 | [沉浸式翻译](/docs?doc=immersive-translate&edit=false) |\n| 编程、读文件、改代码 | [编程软件接入目录](/docs?doc=programming-overview&edit=false)：CC Switch、Claude Code、Codex、TRAE、WorkBuddy 等 |\n| 接入自己的网页聊天服务 | [Open WebUI](/docs?doc=open-webui&edit=false) |\n| 给程序接 API | [开发者首次调用](/docs?doc=developer-quickstart&edit=false) |\n\n第一次用，选一个熟悉的软件即可。下载入口和支持的设备写在各篇教程中。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "50ee884c-afe8-458e-9c74-df443751a4a3",
+          "type": "heading",
+          "text": "侧栏“聊天”里的工具",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "1cdd6200-7366-496b-a27b-d6116e087626",
+          "type": "text",
+          "text": "| 工具 | 对应教程 |\n| --- | --- |\n| Cherry Studio | [New API 服务商配置](/docs?doc=cherry-studio&edit=false) |\n| AionUI | [内置模型与外接编程工具](/docs?doc=aionui&edit=false) |\n| CC Switch | [导入和切换编程工具配置](/docs?doc=cc-switch&edit=false) |\n| DeepChat | [New API / OpenAI 兼容接入](/docs?doc=deepchat&edit=false) |\n| AQBot | [添加 OpenAI 提供商](/docs?doc=aqbot&edit=false) |\n| Lobe Chat 官方示例 | [设置 API Key 和代理地址](/docs?doc=lobe-chat&edit=false) |\n| AI as Workspace | [配置服务商和当前助手](/docs?doc=ai-as-workspace&edit=false) |\n| AMA 问天 / BotGem | [OpenAI API 兼容设置](/docs?doc=ama-botgem&edit=false) |\n| OpenCat | [区分个人 API 和团队邀请](/docs?doc=opencat&edit=false) |\n\n桌面软件入口可能需要先安装对应应用。浏览器未能唤起或导入时，用教程里的手动方法填写。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "5d40ff2a-bfca-4fca-bd9b-fc10b29cbd3a",
+          "type": "heading",
+          "text": "先准备两样信息",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "161900fe-518b-47fe-b623-c06afb926aac",
+          "type": "text",
+          "text": "1. 在 skymoni「API 密钥」创建并复制自己的密钥。\n2. 在「模型广场」复制一个有权限使用的完整模型 ID。\n\n地址直接从对应教程复制。不要把软件官网、软件下载链接或 skymoni 的登录页面填进 API 地址栏。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "49da75d6-a5cc-4559-b0a7-290e034d821c",
+          "type": "heading",
+          "text": "找什么设置",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "bbccac3e-75e1-4b1d-90c0-5866b5c2c9b7",
+          "type": "text",
+          "text": "常见入口叫「服务商」「供应商」「模型提供方」或「自定义 API」。协议优先选「OpenAI 兼容」，再填写 skymoni 的配置。\n\n如果软件只有购买它自身会员的入口，没有修改 API 地址和密钥的设置，暂时不能按这套教程连接 skymoni。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "1a0cafc3-4dc5-4978-b926-8804872ef17f",
+          "type": "heading",
+          "text": "什么情况算接好了",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "686dcdf3-319a-43db-ba95-dcede089651c",
+          "type": "text",
+          "text": "保存设置后，回到聊天界面，选中刚添加的服务商和模型，发送一句短问题。能收到回复，并在 skymoni「使用日志」找到对应调用，才算完成接入。\n\n软件的会员、搜索服务和云同步可能有各自的费用或设置。使用自己的 skymoni API 密钥时，模型用量到 skymoni 的日志中核对。\n\n失败时看 [常见错误和使用日志](/docs?doc=troubleshooting&edit=false)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "0ce2ec4d56165008505a6c2465dacf325c3cbd12e5cf047ef6e24888ad3e8993"
+    },
+    {
+      "id": "cherry-studio",
+      "title": "在 Cherry Studio 使用 skymoni",
+      "category": "客户端接入",
+      "summary": "在 Cherry Studio 的 New API 服务商中，地址填 https://skymoni.com，填自己的密钥，再添加一个模型。启用后回到聊天页选择它即可。",
+      "url": "https://skymoni.com/docs?doc=cherry-studio&edit=false",
+      "published_at": 1791653842,
+      "blocks": [
+        {
+          "id": "82d7eb63-4fbf-4842-aa2c-dcfda22764b0",
+          "type": "heading",
+          "text": "准备连接信息",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "d57fd3b0-662c-4be4-ac92-6a8e4ffd6bd3",
+          "type": "text",
+          "text": "从 [Cherry Studio 官网](https://cherry-ai.com/) 获取适合自己设备的版本。先在 skymoni「API 密钥」创建密钥，再从「模型广场」复制一个可用对话模型的完整 ID。\n\n| 配置项 | 填写内容 |\n| --- | --- |\n| 服务商 | New API |\n| API 密钥 | 自己的 skymoni 密钥 |\n| 模型 ID | 模型广场中的完整 ID |\n\nAPI 地址复制：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "03826a95-3e45-4cb2-bc4d-22df75aa94fb",
+          "type": "code",
+          "text": "https://skymoni.com",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "841abf82-2e80-42c3-9720-eea358694d28",
+          "type": "heading",
+          "text": "设置并启用服务商",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "00d95254-dc2c-4011-a851-b4017d29d64f",
+          "type": "text",
+          "text": "1. 打开「设置」→「模型服务」。\n2. 找到「New API」服务商。\n3. 填入自己的 API 密钥和上面的 API 地址。\n4. 获取模型列表，选择需要的模型；也可以手动添加完整 ID。\n5. 选择模型完成检测，打开服务商的启用开关。\n\nNew API 服务商会按协议补全路径，所以这里填根地址。配置规则见 [Cherry Studio 官方 New API 教程](https://github.com/CherryHQ/cherry-studio-docs/blob/main/pre-basic/providers/newapi.md)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "b2051e58-dae3-46ef-a552-d84093e2a818",
+          "type": "heading",
+          "text": "回到聊天页选模型",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "7e37d751-e35a-4fd2-a061-ffb5e19b2e0b",
+          "type": "text",
+          "text": "选择刚启用的服务商和模型，发送「请只回复：连接成功」。只保存服务商设置，还需要在当前聊天中选中它。\n\n收到回复后，到 skymoni「使用日志」核对模型、时间和费用。先用纯文本，其他能力按模型卡片开启。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "213810b3-405a-4188-b943-dd3928fad86f",
+          "type": "heading",
+          "text": "没有 New API 入口时",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "a7283e31-b060-40e1-bf1e-f51031e7c27e",
+          "type": "text",
+          "text": "不同版本的菜单可能不同，先对照上面的官方教程。软件若支持添加「OpenAI 兼容」服务商，可以按该入口的地址规则填写。\n\n它自动追加 `/chat/completions` 时，Base URL 填 `https://skymoni.com/v1`。不要把这个写法直接套进 New API 的根地址栏；区别见 [API 地址怎么填](/docs?doc=api-address&edit=false)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "d755ccf2-ce45-48b7-910c-488a5587134f",
+          "type": "heading",
+          "text": "检测失败或模型列表为空",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "097078d1-3040-4964-9ff7-f0582650a0c8",
+          "type": "text",
+          "text": "先核对地址、密钥和完整模型 ID，再检查密钥状态、额度和分组。模型限制中要包含测试的模型。\n\n列表获取失败时，保留具体错误；已有可用模型 ID 可以手动添加，然后测试实际对话。遇到 404 要检查路径是否重复，遇到额度或权限错误要回 skymoni 查看设置。\n\n详细步骤见 [常见错误和使用日志](/docs?doc=troubleshooting&edit=false)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "8cdbf0d330912c48d56b5354195ffff42bd2390bf4600d13c0e325211be598c9"
+    },
+    {
+      "id": "chatbox",
+      "title": "在 Chatbox 使用 skymoni",
+      "category": "客户端接入",
+      "summary": "打开 Chatbox 的模型提供方设置，添加一个 OpenAI 兼容服务商。填自己的 skymoni 密钥和完整模型 ID，就可以开始聊天。",
+      "url": "https://skymoni.com/docs?doc=chatbox&edit=false",
+      "published_at": 1791653842,
+      "blocks": [
+        {
+          "id": "d6e754dd-01f3-4cb4-aaa4-5b969dec7e1e",
+          "type": "heading",
+          "text": "下载软件",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "cad850b2-0380-46a8-b93a-aff564d7b6ab",
+          "type": "text",
+          "text": "从 [Chatbox 官网](https://chatboxai.app/zh) 选择适合自己设备的版本。电脑和手机的设置位置可能不同，接入所需的信息相同。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "5263be4f-adad-4922-8c8c-a644bcb8f9fe",
+          "type": "heading",
+          "text": "添加模型提供方",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "44dfa910-b15a-430e-a75f-c3735459ba19",
+          "type": "text",
+          "text": "1. 打开「设置」→「模型提供方」。\n2. 点击添加，名称填「skymoni」。\n3. API 模式选「OpenAI API 兼容」。\n4. API 密钥填自己在 skymoni 创建的完整密钥。\n\n使用自带 API Key 的配置入口；确认聊天时选中的是这个提供方。入口说明见 [Chatbox 官方 BYOK 指南](https://chatboxai.app/zh/guide/byok)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "09b7d6cc-ea35-4a7c-8f4e-19272da9772a",
+          "type": "heading",
+          "text": "地址和路径分别这样填",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "e2712e4e-db03-4421-b1d9-2c16d03d624b",
+          "type": "text",
+          "text": "有 API Host 和 API Path 两个输入框时，API Host 填：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "ea7250f9-471f-4fd1-af12-ac4309077e30",
+          "type": "code",
+          "text": "https://skymoni.com",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "eb5160e9-670b-465f-96b5-fb0ce7d8213c",
+          "type": "text",
+          "text": "API Path 填：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "673f0366-69c7-4116-88bf-9e046dd88f14",
+          "type": "code",
+          "text": "/v1/chat/completions",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "a8f72640-0cee-4e75-a831-bdb971d14efc",
+          "type": "text",
+          "text": "这两个字段会组成普通对话请求地址。字段与默认路径依据见 [Chatbox 官方提供方配置说明](https://docs.chatboxai.app/guides/providers/import-config)。\n\n某些版本的入口只有一个地址栏：如果它要求完整 URL，填 `https://skymoni.com/v1/chat/completions`；如果它自动补 `/chat/completions`，填 `https://skymoni.com/v1`。遇到 404，按 [地址说明](/docs?doc=api-address&edit=false) 检查最终路径。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "c4548306-952d-453e-87de-f8c390b6c57d",
+          "type": "heading",
+          "text": "添加模型",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "d1bb9aab-5023-4203-8f8e-a814b607fce4",
+          "type": "text",
+          "text": "在模型区域点击「新建」或添加：\n\n| 字段 | 怎么填 |\n| --- | --- |\n| 模型 ID | skymoni 模型广场的完整 ID |\n| 昵称 | 自己好认的名字，例如「日常聊天」 |\n| 类型 | 普通对话选 Chat |\n| 能力 | 按模型实际能力开启图片、工具或推理 |\n\n首次测试先用纯文字。不要因为勾选了「图片」或「工具」就认为模型已经具备这些能力。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "0cba1f11-344c-4fa0-9c6f-de00395fe217",
+          "type": "heading",
+          "text": "选中模型，发一句话",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "02309790-1e4f-4d9b-a76a-8ff10ba12199",
+          "type": "text",
+          "text": "保存后回到聊天界面，点模型选择器，选中 skymoni 下刚添加的模型。发送「请只回复：连接成功」。\n\n收到回复后，到 skymoni「使用日志」检查模型和费用。连通性检测失败时，保留具体错误；模型列表为空但已有可用 ID 时，可以手动添加后测试对话。\n\n更多排查见 [常见错误和使用日志](/docs?doc=troubleshooting&edit=false)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "676b1fb369ba6f022b7ff6c52b2c06f002455c396cba6a3e3483cf842d527c6f"
+    },
+    {
+      "id": "kelivo",
+      "title": "在 Kelivo 使用 skymoni",
+      "category": "客户端接入",
+      "summary": "在 Kelivo 添加「OpenAI 兼容」供应商，地址填 https://skymoni.com/v1，再填密钥、选择模型。手机和电脑都可以按这个流程设置。",
+      "url": "https://skymoni.com/docs?doc=kelivo&edit=false",
+      "published_at": 1791653842,
+      "blocks": [
+        {
+          "id": "a6dc244c-5e07-4853-87be-332b0e10024e",
+          "type": "heading",
+          "text": "下载对应版本",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "a0d61288-d4b5-46ab-ad72-ecb2daa07620",
+          "type": "text",
+          "text": "打开 [Kelivo 官网](https://kelivo.psycheas.top/) 的下载入口。Android 选择 APK，Windows 选择安装程序或便携包；其他系统从同一页面选择对应版本。平台信息见 [官方项目](https://github.com/Chevey339/kelivo)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "dea8966d-0964-4793-a259-7444d7c535a6",
+          "type": "heading",
+          "text": "添加供应商",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "dc7620b6-ab1e-4a6c-a124-b8a1e073b90a",
+          "type": "text",
+          "text": "1. 打开「设置」→「供应商」。\n2. 点击添加，类型选 OpenAI 或 OpenAI 兼容。\n3. 名称填「skymoni」。\n4. Base URL 复制下面的地址。\n5. API Key 填自己在 skymoni 创建的密钥。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "6f5e5003-23bc-41cc-a222-d31b6b3f0d1c",
+          "type": "code",
+          "text": "https://skymoni.com/v1",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "5f03e432-15c8-47ee-8a3b-34a2ee0ca009",
+          "type": "text",
+          "text": "普通聊天的 API Path 保持 `/chat/completions`。首次配置先保持 Responses API 开关关闭。不要清空路径，也不要同时把完整请求路径写进 Base URL。配置规则见 [Kelivo 官方使用手册](https://kelivo.psycheas.top/guide)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "e45538a7-7063-4c4e-b4f9-3fd983ab08cd",
+          "type": "heading",
+          "text": "获取并启用模型",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "4d3a2b07-69d6-42eb-bd23-acc595aeb28c",
+          "type": "text",
+          "text": "保存供应商后，点击「获取模型」或「拉取模型列表」，启用自己要用的模型。\n\n没有获取到时，先检查密钥和地址；也可以手动添加从 skymoni 模型广场复制的完整 ID。模型必须在密钥的可用分组内。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "b668e99d-4258-483a-8fbe-db071796dcbe",
+          "type": "heading",
+          "text": "开始聊天",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "826c72cc-4888-45d2-a4f8-7fd64bb9181e",
+          "type": "text",
+          "text": "回到聊天界面，在输入栏选择这个供应商下的模型，发一句短消息。首次测试先用纯文本，暂时关闭联网、工具和复杂助手设定。\n\n如果切换了助手，再确认助手使用的仍是 skymoni 供应商下的模型。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "10d4d2bc-493f-4b5b-97e4-213ae9b4f600",
+          "type": "heading",
+          "text": "费用和换手机",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "65a8b199-6797-4f06-b9e9-8f1775f20853",
+          "type": "text",
+          "text": "Kelivo 展示的费用可能依赖你填写的模型价格，实际扣费请到 skymoni「使用日志」核对。\n\n换设备前，按 Kelivo 手册备份并恢复。供应商二维码可能包含 API 密钥，只在自己的设备之间传递；分享截图时遮住密钥。\n\n问题排查见 [常见错误和使用日志](/docs?doc=troubleshooting&edit=false)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "521f2b8b56aae2c3f4133e82cd251a677f56d41b59de2c09bba1ddf0a78e9f68"
+    },
+    {
+      "id": "open-webui",
+      "title": "在 Open WebUI 接入 skymoni",
+      "category": "客户端接入",
+      "summary": "已有 Open WebUI 的用户，可以添加一个 OpenAI 兼容连接，用 skymoni 的密钥调用模型。本篇从已经安装并能登录 Open WebUI 开始。",
+      "url": "https://skymoni.com/docs?doc=open-webui&edit=false",
+      "published_at": 1791653842,
+      "blocks": [
+        {
+          "id": "205f5427-b946-4650-bee1-6042e7f3937c",
+          "type": "heading",
+          "text": "打开连接设置",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "f33f1a05-8f82-4def-a06a-03b701f0acfd",
+          "type": "text",
+          "text": "用自己 Open WebUI 实例的管理员账号进入「设置」→「管理」→「连接」，找到 OpenAI API 连接，点击添加。\n\n如果你使用的是别人提供的实例，需要由该实例的管理员开放连接或模型权限。连接入口依据见 [Open WebUI 官方接入指南](https://docs.openwebui.com/getting-started/quick-start/connect-a-provider/starting-with-openai-compatible/)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "53c3ee76-c567-40f8-afbe-757c43a64913",
+          "type": "heading",
+          "text": "填写连接信息",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "e7115955-0425-4fe9-a663-53ce5a211dd4",
+          "type": "text",
+          "text": "URL 填：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "ec759215-7113-48ee-b84f-82b07df46bb1",
+          "type": "code",
+          "text": "https://skymoni.com/v1",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "095c923b-184a-47e4-b2f8-6c069551a2e4",
+          "type": "text",
+          "text": "API Key 填自己的 skymoni 密钥。连接名称可以填「skymoni」，启用连接后保存。\n\n这里填版本基础地址，普通对话时 Open WebUI 会追加接口路径。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "ced6a2d3-dfc5-431d-8af6-1321749ce516",
+          "type": "heading",
+          "text": "选择模型",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "286a47d3-c2d9-40df-bb44-2df6c5725d33",
+          "type": "text",
+          "text": "获取模型列表后，选择有权限使用的模型。如果列表没有自动出现，在连接的 Model IDs 中手动添加 skymoni 的完整模型 ID。\n\n「验证连接」通常检查的是模型列表接口。通过验证后仍要发送一条消息，确认实际对话也能成功。模型列表检查和聊天请求的区别见上述官方指南。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "40af505b-4b19-4833-98a6-708f1a4d7fc7",
+          "type": "heading",
+          "text": "发送第一条消息",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "da3be90f-ac6a-435c-80db-40ae854696ac",
+          "type": "text",
+          "text": "回到首页，新建聊天，选中刚添加的模型，发送「请只回复：连接成功」。\n\n在 skymoni「使用日志」核对请求。Open WebUI 可能为标题、标签或其他辅助功能另外发起请求，核对费用时一起查看对应时间段。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "e848e722-0ea9-48de-b6e6-1437c8e86175",
+          "type": "heading",
+          "text": "服务器和浏览器都要分清",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "79be39ed-56b9-4a0a-8eed-55e74933fcf4",
+          "type": "text",
+          "text": "常规连接由 Open WebUI 服务器发出请求。服务器网络、代理或出站规则异常时，即使你手机能打开 skymoni 网站，也可能调用失败。\n\n共享实例中的连接可能供多名用户使用。管理自己的预算时，给这个实例单独创建一把有限额的密钥，并核对模型访问权限。\n\n排查步骤见 [常见错误和使用日志](/docs?doc=troubleshooting&edit=false)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "5ae8e122a6cf96010fa9b44e8435b715ea805947f1f7d9e33fda61e2108a5ef4"
+    },
+    {
+      "id": "immersive-translate",
+      "title": "在沉浸式翻译使用 skymoni",
+      "category": "客户端接入",
+      "summary": "在沉浸式翻译的 OpenAI 服务设置中，填自己的密钥、模型和完整请求地址。先翻译一小段文字，再翻译整页或文件。",
+      "url": "https://skymoni.com/docs?doc=immersive-translate&edit=false",
+      "published_at": 1791653842,
+      "blocks": [
+        {
+          "id": "b4404ef6-4d8d-4930-81a7-1d4f53ea1adc",
+          "type": "heading",
+          "text": "安装并打开设置",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "7a5b2b1c-8e50-486f-8735-9f82eab4c9bb",
+          "type": "text",
+          "text": "从 [沉浸式翻译官网](https://immersivetranslate.com/zh-Hans/) 获取适合设备的浏览器扩展或 App。打开设置，找到「翻译服务」，选择支持自带 API Key 的 OpenAI 配置入口。\n\n本篇使用 skymoni API。插件自身的会员与 skymoni 的钱包分别管理。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "29295855-bf0b-4fd2-abd2-dd5b1fe4a761",
+          "type": "heading",
+          "text": "填入三项信息",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "308c6241-c54a-46b5-9486-67dab7d2bd6e",
+          "type": "text",
+          "text": "1. API Key：自己的 skymoni 密钥，建议给翻译工具单独创建一把。\n2. 自定义模型：skymoni 模型广场的完整对话模型 ID。\n3. 自定义 URL：展开更多设置，粘贴下方完整地址。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "eedcbc93-56d2-4dbe-93ab-a2042384064f",
+          "type": "code",
+          "text": "https://skymoni.com/v1/chat/completions",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "dcd7b967-f8b2-4690-a076-95576a1c7b11",
+          "type": "text",
+          "text": "这里填写到 `/chat/completions`。OpenAI 兼容服务的自定义 URL 写法见 [沉浸式翻译官方说明](https://immersivetranslate.com/zh-Hans/docs/services/ai/)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "e7277388-4c22-4146-9122-d7e9e2ffc050",
+          "type": "heading",
+          "text": "先翻译一个短段落",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "62915642-b5d1-4a90-9745-25bc41e0a7d5",
+          "type": "text",
+          "text": "保存设置，选择刚配置的翻译服务，先翻译几句话。能收到译文后，在 skymoni「使用日志」确认模型和费用。\n\n首次使用先选适合短文本翻译的模型，保持提示词和其他参数默认。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "e67d9423-1479-4579-9bd1-541163eb25bf",
+          "type": "heading",
+          "text": "整页、PDF 和电子书会发多次请求",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "34d555c8-fc3a-4050-b50a-2a8e69870019",
+          "type": "text",
+          "text": "长文通常会分段处理，一次点击可能产生许多调用。先用短内容估计消耗，再处理全文。\n\n出现 429 时，降低并发或请求频率，等待后重试。不要持续点击重复翻译。频率设置的说明见 [沉浸式翻译 OpenAI 指南](https://immersivetranslate.com/zh-Hans/docs/services/openai/)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "e06a34f8-8a32-4482-bdc7-7f1431d24d81",
+          "type": "heading",
+          "text": "有回复但翻译不成功",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "44ce6b52-7dc8-42e3-9f2b-a8dc0e82fcb5",
+          "type": "text",
+          "text": "确认使用的是文本对话模型，回复格式符合插件要求，且没有额外的提示词或工具设定干扰。自定义提示词复杂时，先恢复默认提示词后测试。\n\n地址、权限或额度报错时，按 [常见错误和使用日志](/docs?doc=troubleshooting&edit=false) 排查。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "f972d8c61fb09ee85c21b7d3a5f4343f0abe19ee08b83679adca0bc681d6fbe3"
+    },
+    {
+      "id": "programming-overview",
+      "title": "编程软件接入指南",
+      "category": "编程软件接入",
+      "summary": "准备自己的 skymoni API 密钥和完整模型 ID，找到正在用的软件，照对应教程填写。想少改配置，可以先用 CC Switch。",
+      "url": "https://skymoni.com/docs?doc=programming-overview&edit=false",
+      "published_at": 1791653843,
+      "blocks": [
+        {
+          "id": "b2bb06cc-d9f2-4569-abaf-6589ce0df9cd",
+          "type": "heading",
+          "text": "按软件找教程",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "7e0fd9ea-9f56-46f9-b23b-d49b5a576b40",
+          "type": "text",
+          "text": "| 软件 | 从哪里接入 |\n| --- | --- |\n| CC Switch | [一键导入、切换 Claude Code 和 Codex](/docs?doc=cc-switch&edit=false) |\n| Claude Code | [Messages 接口、终端与 VS Code 配置](/docs?doc=claude-code&edit=false) |\n| Codex | [Responses 接口、CLI 与桌面版配置](/docs?doc=codex&edit=false) |\n| TRAE | [设置 → 模型 → 自定义模型](/docs?doc=trae&edit=false) |\n| 腾讯 WorkBuddy | [设置 → 模型 → 自定义 API](/docs?doc=workbuddy&edit=false) |\n| DeepSeek Harness（dsh） | [添加自定义模型提供商](/docs?doc=deepseek-harness&edit=false) |\n| Cline | [OpenAI Compatible 设置](/docs?doc=cline&edit=false) |\n| OpenCode | [自定义服务商与配置文件](/docs?doc=opencode&edit=false) |\n| Continue | [编辑器中的 config.yaml](/docs?doc=continue&edit=false) |\n| Aider | [API 地址、密钥与模型命令](/docs?doc=aider&edit=false) |\n| 其他插件、自研编程工具 | [通用接入：三种协议怎么选](/docs?doc=custom-coding-client&edit=false) |\n\n这些教程按具体软件的字段填写。模型能聊天，还需要支持软件要求的工具调用和流式输出，才能完成读文件、改代码等任务。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "dc95f8a4-d26b-41c9-808d-f6e9386f0920",
+          "type": "heading",
+          "text": "先准备两样东西",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "c4a239f1-ff26-48d0-a9f0-a23148d1f569",
+          "type": "text",
+          "text": "1. 打开 skymoni「API 密钥」，新建一把给编程软件用的密钥并复制。\n2. 打开「模型广场」，复制有权限、支持对应接口和工具能力的完整模型 ID。\n\nAPI 地址从对应教程复制。密钥额度、分组和模型权限也要允许此次调用。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "7690a4aa-407b-4e64-b0b8-a2af5799bd3d",
+          "type": "heading",
+          "text": "最容易填错的地址",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "ec21c173-8c0b-479f-bc10-9c3a52ca9c6e",
+          "type": "text",
+          "text": "| 用途 | 填法 |\n| --- | --- |\n| 普通 OpenAI 兼容 Base URL | `https://skymoni.com/v1` |\n| Claude Code 的 ANTHROPIC_BASE_URL | `https://skymoni.com` |\n| TRAE / WorkBuddy 的完整普通对话 URL | `https://skymoni.com/v1/chat/completions` |\n| Codex 的 base_url | `https://skymoni.com/v1`，协议选 Responses |\n\n完整请求地址和 Base URL 不是同一个字段。更详细的对应关系见 [API 地址怎么填](/docs?doc=api-address&edit=false)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "be6fdf43-7d76-4bed-8671-d1307f6d8090",
+          "type": "heading",
+          "text": "先确认接入，再开始大任务",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "9e2ad048-d947-4415-9597-81e14e834d0e",
+          "type": "text",
+          "text": "保存后，手动选中刚添加的服务商和模型。先发「只回复：连接成功」，再让它解释一个小文件。\n\n到 skymoni「使用日志」查看这次请求的模型、状态和费用。能回复且有对应日志，再开始处理项目。\n\n遇到报错，按 [常见错误排查](/docs?doc=troubleshooting&edit=false) 检查。编程任务可能连续调用多次，建议给专用密钥设置合适的额度。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "716361b12ff6bb4447c07a9da39bd587483ff9d84d449b2d52f82838ddaf9d78"
+    },
+    {
+      "id": "cc-switch",
+      "title": "CC Switch：一键接入编程工具",
+      "category": "编程软件接入",
+      "summary": "CC Switch 帮你管理 Claude Code、Codex 等工具的服务商配置。先装好目标编程工具和 CC Switch，再从 skymoni 导入自己的密钥。",
+      "url": "https://skymoni.com/docs?doc=cc-switch&edit=false",
+      "published_at": 1791704963,
+      "blocks": [
+        {
+          "id": "39f61695-876b-45df-a600-6343899327fe",
+          "type": "heading",
+          "text": "先安装",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "adc4b18c-f5b4-401e-b5bf-ffaf86c2214f",
+          "type": "text",
+          "text": "在 [CC Switch 官方发布页](https://github.com/farion1231/cc-switch/releases) 选择适合自己系统的版本。Claude Code 或 Codex 需要另行安装。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "986556e1-fa36-4eb0-aea2-58b12638d870",
+          "type": "heading",
+          "text": "方法一：从 skymoni 一键导入",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "e2231f2b-88bc-43e9-8e0d-f3822de7ec80",
+          "type": "text",
+          "text": "1. 打开 skymoni「API 密钥」，找到要使用的密钥。\n2. 打开该密钥的操作菜单，点击「CC Switch」。\n3. 选择 Claude 或 Codex，填写完整的主要模型 ID。\n4. 点击「打开 CC Switch」，允许浏览器打开已安装的软件。\n5. 在 CC Switch 确认导入；选择 skymoni 供应商并点击「切换」，确认显示「使用中」。（记得开启路由模式）\n\nClaude 的小模型、Sonnet、Opus 映射是可选项；填写时也要使用自己有权限的完整模型 ID。\n\n导入后核对当前供应商是否显示「使用中」；还未生效时点击「切换」。若浏览器没有打开软件，用下面的手动方法。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "2a238499-f396-4211-93c2-2183416b969e",
+          "type": "heading",
+          "text": "方法二：手动添加",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "ff037c78-65e8-484b-8e85-96c09d1c61fd",
+          "type": "text",
+          "text": "在 CC Switch 选择对应应用，点击「添加供应商」，选择自定义配置，填名称、密钥和模型。\n\n| 配置 | Claude Code | Codex |\n| --- | --- | --- |\n| 名称 | skymoni | skymoni |\n| 地址 | `https://skymoni.com` | `https://skymoni.com/v1` |\n| 密钥 | 自己的 skymoni API 密钥 | 自己的 skymoni API 密钥 |\n| 模型 | 完整模型 ID | 完整模型 ID |\n| 接口要求 | Anthropic Messages | OpenAI Responses |\n\n先用「直连」配置。保存后点击供应商的「切换」按钮，核对生效状态。菜单依据见 [官方添加指南](https://github.com/farion1231/cc-switch/blob/main/docs/user-manual/zh/2-providers/2.1-add.md)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "2555c6ae-e62e-46d9-a1aa-666586046d68",
+          "type": "heading",
+          "text": "切换后怎么生效",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "dcd15eeb-25e2-4c1c-89b9-94d795b1068e",
+          "type": "text",
+          "text": "Claude Code 当前版本支持配置热重载；若仍显示旧地址，重新打开会话。Codex 需要退出后重开；桌面版彻底退出再启动。\n\n先发一句短问题，并去 skymoni「使用日志」确认调用。详细行为见 [官方切换说明](https://github.com/farion1231/cc-switch/blob/main/docs/user-manual/zh/2-providers/2.2-switch.md)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "ac137211-304a-4a54-b329-49ab915c8d4b",
+          "type": "heading",
+          "text": "什么时候才用路由模式",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "2f1fa011-aed4-455b-a6a3-cdbd9df71215",
+          "type": "text",
+          "text": "如果上游只有 Chat Completions，但目标工具要求另一种协议，需要在支持转换的 CC Switch 版本里配置「路由」及上游格式。路由需要 CC Switch 保持运行。\n\n本站模型支持目标原生接口时，先照上面的直连方法。填写另一个接口地址本身不会完成协议转换。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "cc-switch-codex-routing-heading",
+          "type": "heading",
+          "text": "Codex 路由配置示例",
+          "url": "",
+          "level": 3
+        },
+        {
+          "id": "cc-switch-codex-routing-notes",
+          "type": "callout",
+          "text": "**对照图填写（Codex）**\n\n- API 请求地址：`https://skymoni.com/v1`，图中的「完整 URL」开关保持关闭。\n- API Key：填自己的 skymoni API 密钥。默认模型换成自己有权限的完整模型 ID，图中名称仅作示例。\n- 如使用 Chat Completions 上游，在「高级选项 → 上游格式」选择 Chat Completions，并开启 CC Switch 的路由。支持原生 Responses 的模型仍按上面的直连说明配置。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "cc-switch-codex-routing-image",
+          "type": "image",
+          "text": "CC Switch 的 Codex 配置示例：Chat Completions 上游需开启路由。点击图片可查看大图。",
+          "url": "/api/docs/images/e9c8231c9a4c4e18a22cbd271c0ec31c",
+          "level": 0
+        }
+      ],
+      "source_sha256": "b327bab724579fd4b2975547babb53b3544342821ca46cb72ed82e91d99ee0b6"
+    },
+    {
+      "id": "cline",
+      "title": "在 Cline 接入 skymoni",
+      "category": "编程软件接入",
+      "summary": "在 Cline 选择 OpenAI Compatible，填 skymoni 地址、密钥和模型 ID。先做一个小任务，确认连接与费用，再开始处理整个项目。",
+      "url": "https://skymoni.com/docs?doc=cline&edit=false",
+      "published_at": 1791653843,
+      "blocks": [
+        {
+          "id": "e1dc525e-9d71-4c44-a773-86a853e9addc",
+          "type": "text",
+          "text": "需要其他编辑器插件、CLI 或自研工具的接法，见 [编程软件接入目录](/docs?doc=programming-overview&edit=false)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "d7fc83a1-c3e7-4ae8-88a4-5969af7603af",
+          "type": "heading",
+          "text": "准备模型和密钥",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "0b02cff5-4740-4498-8f13-bd7a62f9a2fa",
+          "type": "text",
+          "text": "给 Cline 单独创建一把 API 密钥，并设置适合自己的额度。到 skymoni 模型广场确认目标模型支持对话和 Cline 所需的工具能力。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "d17d7108-7008-4c41-b4a8-2dec912f88fd",
+          "type": "heading",
+          "text": "打开服务商设置",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "9d024132-800d-4cc4-bbd2-672d49c60bed",
+          "type": "text",
+          "text": "打开 Cline 的设置面板，API Provider 选择「OpenAI Compatible」。填写：\n\n| 字段 | 内容 |\n| --- | --- |\n| Base URL | 下方可复制地址 |\n| API Key | 自己的 skymoni API 密钥 |\n| Model ID | 模型广场中的完整 ID |",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "e04297e4-0cf7-4eff-9e7a-a72b5ea22f20",
+          "type": "code",
+          "text": "https://skymoni.com/v1",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "f129b9c9-2798-45ef-9081-582b2a35b0c2",
+          "type": "text",
+          "text": "菜单与字段依据见 [Cline 官方 OpenAI 兼容配置指南](https://docs.cline.bot/provider-config/openai-compatible)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "66bfb3fc-7731-4ac2-a474-b0f26bfa6461",
+          "type": "heading",
+          "text": "能力和价格按模型填写",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "d376d86a-ca98-4c8a-8359-e8c614183e9a",
+          "type": "text",
+          "text": "如果界面要求上下文长度、最大输出、图片或工具能力，按 skymoni 模型卡片填写。先保持其他参数默认，确认最小任务能运行。\n\nCline 中手填的输入和输出价格主要用于客户端估算。实际费用请看 skymoni「使用日志」；模型换了，能力和估算价格也需要重新核对。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "fbedc1d4-f235-4cac-ae89-1999b463b707",
+          "type": "heading",
+          "text": "先做一个小任务",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "c3c284fa-8583-41c3-bc1e-d3d4bce568d5",
+          "type": "text",
+          "text": "在一个小项目中，先让 Cline 解释一小段代码。暂时不要附加整个目录或要求长时间连续执行。\n\n观察它是否选中了正确的模型，是否完成回复，以及使用日志中有多少次请求。工具失败时保留错误，先确认是模型调用错误还是本地命令、文件或工具执行错误。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "5410fc87-b85f-4959-89fa-bdc059e7c411",
+          "type": "heading",
+          "text": "为什么一句话也会花较多额度",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "51d57792-cf4c-4ad7-821a-87ed949b2018",
+          "type": "text",
+          "text": "编程助手可能把系统提示、代码、文件内容和工具结果一起发送。一次任务也可能包含多轮模型调用，费用不只来自你输入的那一句话。\n\n控制任务范围、减少无关文件、设置密钥限额，可以更容易管理用量。更多说明见 [用量和费用怎么看](/docs?doc=usage-costs&edit=false)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "3bf564e17db9b06baa7492b0bad4904a6a2b4fd6bfcf5c460dd7d227510883c0"
+    },
+    {
+      "id": "claude-code",
+      "title": "Claude Code 接入 skymoni",
+      "category": "编程软件接入",
+      "summary": "Claude Code 使用 Anthropic Messages 接口。最省事的方式是用 CC Switch；也可以在终端配置地址、密钥和模型。",
+      "url": "https://skymoni.com/docs?doc=claude-code&edit=false",
+      "published_at": 1791653843,
+      "blocks": [
+        {
+          "id": "19d5a3e6-b894-4afa-a02c-882faefda9b2",
+          "type": "heading",
+          "text": "不想手改配置",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "dfc029a1-c906-4d70-9cb0-b4e92c526012",
+          "type": "text",
+          "text": "按 [CC Switch 一键导入教程](/docs?doc=cc-switch&edit=false) 选择 Claude，切换到 skymoni。下面适合已经安装 Claude Code、想自己配置的人。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "5d047939-f82e-4c4a-ba20-3d13565d83b8",
+          "type": "heading",
+          "text": "Windows：在 PowerShell 填三项",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "eb410930-322d-4c7e-8c17-726c09e83c1c",
+          "type": "text",
+          "text": "将示例中的密钥和模型替换成自己的值，在同一个终端启动 Claude Code：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "548cef7e-d134-4bb3-9d66-8e136a8463a4",
+          "type": "code",
+          "text": "$env:ANTHROPIC_BASE_URL = 'https://skymoni.com'\n$env:ANTHROPIC_AUTH_TOKEN = '替换成自己的skymoni密钥'\n$env:ANTHROPIC_MODEL = '替换成完整模型ID'\nclaude",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "d1d52077-4630-418a-8f07-0715d1a5a51a",
+          "type": "text",
+          "text": "地址填根地址。Claude Code 会请求 `/v1/messages`；不要再把完整接口路径加到 BASE_URL 后面。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "da8ea432-2dac-44a0-8992-1dc381b86a4e",
+          "type": "heading",
+          "text": "macOS / Linux：在终端填写",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "9b0d52e9-55de-4d6a-81ec-d03f91a9adfb",
+          "type": "code",
+          "text": "export ANTHROPIC_BASE_URL='https://skymoni.com'\nexport ANTHROPIC_AUTH_TOKEN='替换成自己的skymoni密钥'\nexport ANTHROPIC_MODEL='替换成完整模型ID'\nclaude",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "65adf96b-21af-4459-acd9-ef141b725f26",
+          "type": "text",
+          "text": "这两组命令只对当前终端及从它启动的程序生效。模型必须支持 Messages 和 Claude Code 所需的工具能力。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "4e6550ef-c76b-47a5-904a-9bbd324f7992",
+          "type": "heading",
+          "text": "每次打开都能用",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "195e16bc-8bc4-4179-8c89-f9dc181234b3",
+          "type": "text",
+          "text": "确认连接成功后，把下面的 env 配置合并到用户级 `~/.claude/settings.json`。Windows 默认位置是 `%USERPROFILE%\\.claude\\settings.json`。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "f5028c45-f90e-45e4-9da5-3f97bba6837d",
+          "type": "code",
+          "text": "{\n  \"env\": {\n    \"ANTHROPIC_BASE_URL\": \"https://skymoni.com\",\n    \"ANTHROPIC_AUTH_TOKEN\": \"替换成自己的skymoni密钥\",\n    \"ANTHROPIC_MODEL\": \"替换成完整模型ID\"\n  }\n}",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "fc83550b-6b7b-49a3-935d-b334d3ba70bb",
+          "type": "text",
+          "text": "已有文件先备份，再合并 env 字段；不要整份覆盖。密钥保存在个人配置中，不要放进提交到仓库的配置文件。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "1f664177-ab7a-4057-999c-739a8f46d196",
+          "type": "heading",
+          "text": "在 VS Code 扩展中使用",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "05ecece0-264b-4b2f-99f8-a72e00e015d2",
+          "type": "text",
+          "text": "打开 VS Code 命令面板，选择「首选项：打开用户设置（JSON）」，合并：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "22f190e0-031b-4a29-8d60-46e67130707a",
+          "type": "code",
+          "text": "{\n  \"claudeCode.environmentVariables\": [\n    { \"name\": \"ANTHROPIC_BASE_URL\", \"value\": \"https://skymoni.com\" },\n    { \"name\": \"ANTHROPIC_AUTH_TOKEN\", \"value\": \"替换成自己的skymoni密钥\" },\n    { \"name\": \"ANTHROPIC_MODEL\", \"value\": \"替换成完整模型ID\" }\n  ]\n}",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "012849a3-cf43-4de0-9a25-3756754742cc",
+          "type": "text",
+          "text": "重新打开扩展会话。只在另一个终端设置变量，扩展不一定能读取到。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "4a1e3849-be08-4274-92cc-afd04036ef60",
+          "type": "heading",
+          "text": "确认接入成功",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "aa053f24-3885-498e-ae4e-3cd3ccba9ca8",
+          "type": "text",
+          "text": "输入 `/status`，检查地址和凭据来源，再发一句短问题。去 skymoni「使用日志」核对模型和请求。\n\n若显示旧地址，检查个人 settings.json 中是否有旧 env 配置。401 时核对密钥及鉴权来源；不要同时保留不同平台的 AUTH_TOKEN 和 API_KEY。\n\n步骤依据：[Claude Code 官方网关接入](https://code.claude.com/docs/en/llm-gateway-connect)、[模型设置](https://code.claude.com/docs/en/model-config)。Claude 桌面应用另有自己的网关入口，不能直接套用终端变量。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "2af3a97e864f62b2e4e14cd38bde3a1ab3717de1ef19d534f69b0b9e949dadba"
+    },
+    {
+      "id": "developer-quickstart",
+      "title": "开发者首次调用",
+      "category": "开发者接入",
+      "summary": "先用一个短的非流式请求验证地址、密钥和模型。下面提供 Windows PowerShell、cURL、Python 和 JavaScript 示例，按自己使用的环境选一个即可。",
+      "url": "https://skymoni.com/docs?doc=developer-quickstart&edit=false",
+      "published_at": 1791653843,
+      "blocks": [
+        {
+          "id": "853aea3a-acc8-4c7f-9a2c-237c6ab6f083",
+          "type": "heading",
+          "text": "准备密钥和模型",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "268601fe-928b-45bf-a4a3-05be68b6359c",
+          "type": "text",
+          "text": "在 skymoni 创建自己的 API 密钥，复制一个允许通过 Chat Completions 调用的完整模型 ID。\n\n调用会按模型规则计费。示例中的密钥和模型是占位内容，需要自己替换；真实密钥放在私有环境变量里，不要提交进公开代码。\n\n普通对话地址：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "6e25a63f-12ac-4e01-bae0-4ea8d93d305f",
+          "type": "code",
+          "text": "https://skymoni.com/v1/chat/completions",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "5e1b1a99-3cf1-463c-a0dc-34f4611dd7b5",
+          "type": "heading",
+          "text": "Windows：PowerShell",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "9c908f5b-6a0c-4029-bb47-643e616bf2c0",
+          "type": "text",
+          "text": "把前两行替换成自己的信息，在自己的 PowerShell 终端执行。设置只作用于当前终端会话。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "e31be81e-8ddc-41f2-ba73-5938fe4bf46c",
+          "type": "code",
+          "text": "$env:SKYMONI_API_KEY = '替换成自己的skymoni密钥'\n$env:SKYMONI_MODEL = '替换成完整模型ID'\n\n$body = @{\n  model = $env:SKYMONI_MODEL\n  messages = @(@{ role = 'user'; content = '请只回复：连接成功' })\n  stream = $false\n} | ConvertTo-Json -Depth 10\n\n$result = Invoke-RestMethod `\n  -Uri 'https://skymoni.com/v1/chat/completions' `\n  -Method Post `\n  -Headers @{ Authorization = \"Bearer $env:SKYMONI_API_KEY\" } `\n  -ContentType 'application/json; charset=utf-8' `\n  -Body ([System.Text.Encoding]::UTF8.GetBytes($body)) `\n  -TimeoutSec 120\n\n$result.choices[0].message.content\n$result.usage",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "337a2112-9fa9-413f-9d5f-f6182927e078",
+          "type": "heading",
+          "text": "macOS / Linux：cURL",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "0742ecbb-62eb-4b51-b1e6-18791f8bb836",
+          "type": "text",
+          "text": "在自己的终端设置临时环境变量，然后发送请求：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "75f01c17-e2d6-4d37-97ea-065e21e7200e",
+          "type": "code",
+          "text": "export SKYMONI_API_KEY='替换成自己的skymoni密钥'\nexport SKYMONI_MODEL='替换成完整模型ID'\n\ncurl --show-error --max-time 120 \\\n  'https://skymoni.com/v1/chat/completions' \\\n  -H \"Authorization: Bearer $SKYMONI_API_KEY\" \\\n  -H 'Content-Type: application/json' \\\n  --data \"{\\\"model\\\":\\\"$SKYMONI_MODEL\\\",\\\"messages\\\":[{\\\"role\\\":\\\"user\\\",\\\"content\\\":\\\"请只回复：连接成功\\\"}],\\\"stream\\\":false}\"",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "644e8cfe-f5c0-4ea8-aa3f-76476e7e981c",
+          "type": "heading",
+          "text": "Python：直接用 HTTP",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "47eaff07-aa9b-4548-af02-acad6dcf37d1",
+          "type": "text",
+          "text": "先在运行程序的同一个终端设置上面的两个环境变量。把下方保存为 `skymoni_chat.py`，用 Python 3 执行；使用标准库，无需额外安装 SDK。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "b65f90d3-1fbe-497e-8a1e-9db1d6c62208",
+          "type": "code",
+          "text": "import json\nimport os\nimport urllib.error\nimport urllib.request\n\npayload = {\n    \"model\": os.environ[\"SKYMONI_MODEL\"],\n    \"messages\": [{\"role\": \"user\", \"content\": \"请只回复：连接成功\"}],\n    \"stream\": False,\n}\nrequest = urllib.request.Request(\n    \"https://skymoni.com/v1/chat/completions\",\n    data=json.dumps(payload, ensure_ascii=False).encode(\"utf-8\"),\n    headers={\n        \"Authorization\": \"Bearer \" + os.environ[\"SKYMONI_API_KEY\"],\n        \"Content-Type\": \"application/json\",\n    },\n    method=\"POST\",\n)\ntry:\n    with urllib.request.urlopen(request, timeout=120) as response:\n        result = json.load(response)\n    print(result[\"choices\"][0][\"message\"][\"content\"])\n    print(result.get(\"usage\", {}))\nexcept urllib.error.HTTPError as error:\n    print(\"HTTP\", error.code)\n    print(error.read().decode(\"utf-8\", errors=\"replace\"))",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "8c3f138a-0090-4714-afbb-354919289c25",
+          "type": "heading",
+          "text": "JavaScript：Node.js",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "91f43b07-dea6-4663-8a2e-95315b14c463",
+          "type": "text",
+          "text": "使用 Node.js 18 或以上版本，在同一终端设置环境变量。保存为 `skymoni_chat.mjs`，运行 `node skymoni_chat.mjs`。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "6194d51f-4e93-4014-8acd-4a5f8a3968c2",
+          "type": "code",
+          "text": "const apiKey = process.env.SKYMONI_API_KEY;\nconst model = process.env.SKYMONI_MODEL;\nif (!apiKey || !model) throw new Error('请先设置密钥和模型环境变量');\n\nconst response = await fetch('https://skymoni.com/v1/chat/completions', {\n  method: 'POST',\n  headers: {\n    Authorization: `Bearer ${apiKey}`,\n    'Content-Type': 'application/json',\n  },\n  body: JSON.stringify({\n    model,\n    messages: [{ role: 'user', content: '请只回复：连接成功' }],\n    stream: false,\n  }),\n  signal: AbortSignal.timeout(120000),\n});\nif (!response.ok) {\n  throw new Error(`HTTP ${response.status}: ${await response.text()}`);\n}\nconst result = await response.json();\nconsole.log(result.choices[0].message.content);\nconsole.log(result.usage);",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "8aaba33d-23b1-495e-a268-f6ebde64840c",
+          "type": "text",
+          "text": "不要把带真实密钥的这段代码放到公开网页前端。公开应用通过自己的服务端调用，并在服务端保存密钥。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "5c9ca53c-798f-49e0-874d-5a0d216ec003",
+          "type": "heading",
+          "text": "怎样判断请求成功",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "1cd7794f-e545-4023-a84c-585bff41d062",
+          "type": "text",
+          "text": "非流式 Chat Completions 的回复通常位于 `choices[0].message.content`。收到回复后，到 skymoni「使用日志」核对请求和用量。\n\n连通后再考虑流式、图片和工具调用。流式返回是分段事件流，不能直接把整个响应当成一个 JSON 解析。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "72414af2-9f76-44b3-ac38-bb9d2c1d6af5",
+          "type": "heading",
+          "text": "已有 SDK 项目",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "ebdc7f56-ecd7-47a3-9b8a-a090c2f5333e",
+          "type": "text",
+          "text": "已有支持自定义接口的 SDK 时，按它的配置入口替换 API Key、Base URL 和模型。OpenAI 兼容 SDK 的 Base URL 通常填 `https://skymoni.com/v1`，方法调用会继续拼接路径。\n\n如果使用 Messages、Gemini 原生或 Responses，按对应协议重写请求，不能只改一个 URL。遇到错误见 [常见错误和使用日志](/docs?doc=troubleshooting&edit=false)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "15b1719da8864542eac5eb44d8d26c130b43c173e525e582db2ed760a9fb405d"
+    },
+    {
+      "id": "codex",
+      "title": "Codex 接入 skymoni",
+      "category": "编程软件接入",
+      "summary": "Codex 自定义服务商使用 Responses 接口。先选择支持 Responses 和编程工具调用的模型；图形方式可以使用 CC Switch。",
+      "url": "https://skymoni.com/docs?doc=codex&edit=false",
+      "published_at": 1791653844,
+      "blocks": [
+        {
+          "id": "5b8a2dba-ee3f-4da3-8913-0558453f4074",
+          "type": "heading",
+          "text": "先选接入方法",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "185aa320-b47d-451e-a96c-83cdd6327b1d",
+          "type": "text",
+          "text": "想一键配置，按 [CC Switch 教程](/docs?doc=cc-switch&edit=false) 选择 Codex。手动配置按下面做，不需要修改项目源码。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "c5524f43-d548-4e9e-ab3b-3cd1e2eacb49",
+          "type": "heading",
+          "text": "修改用户配置",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "0a61bac8-cb03-40b1-b60b-d319426b026c",
+          "type": "text",
+          "text": "打开用户级 `config.toml`：Windows 默认在 `%USERPROFILE%\\.codex\\config.toml`；macOS / Linux 默认在 `~/.codex/config.toml`。如果设置过 CODEX_HOME，以那个目录为准。\n\n先备份已有文件，把以下内容合并进去。顶层 model 和 model_provider 要放在第一个 `[表名]` 前；已有同名字段只修改一次。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "aa68374e-b7a1-4791-9dd2-c28187925c76",
+          "type": "code",
+          "text": "model = \"替换成完整模型ID\"\nmodel_provider = \"skymoni\"\n\n[model_providers.skymoni]\nname = \"skymoni\"\nbase_url = \"https://skymoni.com/v1\"\nwire_api = \"responses\"\nenv_key = \"SKYMONI_API_KEY\"\nrequires_openai_auth = false",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "c51e17ba-96d7-49e1-856a-648e62762f1d",
+          "type": "text",
+          "text": "这是用户级配置，不要把 model_provider 配到项目里的 `.codex/config.toml`。当前 Codex 的 wire_api 使用 responses；普通聊天接口成功，不代表该模型的 Responses 接口也可用。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "54936fed-eab2-4258-bcf5-9ad4109c3994",
+          "type": "heading",
+          "text": "把密钥交给启动程序",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "055e2a78-278c-482c-b84b-b5d05e052446",
+          "type": "text",
+          "text": "Windows PowerShell，替换密钥后在同一终端启动：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "036cc4d3-5343-4f99-88ce-bcdc12c8906c",
+          "type": "code",
+          "text": "$env:SKYMONI_API_KEY = '替换成自己的skymoni密钥'\ncodex",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "f24e63a0-bbcf-45c5-af98-d0df9d52a9b4",
+          "type": "text",
+          "text": "macOS / Linux 终端：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "797acd53-c74d-4d93-bdcf-c33d1ada24a3",
+          "type": "code",
+          "text": "export SKYMONI_API_KEY='替换成自己的skymoni密钥'\ncodex",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "c381d911-ca85-4298-a2e9-89ed2227d8be",
+          "type": "text",
+          "text": "密钥不写进 TOML 或项目仓库。上述变量只对当前终端及它启动的进程有效。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "6702ea6f-4033-472b-a816-be06de9cc1dd",
+          "type": "heading",
+          "text": "CLI、桌面版和编辑器",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "ec23019e-07f7-41f9-a765-51b4659cf363",
+          "type": "text",
+          "text": "CLI 改完配置后退出重开。桌面版也读取用户配置，需彻底退出再打开，并确保桌面进程能够读取密钥变量。只在终端设置一次，开始菜单启动的应用不一定能读取到。\n\n桌面版或编辑器更适合用 CC Switch 管理配置；切换后重开应用或编辑器窗口，并核对当前服务商。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "2df9da3c-29a3-47b2-ade3-f270e90caa1c",
+          "type": "heading",
+          "text": "检查实际使用的模型",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "cfea68e1-5a5c-4dc4-9792-c3f8e1c7a368",
+          "type": "text",
+          "text": "CLI 中输入 `/status`，检查服务商和模型，再发「只回复：连接成功」。在 skymoni「使用日志」找到对应请求。\n\n如果模型别名无法识别，可能还需要与它匹配的模型目录信息；先选 Codex 可识别且本站开放的模型，不要随意改名冒充其他模型。\n\n步骤依据：[OpenAI 官方网关接入](https://learn.chatgpt.com/docs/enterprise/connect-to-a-gateway)、[自定义服务商配置](https://learn.chatgpt.com/docs/config-file/config-advanced)、[配置字段](https://learn.chatgpt.com/docs/config-file/config-reference)。这些步骤用于本机运行的 Codex。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "5c254858f3322d4012fe4f6f970888ddb087efc6bc71647a69551d09ef69ee77"
+    },
+    {
+      "id": "trae",
+      "title": "TRAE 接入 skymoni",
+      "category": "编程软件接入",
+      "summary": "在 TRAE 的自定义模型中选择接口格式，打开“完整 URL”，填对应请求地址、自己的密钥和完整模型 ID。",
+      "url": "https://skymoni.com/docs?doc=trae&edit=false",
+      "published_at": 1791653844,
+      "blocks": [
+        {
+          "id": "763af5f2-4244-4059-b684-7ae60f90c98d",
+          "type": "heading",
+          "text": "打开自定义模型",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "606bcbba-5cb1-42b8-8266-72762e9bb1af",
+          "type": "text",
+          "text": "1. 在 TRAE 前往「设置 → 模型」。\n2. 点击「添加模型」，选择「自定义模型」。\n3. 按下面一种格式填写，先接一个模型即可。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "9f10f4be-af58-4788-83ea-be036a13056a",
+          "type": "heading",
+          "text": "方法一：OpenAI 兼容对话",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "34a33e9e-bc0e-4597-936b-fa36ee3a133c",
+          "type": "text",
+          "text": "| 字段 | 填什么 |\n| --- | --- |\n| API 格式 | OpenAI Chat Completions |\n| 完整 URL | 开启 |\n| 自定义请求地址 | 下方地址 |\n| API 密钥 | 自己的 skymoni 密钥 |\n| 模型 ID | 模型广场中的完整 ID |\n| 模型展示名称 | skymoni + 自己便于识别的名称 |",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "2b7271a2-1e4a-4a9f-9875-984872208036",
+          "type": "code",
+          "text": "https://skymoni.com/v1/chat/completions",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "867919a3-4b24-4628-8964-6e62a0b42bed",
+          "type": "heading",
+          "text": "方法二：Anthropic Messages",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "52deb05e-e138-4756-a3a8-036d91f0d48b",
+          "type": "text",
+          "text": "所选模型支持 Messages 时，API 格式改为「Anthropic Messages」，保持完整 URL 开启，地址改填：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "dd06ec37-0f63-4af7-aab6-d02883ce95c0",
+          "type": "code",
+          "text": "https://skymoni.com/v1/messages",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "47f921f9-c80f-496e-85fe-d65f1b4ea4f1",
+          "type": "text",
+          "text": "密钥仍填自己的 skymoni 密钥，模型填该接口可用的完整 ID。模型系列、上下文和图片能力按模型卡片配置。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "1ccfa06d-8de7-492a-a75b-a4e9fc6addce",
+          "type": "heading",
+          "text": "保存并选中模型",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "d0b710b6-fb76-4d01-b87e-1c9ab1686a84",
+          "type": "text",
+          "text": "点击「添加模型」完成连接检测，确认模型处于启用状态。在对话框的模型列表里手动选中刚添加的模型，再发一句短问题。\n\nAuto 模式只使用 TRAE 内置模型；接入自己的 API 后，要手动选自定义模型。到 skymoni 使用日志核对调用。\n\n如果关闭“完整 URL”，TRAE 会自动补路径；此时不要继续填到接口末尾。首次接入建议保持完整 URL 开启，容易核对。\n\n菜单依据：[TRAE 官方自定义模型说明](https://docs.trae.cn/ide_models)、[Auto 模式](https://docs.trae.cn/ide_auto-mode)。下载入口：[TRAE 官网](https://www.trae.cn/)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "81a9ecb0298232f857995567c1e7b1e9f3a7917d3cbd9de7f36fc59b13990d55"
+    },
+    {
+      "id": "wallet-and-warehouse",
+      "title": "钱包充值与资源领取",
+      "category": "账户与资源",
+      "summary": "想给模型调用增加额度，去「钱包」；想领取账号、链接或其他资源，去兑换入口和「我的仓库」。先确认手里的兑换码是哪一种。",
+      "url": "https://skymoni.com/docs?doc=wallet-and-warehouse&edit=false",
+      "published_at": 1791653844,
+      "blocks": [
+        {
+          "id": "d8b7a5fa-9943-41ba-8754-3787a6b88d9e",
+          "type": "heading",
+          "text": "查看钱包，确认购买内容",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "e89d3ae2-463e-42e5-9615-aef3bd3d50ef",
+          "type": "text",
+          "text": "在「钱包」查看余额和当前开放的充值方式。购买前核对实付金额、到账额度和套餐条件；页面显示的额度单位不一定等同于付款货币。\n\n价格、库存、支付方式、适用范围和期限，以当前页面为准。外部服务的会员或余额与 skymoni 钱包分别管理。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "1c801f07-65c2-4582-8eb2-2dd8bbbc5539",
+          "type": "heading",
+          "text": "购买后需要兑换时",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "f3a84b92-9cfc-4f03-ae9d-b7b3152ab63e",
+          "type": "text",
+          "text": "如果钱包引导到外部购买平台，按它的流程完成付款，保存订单号和付款时间。收到额度兑换码后，回到 skymoni 钱包的额度兑换入口提交，再核对余额变化。\n\n付款成功与兑换到账可能是两个步骤。需要兑换码的套餐，完成兑换后再确认站内额度。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "e6bd1267-e0df-4cc3-a5e9-b501bfeb828b",
+          "type": "heading",
+          "text": "两种兑换码不要混用",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "af42fd50-6063-426e-9e5b-f1c7f48f85af",
+          "type": "text",
+          "text": "| 类型 | 去哪里用 | 成功后看到什么 |\n| --- | --- | --- |\n| 额度兑换码 | 钱包的额度兑换入口 | 站内消费额度增加 |\n| 福利 / 资源兑换码 | 兑换福利或仓库的资源兑换入口 | 我的仓库新增资源 |\n\n资源兑换本身不会给钱包加余额。领取后去仓库打开详情，按里面的说明使用。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "31fa962d-af7f-4eda-834f-7c1ff083b675",
+          "type": "heading",
+          "text": "从商城购买资源",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "752cd957-1118-4e9c-bf6f-603c0ec6fa35",
+          "type": "text",
+          "text": "1. 查看商品说明、使用条件和交付内容。\n2. 选择套餐，核对价格、库存和期限。\n3. 按页面提示使用站内额度购买。\n4. 到「我的仓库」查看交付结果。\n\n购买前分清是模型调用额度还是外部资源，按对应商品页说明判断。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "6296e826-31ef-46d4-bd21-7d021466c50c",
+          "type": "heading",
+          "text": "在仓库里怎么用",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "c24b1797-b667-4130-9800-c66b4a013150",
+          "type": "text",
+          "text": "打开资源详情，查看入口链接、账号信息、使用说明、来源和状态。按资源自己的指引操作外部服务。\n\n领取外部账号后，核对该服务的实际额度或订阅期限。不要把仓库里的账号密码当作 skymoni 的 API 密钥填进客户端。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "c474440b-3a16-46b6-b505-d317cc829198",
+          "type": "heading",
+          "text": "有余额，为什么不能调用",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "0d4e381e-b71b-4cc5-9e1d-855152ab5e14",
+          "type": "text",
+          "text": "还要检查 API 密钥是否启用、到期、达到限额，以及分组是否支持所选模型。错误提示若涉及单次额度校验，再按提示核对请求长度和输出设置。\n\n说明见 [密钥教程](/docs?doc=api-keys&edit=false) 和 [用量与费用](/docs?doc=usage-costs&edit=false)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "fd2d1e79-9819-48ca-b077-4a2f0ac09414",
+          "type": "heading",
+          "text": "兑换或到账异常",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "5117369b-9644-48f4-80fb-861acd5052a9",
+          "type": "text",
+          "text": "遇到无效、已使用、暂不可领取或售罄提示，先保存错误。付款后的未知状态订单，先查订单、钱包和仓库，再联系管理员核查。\n\n提供订单号、付款或兑换时间、商品名称和错误截图。不要通过反复购买补偿一笔状态不明的订单，也不要公开完整兑换码。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "0235172dcf12a9557abae6ddd71f2bb81f16501c4c7b36828e889413653295e5"
+    },
+    {
+      "id": "usage-costs",
+      "title": "用量和费用怎么看",
+      "category": "账户与资源",
+      "summary": "先看模型价卡，再看使用日志。聊天费用通常和发送、生成的内容有关；一次点击也可能发起多次请求。",
+      "url": "https://skymoni.com/docs?doc=usage-costs&edit=false",
+      "published_at": 1791653844,
+      "blocks": [
+        {
+          "id": "2c61b441-c4ea-4e50-be77-5b6fab0ac34a",
+          "type": "heading",
+          "text": "三个数字分别是什么",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "4d7aced2-6272-49fb-92ab-69e076e33851",
+          "type": "text",
+          "text": "| 看到的数字 | 含义 |\n| --- | --- |\n| 钱包余额 | 账户当前可用的站内额度 |\n| API 密钥额度 | 这把密钥允许消耗的额度上限 |\n| 客户端费用估算 | 软件根据自己的价格设置估计的费用 |\n\n按余额扣费的调用会消耗账户额度。给密钥设置限额是限制它的消费范围，不是给它另外充值一个钱包；「无限额度」也不代表免费调用。\n\n如果页面提供订阅，适用模型、限额、重置周期和扣费来源按订阅页面说明确认。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "d5d3101d-116c-4983-bb50-2baf74a62ff0",
+          "type": "heading",
+          "text": "Token 是什么",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "a0b4a655-89e9-4b86-853d-12f595a4a87f",
+          "type": "text",
+          "text": "Token 是模型处理内容的计量单位，和汉字数、英文单词数不固定一一对应。文字、代码、图片、音频等内容的计量方式也可能不同。\n\n输入通常包括你本轮的问题、客户端发来的历史对话、系统提示词、文件或工具结果；输出是模型生成的内容。推理和缓存等用量，按所选模型的实际计费说明核对。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "92ee52d5-fe1f-4560-94c7-2cfc7e822620",
+          "type": "heading",
+          "text": "为什么越聊越贵",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "1ae6b3f6-9cf9-481e-9767-c5e8c9ef32db",
+          "type": "text",
+          "text": "为了记得之前说过什么，客户端通常会再次发送历史消息。因此，后面的一轮可能比第一轮携带更多输入。\n\n长提示词、知识库检索结果、文章和代码文件也会增加输入。换话题时可以新建对话；需要保留背景信息时，先保存一份简短摘要，再开启新对话。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "12474d08-a5df-442b-a4e1-cd71388adba1",
+          "type": "heading",
+          "text": "为什么只有一个操作，却有多条日志",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "33653404-da41-4e94-b620-8991e641a876",
+          "type": "text",
+          "text": "软件可能自动生成标题、翻译分段、总结对话、调用工具或重试失败请求。查看同一时间段的模型和密钥，确认是不是这些功能带来的调用。\n\n点击停止、关闭页面或客户端超时，不一定代表服务端请求已经结束。遇到未知状态时先看日志，不要立刻连续重新发送。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "6202af8c-ec29-407a-8303-67e5608052b0",
+          "type": "heading",
+          "text": "核对一次费用",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "8ef22a68-308d-479d-b23b-16bfd63751b0",
+          "type": "text",
+          "text": "1. 在模型广场确认完整 ID、分组、计费单位和当前价格。\n2. 在「使用日志」找到对应时间的请求。\n3. 查看输入、输出、缓存或其他计费项，以及最终费用。\n4. 同时检查附近是否有自动重试或辅助请求。\n\n按 Token、按次、按图片或按时长计费的模型，不能用同一个公式计算。缓存读取和写入也可能有不同价格，不要简单把所有显示的 Token 数加起来重复计算。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "78151506-b076-4ac5-8214-113274523c54",
+          "type": "heading",
+          "text": "一个纯文本计算例子",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "0b95a675-2267-458d-b589-2adbe7f44fc4",
+          "type": "text",
+          "text": "下面仅演示公式，不是 skymoni 的实际报价。假设某模型输入为 2 元／百万 Token、输出为 8 元／百万 Token，本次输入 1000、输出 500：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "8a83df67-574f-4b23-8c78-45d2ece5c67b",
+          "type": "code",
+          "text": "输入费用 = 1000 ÷ 1000000 × 2 = 0.002 元\n输出费用 =  500 ÷ 1000000 × 8 = 0.004 元\n合计 = 0.006 元",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "84140963-e158-47a5-8fb3-5220507481b7",
+          "type": "text",
+          "text": "这个例子没有缓存、工具、图片、分组调整或其他计费项。实际调用以当前价卡和日志明细为准。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "bd8712fb-0add-4c5f-b214-9bdf3f8fc6d0",
+          "type": "heading",
+          "text": "想控制花费，先做这几件事",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "e29e96d1-a413-4638-80ef-4e110a36bc9f",
+          "type": "text",
+          "text": "- 给每个软件分别建密钥，并设置限额。\n- 长任务前，先做一次短测试。\n- 减少无关历史、文件和自动重试。\n- 按需求选择模型，设置合理的回复长度。\n- 定期到「使用日志」核对消耗。\n\n额度不足或费用异常时，按 [常见错误和使用日志](/docs?doc=troubleshooting&edit=false) 保存信息后联系管理员。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "738be5bc14f0596676e18c9d840301c9f20b25fb4b543bb0cf836ae3a24f3b07"
+    },
+    {
+      "id": "workbuddy",
+      "title": "腾讯 WorkBuddy 接入 skymoni",
+      "category": "编程软件接入",
+      "summary": "在 WorkBuddy 的模型设置中添加自定义 API，开启“自定义协议”，填完整对话地址、密钥和模型 ID。",
+      "url": "https://skymoni.com/docs?doc=workbuddy&edit=false",
+      "published_at": 1791653844,
+      "blocks": [
+        {
+          "id": "34a1a3b7-1e73-43e2-95f0-f1bd0629c86a",
+          "type": "heading",
+          "text": "添加自定义 API",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "cb3a9b03-4d9e-4771-a390-c950557fd703",
+          "type": "text",
+          "text": "1. 打开 WorkBuddy「设置 → 模型」。\n2. 新建自定义 API / 自定义模型，名称填 skymoni。\n3. 开启「自定义协议」，按下表填写。\n\n| 字段 | 填什么 |\n| --- | --- |\n| 请求 URL | 下方完整地址 |\n| API Key | 自己的 skymoni 密钥 |\n| 模型 ID | 模型广场中的完整 ID |\n| 自定义协议 | 开启，直接使用填写的 URL |\n| 图片、上下文等能力 | 按实际模型能力填写 |",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "f274ad81-7eae-49a2-9a96-b4ac1504183f",
+          "type": "code",
+          "text": "https://skymoni.com/v1/chat/completions",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "3f5f7373-17a3-4808-b60a-cc57f5428fad",
+          "type": "heading",
+          "text": "为什么要开这个选项",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "40333a28-e927-4e79-a109-7290d3082069",
+          "type": "text",
+          "text": "官方说明中，“自定义协议”开启时会直接向填写的 URL 请求；关闭时会按标准接口规则补全 `/chat/completions`。\n\n本教程采用“开启 + 完整地址”。如果你用关闭的方式，需要填写让软件补全后正确的基础地址，不能再重复追加接口路径。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "c9d4f3a1-0c60-469c-8357-a54a46de0cd5",
+          "type": "heading",
+          "text": "保存后开始用",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "52a4ba47-730b-4cdf-a2d8-5d71f0696156",
+          "type": "text",
+          "text": "完成保存并启用，在任务界面的模型选项中选择刚添加的自定义模型。先让它解释一小段代码，再到 skymoni「使用日志」核对模型和状态。\n\n能对话但不能执行工具时，检查所选模型是否支持工具调用，及软件的能力设置是否与模型一致。\n\n菜单依据：[WorkBuddy 官方模型说明](https://www.workbuddy.ai/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Model)。下载入口：[WorkBuddy 官网](https://www.workbuddy.ai/)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "c2c1a87aa2b07b0698a8bd1bbcf850336a6c8698a389ca534b911420cfacf88a"
+    },
+    {
+      "id": "deepseek-harness",
+      "title": "DeepSeek Harness（dsh）接入",
+      "category": "编程软件接入",
+      "summary": "DeepSeek Harness 支持自定义模型提供商。连接 skymoni 时，新建“自定义模型 API”，填写本站地址和密钥。",
+      "url": "https://skymoni.com/docs?doc=deepseek-harness&edit=false",
+      "published_at": 1791653845,
+      "blocks": [
+        {
+          "id": "a1bb78b7-2643-4989-91b7-5d70bb0c368c",
+          "type": "heading",
+          "text": "打开软件",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "4360dc0b-7f6c-4a58-8afc-a8ae70bc75c0",
+          "type": "text",
+          "text": "在 [DeepSeek 官方项目](https://github.com/deepseek-ai/deepseek-harness) 查看安装说明。已经具备项目要求的 Node.js 环境时，可以用以下命令打开本地 Web 界面：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "abc16c27-813e-4c69-9fc8-7b5f69bdbd41",
+          "type": "code",
+          "text": "npx @deepseek-ai/dsh web",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "f3768414-21e9-495a-b4b1-b3c9b1b7db0a",
+          "type": "text",
+          "text": "按终端提示打开本机地址，通常为 `http://127.0.0.1:3080`。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "7f3b3004-bb83-4923-ba06-fc18be4ef2bd",
+          "type": "heading",
+          "text": "新建自定义提供商",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "8f1fa18f-5d78-4ccd-8356-2719878d7398",
+          "type": "text",
+          "text": "进入「设置 → 模型」，点击添加模型提供商，选择「自定义模型 API / Custom Model API」。\n\n| 字段 | 填什么 |\n| --- | --- |\n| 提供商 ID | skymoni，使用小写字母 |\n| 显示名称 | skymoni |\n| API 协议 | 先选 OpenAI Chat Completions |\n| Base URL | 下方地址 |\n| API 密钥 | 自己的 skymoni 密钥 |",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "43a7b46e-9911-44d4-a1c3-e383bb16929c",
+          "type": "code",
+          "text": "https://skymoni.com/v1",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "22307a6f-36aa-4da6-9083-9df10415fef8",
+          "type": "text",
+          "text": "这里使用自定义提供商。内置 DeepSeek 提供商连接它自己的默认服务，填入本站密钥不会自动改变地址。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "b11c2d3b-a329-4168-bc4c-f05fddc2e356",
+          "type": "heading",
+          "text": "添加模型并选中",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "2915f18c-e3fe-4816-b736-032e894db051",
+          "type": "text",
+          "text": "尝试获取模型列表；没有取到时，手动添加模型广场中的完整 ID。至少添加一个模型，按它的真实能力填写工具和图片等选项。\n\n保存后选中这个提供商下的模型，新建会话并发一句短问题。已有会话可能仍使用之前的模型，所以先开新会话测试。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "c6a63e47-95b1-4038-bb5b-e969d581af7b",
+          "type": "heading",
+          "text": "需要其他协议时",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "17b85e38-d9c6-4e0f-834a-a06161cac27c",
+          "type": "text",
+          "text": "软件也支持 OpenAI Responses 和 Anthropic Messages。只有所选模型和接口都支持时，才新建或切换相应协议；一个提供商配置使用一种协议。\n\nResponses 的 OpenAI Base URL 仍为 `https://skymoni.com/v1`。Messages 按该提供商界面或官方说明填写对应基础路径，最终请求应到 `/v1/messages`，不要直接照搬 Claude Code 的字段含义。\n\n步骤依据：[DeepSeek 官方提供商指南](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/guide/providers.zh.md)。有回复后，去 skymoni 使用日志确认实际调用。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "65d01c83da009d4d4c3fd8719f54b5a60909b8e1423f3786d004f64d95575928"
+    },
+    {
+      "id": "opencode",
+      "title": "OpenCode 接入 skymoni",
+      "category": "编程软件接入",
+      "summary": "在 OpenCode 添加一个自定义服务商，保存密钥，再配置 API 地址和模型。这里先用 OpenAI Chat Completions。",
+      "url": "https://skymoni.com/docs?doc=opencode&edit=false",
+      "published_at": 1791653845,
+      "blocks": [
+        {
+          "id": "18148b02-4183-4601-9365-4d6d1e24da5a",
+          "type": "heading",
+          "text": "保存密钥",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "b9385d5e-d9f2-4d89-ac09-4fdab8ff9b56",
+          "type": "text",
+          "text": "启动 OpenCode，输入 `/connect`，选择「Other」，提供商 ID 填 `skymoni`，密钥填自己的 skymoni API 密钥。\n\n这一步只保存凭据，还需要下面的配置。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "6a359e7d-d197-4946-b1c9-1b9bfc8ac6bd",
+          "type": "heading",
+          "text": "填写配置文件",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "63518ad8-5f19-45e5-9704-18135d388e08",
+          "type": "text",
+          "text": "在项目的 `opencode.json` 合并以下内容。把两处 `REPLACE_WITH_MODEL_ID` 都换成模型广场中的完整 ID：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "52d49c76-5dea-4643-8052-60cd71e66513",
+          "type": "code",
+          "text": "{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"model\": \"skymoni/REPLACE_WITH_MODEL_ID\",\n  \"provider\": {\n    \"skymoni\": {\n      \"npm\": \"@ai-sdk/openai-compatible\",\n      \"name\": \"skymoni\",\n      \"options\": {\n        \"baseURL\": \"https://skymoni.com/v1\"\n      },\n      \"models\": {\n        \"REPLACE_WITH_MODEL_ID\": {\n          \"name\": \"skymoni 编程模型\"\n        }\n      }\n    }\n  }\n}",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "bc243f9d-3ba3-4b0e-9a1d-227c39478af9",
+          "type": "text",
+          "text": "`/connect` 的提供商 ID 与配置中的 `skymoni` 必须一致。密钥已保存在个人凭据中，不必再写进项目 JSON。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "24c5491d-2105-425d-9647-5ee9833e1be0",
+          "type": "heading",
+          "text": "选模型并测试",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "67e2552f-cfe0-4a6b-9100-10894d6566d0",
+          "type": "text",
+          "text": "重新打开 OpenCode，输入 `/models`，选择刚添加的模型。先发一句短问题，再到 skymoni「使用日志」确认调用。\n\n编程任务需要所选模型支持工具调用。若要使用 Responses，官方要求适配包改用 `@ai-sdk/openai`，并选择支持 Responses 的模型；不能只把 Chat Completions 的地址换个后缀。\n\n配置依据：[OpenCode 官方自定义服务商](https://opencode.ai/docs/providers/#custom-provider)。安装入口：[OpenCode 官网](https://opencode.ai/)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "63879dab3e72aa93c7a2dbd04658a5560f833e08f681557f54ded74333a909e6"
+    },
+    {
+      "id": "continue",
+      "title": "Continue 接入 skymoni",
+      "category": "编程软件接入",
+      "summary": "Continue 可以在编辑器里使用 OpenAI 兼容模型。把 apiBase 指向 skymoni，再填写自己的模型 ID 和密钥。",
+      "url": "https://skymoni.com/docs?doc=continue&edit=false",
+      "published_at": 1791653845,
+      "blocks": [
+        {
+          "id": "85890650-1c35-4672-b6e8-a1ba941e8eb7",
+          "type": "heading",
+          "text": "打开个人配置",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "47ef9949-91be-439f-adbd-a9f56ca7516f",
+          "type": "text",
+          "text": "在 Continue 打开本地配置文件 `~/.continue/config.yaml`。Windows 默认在 `%USERPROFILE%\\.continue\\config.yaml`。\n\n已有配置先备份，只合并模型项，不要覆盖原有的模型和工具设置。第一次配置可用下面的完整示例。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "d1af7a41-96fe-4c3f-b32e-54c131e5c502",
+          "type": "code",
+          "text": "name: skymoni\nversion: 1.0.0\nschema: v1\nmodels:\n  - name: skymoni 编程模型\n    provider: openai\n    model: REPLACE_WITH_MODEL_ID\n    apiBase: https://skymoni.com/v1\n    apiKey: ${{ secrets.SKYMONI_API_KEY }}\n    useResponsesApi: false\n    roles:\n      - chat\n      - edit\n      - apply",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "c17727d3-deb2-4f39-83ef-dc74175e1fdd",
+          "type": "text",
+          "text": "将 `REPLACE_WITH_MODEL_ID` 换成完整模型 ID。这个示例使用 Chat Completions；需要 Responses 时，按模型支持情况调整 `useResponsesApi`。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "ff1811a7-fdec-4d88-89aa-7a56c3282c4b",
+          "type": "heading",
+          "text": "保存自己的密钥",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "1fb815ad-2a84-492b-9acb-3567837a9635",
+          "type": "text",
+          "text": "在个人目录 `~/.continue/.env` 中添加下面这一行，将等号右边换成自己的密钥：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "9cac1bfe-6e61-4a76-9b8d-c1d326b2ee34",
+          "type": "code",
+          "text": "SKYMONI_API_KEY=REPLACE_WITH_YOUR_API_KEY",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "2911148b-54a5-4beb-bc5b-597c985c9334",
+          "type": "text",
+          "text": "个人 .env 不放进项目仓库。只在其他终端 export 密钥，正在运行的编辑器扩展不一定能读取到；个人 .env 更容易确认。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "3a300a73-6412-4717-9ec6-799120c12846",
+          "type": "heading",
+          "text": "选中模型并测试",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "3e0d2696-097b-4880-988c-7fe601a17e48",
+          "type": "text",
+          "text": "保存后，在 Continue 模型列表选择「skymoni 编程模型」。如果没出现，重载编辑器窗口，再发一句短问题并核对本站使用日志。\n\nAgent 模式需要模型支持工具调用。支持但软件未识别时，按官方能力指南补充 `tool_use`。代码补全的 autocomplete 模型需要另行配置，不能把所有聊天模型都当作补全模型。\n\n依据：[Continue 官方 OpenAI 兼容配置](https://docs.continue.dev/customize/model-providers/top-level/openai)、[个人密钥与配置排查](https://docs.continue.dev/faqs)、[模型能力](https://docs.continue.dev/customize/deep-dives/model-capabilities)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "5f736e06800a5c8e73444b3da6743dbc211468d2b8713b2db1382d1d97717795"
+    },
+    {
+      "id": "aider",
+      "title": "Aider 接入 skymoni",
+      "category": "编程软件接入",
+      "summary": "Aider 可以连接 OpenAI 兼容接口。设置 API 地址和自己的密钥，再用 openai/ 前缀指定模型。",
+      "url": "https://skymoni.com/docs?doc=aider&edit=false",
+      "published_at": 1791653845,
+      "blocks": [
+        {
+          "id": "58aeaec7-4cc1-438a-a922-b7c60d7a37d1",
+          "type": "heading",
+          "text": "Windows PowerShell",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "28629f5a-b781-4247-8b42-0017078b35b3",
+          "type": "text",
+          "text": "安装好 Aider 后，在项目目录打开 PowerShell，替换两处示例值并运行：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "6acd4afe-f04e-41e6-b07d-7e7befaddad1",
+          "type": "code",
+          "text": "$env:OPENAI_API_BASE = 'https://skymoni.com/v1'\n$env:OPENAI_API_KEY = '替换成自己的skymoni密钥'\naider --model 'openai/替换成完整模型ID'",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "a84c8b34-5bad-4f03-928d-6dfc321b0ee3",
+          "type": "heading",
+          "text": "macOS / Linux",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "0837d5d5-b755-4902-97aa-703f41db3fd6",
+          "type": "code",
+          "text": "export OPENAI_API_BASE='https://skymoni.com/v1'\nexport OPENAI_API_KEY='替换成自己的skymoni密钥'\naider --model 'openai/替换成完整模型ID'",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "f230a6b5-0424-4403-981a-ee0ca412696d",
+          "type": "text",
+          "text": "`openai/` 是 Aider 的接口前缀，后面接 skymoni 模型的完整 ID，保持模型 ID 本身不变。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "5f7fd05c-e9cb-41de-ba54-a6c1f2b483b2",
+          "type": "heading",
+          "text": "先试一个小文件",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "231a5a89-e566-478a-9d18-2842a055f194",
+          "type": "text",
+          "text": "在小项目中先让 Aider 解释一个文件。确认有回复，并在 skymoni「使用日志」找到对应调用，再开始改代码。\n\n自定义模型可能没有内置的上下文、价格或能力信息，出现提示时查看官方模型说明，不要把客户端估算当作本站实际费用。\n\n上面的变量只对当前终端有效。安装和接口依据：[Aider 官方安装](https://aider.chat/docs/install.html)、[OpenAI 兼容接入](https://aider.chat/docs/llms/openai-compat.html)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "b51ec675c71d7acb7fe8770cec836e8c3a8838042d671ae96fe8a7550b9dc320"
+    },
+    {
+      "id": "custom-coding-client",
+      "title": "其他编程软件、自研工具怎么接",
+      "category": "编程软件接入",
+      "summary": "不管是谁开发的工具，只要允许修改 API 地址、密钥、模型和协议，就可以按下面的方法尝试连接 skymoni。",
+      "url": "https://skymoni.com/docs?doc=custom-coding-client&edit=false",
+      "published_at": 1791653845,
+      "blocks": [
+        {
+          "id": "03e1d5a5-1441-4cfe-8b24-a3642a053bc8",
+          "type": "heading",
+          "text": "先找四个设置",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "895709bf-0630-4892-ad50-3208cf3e3781",
+          "type": "text",
+          "text": "进入工具的设置，找「模型」「服务商」「自定义 API」或「OpenAI Compatible」。先按下表填写：\n\n| 字段 | 填什么 |\n| --- | --- |\n| 服务商 / Provider | OpenAI Compatible 或自定义 |\n| Base URL / apiBase | `https://skymoni.com/v1` |\n| API Key / Token | 自己的 skymoni API 密钥 |\n| Model / 模型 ID | 模型广场中的完整 ID |\n\n这套填写适用于自动追加 `/chat/completions` 的 OpenAI 兼容工具。若字段要求“完整请求 URL”，改填下一节的完整地址。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "f7abcc50-df1a-45e6-be86-a04df780886b",
+          "type": "heading",
+          "text": "协议按工具要求选",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "d9ab410f-9bd9-4674-8dcf-f2155817b4b0",
+          "type": "text",
+          "text": "| 工具要求的协议 | 完整请求地址 |\n| --- | --- |\n| OpenAI Chat Completions | `https://skymoni.com/v1/chat/completions` |\n| OpenAI Responses | `https://skymoni.com/v1/responses` |\n| Anthropic Messages | `https://skymoni.com/v1/messages` |\n\n先选软件明确支持、模型也支持的协议。只认 Responses 的工具不能直接用 Chat Completions 数据；只认 Messages 的工具也不能直接用 OpenAI 消息格式。\n\nBase URL 是否带 `/v1`，取决于软件会补哪段路径。Claude Code 填根地址；OpenAI 兼容 SDK 通常填带 `/v1` 的地址。详见 [地址填写规则](/docs?doc=api-address&edit=false)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "b4f298e8-d355-4892-b2b0-c879a771afa9",
+          "type": "heading",
+          "text": "自己写程序时",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "5be40699-6ef0-43c7-abdf-d4db4a0a29b9",
+          "type": "text",
+          "text": "使用 OpenAI 兼容 SDK 时，设置 `base_url=https://skymoni.com/v1`、自己的 api_key 和完整 model ID。不同 SDK 的参数拼写可能是 baseURL 或 apiBase。\n\n直接发 HTTP 时，使用完整地址。OpenAI 接口鉴权头为 `Authorization: Bearer 自己的密钥`；Messages 请求还需配套消息格式和 `anthropic-version`，可按本站后端支持的 Bearer 或 x-api-key 鉴权。\n\n可复制的基础调用示例见 [开发者首次调用](/docs?doc=developer-quickstart&edit=false)。密钥从环境或个人配置读取，不放进网页源码和项目仓库。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "fc24fcba-81f2-452d-960a-026aef9a0fef",
+          "type": "heading",
+          "text": "编程功能还要核对两项",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "73391b30-6a71-4b37-a6c9-938ad58770af",
+          "type": "text",
+          "text": "- 工具调用：软件要能发送工具定义，并把工具结果交回模型。普通文字回复不等于能改文件。\n- 流式输出：软件要能解析所选接口的事件格式，不能把三种协议的流式响应当成同一种。\n\n先做短对话，再做解释文件的小任务，最后试一次简单修改。在 skymoni 日志中确认服务商、模型和状态。\n\n如果工具只提供它自身账号登录，没有自定义接口入口，按它的官方说明确认是否支持外部 API。改模型显示名称不会改变实际连接地址。\n\n具体配置参考：[Cline](/docs?doc=cline&edit=false)、[OpenCode](/docs?doc=opencode&edit=false)、[Continue](/docs?doc=continue&edit=false)，或返回 [编程软件接入目录](/docs?doc=programming-overview&edit=false)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "24e6583eb3b12d88fd651b1578b8085db3603ff263ecfe4581e4c72e2fdcbfc8"
+    },
+    {
+      "id": "creator-center",
+      "title": "在创作者中心发布作品",
+      "category": "创作与分享",
+      "summary": "创作者中心可以展示网站、软件、Skills、硬件和教程等作品。你可以手动创建项目，也可以导入自己的 GitHub 仓库，再完善介绍并提交审核。",
+      "url": "https://skymoni.com/docs?doc=creator-center&edit=false",
+      "published_at": 1791653846,
+      "blocks": [
+        {
+          "id": "4f2fcfc3-053e-4fbe-af7c-be2c38f89a44",
+          "type": "heading",
+          "text": "开通创作者",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "cd557227-dacd-425c-bb4d-da63f93eb943",
+          "type": "text",
+          "text": "登录自己的 skymoni 账户，进入创作者中心，按页面要求完成申请、填写资料并接受创作者条款。\n\n当前内置指引要求先成功兑换一次额度兑换码，再申请创作者。余额与兑换资格分别判断，若未满足申请条件，按页面提示完成相应步骤。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "b9e1e3d6-62df-40b9-904e-cd6949d6f172",
+          "type": "heading",
+          "text": "手动创建作品",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "fd3aa54a-320c-4fc4-bc79-cff77ad1da32",
+          "type": "text",
+          "text": "从工作区新建项目，填写标题、简介、分类和来源链接，再用内容块说明作品解决什么问题、怎么使用，以及适合哪些用户。\n\n可以先完成文字和链接，再补充封面和图片。展示开源项目或分叉项目时，保留来源、作者署名和许可证信息。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "a5d65694-e9b5-450e-a4f1-a0bf2f611278",
+          "type": "heading",
+          "text": "从 GitHub 导入",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "952dc141-cb56-4964-a1e6-5837e08605dc",
+          "type": "text",
+          "text": "1. 在工作区打开 GitHub 导入入口，连接 GitHub。\n2. 按提示验证 skymoni 账户，并在 GitHub 完成授权。\n3. 选择已连接 GitHub 账户名下的公开仓库。\n4. 导入整个仓库时，子目录留空；只导入仓库中的一个项目时，填写相对路径，例如 `skills/my-skill`。\n5. 将内容导入为私有草稿。\n\n子目录栏填写仓库内的路径，不能直接粘贴 GitHub 页面网址。仓库较多时，使用上一页和下一页浏览；搜索范围以当前页面提示为准。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "e1e26a47-8d6d-4605-81a0-85a081ca2b8a",
+          "type": "heading",
+          "text": "完善导入草稿",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "262db79c-433e-49b2-bd75-fbca417e2f18",
+          "type": "text",
+          "text": "检查标题、简介、分类、来源链接和许可证。README 是介绍的起点，可以用内容块补充、调整顺序和增加图片。\n\nREADME 里的图片不会自动复制到作品图库。需要展示图片时，自己补充封面或图片块；README 缺失或被截短时，补写必要的使用步骤。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "709540cf-24b2-48f5-bcc2-e5038b4d45c9",
+          "type": "heading",
+          "text": "保存并提交审核",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "70d91fc0-e213-4463-92ef-199215f43c71",
+          "type": "text",
+          "text": "检查桌面和手机预览，保存草稿，再使用编辑器中的提交审核入口。草稿在审核通过前保持私有；需要修改时，完善内容后重新提交。\n\n公开作品与软件中心的软件分发分别管理。需要提供安装包时，在工作区的「软件分发」中提交软件信息，并按软件审核流程处理。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "da279ec9d4691852430af4a132e9714072da284fb406bb30efc7f16a38dc5b5e"
+    },
+    {
+      "id": "software-center",
+      "title": "使用软件中心查找和下载工具",
+      "category": "软件工具",
+      "summary": "先按用途和设备找工具，再看详情里的下载入口。装好 AI 软件后，还需要在它的自定义 API 设置中填写 skymoni 的连接信息。",
+      "url": "https://skymoni.com/docs?doc=software-center&edit=false",
+      "published_at": 1791653846,
+      "blocks": [
+        {
+          "id": "f3ff1cdf-0f9d-47d2-83b1-61e82187d385",
+          "type": "heading",
+          "text": "先找自己需要的工具",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "325f9409-2601-4b55-96f3-6627dc3fb0e3",
+          "type": "text",
+          "text": "打开「软件中心」，按当前页面提供的分类、搜索、用途和系统筛选缩小范围。\n\n要聊天、角色扮演、翻译或辅助编程，可以先看 [客户端选择](/docs?doc=client-overview&edit=false)，再回到软件中心查找对应工具。\n\n接入编程软件可以直接看 [编程软件目录](/docs?doc=programming-overview&edit=false)，其中有 CC Switch、Claude Code、Codex、TRAE、WorkBuddy、DeepSeek Harness、Cline、OpenCode、Continue 和 Aider。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "23f8be9e-b84b-4a13-b00e-89ae5a698b52",
+          "type": "heading",
+          "text": "看详情，分清安装还是访问",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "a26c06bc-8558-4921-9091-f777048d4421",
+          "type": "text",
+          "text": "进入软件详情，查看功能、发布者、来源链接、系统要求和更新说明。有截图时可以先了解界面。\n\n| 条目类型 | 下一步 |\n| --- | --- |\n| 桌面软件 | 选择适合电脑系统的安装包 |\n| 手机 App | 选择适合手机系统的入口 |\n| 浏览器扩展 | 按发布者说明安装到支持的浏览器 |\n| 在线工具 | 打开网站，按它的说明使用 |\n\n缺少重要条件时，查看发布者提供的来源说明。许可证用于确认允许的使用和分发方式。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "1038c17b-1850-434b-b753-0abefc7b1fd6",
+          "type": "heading",
+          "text": "下载时选哪个文件",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "6bed8f90-f5b7-471e-877c-97de3e3d8b66",
+          "type": "text",
+          "text": "电脑和手机不能通用同一个安装包。Windows 常见安装程序或便携 ZIP；Android 常见 APK；macOS、iOS 和其他系统按对应发布入口选择。\n\n如果页面提供多个架构，按软件说明和自己的设备选择。下载后是压缩包时，先解压并查看其中的使用说明。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "112ff6c7-04e3-4891-b1ca-aa5116912ff2",
+          "type": "heading",
+          "text": "装好后接 skymoni",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "dc24a2d3-48a8-434d-9f8f-94356b8aa2a3",
+          "type": "text",
+          "text": "在软件中找「供应商」「服务商」「模型提供方」或「自定义 API」，准备自己的 API 密钥和完整模型 ID，再按对应教程填地址。\n\n- [Cherry Studio](/docs?doc=cherry-studio&edit=false)：New API 服务商填根地址。\n- [Chatbox](/docs?doc=chatbox&edit=false)：注意主机地址和路径是否分开。\n- [Kelivo](/docs?doc=kelivo&edit=false)：OpenAI 兼容 Base URL 带 `/v1`。\n- [角色扮演平台](/docs?doc=roleplay-mobile&edit=false)：先确认有自定义 API 入口。\n- [沉浸式翻译](/docs?doc=immersive-translate&edit=false)：自定义 URL 填完整请求地址。\n- [CC Switch](/docs?doc=cc-switch&edit=false)：从 API 密钥操作菜单导入并切换供应商。\n- [其他编程软件 / 自研工具](/docs?doc=custom-coding-client&edit=false)：先选协议，再填地址、密钥和模型。\n\n没有自定义地址和密钥入口的软件，需要按它自己的服务方式使用。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "f796bf39-8932-448a-a99c-7aad70c02e95",
+          "type": "heading",
+          "text": "下载或运行出错",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "87407d59-d3ff-4a58-8f23-8df55f3c4121",
+          "type": "text",
+          "text": "记录软件名称、所选系统、版本和错误提示。无法安装时，先核对系统和架构要求；能打开但模型调用失败时，按 [接口错误排查](/docs?doc=troubleshooting&edit=false) 处理。\n\n软件中心与站点「下载 App」入口提供不同内容。需要 skymoni 客户端时，从「下载 App」查看当前提供的版本。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "5b71e18d56bb52a57a8cc0dda21e91ef8064a5d662ae43f7e5ffcb39010ae63d"
+    },
+    {
+      "id": "troubleshooting",
+      "title": "常见错误和使用日志",
+      "category": "问题排查",
+      "summary": "出错后先保留完整错误提示，再按「地址 → 密钥 → 模型 → 额度」检查。每次只改一个地方，用一句短消息重新测试。",
+      "url": "https://skymoni.com/docs?doc=troubleshooting&edit=false",
+      "published_at": 1791653846,
+      "blocks": [
+        {
+          "id": "27370b22-fe0c-4aba-8b6a-99c8e9c50f29",
+          "type": "heading",
+          "text": "先做一次最小测试",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "11ae9d4b-0349-47c8-bf54-987d8b7962a1",
+          "type": "text",
+          "text": "新建一个对话，选择确定有权限的模型，只发「请只回复：连接成功」。暂时关闭联网、工具、文件和复杂提示词。\n\n如果短文本能用，原任务不能用，继续检查长度、图片、工具或额外参数。全部请求都不能用时，先核对连接信息。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "03d851c5-2f0b-44e1-bd9d-fb0123c329f0",
+          "type": "heading",
+          "text": "四项连接检查",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "8e805645-4693-484f-831d-f4d00c21ec14",
+          "type": "text",
+          "text": "| 检查项 | 怎么确认 |\n| --- | --- |\n| 地址 | 按对应客户端教程填，检查有没有重复 `/v1` 或接口路径 |\n| 密钥 | 完整无空格，已启用、未过期，使用的是模型 API 密钥 |\n| 模型 | 完整 ID、后缀正确，在密钥所属分组和模型限制内 |\n| 额度 | 钱包、密钥限额及适用订阅均满足这次请求 |\n\n地址区别见 [API 地址怎么填](/docs?doc=api-address&edit=false)，权限说明见 [密钥教程](/docs?doc=api-keys&edit=false)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "28cea19d-68e3-4333-8e59-66928deac3fd",
+          "type": "heading",
+          "text": "按错误码排查",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "660ee330-d679-4aa4-a807-941821a94d40",
+          "type": "text",
+          "text": "状态码帮助缩小范围，最终结合响应中的具体错误内容判断。\n\n| 错误或现象 | 优先处理 |\n| --- | --- |\n| 400 / 422 | 检查消息、参数、输入长度和模型支持的协议；先恢复默认参数 |\n| 401 | 重新复制有效密钥；代码中检查鉴权头格式 |\n| 403 / 无权限 | 检查账户状态、密钥分组、模型限制和 IP 白名单 |\n| 额度不足 | 核对钱包、密钥限额和扣费来源；有余额也要看具体额度提示 |\n| 404 | 检查最终请求路径和模型 ID；不要重复拼接版本或接口 |\n| 429 | 降低并发和频率；有重试时间提示时等待后再试 |\n| 500 / 502 / 503 | 保存错误与请求 ID，稍后重试；可用另一可用模型做短测试 |\n| 超时 / 没有响应 | 检查实际发请求设备的网络与超时设置，简化内容后重试 |\n| 模型不存在 / 无可用渠道 | 复制正确 ID，核对分组权限和当前模型可用状态 |\n\n不要持续高频重试。超时、关闭页面或点击停止后，先看日志再决定是否重新发送。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "7dfc7668-9bed-4417-a0c2-a407bc1b34c6",
+          "type": "heading",
+          "text": "检测通过，聊天还是失败",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "9623a670-6f4a-495f-a3fe-744fc470cb3e",
+          "type": "text",
+          "text": "有些软件的检测只验证模型列表，不验证实际对话。保存并启用服务商后，回到聊天页重新选中正确的模型。\n\n再核对模型是否支持当前功能。纯文本能用，不代表图片、工具调用或 Responses 一定能用。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "33689d2c-2057-4777-9658-0a773f4ec41d",
+          "type": "heading",
+          "text": "回复中断、乱码或解析失败",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "cad36585-725e-4d2d-aecb-cbd3add40faf",
+          "type": "text",
+          "text": "- 回复提前结束：检查最大回复长度、停止词和返回的结束原因。\n- 流式失败但普通回复正常：先用非流式确认，再检查客户端、代理或网关对事件流的处理。\n- JSON 解析失败：检查返回的是事件流、HTML 错误页，还是正常 JSON；记录状态码和响应类型。\n- 网页出现 CORS / Failed to fetch：检查浏览器报错和实际请求来源；服务器连接需要检查服务器网络。\n- 模型说的身份不一致：单凭「你是什么模型」的回答无法核实来源；保留请求模型、日志与返回信息供核查。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "b0ee8ed3-e049-40d9-a867-c88c9d3bd8f5",
+          "type": "heading",
+          "text": "去哪里看日志",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "07b28cc2-0726-4c37-b472-1f83d77a6a23",
+          "type": "text",
+          "text": "进入「使用日志」，按发生时间、模型或密钥等当前支持的条件筛选，打开对应详情。查看请求 ID、用量、费用和错误说明。\n\n手机端的筛选项可能在筛选面板中。没有找到记录时，确认时间范围；并非每次失败都会产生一条可见日志。\n\n费用偏高或出现多条记录，见 [用量和费用怎么看](/docs?doc=usage-costs&edit=false)。日志字段参考 [New API 官方日志指南](https://docs.newapi.ai/zh/docs/guide/feature-guide/user/log)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "770cb029-fdc2-408a-805a-76a588281342",
+          "type": "heading",
+          "text": "联系管理员，复制这份信息",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "cd5f93c6-a700-4521-9786-e7c2b34490b2",
+          "type": "text",
+          "text": "把下方占位内容替换后提供，能减少来回确认：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "a602d0a6-0651-41b0-867b-43b6958e329e",
+          "type": "code",
+          "text": "发生时间和时区：\n客户端名称、系统和版本：\n模型完整 ID、密钥分组：\nAPI 地址和接口类型：\n错误码和完整错误提示：\n请求 ID（有的话）：\n短文本测试是否成功：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "897469c6-04e6-41c1-a3bb-087f389a06b0",
+          "type": "text",
+          "text": "截图中遮住完整 API 密钥、兑换码、账号密码和私密对话。无需提供真实密钥即可先排查地址、权限与错误信息。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "9ee7d3f7fb403ca359ad27cc709c17afd010c90d7551fe6590ac22375991be47"
+    },
+    {
+      "id": "aionui",
+      "title": "AionUI 接入 skymoni",
+      "category": "客户端接入",
+      "summary": "在 AionUI 的模型设置里选择 New API，填 skymoni 根地址、自己的密钥和模型。外接 Claude Code、Codex 时还要配置对应工具。",
+      "url": "https://skymoni.com/docs?doc=aionui&edit=false",
+      "published_at": 1791653846,
+      "blocks": [
+        {
+          "id": "7019a52a-833a-4b3f-90d4-b31b52e5b7bb",
+          "type": "heading",
+          "text": "找到接入入口",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "7f464f66-aac6-4393-b0e0-be6cdf906a06",
+          "type": "text",
+          "text": "在 [AionUI 官方项目](https://github.com/iOfficeAI/AionUi) 下载适合系统的版本并打开。\n\n如果从 skymoni「聊天」里的 AionUI 入口打开，浏览器会尝试交给已安装的软件导入。未打开或未完成导入时，用下面的手动方法。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "12e351a9-b4b4-4993-b620-87543c0e6810",
+          "type": "heading",
+          "text": "手动添加模型",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "37c02764-47ec-4787-a6be-cf078d08b4e7",
+          "type": "text",
+          "text": "1. 打开 AionUI「设置 → 模型」，点击添加模型。\n2. 平台选「New API」。\n3. 填下面的地址和自己的 skymoni API 密钥。\n4. 获取模型或手动添加完整模型 ID，保存并选中。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "d9a8b72a-5884-4c4a-9146-90676bb055af",
+          "type": "code",
+          "text": "https://skymoni.com",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "3e3c70e6-7509-4e96-8ceb-7e4839d31363",
+          "type": "text",
+          "text": "New API 平台使用站点根地址。若使用另一个「自定义 OpenAI 兼容」入口，按其自动拼接规则填写，常见 Base URL 为 `https://skymoni.com/v1`。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "85de5496-ebc3-4869-aa27-f5ca499a0880",
+          "type": "heading",
+          "text": "用来辅助编程时",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "a0d60150-44bf-4898-bddf-002cc9cf2194",
+          "type": "text",
+          "text": "AionUI 自身使用的模型按这里配置；如果会话启动的是外部 Claude Code、Codex 等 CLI，还需要给那个工具配置服务商。\n\n可以用 [CC Switch](/docs?doc=cc-switch&edit=false) 管理外部工具，或照 [Claude Code](/docs?doc=claude-code&edit=false)、[Codex](/docs?doc=codex&edit=false) 教程配置。只改 AionUI 模型设置，不一定改变外部 CLI 的地址。\n\n先发短问题，在 skymoni 使用日志确认实际调用。菜单依据：[AionUI 官方模型配置](https://github.com/iOfficeAI/AionUi/wiki/LLM-Configuration)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "1566871a9acf62849a243a5b1c722a18215a120529d4dd6f79818bccfc9ba5fb"
+    },
+    {
+      "id": "deepchat",
+      "title": "DeepChat 接入 skymoni",
+      "category": "客户端接入",
+      "summary": "DeepChat 可以用 New API 或 OpenAI 兼容服务商接入。先填自己的密钥，再启用模型并在对话中选中。",
+      "url": "https://skymoni.com/docs?doc=deepchat&edit=false",
+      "published_at": 1791653846,
+      "blocks": [
+        {
+          "id": "80dcbb12-b792-44b4-9f13-5aade2594b66",
+          "type": "heading",
+          "text": "打开软件",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "dd093bde-77f4-46e1-b1d1-d4250d3201ef",
+          "type": "text",
+          "text": "在 [DeepChat 官方网站](https://deepchat.thinkinai.xyz/) 或 [官方发布页](https://github.com/ThinkInAIXYZ/deepchat/releases) 下载。\n\nskymoni「聊天 → DeepChat」入口会尝试打开已安装的软件并导入连接信息。若没有打开，手动填写即可。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "2d221a28-cb23-4e59-b234-0d008edf17d5",
+          "type": "heading",
+          "text": "方法一：New API",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "9649c2ce-8f07-45b9-ae78-5f1ac2d674ae",
+          "type": "text",
+          "text": "进入 DeepChat 设置中的模型服务商，选择或添加 New API，填写：\n\n| 字段 | 填什么 |\n| --- | --- |\n| 服务商 | New API |\n| Base URL / 服务地址 | 下方根地址 |\n| API Key | 自己的 skymoni 密钥 |\n| 模型 | 获取列表后选择，或手动填完整 ID |",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "babd99d5-9c9b-4446-86f2-ec36063da1cf",
+          "type": "code",
+          "text": "https://skymoni.com",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "8edfed49-4033-40e1-a4ec-5430e1667c86",
+          "type": "heading",
+          "text": "方法二：OpenAI 兼容",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "aeffe881-1efb-4441-a2c9-21b60c4a4206",
+          "type": "text",
+          "text": "如果选的是 OpenAI / OpenAI Chat Completions 兼容入口，Base URL 填：",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "f6cd3198-a416-4ab4-ba45-02e141c56951",
+          "type": "code",
+          "text": "https://skymoni.com/v1",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "822e70a3-17e4-45a5-b0a3-a8e813d1d5b5",
+          "type": "text",
+          "text": "不要把软件的“OpenAI Codex 登录”入口当作普通 API Key 配置；不同入口的鉴权方式不同。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "fd177df9-7306-4f91-b28d-d5ab0ea436d1",
+          "type": "heading",
+          "text": "开始对话",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "eb78e657-de56-4e2c-900f-b20f4dc3c0d2",
+          "type": "text",
+          "text": "保存并启用服务商和模型，回到会话选择它，发一句短问题，再核对 skymoni 使用日志。\n\n只有模型 ID 的显示名称变了、实际服务商没有切换，也可能仍在调用原服务。官方默认入口及地址格式见 [DeepChat 服务商配置](https://github.com/ThinkInAIXYZ/deepchat/blob/dev/src/main/provider/defaults.ts)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "f96b7fabc1fd2cdabe25c2c04accda54cbb6c4bfcf328b01a4c33c3e06e71a66"
+    },
+    {
+      "id": "aqbot",
+      "title": "AQBot 接入 skymoni",
+      "category": "客户端接入",
+      "summary": "在 AQBot 新增 OpenAI 类型的提供商，填 skymoni 根地址和密钥，再拉取或添加模型。",
+      "url": "https://skymoni.com/docs?doc=aqbot&edit=false",
+      "published_at": 1791653847,
+      "blocks": [
+        {
+          "id": "fc5d5e4d-20d9-4678-a5c9-d3effdf98938",
+          "type": "heading",
+          "text": "打开提供商设置",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "a5329965-c0e9-449b-837b-f8d2f8e5ace6",
+          "type": "text",
+          "text": "从 [AQBot 官方网站](https://app.aqbot.top/) 安装对应版本。进入「设置 → 提供商」，点击加号添加：\n\n| 字段 | 填什么 |\n| --- | --- |\n| 名称 | skymoni |\n| 类型 | OpenAI |\n| Base URL | 下方根地址 |\n| API Key | 自己的 skymoni 密钥 |",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "debbbac9-6371-4c2f-9f4e-bc54e6617060",
+          "type": "code",
+          "text": "https://skymoni.com",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "0502ef92-7782-4edd-9b6a-4f61be7f8ff0",
+          "type": "text",
+          "text": "这里按 AQBot 官方提供商表单的主机格式填写，它的示例默认主机同样不带 `/v1`。其他客户端的 Base URL 可能不同，不要混用。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "7f2e361b-40e9-4910-b1d5-371140f2e4fb",
+          "type": "heading",
+          "text": "添加模型并开始用",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "cae542ca-cc9b-470f-a4b5-40633ff4b300",
+          "type": "text",
+          "text": "获取模型列表，选择需要的模型；获取失败时，手动填写模型广场中的完整 ID。图片、上下文等能力按模型真实支持情况配置。\n\n保存后在会话选中 skymoni 提供商和该模型，发一句短问题，核对本站使用日志。\n\nskymoni「聊天 → AQBot」入口可以尝试导入；浏览器没有唤起应用时，按上面的步骤手动填。\n\n菜单依据：[AQBot 官方快速开始](https://app.aqbot.top/zh/guide/getting-started)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "08470095c820f8b9dfd24f1571d840fca68d055ffbbec1d90f8aec4affc7fcc2"
+    },
+    {
+      "id": "lobe-chat",
+      "title": "Lobe Chat / LobeHub 接入 skymoni",
+      "category": "客户端接入",
+      "summary": "在应用设置的 AI 服务商中启用 OpenAI，填写 skymoni API 地址和自己的密钥，再选择本站可用模型。",
+      "url": "https://skymoni.com/docs?doc=lobe-chat&edit=false",
+      "published_at": 1791653847,
+      "blocks": [
+        {
+          "id": "2919b5eb-ce6f-4695-bf68-9dd1dbfbd9da",
+          "type": "heading",
+          "text": "进入服务商设置",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "ab4f329a-78a2-4656-bfd8-25a50d2fc18a",
+          "type": "text",
+          "text": "打开正在使用的 Lobe Chat / LobeHub，进入「应用设置 → AI 服务商 → OpenAI」，启用该服务商。\n\n| 字段 | 填什么 |\n| --- | --- |\n| API Key | 自己的 skymoni 密钥 |\n| 代理地址 / Base URL | 下方地址 |\n| 模型 | 启用或添加完整模型 ID |",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "5be86a42-123e-4cd9-b4df-25ec47d46715",
+          "type": "code",
+          "text": "https://skymoni.com/v1",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "cc148e17-a16f-4403-ab81-2b646e6fe309",
+          "type": "text",
+          "text": "点击检查连接，保存设置，在助理或对话中选择刚配置的服务商和模型。菜单依据：[LobeHub 官方 OpenAI 配置](https://github.com/lobehub/lobe-chat/blob/main/docs/usage/providers/openai.zh-CN.mdx)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "e2f41a58-396b-4c23-8007-d709f8d81806",
+          "type": "heading",
+          "text": "从本站“官方示例”打开",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "2aad6a5b-b7ab-4b56-96a0-91f98fe2221b",
+          "type": "text",
+          "text": "skymoni「聊天」中提供 Lobe Chat 官方示例入口，会尝试传入 OpenAI 配置。示例站点的版本、登录要求或导入方式可能变化；打开后仍要核对地址、密钥来源和所选模型。\n\n如果示例入口失效，使用自己已经安装或部署的 Lobe Chat，再按上面的设置填写。官网入口：[LobeHub](https://lobehub.com/)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "3a93ec8c-56b7-4cbf-b828-9c63f4330f5f",
+          "type": "heading",
+          "text": "使用自己的 API",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "c33081a8-aea5-4440-b7dc-0e7480afd337",
+          "type": "text",
+          "text": "云平台可能同时提供它自己的模型服务。测试时选中配置过 skymoni 的服务商，并在本站「使用日志」确认请求。\n\n若当前部署没有允许用户填写 API Key 或自定义地址的入口，需要由该部署的管理员开启。只购买软件会员不会自动完成本站 API 接入。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "c6ca7b73203973e19ae370044e83f41987328bf1e5a99808b2e5fc15ab4d1f74"
+    },
+    {
+      "id": "ai-as-workspace",
+      "title": "AI as Workspace 接入 skymoni",
+      "category": "客户端接入",
+      "summary": "在 AI as Workspace 的设置中选择 OpenAI，填 skymoni 地址和自己的密钥，再给当前助手选择模型。",
+      "url": "https://skymoni.com/docs?doc=ai-as-workspace&edit=false",
+      "published_at": 1791653847,
+      "blocks": [
+        {
+          "id": "f9aaa187-848c-4af5-bc12-d45b5587cc44",
+          "type": "heading",
+          "text": "打开应用",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "172a8daa-1832-4ba6-addd-0f9390e80c28",
+          "type": "text",
+          "text": "网页版入口：[AI as Workspace](https://aiaw.app/)。桌面和 Android 客户端可从 [官方跨平台说明](https://docs.aiaw.app/zh/usage/cross-platform.html) 中的发布入口下载。\n\nskymoni「聊天 → AI as Workspace」入口会尝试带入服务商配置；导入后也要检查当前助手实际选择的服务商。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "93b7cc94-c2a1-4b7f-9b62-aee4afd6bbe5",
+          "type": "heading",
+          "text": "手动填三项",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "c0d9c27f-80ce-4314-9783-fc8bfe11b080",
+          "type": "text",
+          "text": "进入设置，服务商选择 OpenAI：\n\n| 字段 | 填什么 |\n| --- | --- |\n| Base URL | 下方地址 |\n| API Key | 自己的 skymoni 密钥 |\n| 模型 | 模型广场中的完整 ID |",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "02c0819e-58db-4ead-98c9-782fb6a8f32d",
+          "type": "code",
+          "text": "https://skymoni.com/v1",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "7b844130-6771-4260-9d21-a2703f0d947f",
+          "type": "text",
+          "text": "保存后，将此服务商设为默认，或在当前助手中指定该服务商和模型。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "af459638-aeda-4fa1-9071-ea1b05863d86",
+          "type": "heading",
+          "text": "配置多个服务商",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "5117bf2b-cd7f-4d8b-8906-844b067a0d59",
+          "type": "text",
+          "text": "只有一套接口时，直接在设置里填写即可。需要多个服务商时，创建自定义服务商，并将它设为默认或分配给指定助手。\n\n模型名重映射属于进阶功能。首次接入直接使用完整模型 ID，更容易确认实际请求。\n\n先发一句短问题，并在 skymoni 使用日志核对。菜单依据：[官方自定义服务商说明](https://docs.aiaw.app/zh/usage/custom-provider.html)、[中转站导入格式](https://docs.aiaw.app/zh/usage/share-link.html)。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "a10c860740406823a580701c458f7acafe7383753c83dc17ab67c559d7c18b47"
+    },
+    {
+      "id": "ama-botgem",
+      "title": "AMA 问天 / BotGem 接入 skymoni",
+      "category": "客户端接入",
+      "summary": "站内菜单仍显示“AMA 问天”。当前 BotGem 公开指南提供 OpenAI API 兼容入口，可以手动填写地址、密钥和模型。",
+      "url": "https://skymoni.com/docs?doc=ama-botgem&edit=false",
+      "published_at": 1791653847,
+      "blocks": [
+        {
+          "id": "2c63be36-438f-453b-ba72-b03c93ed927d",
+          "type": "heading",
+          "text": "下载适合设备的版本",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "e0f58508-9dd5-470d-a236-19ebb9b01e52",
+          "type": "text",
+          "text": "在 [BotGem 官网](https://botgem.com/) 选择 Windows、macOS、Android 或 iOS 对应的入口。\n\n如果本站 AMA 入口未能打开当前应用，按下面的手动步骤即可，不必反复点击旧导入链接。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "833fc98f-44db-4ffc-9cc0-bd29d35ce951",
+          "type": "heading",
+          "text": "填写 OpenAI 兼容服务",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "d5cc978f-7198-4f8d-8029-1f19dbd3ee0a",
+          "type": "text",
+          "text": "1. 打开应用「设置 → 服务提供商」。\n2. 选择「OpenAI API 兼容」。\n3. API 密钥填自己的 skymoni 密钥。\n4. 基础 URL 先填下面的地址，模型列表填写完整模型 ID，保存。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "daee0584-9ede-4db8-85c2-28326c21bfa3",
+          "type": "code",
+          "text": "https://skymoni.com/v1",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "5e46df72-d75a-4db6-8399-0417f106cebb",
+          "type": "text",
+          "text": "不要只在固定连接官方服务的 OpenAI 入口填本站密钥；这里需要能修改基础 URL 的兼容入口。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "db33a67c-ab4e-4893-b01f-bd05a03a2d7b",
+          "type": "heading",
+          "text": "开始对话",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "7bd122cf-1275-4289-94bd-7a32816f58af",
+          "type": "text",
+          "text": "新建对话，选择刚配置的服务商和模型，发一句短问题，到 skymoni「使用日志」确认调用。\n\n旧 AMA 版本如果把“主机”与 API 路径分开，或自动补 `/v1`，主机填 `https://skymoni.com`。最终普通对话地址应为 `/v1/chat/completions`，详见 [地址填写规则](/docs?doc=api-address&edit=false)。\n\n菜单依据：[BotGem 官方兼容 API 指南](https://docs.botgem.com/zh/openai-compatible.html)。旧 AMA 导入方式是否可用，以当前安装版本为准。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "e6d35be934eaeb6ece2458af7cca213a63211924bb9951f8b2b3796601fd366f"
+    },
+    {
+      "id": "opencat",
+      "title": "OpenCat 接入：先选对入口",
+      "category": "客户端接入",
+      "summary": "OpenCat 有个人 API 客户端和团队服务两种接入。连接 skymoni 优先找可修改地址的 OpenAI 兼容 API 入口；团队邀请还需要兼容的团队后端。",
+      "url": "https://skymoni.com/docs?doc=opencat&edit=false",
+      "published_at": 1791653847,
+      "blocks": [
+        {
+          "id": "c0353ad6-d1ce-4a03-b350-d1d589fd9792",
+          "type": "heading",
+          "text": "个人 API 客户端",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "6bd5ce50-0342-4616-84a8-43a0e0c984fb",
+          "type": "text",
+          "text": "从 [OpenCat 官网](https://opencat.app/) 安装适合自己设备的版本。进入设置中的 API / 服务提供商，找 OpenAI 兼容服务或自定义地址配置。\n\n| 字段含义 | 填什么 |\n| --- | --- |\n| API Key | 自己的 skymoni 密钥 |\n| Base URL，自动补 /chat/completions | `https://skymoni.com/v1` |\n| API Host，自动补 /v1/chat/completions | `https://skymoni.com` |\n| 模型 ID | 本站支持的完整 ID |\n\n不同版本的字段可能不同，按它实际补全的路径填写。普通聊天最终请求地址应为 `https://skymoni.com/v1/chat/completions`。\n\n如果只有密钥输入框，无法改变服务地址，不能仅靠填写本站密钥完成接入。当前公开资料未明确每个版本的自定义主机按钮位置，因此这里按字段含义给出填写方式。\n\nAPI 客户端能力依据：[OpenCat 官方说明](https://opencat.app/zh-Hans/privacy/)。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "fefb0115-fca7-4d81-9570-d5908a9cf612",
+          "type": "heading",
+          "text": "“加入团队”怎么用",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "9b23d7fd-d22b-41ed-8b29-bab957879e9e",
+          "type": "text",
+          "text": "团队接入需要团队管理员提供的 OpenCat Team 后端地址和团队访问令牌。它的邀请协议是 `opencat://team/join`，不能把普通 API Key 当作团队令牌。\n\n本站菜单中的 OpenCat 入口采用团队邀请形式，目前没有核验本站与 OpenCat Team 后端协议兼容。若提示团队验证失败，换到个人自定义 API 入口；这类错误不直接说明本站密钥无效。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "05341857-09c4-4fc9-8bb4-43bda4f520cd",
+          "type": "heading",
+          "text": "自己部署 OpenCat Team 时",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "8d2159ca-a073-4757-8f8b-cfead7180e98",
+          "type": "text",
+          "text": "按 [OpenCat 官方团队指南](https://opencat.app/en/doc/opencat-for-team/) 部署兼容后端。上游 OpenAI API 的域名变量 API_DOMAIN 可指向 `https://skymoni.com`，上游密钥使用自己的 skymoni API 密钥。\n\n加入客户端时，填你部署的团队后端地址和它签发的团队令牌。团队管理员还需确认该后端支持要用的模型和功能。",
+          "url": "",
+          "level": 0
+        },
+        {
+          "id": "35da3042-c336-43d5-92ef-24786af14ad3",
+          "type": "heading",
+          "text": "验证调用",
+          "url": "",
+          "level": 2
+        },
+        {
+          "id": "b1b9d2b6-9152-4286-93a8-9afb72ce7ae4",
+          "type": "text",
+          "text": "选好模型，发一句短问题，到 skymoni 使用日志确认请求。若当前版本没有适用入口，也可以按 [客户端目录](/docs?doc=client-overview&edit=false) 选择支持自定义 API 的软件。",
+          "url": "",
+          "level": 0
+        }
+      ],
+      "source_sha256": "67328c8a15bc54d4664fd5bbffda2b7f43fca2189a6cbd6b7c952a9efb8b2528"
+    }
+  ],
+  "workflows": [
+    {
+      "id": "account",
+      "title": "注册登录与找回账户",
+      "example_question": "第一次来，怎么开始用？",
+      "entry_url": "https://skymoni.com/sign-up",
+      "steps": [
+        "打开注册页，按页面要求填写用户名、邮箱、密码和确认密码。",
+        "如果页面要求邮箱验证、人机验证或注册资格，先完成对应步骤，并阅读页面显示的条款。",
+        "已有账户时，打开登录页 /sign-in，使用自己的账户登录。",
+        "忘记密码时，打开 /forgot-password，填写账户绑定邮箱，并按收到的邮件继续操作。",
+        "登录后先查看钱包，再创建模型调用所需的 API 密钥。"
+      ],
+      "notes": [
+        "验证码、第三方登录和注册资格随站点当前配置变化，以实际页面要求为准。",
+        "小云收集排错信息时使用占位符，密码和验证码由用户在账户页面自行填写。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=quick-start&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "keys",
+      "title": "创建和管理 API 密钥",
+      "example_question": "我想在手机软件里使用，密钥在哪里创建？",
+      "entry_url": "https://skymoni.com/keys",
+      "steps": [
+        "登录后打开“API 密钥”，点击创建按钮。",
+        "名称填写用途，例如“手机聊天”或“编程软件”。",
+        "选择能使用目标模型的分组，设置这把密钥的消费限额和过期时间。",
+        "按需要设置模型限制和 IP 白名单。第一次接入时先保持不理解的高级设置为默认。",
+        "保存后复制完整密钥，在客户端的 API Key 栏粘贴，检查前后空格或换行。",
+        "换软件时可以使用独立密钥，方便停用和核对各自用量。"
+      ],
+      "notes": [
+        "无限额度表示不设置这把密钥自身的消费上限，调用仍需账户余额或适用订阅额度。",
+        "模型限制留空时，可用范围仍由密钥分组决定。更改分组后需要复核模型限制。",
+        "使用已有密钥排错时，先核对当前分组和目标模型的对应关系。",
+        "“安全与访问”中的账户管理访问令牌与模型 API 密钥用途不同。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=api-keys&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "models",
+      "title": "选择模型和核对价格",
+      "example_question": "我该选哪个模型，价格在哪里看？",
+      "entry_url": "https://skymoni.com/pricing",
+      "steps": [
+        "打开模型广场，按用途查看对话、图片、编程或其他能力。",
+        "选择对应分组，查看模型卡片的协议、完整模型 ID、计费单位和当前价格。",
+        "复制完整模型 ID，包括名称中的后缀，并确认它在密钥允许的范围内。",
+        "把完整 ID 填入软件的 Model 栏，再发送一条短文本确认基本对话。"
+      ],
+      "notes": [
+        "价格、分组、可用模型、分时规则和汇率在回答时查询当前价卡。",
+        "图片输入、图片生成、联网和工具调用分别核对能力与客户端支持情况。",
+        "软件显示的昵称可以自定义，实际调用使用完整模型 ID。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=model-selection&edit=false",
+        "https://skymoni.com/docs?doc=usage-costs&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "client",
+      "title": "接入聊天客户端",
+      "example_question": "怎么把网站接到 Cherry Studio 或手机聊天软件？",
+      "entry_url": "https://skymoni.com/docs?doc=client-overview&edit=false",
+      "steps": [
+        "先确认软件名称、设备系统，以及正在配置的供应商类型。",
+        "在软件中找到服务商、供应商、模型提供方或自定义 API 设置。",
+        "准备自己的 skymoni API 密钥和模型广场中的完整模型 ID。",
+        "按对应软件教程填写地址，保存并启用服务商。",
+        "返回实际聊天窗口，选中刚配置的服务商和模型，再发送短文本。",
+        "到使用日志核对本次时间、模型和用量。"
+      ],
+      "notes": [
+        "Cherry Studio 的 New API 服务商使用 https://skymoni.com 根地址。",
+        "Kelivo 的 OpenAI 兼容 Base URL 使用 https://skymoni.com/v1。",
+        "Chatbox 要先确认地址与路径是否分成两个字段。",
+        "给出第三方软件操作步骤时附上本站对应教程，菜单随软件版本变化时先询问当前界面。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=client-overview&edit=false",
+        "https://skymoni.com/docs?doc=cherry-studio&edit=false",
+        "https://skymoni.com/docs?doc=kelivo&edit=false",
+        "https://skymoni.com/docs?doc=chatbox&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "address",
+      "title": "填写接口地址",
+      "example_question": "Base URL 到底要不要带 /v1？",
+      "entry_url": "https://skymoni.com/docs?doc=api-address&edit=false",
+      "steps": [
+        "先询问软件名称和地址栏的字段名称。",
+        "软件会自动补 /chat/completions 时，普通 OpenAI 兼容 Base URL 填 https://skymoni.com/v1。",
+        "主机和路径分开时，主机填 https://skymoni.com，普通聊天路径填 /v1/chat/completions。",
+        "明确要求完整普通聊天请求 URL 时，填 https://skymoni.com/v1/chat/completions。",
+        "最终请求应拼成一条正确路径，检查重复的 /v1 或重复接口尾缀。",
+        "Messages、Responses 和 Gemini 按客户端与模型支持的协议分别设置。"
+      ],
+      "notes": [
+        "地址规则取决于客户端会自动补哪一段路径。",
+        "完整请求路径在教程中分别列出，先确认协议再指导填写。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=api-address&edit=false",
+        "https://skymoni.com/docs?doc=developer-quickstart&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "coding",
+      "title": "接入编程工具",
+      "example_question": "怎么给 Codex 或 Claude Code 配置？",
+      "entry_url": "https://skymoni.com/docs?doc=programming-overview&edit=false",
+      "steps": [
+        "先确认正在使用的工具和系统，例如 Codex 桌面版、CLI、Claude Code 或 Cline。",
+        "查看对应教程，确认所选模型支持工具要求的协议和工具调用能力。",
+        "需要一键导入时，从 API 密钥操作菜单打开 CC Switch，并按教程选择工具和模型。",
+        "在工具中切换到新配置，按该工具要求重新打开会话或应用。",
+        "发送一个短问题，再到 skymoni 使用日志核对是否产生了目标模型的调用。"
+      ],
+      "notes": [
+        "配置文件、环境变量和重启要求使用对应工具教程，避免将不同工具的配置混在一起。",
+        "现有配置先备份，再合并需要的字段。",
+        "本站教程包含示例模型占位符，实际模型从当前模型广场选择。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=programming-overview&edit=false",
+        "https://skymoni.com/docs?doc=cc-switch&edit=false",
+        "https://skymoni.com/docs?doc=codex&edit=false",
+        "https://skymoni.com/docs?doc=claude-code&edit=false",
+        "https://skymoni.com/docs?doc=cline&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "playground",
+      "title": "在网页游乐场测试",
+      "example_question": "能不能直接在网站上试一下模型？",
+      "entry_url": "https://skymoni.com/playground",
+      "steps": [
+        "登录后打开游乐场，选择自己可用的分组和模型。",
+        "首次使用先保持默认参数，在新对话中发送简短文本。",
+        "收到回复后，到使用日志核对请求模型、用量和费用。",
+        "普通对话成功后，再根据模型和界面的支持情况尝试文件或其他能力。"
+      ],
+      "notes": [
+        "游乐场模型调用的扣费按当前模型、账户额度和页面规则处理。",
+        "小云网站使用咨询的费用由网站承担，这是小云接入时单独配置的服务策略。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=quick-start&edit=false",
+        "https://skymoni.com/docs?doc=usage-costs&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "wallet",
+      "title": "钱包充值和额度兑换",
+      "example_question": "买了额度以后怎么到账？",
+      "entry_url": "https://skymoni.com/wallet",
+      "steps": [
+        "登录后打开钱包，查看当前可用额度、充值方式和套餐条件。",
+        "购买前核对实付金额、到账额度、期限和适用范围。",
+        "如果流程交付的是额度兑换码，回到钱包的额度兑换入口提交。",
+        "兑换完成后核对钱包余额及对应记录。",
+        "遇到付款成功但状态不明的订单，保存订单号、时间和错误信息，交由人工核对。"
+      ],
+      "notes": [
+        "到账额度、支付方式和售后规则按当前钱包与对应商品页确认。",
+        "小云提供操作指引，订单实况、补单和退款结果由有权限的人工核查。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=wallet-and-warehouse&edit=false",
+        "https://skymoni.com/docs?doc=usage-costs&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "warehouse",
+      "title": "领取资源和查看仓库",
+      "example_question": "我买到的账号或兑换资源在哪里？",
+      "entry_url": "https://skymoni.com/warehouse",
+      "steps": [
+        "先区分拿到的是额度兑换码还是资源兑换码。",
+        "额度兑换按钱包入口操作，资源领取按兑换福利或仓库的资源入口操作。",
+        "商城购买资源前阅读商品说明，核对套餐、库存、期限和交付内容。",
+        "完成购买或领取后，打开“我的仓库”查看资源详情、入口和使用说明。",
+        "按资源自己的指引使用外部服务，遇到交付问题保留订单信息联系人工。"
+      ],
+      "notes": [
+        "资源领取与钱包额度兑换有不同的结果，按兑换入口说明选择。",
+        "仓库中的外部账户信息，按对应外部服务的说明使用。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=wallet-and-warehouse&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "logs",
+      "title": "查看使用日志和费用",
+      "example_question": "为什么多扣了额度，在哪里看明细？",
+      "entry_url": "https://skymoni.com/usage-logs/common",
+      "steps": [
+        "打开使用日志，按时间、模型和密钥等页面提供的条件筛选。",
+        "找到对应请求，查看用量、费用、错误说明和请求 ID。",
+        "结合模型价卡核对输入、输出、缓存和计费单位。",
+        "同一操作有多条记录时，检查客户端自动标题、辅助模型、工具和重试。",
+        "费用仍有疑问时，提供脱敏后的时间、模型、客户端和请求 ID 给人工核查。"
+      ],
+      "notes": [
+        "聊天历史、系统提示、文件和工具结果都会影响请求输入量。",
+        "客户端的费用估算需与站内实际日志区分。",
+        "账户余额、订阅使用量和订单细节需要当前用户权限与对应接口才能核查。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=usage-costs&edit=false",
+        "https://skymoni.com/docs?doc=troubleshooting&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "errors",
+      "title": "排查接口错误",
+      "example_question": "连接失败，应该先查什么？",
+      "entry_url": "https://skymoni.com/docs?doc=troubleshooting&edit=false",
+      "steps": [
+        "先收集软件名称、系统、完整模型 ID、接口类型、错误码和脱敏后的错误提示。",
+        "核对地址拼接、密钥启用与有效期、模型分组权限和可用额度。",
+        "401 优先核对鉴权与密钥，403 优先核对权限或具体上游错误，404 核对路径和模型 ID。",
+        "429 按提示降低并发并等待，400 或 422 先简化参数和内容。",
+        "500、502、503 或超时结合具体错误与请求 ID 排查，先查看日志，再决定是否重试。",
+        "用一条普通短文本缩小范围，之后逐项恢复文件、工具或流式功能。"
+      ],
+      "notes": [
+        "错误码用于缩小范围，具体原因结合响应内容和日志判断。",
+        "向人工提供截图前遮住密钥、兑换码、密码和私密对话。",
+        "客户模型可用状态从渠道状态页面查看，后台上游账号或渠道配置由管理员处理。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=troubleshooting&edit=false",
+        "https://skymoni.com/docs?doc=api-keys&edit=false",
+        "https://skymoni.com/docs?doc=api-address&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "software",
+      "title": "软件下载与 skymoni App",
+      "example_question": "应该下载哪个版本？",
+      "entry_url": "https://skymoni.com/software",
+      "steps": [
+        "打开软件中心，按用途、软件名称和设备系统筛选。",
+        "进入详情查看来源、功能、系统要求和发布说明。",
+        "选择与系统和架构对应的文件或在线入口，按该软件说明安装或访问。",
+        "要使用 skymoni 客户端时，打开站点“下载 App”入口 /app，查看当前提供的版本。",
+        "软件装好后，按对应接入教程填写地址、密钥和模型。"
+      ],
+      "notes": [
+        "系统支持、安装包版本、下载链接和文件校验值以当前发布页为准。",
+        "普通软件中心条目与 skymoni App 下载入口按各自详情页操作。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=software-center&edit=false",
+        "https://skymoni.com/docs?doc=client-overview&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "creator",
+      "title": "申请创作者和发布作品",
+      "example_question": "我想发布自己的项目怎么做？",
+      "entry_url": "https://skymoni.com/creators/workspace",
+      "steps": [
+        "使用 skymoni 账户登录，进入创作者工作区。",
+        "根据页面显示的申请资格、开放状态和条款，填写资料并申请创作者身份。",
+        "新建项目，填写标题、简介、分类和来源链接，用内容块补充使用说明。",
+        "从 GitHub 导入时，按当前授权流程选择自己的公开仓库，子目录栏填写仓库内相对路径。",
+        "检查导入内容、作者署名、来源、许可证、封面和图片。",
+        "保存私有草稿，检查桌面和手机预览，再提交审核。"
+      ],
+      "notes": [
+        "现有教程列出“成功兑换过额度兑换码”的常规资格，管理员已授予身份或申请入口关闭时，按当前账户页面处理。",
+        "软件分发有单独的提交与审核流程，按工作区对应标签操作。",
+        "审核状态和处理时间由当前工作区或人工核对。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=creator-center&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "community",
+      "title": "参与社区交流",
+      "example_question": "我想发问题或者反馈建议",
+      "entry_url": "https://skymoni.com/creators",
+      "steps": [
+        "打开 skymoni 社区，先查看社区规范。",
+        "使用自己的 skymoni 账户登录，按当前页面提示完成参与资格。",
+        "从发帖入口创建话题，填写标题和问题说明，发布前遮住凭据和个人敏感信息。",
+        "涉及项目展示时，可以转到创作者工作区整理作品。"
+      ],
+      "notes": [
+        "社区参与资格、邀请码或兑换要求由当前公开政策与账户页面决定。",
+        "订单与账户问题交由客服单独核查，公开发帖使用脱敏资料。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=creator-center&edit=false"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "mascot",
+      "title": "调整小云与联系人工",
+      "example_question": "小云挡住按钮了，怎么挪开？",
+      "entry_url": "https://skymoni.com/",
+      "steps": [
+        "按住小云人物拖动，可调整它在页面里的位置。",
+        "点击人物左下角的齿轮，可以调整大小，或选择收成小入口。",
+        "“叫小云回来”按钮和圆形小入口同样可以拖动，点击入口展开小云。",
+        "需要人工咨询时，通过小云的客服入口查看 QQ 交流群 673994374 或邮箱 792521914@qq.com。"
+      ],
+      "notes": [
+        "手机和桌面的大小及入口位置分别在当前设备保存。",
+        "涉及订单、账户封禁、退款和未能确认的问题时，提供人工联系入口，并说明需要准备哪些脱敏信息。"
+      ],
+      "sources": [
+        "https://skymoni.com/docs?doc=quick-start&edit=false"
+      ],
+      "status": "draft"
+    }
+  ]
+}

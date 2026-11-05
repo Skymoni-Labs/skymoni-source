@@ -1,0 +1,10 @@
+{
+  "api_key": "REPLACE_WITH_SERVER_ONLY_DEEPSEEK_KEY",
+  "signing_secret": "REPLACE_WITH_AT_LEAST_48_RANDOM_CHARACTERS",
+  "model": "deepseek-flash",
+  "daily_requests": 200,
+  "visitor_daily_requests": 20,
+  "daily_tokens": 300000,
+  "max_output_tokens": 900,
+  "requests_per_minute": 3
+}

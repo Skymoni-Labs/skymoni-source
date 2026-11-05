@@ -1,0 +1,16 @@
+# Include inside the existing skymoni.com TLS server. This site uses PROXY protocol.
+location ^~ /api/cloud-assistant/ {
+    client_max_body_size 24k;
+    client_body_timeout 10s;
+    proxy_pass http://127.0.0.1:18886;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $proxy_protocol_addr;
+    proxy_connect_timeout 3s;
+    proxy_read_timeout 50s;
+    proxy_send_timeout 10s;
+    proxy_buffering off;
+    proxy_cache off;
+    gzip off;
+}

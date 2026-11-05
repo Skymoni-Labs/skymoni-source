@@ -37,6 +37,8 @@ function mount(options = {}) {
   window.SVGElement.prototype.beginElement = () => {}
   window.SVGElement.prototype.endElement = () => {}
   window.HTMLElement.prototype.setPointerCapture = () => {}
+  window.TextDecoder = TextDecoder
+  if (options.fetch) window.fetch = options.fetch
   for (const [key, value] of Object.entries(options.saved ?? {})) {
     window.localStorage.setItem(key, value)
   }
@@ -53,6 +55,185 @@ function mount(options = {}) {
   root.querySelector('link').dispatchEvent(new window.Event('load'))
   return { dom, window, host, root, get: (id) => root.querySelector(`#${id}`) }
 }
+
+const settle = () => new Promise((resolve) => setTimeout(resolve, 20))
+const reply = (data, ok = true) => ({ ok, json: async () => data })
+
+test('streaming text appears before completion, then renders the final links', async () => {
+  let controller
+  const body = new ReadableStream({
+    start(value) {
+      controller = value
+    },
+  })
+  const app = mount({
+    fetch: async (url) =>
+      url.endsWith('/status')
+        ? reply({ ready: true, remaining: 20 })
+        : { ok: true, headers: { get: () => 'text/event-stream' }, body },
+  })
+  const send = (kind, data) => {
+    const bytes = new TextEncoder().encode(
+      `event: ${kind}\ndata: ${JSON.stringify(data)}\n\n`
+    )
+    controller.enqueue(bytes.slice(0, bytes.length - 4))
+    controller.enqueue(bytes.slice(bytes.length - 4))
+  }
+  try {
+    app.get('chat-input').value = '怎么接入？'
+    app
+      .get('chat-form')
+      .dispatchEvent(new app.window.Event('submit', { cancelable: true }))
+    await settle()
+    send('delta', { text: '第一步，打开密钥页' })
+    await settle()
+    assert.equal(
+      app.root.querySelector('.is-streaming .chat-message-body').textContent,
+      '第一步，打开密钥页'
+    )
+    assert.equal(app.get('chat-send').disabled, true)
+    assert.equal(app.root.querySelector('#chat-privacy'), null)
+    send('delta', { text: '第一步，打开密钥页。然后创建。' })
+    send('done', { answer: '打开[密钥](/keys)', remaining: 19 })
+    await settle()
+    assert.equal(app.root.querySelector('.is-streaming'), null)
+    assert.equal(
+      app.root.querySelector('.chat-message:last-child a').href,
+      'https://skymoni.com/keys'
+    )
+    assert.equal(app.get('chat-send').disabled, false)
+  } finally {
+    app.dom.window.close()
+  }
+})
+
+test('an interrupted stream retains the request id and replaces partial text on retry', async () => {
+  const requests = []
+  const app = mount({
+    fetch: async (url, options) => {
+      if (url.endsWith('/status')) return reply({ ready: true, remaining: 20 })
+      requests.push(JSON.parse(options.body))
+      if (requests.length > 1) {
+        return reply({ answer: '完整回答', remaining: 19 })
+      }
+      return {
+        ok: true,
+        headers: { get: () => 'text/event-stream' },
+        body: new ReadableStream({
+          start(controller) {
+            controller.enqueue(
+              new TextEncoder().encode(
+                'event: delta\ndata: {"text":"部分回答"}\n\n'
+              )
+            )
+            controller.close()
+          },
+        }),
+      }
+    },
+  })
+  try {
+    app.get('chat-input').value = '怎么使用？'
+    app
+      .get('chat-form')
+      .dispatchEvent(new app.window.Event('submit', { cancelable: true }))
+    await settle()
+    assert.equal(app.get('chat-retry-row').hidden, false)
+    assert.ok(
+      app.root
+        .querySelector('.chat-message:last-child')
+        .textContent.includes('回复未完成')
+    )
+    app.get('chat-retry').click()
+    await settle()
+    assert.equal(requests[0].request_id, requests[1].request_id)
+    assert.equal(app.root.querySelectorAll('.chat-message-user').length, 1)
+    assert.ok(!app.get('chat-transcript').textContent.includes('部分回答'))
+    assert.ok(app.get('chat-transcript').textContent.includes('完整回答'))
+  } finally {
+    app.dom.window.close()
+  }
+})
+
+test('chat sends redacted messages and follow-ups with safe document links', async () => {
+  const requests = []
+  const app = mount({
+    fetch: async (url, options) => {
+      if (url.endsWith('/status')) return reply({ ready: true, remaining: 20 })
+      requests.push(JSON.parse(options.body))
+      return reply({
+        answer:
+          '打开[密钥](/keys)。[外链](https://evil.example) <img src=x onerror=alert(1)>',
+        remaining: 19,
+        sources: [
+          { title: '教程', url: '/docs?doc=start&edit=false' },
+          { title: '不安全', url: 'https://user:pass@skymoni.com/keys' },
+        ],
+      })
+    },
+  })
+  try {
+    app.get('support-hint').click()
+    app.get('chat-input').value =
+      '怎么使用 sk-0123456789abcdef test@example.com'
+    app
+      .get('chat-form')
+      .dispatchEvent(new app.window.Event('submit', { cancelable: true }))
+    app
+      .get('chat-form')
+      .dispatchEvent(new app.window.Event('submit', { cancelable: true }))
+    await settle()
+    assert.equal(requests.length, 1)
+    assert.ok(!requests[0].message.includes('sk-0123'))
+    assert.ok(!requests[0].message.includes('test@example.com'))
+    assert.equal(app.root.querySelector('.chat-message-body img'), null)
+    const links = [...app.root.querySelectorAll('.chat-message a')]
+    assert.equal(links.length, 2)
+    assert.ok(
+      links.every(
+        (link) => link.origin === 'https://skymoni.com' && !link.username
+      )
+    )
+    app.get('chat-input').value = '下一步呢'
+    app
+      .get('chat-form')
+      .dispatchEvent(new app.window.Event('submit', { cancelable: true }))
+    await settle()
+    assert.equal(requests[1].history.length, 2)
+    app.get('chat-new').click()
+    assert.equal(app.root.querySelectorAll('.chat-message').length, 1)
+    assert.equal(app.get('chat-input').value, '')
+  } finally {
+    app.dom.window.close()
+  }
+})
+
+test('chat retry preserves the request id after an uncertain network result', async () => {
+  const requests = []
+  const app = mount({
+    fetch: async (url, options) => {
+      if (url.endsWith('/status')) return reply({ ready: true, remaining: 20 })
+      requests.push(JSON.parse(options.body))
+      if (requests.length === 1) throw new TypeError('Network error')
+      return reply({ answer: '已完成', remaining: 19 })
+    },
+  })
+  try {
+    app.get('chat-input').value = '怎么接入'
+    app
+      .get('chat-form')
+      .dispatchEvent(new app.window.Event('submit', { cancelable: true }))
+    await settle()
+    assert.equal(app.get('chat-retry-row').hidden, false)
+    app.get('chat-retry').click()
+    await settle()
+    assert.equal(requests[0].request_id, requests[1].request_id)
+    assert.equal(app.root.querySelectorAll('.chat-message-user').length, 1)
+    assert.equal(app.get('chat-retry-row').hidden, true)
+  } finally {
+    app.dom.window.close()
+  }
+})
 
 test('the fifth and tenth mascot clicks reveal the supplied redemption code', () => {
   const app = mount()

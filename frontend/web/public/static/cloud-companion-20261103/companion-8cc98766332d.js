@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later
- * Skymoni cloud companion. No account, API, or model requests are made here.
+ * Skymoni cloud companion. Website help is relayed through the server-only AI service.
  */
 ;(() => {
   if (document.querySelector('#skymoni-cloud-companion')) return
@@ -10,30 +10,41 @@
   const stylesheet = document.createElement('link')
   stylesheet.rel = 'stylesheet'
   stylesheet.href =
-    '/static/cloud-companion-20261103/companion-0bfc8df20690.css'
+    '/static/cloud-companion-20261103/companion-f706d450b467.css'
   const template = document.createElement('template')
   // The template is a static, bundled asset. No user or server HTML is inserted.
   template.innerHTML = String.raw`  <aside class="companion" id="companion" aria-label="云朵伙伴">
     <div class="speech-bubble" id="speech-bubble" role="status" aria-live="polite" hidden></div>
     <button class="support-hint" id="support-hint" type="button" aria-controls="support-panel" aria-expanded="false" aria-haspopup="dialog">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a8 8 0 0 1 16 0v5a3 3 0 0 1-3 3h-3M4 11H3v6h4v-6H4Zm16 0h1v6h-4v-6h3Z"/><path d="M11 19h3"/></svg>
-      <span><strong>需要帮助？</strong><small>点我联系客服</small></span>
+      <span><strong>想问怎么用？</strong><small>和小云聊聊</small></span>
       <span class="support-hint-arrow" aria-hidden="true">↗</span>
     </button>
-    <section class="support-panel" id="support-panel" role="dialog" aria-labelledby="support-title" aria-describedby="support-description" hidden>
-      <div class="support-heading">
-        <span class="support-kicker">SKYMONI SUPPORT</span>
-        <h2 id="support-title">小云帮你联系</h2>
-        <button class="support-close" id="support-close" type="button" aria-label="关闭客服入口">×</button>
+    <section class="support-panel" id="support-panel" role="dialog" aria-labelledby="support-title" hidden>
+      <div class="chat-heading">
+        <span class="chat-avatar" aria-hidden="true">☁</span>
+        <div><h2 id="support-title">小云 · 网站助手</h2><span>一起把下一步弄明白</span></div>
+        <button id="chat-new" type="button" aria-label="开始新对话" title="开始新对话">↺</button>
+        <button class="support-close" id="support-close" type="button" aria-label="关闭小云对话">×</button>
       </div>
-      <p id="support-description">使用咨询、问题反馈和售后支持，都可以从这里找到我们。</p>
-      <div class="support-group">
-        <span>App 内测与售后 QQ 交流群</span>
-        <strong>673994374</strong>
-        <button id="copy-support-group" type="button">复制群号 <span aria-hidden="true">↗</span></button>
+      <div class="chat-transcript" id="chat-transcript" role="log" aria-label="与小云的对话" aria-live="polite" aria-relevant="additions text"></div>
+      <div class="chat-suggestions" id="chat-suggestions">
+        <button type="button">如何创建 API 密钥？</button>
+        <button type="button">API 地址怎么填？</button>
+        <button type="button">充值后去哪里兑换？</button>
       </div>
-      <a class="support-email" href="mailto:792521914@qq.com"><span>客服邮箱<small>792521914@qq.com</small></span><span aria-hidden="true">↗</span></a>
-      <p class="support-feedback" id="support-feedback" role="status" aria-live="polite">打开 QQ，搜索群号即可加入。</p>
+      <div class="chat-feedback" id="chat-feedback" role="status" aria-live="polite"></div>
+      <div class="chat-retry-row" id="chat-retry-row" hidden><button id="chat-retry" type="button">重试这条问题</button><a href="https://skymoni.com/docs" target="_blank" rel="noopener">查看使用文档 ↗</a></div>
+      <form class="chat-form" id="chat-form">
+        <label class="chat-input-label" for="chat-input">想了解什么？</label>
+        <textarea id="chat-input" rows="2" maxlength="1000" placeholder="例如：怎么在手机上使用？" aria-label="输入想问小云的问题"></textarea>
+        <div class="chat-compose-actions"><span id="chat-quota">网站使用咨询免费</span><button id="chat-send" type="submit">发送 <span aria-hidden="true">↑</span></button></div>
+      </form>
+      <details class="chat-human"><summary>联系人工客服 <span aria-hidden="true">↗</span></summary>
+        <div class="support-group"><span>QQ 交流群</span><strong>673994374</strong><button id="copy-support-group" type="button">复制群号</button></div>
+        <a class="support-email" href="mailto:792521914@qq.com"><span>客服邮箱<small>792521914@qq.com</small></span><span aria-hidden="true">↗</span></a>
+        <p class="support-feedback" id="support-feedback" role="status" aria-live="polite">打开 QQ，搜索群号即可加入。</p>
+      </details>
     </section>
     <section class="size-panel" id="size-panel" role="dialog" aria-labelledby="size-panel-title" hidden>
       <div class="support-heading">
@@ -254,6 +265,10 @@
     if (companion.hidden) return
     const bounds = companion.getBoundingClientRect()
     const viewportWidth = document.documentElement.clientWidth
+    const viewportHeight = window.visualViewport?.height ?? window.innerHeight
+    const viewportTop = window.visualViewport?.offsetTop ?? 0
+    supportPanel.style.maxHeight = `${Math.max(180, viewportHeight - 24)}px`
+    supportPanel.dataset.smallHeight = String(viewportHeight < 480)
     for (const element of [
       speech,
       supportHint,
@@ -276,8 +291,8 @@
         ? bounds.top - floatingBounds.height - 12
         : bounds.bottom + 12
       const safeTop = Math.max(
-        12,
-        Math.min(top, window.innerHeight - floatingBounds.height - 12)
+        viewportTop + 12,
+        Math.min(top, viewportTop + viewportHeight - floatingBounds.height - 12)
       )
       element.style.left = `${left - bounds.left}px`
       element.style.top = `${safeTop - bounds.top}px`
@@ -304,7 +319,8 @@
     supportPanel.hidden = false
     supportHint.setAttribute('aria-expanded', 'true')
     positionFloatingContent()
-    supportClose.focus({ preventScroll: true })
+    shadow.querySelector('#chat-input').focus({ preventScroll: true })
+    void loadChatStatus()
   }
 
   function closeSizeSettings(restoreFocus = true) {
@@ -696,6 +712,378 @@
     companion.style.removeProperty('--look-angle')
     scheduleBlink()
   })
+
+  const transcript = shadow.querySelector('#chat-transcript')
+  const chatForm = shadow.querySelector('#chat-form')
+  const chatInput = shadow.querySelector('#chat-input')
+  const chatSend = shadow.querySelector('#chat-send')
+  const chatNew = shadow.querySelector('#chat-new')
+  const chatFeedback = shadow.querySelector('#chat-feedback')
+  const chatQuota = shadow.querySelector('#chat-quota')
+  const chatSuggestions = shadow.querySelector('#chat-suggestions')
+  const chatRetryRow = shadow.querySelector('#chat-retry-row')
+  const chatHistory = []
+  let chatSession = null
+  let chatPending = null
+  let chatPartialBubble = null
+  let chatBusy = false
+
+  function safeChatLink(value) {
+    try {
+      const url = new URL(value, 'https://skymoni.com')
+      const paths = [
+        '/',
+        '/docs',
+        '/keys',
+        '/pricing',
+        '/wallet',
+        '/warehouse',
+        '/benefits',
+        '/usage-logs/common',
+        '/software',
+        '/app',
+        '/playground',
+        '/channel-status',
+        '/sign-in',
+        '/sign-up',
+        '/forgot-password',
+        '/security',
+        '/profile',
+        '/creators',
+        '/creators/new',
+        '/creators/guidelines',
+        '/creators/workspace',
+      ]
+      return url.origin === 'https://skymoni.com' &&
+        !url.username &&
+        !url.password &&
+        !url.hash &&
+        (!url.search ||
+          (url.pathname === '/docs' &&
+            /^\?doc=[a-z0-9-]{1,64}(?:&edit=false)?$/.test(url.search))) &&
+        paths.includes(url.pathname)
+        ? url.href
+        : null
+    } catch {
+      return null
+    }
+  }
+
+  function chatMessage(role, text, sources = []) {
+    const bubble = document.createElement('div')
+    bubble.className = `chat-message chat-message-${role}`
+    const label = document.createElement('span')
+    label.className = 'chat-speaker'
+    label.textContent = role === 'user' ? '你' : '小云'
+    const body = document.createElement('div')
+    body.className = 'chat-message-body'
+    const content = text.replaceAll(/\*\*([^*]+)\*\*/g, '$1')
+    const links = /\[([^\]]{1,100})\]\(([^\s)]+)\)/g
+    let cursor = 0
+    for (const match of content.matchAll(links)) {
+      body.append(document.createTextNode(content.slice(cursor, match.index)))
+      const href = safeChatLink(match[2])
+      if (href) {
+        const link = document.createElement('a')
+        link.href = href
+        link.target = '_blank'
+        link.rel = 'noopener'
+        link.textContent = match[1]
+        body.append(link)
+      } else {
+        body.append(document.createTextNode(match[1]))
+      }
+      cursor = match.index + match[0].length
+    }
+    body.append(document.createTextNode(content.slice(cursor)))
+    bubble.append(label, body)
+    if (sources.length) {
+      const references = document.createElement('div')
+      references.className = 'chat-sources'
+      for (const source of sources.slice(0, 3)) {
+        const href = safeChatLink(source.url)
+        if (!href || typeof source.title !== 'string') continue
+        const link = document.createElement('a')
+        link.href = href
+        link.target = '_blank'
+        link.rel = 'noopener'
+        link.textContent = `${source.title} ↗`
+        references.append(link)
+      }
+      bubble.append(references)
+    }
+    transcript.append(bubble)
+    transcript.scrollTop = transcript.scrollHeight
+    return bubble
+  }
+
+  async function readChatStream(response, onText) {
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+    let pending = ''
+    try {
+      while (true) {
+        const { value, done } = await reader.read()
+        pending += decoder.decode(value, { stream: !done })
+        pending = pending.replaceAll('\r\n', '\n')
+        let boundary
+        while ((boundary = pending.indexOf('\n\n')) >= 0) {
+          const frame = pending.slice(0, boundary)
+          pending = pending.slice(boundary + 2)
+          const lines = frame.split('\n')
+          const kind = lines
+            .find((line) => line.startsWith('event:'))
+            ?.slice(6)
+            .trim()
+          const raw = lines
+            .filter((line) => line.startsWith('data:'))
+            .map((line) => line.slice(5).trim())
+            .join('\n')
+          if (!raw) continue
+          const data = JSON.parse(raw)
+          if (kind === 'delta' && typeof data.text === 'string') {
+            if (data.text.length > 6000) {
+              throw new Error('回复过长，请新建对话。')
+            }
+            onText(data.text)
+          } else if (kind === 'done') {
+            return data
+          } else if (kind === 'error') {
+            throw Object.assign(
+              new Error(data.message || '回复中断，请重试。'),
+              { code: data.error }
+            )
+          }
+        }
+        if (pending.length > 32768) throw new Error('回复格式异常，请重试。')
+        if (done) throw new Error('连接中断，可以重试获取这条问题的完整回复。')
+      }
+    } finally {
+      await reader.cancel().catch(() => {})
+    }
+  }
+
+  function welcomeChat() {
+    chatMessage(
+      'assistant',
+      '你好，我是小云 ☁\n想了解创建密钥、软件接入，还是充值兑换？告诉我你要做什么，我一步步带你。'
+    )
+  }
+
+  async function loadChatStatus() {
+    if (typeof window.fetch !== 'function') return
+    if (!chatSession) {
+      const controller = new AbortController()
+      const timer = setTimeout(() => controller.abort(), 10000)
+      chatSession = window
+        .fetch('/api/cloud-assistant/status', {
+          credentials: 'same-origin',
+          cache: 'no-store',
+          signal: controller.signal,
+        })
+        .then(async (response) => {
+          if (!response.ok) {
+            throw new Error('小云暂时无法准备咨询，请稍后再试。')
+          }
+          const status = await response.json()
+          if (!status.ready) {
+            throw new Error('小云暂时无法回复，可以先查看教程或联系人工。')
+          }
+          if (Number.isInteger(status.remaining)) {
+            chatQuota.textContent = `今天还可提问 ${status.remaining} 次`
+          }
+          return status
+        })
+        .catch((error) => {
+          chatSession = null
+          throw error
+        })
+        .finally(() => clearTimeout(timer))
+    }
+    try {
+      return await chatSession
+    } catch (error) {
+      if (!chatBusy) chatFeedback.textContent = error.message
+      return null
+    }
+  }
+
+  function redactChatInput(text) {
+    return text
+      .replaceAll(
+        /\bsk-[a-z0-9_-]{12,}|\bbearer\s+[a-z0-9_.-]{12,}/gi,
+        '[密钥已隐去]'
+      )
+      .replaceAll(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/g, '[邮箱已隐去]')
+  }
+
+  async function sendChat(retry = false) {
+    if (chatBusy) return
+    const question =
+      retry && chatPending
+        ? chatPending.message
+        : redactChatInput(chatInput.value.trim())
+    if (!question) {
+      chatInput.focus()
+      return
+    }
+    if (question.length > 1000) {
+      chatFeedback.textContent = '请把问题控制在1000字以内。'
+      return
+    }
+    chatBusy = true
+    chatSend.disabled = true
+    chatNew.disabled = true
+    chatForm.setAttribute('aria-busy', 'true')
+    chatFeedback.textContent = '小云正在查阅使用说明…'
+    chatRetryRow.hidden = true
+    chatSuggestions.hidden = true
+    if (!retry || !chatPending) {
+      chatPending = {
+        request_id: crypto.randomUUID(),
+        message: question,
+        history: chatHistory.slice(-6).map((message) => ({
+          ...message,
+          content: message.content.slice(0, 1000),
+        })),
+        page: window.location.pathname,
+      }
+      chatMessage('user', question)
+      chatInput.value = ''
+    }
+    if (retry) chatPartialBubble?.remove()
+    chatPartialBubble = null
+    let timer
+    try {
+      const status = await loadChatStatus()
+      if (!status) {
+        throw new Error('小云暂时无法连接，请稍后重试，或查看使用文档。')
+      }
+      const controller = new AbortController()
+      timer = setTimeout(() => controller.abort(), 47000)
+      const response = await window.fetch('/api/cloud-assistant/chat', {
+        method: 'POST',
+        credentials: 'same-origin',
+        signal: controller.signal,
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'text/event-stream',
+          'X-Skymoni-Assistant': '1',
+        },
+        body: JSON.stringify(chatPending),
+      })
+      const streaming =
+        response.ok &&
+        response.headers?.get('Content-Type')?.includes('text/event-stream')
+      const result = streaming
+        ? await readChatStream(response, (text) => {
+            if (!chatPartialBubble) {
+              chatPartialBubble = chatMessage('assistant', '')
+              chatPartialBubble.classList.add('is-streaming')
+              chatPartialBubble.setAttribute('aria-live', 'off')
+            }
+            const followBottom =
+              transcript.scrollHeight -
+                transcript.scrollTop -
+                transcript.clientHeight <
+              90
+            chatPartialBubble.querySelector('.chat-message-body').textContent =
+              text
+            if (followBottom) transcript.scrollTop = transcript.scrollHeight
+            chatFeedback.textContent = '小云正在回复…'
+          })
+        : await response.json()
+      if (!response.ok) {
+        if (['provider_unavailable', 'request_failed'].includes(result.error)) {
+          chatPending.request_id = crypto.randomUUID()
+        }
+        if (result.error === 'session_required') chatSession = null
+        throw new Error(result.message || '小云暂时未能回复，请稍后再试。')
+      }
+      if (typeof result.answer !== 'string' || !result.answer.trim()) {
+        throw new Error('回复未完成，请重新试一次。')
+      }
+      chatPartialBubble?.remove()
+      chatPartialBubble = null
+      chatMessage(
+        'assistant',
+        result.answer,
+        Array.isArray(result.sources) ? result.sources : []
+      )
+      chatHistory.push(
+        { role: 'user', content: question },
+        { role: 'assistant', content: result.answer }
+      )
+      if (chatHistory.length > 12) {
+        chatHistory.splice(0, chatHistory.length - 12)
+      }
+      if (Number.isInteger(result.remaining)) {
+        chatQuota.textContent = `今天还可提问 ${result.remaining} 次`
+      }
+      chatPending = null
+      chatFeedback.textContent = ''
+    } catch (error) {
+      if (['provider_unavailable', 'request_failed'].includes(error.code)) {
+        chatPending.request_id = crypto.randomUUID()
+      }
+      if (chatPartialBubble) {
+        chatPartialBubble.classList.remove('is-streaming')
+        chatPartialBubble.querySelector('.chat-speaker').textContent =
+          '小云 · 回复未完成'
+      }
+      chatFeedback.textContent =
+        error.name === 'AbortError'
+          ? '等待回复有点久，可以点击重试获取这条问题的结果。'
+          : error.message
+      chatRetryRow.hidden = false
+    } finally {
+      clearTimeout(timer)
+      chatBusy = false
+      chatSend.disabled = false
+      chatNew.disabled = false
+      chatForm.removeAttribute('aria-busy')
+      positionFloatingContent()
+    }
+  }
+
+  chatForm.addEventListener('submit', (event) => {
+    event.preventDefault()
+    void sendChat()
+  })
+  chatInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
+      event.preventDefault()
+      void sendChat()
+    }
+  })
+  shadow.querySelector('#chat-retry').addEventListener('click', () => {
+    void sendChat(true)
+  })
+  for (const button of chatSuggestions.querySelectorAll('button')) {
+    button.addEventListener('click', () => {
+      chatInput.value = button.textContent
+      void sendChat()
+    })
+  }
+  chatNew.addEventListener('click', () => {
+    if (chatBusy) return
+    chatHistory.length = 0
+    chatPending = null
+    chatPartialBubble = null
+    transcript.replaceChildren()
+    welcomeChat()
+    chatFeedback.textContent = ''
+    chatRetryRow.hidden = true
+    chatSuggestions.hidden = false
+    chatInput.value = ''
+    chatInput.focus()
+  })
+  shadow
+    .querySelector('.chat-human')
+    .addEventListener('toggle', positionFloatingContent)
+  window.visualViewport?.addEventListener('resize', positionFloatingContent)
+  welcomeChat()
+
   loadPreferences()
   scheduleBlink()
   positionFloatingContent()
