@@ -1157,12 +1157,18 @@ input[type='range'] {
 }
 @media (max-width: 760px) {
   .support-panel {
-    width: 352px;
-    height: min(570px, calc(100dvh - 24px));
+    width: min(320px, calc(100vw - 40px));
+    height: clamp(260px, 56dvh, 420px);
   }
   .chat-heading {
     padding-top: 14px;
     padding-bottom: 14px;
+  }
+  .support-panel:has(.chat-human[open]) .chat-suggestions {
+    display: none;
+  }
+  .chat-human {
+    max-height: min(112px, calc(100% - 205px));
   }
 }
 .support-panel[data-small-height='true'] .chat-heading {

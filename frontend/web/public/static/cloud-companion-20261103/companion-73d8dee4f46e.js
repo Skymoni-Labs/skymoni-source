@@ -10,7 +10,7 @@
   const stylesheet = document.createElement('link')
   stylesheet.rel = 'stylesheet'
   stylesheet.href =
-    '/static/cloud-companion-20261103/companion-e09cba21866a.css'
+    '/static/cloud-companion-20261103/companion-7f0b40720c18.css'
   const template = document.createElement('template')
   // The template is a static, bundled asset. No user or server HTML is inserted.
   template.innerHTML = String.raw`  <aside class="companion" id="companion" aria-label="云朵伙伴">
@@ -274,8 +274,19 @@
     const viewportWidth = document.documentElement.clientWidth
     const viewportHeight = window.visualViewport?.height ?? window.innerHeight
     const viewportTop = window.visualViewport?.offsetTop ?? 0
-    supportPanel.style.maxHeight = `${Math.max(180, viewportHeight - 24)}px`
-    supportPanel.dataset.smallHeight = String(viewportHeight < 480)
+    const chatGutter = mobileLayout.matches ? 24 : 12
+    const availableChatHeight = Math.max(0, viewportHeight - chatGutter * 2)
+    supportPanel.style.maxHeight = `${availableChatHeight}px`
+    const chatHeight = mobileLayout.matches
+      ? Math.min(
+          420,
+          Math.max(260, window.innerHeight * 0.56),
+          availableChatHeight
+        )
+      : viewportHeight
+    supportPanel.dataset.smallHeight = String(
+      chatHeight < (mobileLayout.matches ? 400 : 480)
+    )
     for (const element of [
       speech,
       supportHint,
@@ -284,13 +295,14 @@
       rewardPanel,
     ]) {
       if (element.hidden) continue
-      element.style.maxWidth = `${viewportWidth - 24}px`
+      const gutter = element === supportPanel && mobileLayout.matches ? 20 : 12
+      element.style.maxWidth = `${viewportWidth - gutter * 2}px`
       const floatingBounds = element.getBoundingClientRect()
       const left = Math.max(
-        12,
+        gutter,
         Math.min(
           bounds.left + bounds.width / 2 - floatingBounds.width / 2,
-          viewportWidth - floatingBounds.width - 12
+          viewportWidth - floatingBounds.width - gutter
         )
       )
       const above = bounds.top >= floatingBounds.height + 24
@@ -298,8 +310,11 @@
         ? bounds.top - floatingBounds.height - 12
         : bounds.bottom + 12
       const safeTop = Math.max(
-        viewportTop + 12,
-        Math.min(top, viewportTop + viewportHeight - floatingBounds.height - 12)
+        viewportTop + gutter,
+        Math.min(
+          top,
+          viewportTop + viewportHeight - floatingBounds.height - gutter
+        )
       )
       element.style.left = `${left - bounds.left}px`
       element.style.top = `${safeTop - bounds.top}px`
@@ -326,7 +341,9 @@
     supportPanel.hidden = false
     supportHint.setAttribute('aria-expanded', 'true')
     positionFloatingContent()
-    shadow.querySelector('#chat-input').focus({ preventScroll: true })
+    if (!mobileLayout.matches) {
+      shadow.querySelector('#chat-input').focus({ preventScroll: true })
+    }
     void loadChatStatus()
   }
 
@@ -760,7 +777,7 @@
     chatSuggestions.hidden = !allowed || chatHistory.length > 0 || chatBusy
     chatRetryRow.hidden = true
     chatNew.disabled = !allowed || chatBusy
-    if (allowed && !supportPanel.hidden && !chatBusy) {
+    if (allowed && !supportPanel.hidden && !chatBusy && !mobileLayout.matches) {
       chatInput.focus({ preventScroll: true })
     }
     positionFloatingContent()
@@ -1162,6 +1179,7 @@
     .querySelector('.chat-human')
     .addEventListener('toggle', positionFloatingContent)
   window.visualViewport?.addEventListener('resize', positionFloatingContent)
+  window.visualViewport?.addEventListener('scroll', positionFloatingContent)
   welcomeChat()
   setChatAccess('checking')
   shadow.querySelector('#chat-auth-retry').addEventListener('click', () => {

@@ -96,6 +96,29 @@ test('anonymous visitors see a login link and cannot submit, even with local log
   }
 })
 
+test('opening mobile chat preserves the conversation without automatically raising the keyboard', async () => {
+  const app = mount({
+    mobile: true,
+    fetch: async () => reply({ ready: true, remaining: 20 }),
+  })
+  try {
+    app.get('support-hint').click()
+    await settle()
+    assert.equal(app.get('support-panel').hidden, false)
+    assert.notEqual(app.root.activeElement, app.get('chat-input'))
+    const conversation = app.get('chat-transcript').textContent
+    app.get('support-close').click()
+    app.get('companion-size-button').click()
+    app.get('widget-open-chat').click()
+    await settle()
+    assert.equal(app.get('chat-transcript').textContent, conversation)
+    assert.notEqual(app.root.activeElement, app.get('chat-input'))
+    assert.equal(app.get('size-panel').hidden, true)
+  } finally {
+    app.dom.window.close()
+  }
+})
+
 test('a revoked session blocks chat and a logout clears previous messages', async () => {
   let revoked = false
   const app = mount({
