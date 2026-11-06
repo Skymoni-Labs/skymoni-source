@@ -59,7 +59,7 @@ const router = createRouter({
 })
 void i18n.changeLanguage('zhCN')
 document.documentElement.lang = 'zh-CN'
-document.title = 'skymoni · 导航玻璃本地预览'
+document.title = 'skymoni · 导航毛玻璃本地预览'
 document.addEventListener('click', (event) => {
   const anchor = (event.target as Element).closest<HTMLAnchorElement>('a[href]')
   if (
