@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useId, useRef, type ReactNode } from 'react'
 
+import {
+  createHeaderLensMap,
+  HEADER_REFRACTION_SCALE,
+} from './public-header-lens'
+
 import '@/styles/public-header-glass.css'
 
 export function PublicHeaderGlass() {
@@ -18,6 +23,9 @@ export function PublicHeaderGlass() {
       return
     }
     let frame = 0
+    let paint = 0
+    let generation = 0
+    let disposed = false
     let lastSize = ''
     const update = () => {
       frame = 0
@@ -25,35 +33,49 @@ export function PublicHeaderGlass() {
       const height = Math.round(nav.clientHeight)
       if (!width || !height || lastSize === `${width}:${height}`) return
       lastSize = `${width}:${height}`
+      const revision = ++generation
       const canvas = document.createElement('canvas')
       canvas.width = width
       canvas.height = height
       const context = canvas.getContext('2d')
       if (!context) return
       const pixels = context.createImageData(width, height)
-      const radius = height / 2
-      for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
-          const centerX = Math.max(radius, Math.min(width - radius, x))
-          const dx = x - centerX
-          const dy = y - radius
-          const distance = Math.hypot(dx, dy) || 1
-          // Neutral center, lens displacement only within the capsule's rim.
-          const rim = Math.max(0, 1 - Math.max(0, radius - distance) / 8) ** 2
-          const index = (y * width + x) * 4
-          pixels.data[index] = 128 + (dx / distance) * rim * 96
-          pixels.data[index + 1] = 128 + (dy / distance) * rim * 96
-          pixels.data[index + 2] = 128
-          pixels.data[index + 3] = 255
-        }
+      try {
+        pixels.data.set(createHeaderLensMap(width, height))
+      } catch {
+        surface.removeAttribute('data-refraction')
+        return
       }
       context.putImageData(pixels, 0, 0)
-      map.current?.setAttribute('href', canvas.toDataURL())
-      surface.style.backdropFilter = `url(#${id}) saturate(1.12)`
-      surface.style.setProperty(
-        '-webkit-backdrop-filter',
-        `url(#${id}) saturate(1.12)`
+      const uri = canvas.toDataURL()
+      const image = new Image()
+      image.addEventListener(
+        'load',
+        () => {
+          if (disposed || revision !== generation) return
+          map.current?.setAttribute('href', uri)
+          cancelAnimationFrame(paint)
+          // Allow the SVG image to paint before replacing the blur fallback.
+          paint = requestAnimationFrame(() => {
+            paint = requestAnimationFrame(() => {
+              if (disposed || revision !== generation) return
+              surface.style.setProperty('--public-header-lens', `url(#${id})`)
+              surface.setAttribute('data-refraction', 'ready')
+            })
+          })
+        },
+        { once: true }
       )
+      image.addEventListener(
+        'error',
+        () => {
+          if (!disposed && revision === generation) {
+            surface.removeAttribute('data-refraction')
+          }
+        },
+        { once: true }
+      )
+      image.src = uri
     }
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update)
@@ -62,8 +84,13 @@ export function PublicHeaderGlass() {
     observer.observe(nav)
     update()
     return () => {
+      disposed = true
+      generation++
       observer.disconnect()
       cancelAnimationFrame(frame)
+      cancelAnimationFrame(paint)
+      surface.removeAttribute('data-refraction')
+      surface.style.removeProperty('--public-header-lens')
     }
   }, [id])
 
@@ -90,57 +117,25 @@ export function PublicHeaderGlass() {
               preserveAspectRatio='none'
               result='lens'
             />
-            <feDisplacementMap
+            <feGaussianBlur
               in='SourceGraphic'
-              in2='lens'
-              scale='-65'
-              xChannelSelector='R'
-              yChannelSelector='G'
-              result='red-shift'
-            />
-            <feColorMatrix
-              in='red-shift'
-              type='matrix'
-              values='1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'
-              result='red'
+              stdDeviation='3.5'
+              edgeMode='duplicate'
+              result='soft-backdrop'
             />
             <feDisplacementMap
-              in='SourceGraphic'
+              in='soft-backdrop'
               in2='lens'
-              scale='-62'
+              scale={HEADER_REFRACTION_SCALE}
               xChannelSelector='R'
               yChannelSelector='G'
-              result='green-shift'
             />
-            <feColorMatrix
-              in='green-shift'
-              type='matrix'
-              values='0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0'
-              result='green'
-            />
-            <feDisplacementMap
-              in='SourceGraphic'
-              in2='lens'
-              scale='-58'
-              xChannelSelector='R'
-              yChannelSelector='G'
-              result='blue-shift'
-            />
-            <feColorMatrix
-              in='blue-shift'
-              type='matrix'
-              values='0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0'
-              result='blue'
-            />
-            <feBlend in='red' in2='green' mode='screen' result='rg' />
-            <feBlend in='rg' in2='blue' mode='screen' />
           </filter>
         </defs>
       </svg>
-      <span className='public-header-glass-material' aria-hidden='true' />
       <span
         ref={material}
-        className='public-header-glass-rim'
+        className='public-header-glass-material'
         aria-hidden='true'
       />
     </>
