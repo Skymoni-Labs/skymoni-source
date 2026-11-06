@@ -17,6 +17,7 @@ import { Route as CreatorsRouteImport } from './routes/creators'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as SkivuResourcesRouteImport } from './routes/skivu-resources'
 import { Route as SoftwareRouteImport } from './routes/software'
 import { Route as UserAgreementRouteImport } from './routes/user-agreement'
 import { Route as authCommunityAuthorizeRouteImport } from './routes/(auth)/community-authorize'
@@ -150,6 +151,11 @@ const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SkivuResourcesRoute = SkivuResourcesRouteImport.update({
+  id: '/skivu-resources',
+  path: '/skivu-resources',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SoftwareRoute = SoftwareRouteImport.update({
@@ -686,6 +692,7 @@ export interface FileRoutesByFullPath {
   '/docs': typeof DocsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/shop': typeof ShopRoute
+  '/skivu-resources': typeof SkivuResourcesRoute
   '/software': typeof SoftwareRouteWithChildren
   '/user-agreement': typeof UserAgreementRoute
   '/system-settings': typeof AuthenticatedSystemSettingsRouteRouteWithChildren
@@ -789,6 +796,7 @@ export interface FileRoutesByTo {
   '/docs': typeof DocsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/shop': typeof ShopRoute
+  '/skivu-resources': typeof SkivuResourcesRoute
   '/user-agreement': typeof UserAgreementRoute
   '/community-authorize': typeof authCommunityAuthorizeRoute
   '/drip-authorize': typeof authDripAuthorizeRoute
@@ -894,6 +902,7 @@ export interface FileRoutesById {
   '/docs': typeof DocsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/shop': typeof ShopRoute
+  '/skivu-resources': typeof SkivuResourcesRoute
   '/software': typeof SoftwareRouteWithChildren
   '/user-agreement': typeof UserAgreementRoute
   '/_authenticated/system-settings': typeof AuthenticatedSystemSettingsRouteRouteWithChildren
@@ -1000,6 +1009,7 @@ export interface FileRouteTypes {
     | '/docs'
     | '/privacy-policy'
     | '/shop'
+    | '/skivu-resources'
     | '/software'
     | '/user-agreement'
     | '/system-settings'
@@ -1103,6 +1113,7 @@ export interface FileRouteTypes {
     | '/docs'
     | '/privacy-policy'
     | '/shop'
+    | '/skivu-resources'
     | '/user-agreement'
     | '/community-authorize'
     | '/drip-authorize'
@@ -1207,6 +1218,7 @@ export interface FileRouteTypes {
     | '/docs'
     | '/privacy-policy'
     | '/shop'
+    | '/skivu-resources'
     | '/software'
     | '/user-agreement'
     | '/_authenticated/system-settings'
@@ -1314,6 +1326,7 @@ export interface RootRouteChildren {
   DocsRoute: typeof DocsRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ShopRoute: typeof ShopRoute
+  SkivuResourcesRoute: typeof SkivuResourcesRoute
   SoftwareRoute: typeof SoftwareRouteWithChildren
   UserAgreementRoute: typeof UserAgreementRoute
   errors401Route: typeof errors401Route
@@ -1387,6 +1400,13 @@ declare module '@tanstack/react-router' {
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/skivu-resources': {
+      id: '/skivu-resources'
+      path: '/skivu-resources'
+      fullPath: '/skivu-resources'
+      preLoaderRoute: typeof SkivuResourcesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/software': {
@@ -2317,6 +2337,7 @@ const rootRouteChildren: RootRouteChildren = {
   DocsRoute: DocsRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ShopRoute: ShopRoute,
+  SkivuResourcesRoute: SkivuResourcesRoute,
   SoftwareRoute: SoftwareRouteWithChildren,
   UserAgreementRoute: UserAgreementRoute,
   errors401Route: errors401Route,

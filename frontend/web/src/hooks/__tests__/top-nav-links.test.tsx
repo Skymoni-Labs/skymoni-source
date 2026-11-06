@@ -104,12 +104,23 @@ describe('store top navigation', () => {
       '/pricing',
       '/store',
       '/software',
+      '/skivu-resources',
       '/creators',
       '/rankings',
       '/app',
       '/docs',
       '/about',
     ])
+  })
+
+  test('Skivu has a public resource destination independent of Software Center visibility', () => {
+    const { result } = readLinks({ software: false })
+    expect(
+      result.current.find((link) => link.href === '/skivu-resources')
+    ).toMatchObject({
+      title: 'Skivu',
+      requiresAuth: false,
+    })
   })
 
   test('a guest can open the public Store entry without a login prompt', () => {
