@@ -177,6 +177,12 @@ export function useSidebarData(): SidebarData {
             requiredRole: ROLE.SUPER_ADMIN,
           },
           {
+            title: '模型账户',
+            url: '/model-accounts',
+            icon: Network,
+            requiredRole: ROLE.SUPER_ADMIN,
+          },
+          {
             title: t('Models'),
             url: '/models/metadata',
             icon: Box,

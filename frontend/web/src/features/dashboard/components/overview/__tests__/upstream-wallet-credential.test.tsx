@@ -65,6 +65,12 @@ describe('wallet password access', () => {
     expect(mocks.post).not.toHaveBeenCalled()
     expect(screen.queryByText(login.password)).toBeNull()
     await unlock()
+    expect(
+      screen.getByRole('link', { name: `${login.login_url} ↗` })
+    ).toHaveAttribute('href', login.login_url)
+    expect(
+      screen.getByRole('button', { name: '复制上游网址' })
+    ).toBeInTheDocument()
     expect(mocks.post).toHaveBeenCalledWith(
       '/api/upstream-wallet/1/credential/reveal',
       {

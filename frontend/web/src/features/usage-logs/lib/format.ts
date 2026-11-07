@@ -508,6 +508,8 @@ const AUDIT_TEMPLATES: Record<string, string> = {
   // Channel
   'channel.create': 'Created channel {{name}} (type {{type}}, count {{count}})',
   'channel.update': 'Updated channel {{name}} (ID: {{id}})',
+  'channel.account_priority':
+    'Set priority to {{priority}} for {{count}} channels of model {{model}} (wallet {{wallet_id}})',
   'channel.status_update': 'Updated channel status (ID: {{id}})',
   'channel.status_update_batch':
     'Batch updated channel status ({{count}}/{{total}} changed)',

@@ -378,6 +378,10 @@ func SetApiRouter(router *gin.Engine) {
 		}
 
 		dataRoute := apiRouter.Group("/data")
+		modelAccountRoute := apiRouter.Group("/model-accounts")
+		modelAccountRoute.Use(middleware.RootAuth(), middleware.DisableCache())
+		modelAccountRoute.GET("", controller.GetModelAccounts)
+		modelAccountRoute.PUT("/priority", middleware.SessionCookieOriginGuard(), controller.UpdateModelAccountPriority)
 		walletRoute := apiRouter.Group("/upstream-wallet")
 		walletRoute.Use(middleware.RootAuth())
 		walletRoute.GET("", controller.GetUpstreamWallets)

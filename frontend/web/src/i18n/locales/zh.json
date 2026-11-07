@@ -6332,6 +6332,7 @@
     "Updated a vendor": "更新了一个供应商",
     "Updated At": "更新时间",
     "Updated channel {{name}} (ID: {{id}})": "更新渠道 {{name}}（ID: {{id}}）",
+    "Set priority to {{priority}} for {{count}} channels of model {{model}} (wallet {{wallet_id}})": "将模型 {{model}}、账户 {{wallet_id}} 的 {{count}} 条渠道优先级设为 {{priority}}",
     "Updated channel status (ID: {{id}})": "更新渠道状态（ID: {{id}}）",
     "Updated daily": "每日更新",
     "Updated Passkey domains: removed {{domains}}; affected {{known}}; unknown {{unknown}}": "已更新通行密钥域名：删除 {{domains}}；已知受影响 {{known}}；归属未知 {{unknown}}",

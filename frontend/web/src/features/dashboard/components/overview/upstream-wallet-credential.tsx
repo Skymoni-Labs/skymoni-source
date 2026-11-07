@@ -28,7 +28,13 @@ const emptyLogin: WalletLogin = {
   note: '',
 }
 
-export function UpstreamWalletCredential({ walletID }: { walletID: number }) {
+export function UpstreamWalletCredential({
+  walletID,
+  title = '账号与密码',
+}: {
+  walletID: number
+  title?: string
+}) {
   const id = useId()
   const [unlockKey, setUnlockKey] = useState('')
   const [login, setLogin] = useState<WalletLogin | null>(null)
@@ -175,7 +181,7 @@ export function UpstreamWalletCredential({ walletID }: { walletID: number }) {
     >
       <summary className='cursor-pointer text-sm font-medium'>
         <KeyRound className='mr-1.5 inline size-4' />
-        账号与密码
+        {title}
       </summary>
       <div className='mt-3 space-y-3'>
         <p className='text-muted-foreground text-xs'>
@@ -258,14 +264,27 @@ export function UpstreamWalletCredential({ walletID }: { walletID: number }) {
                 <Copy className='size-4' />
               </Button>
             </div>
-            <a
-              className='text-primary inline-block text-xs break-all underline-offset-4 hover:underline'
-              href={login.login_url}
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              打开上游登录页 ↗
-            </a>
+            <div className='flex items-center justify-between gap-2'>
+              <div className='min-w-0'>
+                <p className='text-muted-foreground text-xs'>上游网址</p>
+                <a
+                  className='text-primary text-sm break-all underline-offset-4 hover:underline'
+                  href={login.login_url}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  {login.login_url} ↗
+                </a>
+              </div>
+              <Button
+                size='icon'
+                variant='ghost'
+                aria-label='复制上游网址'
+                onClick={() => void copy(login.login_url)}
+              >
+                <Copy className='size-4' />
+              </Button>
+            </div>
             {login.note && (
               <p className='text-muted-foreground text-xs'>{login.note}</p>
             )}

@@ -69,6 +69,7 @@ import { Route as AuthenticatedDashboardSectionRouteImport } from './routes/_aut
 import { Route as AuthenticatedEmailMessagesIndexRouteImport } from './routes/_authenticated/email-messages/index'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
 import { Route as AuthenticatedKeysIndexRouteImport } from './routes/_authenticated/keys/index'
+import { Route as AuthenticatedModelAccountsIndexRouteImport } from './routes/_authenticated/model-accounts/index'
 import { Route as AuthenticatedModelSalesIndexRouteImport } from './routes/_authenticated/model-sales/index'
 import { Route as AuthenticatedModelsIndexRouteImport } from './routes/_authenticated/models/index'
 import { Route as AuthenticatedModelsSectionRouteImport } from './routes/_authenticated/models/$section'
@@ -422,6 +423,12 @@ const AuthenticatedKeysIndexRoute = AuthenticatedKeysIndexRouteImport.update({
   path: '/keys/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedModelAccountsIndexRoute =
+  AuthenticatedModelAccountsIndexRouteImport.update({
+    id: '/model-accounts/',
+    path: '/model-accounts/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedModelSalesIndexRoute =
   AuthenticatedModelSalesIndexRouteImport.update({
     id: '/model-sales/',
@@ -754,6 +761,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/email-messages/': typeof AuthenticatedEmailMessagesIndexRoute
   '/keys/': typeof AuthenticatedKeysIndexRoute
+  '/model-accounts/': typeof AuthenticatedModelAccountsIndexRoute
   '/model-sales/': typeof AuthenticatedModelSalesIndexRoute
   '/models/': typeof AuthenticatedModelsIndexRoute
   '/playground/': typeof AuthenticatedPlaygroundIndexRoute
@@ -856,6 +864,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/email-messages': typeof AuthenticatedEmailMessagesIndexRoute
   '/keys': typeof AuthenticatedKeysIndexRoute
+  '/model-accounts': typeof AuthenticatedModelAccountsIndexRoute
   '/model-sales': typeof AuthenticatedModelSalesIndexRoute
   '/models': typeof AuthenticatedModelsIndexRoute
   '/playground': typeof AuthenticatedPlaygroundIndexRoute
@@ -964,6 +973,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/email-messages/': typeof AuthenticatedEmailMessagesIndexRoute
   '/_authenticated/keys/': typeof AuthenticatedKeysIndexRoute
+  '/_authenticated/model-accounts/': typeof AuthenticatedModelAccountsIndexRoute
   '/_authenticated/model-sales/': typeof AuthenticatedModelSalesIndexRoute
   '/_authenticated/models/': typeof AuthenticatedModelsIndexRoute
   '/_authenticated/playground/': typeof AuthenticatedPlaygroundIndexRoute
@@ -1071,6 +1081,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/email-messages/'
     | '/keys/'
+    | '/model-accounts/'
     | '/model-sales/'
     | '/models/'
     | '/playground/'
@@ -1173,6 +1184,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/email-messages'
     | '/keys'
+    | '/model-accounts'
     | '/model-sales'
     | '/models'
     | '/playground'
@@ -1280,6 +1292,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/'
     | '/_authenticated/email-messages/'
     | '/_authenticated/keys/'
+    | '/_authenticated/model-accounts/'
     | '/_authenticated/model-sales/'
     | '/_authenticated/models/'
     | '/_authenticated/playground/'
@@ -1766,6 +1779,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedKeysIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/model-accounts/': {
+      id: '/_authenticated/model-accounts/'
+      path: '/model-accounts'
+      fullPath: '/model-accounts/'
+      preLoaderRoute: typeof AuthenticatedModelAccountsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/model-sales/': {
       id: '/_authenticated/model-sales/'
       path: '/model-sales'
@@ -2197,6 +2217,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedEmailMessagesIndexRoute: typeof AuthenticatedEmailMessagesIndexRoute
   AuthenticatedKeysIndexRoute: typeof AuthenticatedKeysIndexRoute
+  AuthenticatedModelAccountsIndexRoute: typeof AuthenticatedModelAccountsIndexRoute
   AuthenticatedModelSalesIndexRoute: typeof AuthenticatedModelSalesIndexRoute
   AuthenticatedModelsIndexRoute: typeof AuthenticatedModelsIndexRoute
   AuthenticatedPlaygroundIndexRoute: typeof AuthenticatedPlaygroundIndexRoute
@@ -2234,6 +2255,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   AuthenticatedEmailMessagesIndexRoute: AuthenticatedEmailMessagesIndexRoute,
   AuthenticatedKeysIndexRoute: AuthenticatedKeysIndexRoute,
+  AuthenticatedModelAccountsIndexRoute: AuthenticatedModelAccountsIndexRoute,
   AuthenticatedModelSalesIndexRoute: AuthenticatedModelSalesIndexRoute,
   AuthenticatedModelsIndexRoute: AuthenticatedModelsIndexRoute,
   AuthenticatedPlaygroundIndexRoute: AuthenticatedPlaygroundIndexRoute,
