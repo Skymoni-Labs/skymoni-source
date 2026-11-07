@@ -77,10 +77,12 @@ export function ModelAccountsContent() {
   const [saveError, setSaveError] = useState('')
   const [channel, setChannel] = useState<Channel | null>(null)
   const [loadingChannel, setLoadingChannel] = useState<number | null>(null)
-  const models = (query.data ?? []).map((item) => ({
-    ...item,
-    accounts: orderedAccounts(item.accounts),
-  }))
+  const models = (query.data ?? [])
+    .filter((item) => item.accounts.some((account) => account.id > 0))
+    .map((item) => ({
+      ...item,
+      accounts: orderedAccounts(item.accounts),
+    }))
   const term = search.trim().toLowerCase()
   const filtered = models.filter((item) =>
     `${item.model} ${item.accounts.map((a) => `${a.name} ${a.provider} ${a.channels.map((c) => c.upstream_model).join(' ')}`).join(' ')}`
