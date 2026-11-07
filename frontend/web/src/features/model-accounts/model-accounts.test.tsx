@@ -23,11 +23,16 @@ import {
   type AccountModel,
 } from './api'
 import { ModelAccountsContent } from './index'
+import { getProviderCatalog } from './providers'
 
 vi.mock('./api', async (original) => ({
   ...(await original<typeof import('./api')>()),
   getModelAccounts: vi.fn(),
   saveAccountPriority: vi.fn(),
+}))
+vi.mock('./providers', async (original) => ({
+  ...(await original<typeof import('./providers')>()),
+  getProviderCatalog: vi.fn(),
 }))
 vi.mock('@/features/channels/components/drawers/channel-mutate-drawer', () => ({
   ChannelMutateDrawer: ({
@@ -125,12 +130,61 @@ function mount() {
 }
 
 beforeEach(() => {
+  vi.mocked(getProviderCatalog).mockResolvedValue({
+    models: [{ model_name: fixture[0].model, name_rule: 0, vendor_id: 1 }],
+    vendors: [{ id: 1, name: 'DeepSeek', icon: 'DeepSeek.Color' }],
+  })
   vi.mocked(getModelAccounts).mockResolvedValue(structuredClone(fixture))
   vi.mocked(saveAccountPriority).mockReset()
   vi.mocked(getChannel).mockReset()
 })
 
 describe('model account management', () => {
+  it('filters models by their registered provider rather than their upstream account', async () => {
+    const other = { ...structuredClone(fixture[0]), model: 'gpt-6.1-sol' }
+    other.accounts[0].name = 'GPT provider account'
+    other.accounts[0].id = 143
+    vi.mocked(getModelAccounts).mockResolvedValue([
+      ...structuredClone(fixture),
+      other,
+    ])
+    vi.mocked(getProviderCatalog).mockResolvedValue({
+      models: [
+        { model_name: fixture[0].model, name_rule: 0, vendor_id: 1 },
+        { model_name: other.model, name_rule: 0, vendor_id: 2 },
+      ],
+      vendors: [
+        { id: 1, name: 'DeepSeek' },
+        { id: 2, name: 'OpenAI' },
+      ],
+    })
+    mount()
+    const choices = screen.getByRole('group', { name: '提供商' })
+    fireEvent.click(
+      await within(choices).findByRole('button', { name: 'OpenAI，1 个模型' })
+    )
+    expect(
+      screen.getByRole('region', { name: 'OpenAI 模型' })
+    ).toBeInTheDocument()
+    expect(screen.queryByText(fixture[0].model)).toBeNull()
+    expect(screen.getByText(other.model)).toBeInTheDocument()
+    fireEvent.click(
+      within(choices).getByRole('button', { name: 'DeepSeek，1 个模型' })
+    )
+    expect(screen.getByText(fixture[0].model)).toBeInTheDocument()
+    expect(screen.queryByText(other.model)).toBeNull()
+  })
+
+  it('keeps account controls available when provider metadata cannot load', async () => {
+    vi.mocked(getProviderCatalog).mockRejectedValue(
+      new Error('temporary unavailable')
+    )
+    mount()
+    expect(
+      await screen.findByText('提供商资料暂时不可用，暂按模型名称归类。')
+    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '调优先级' })).toBeInTheDocument()
+  })
   it('lists accounts and opens exact channel details with disabled state', async () => {
     mount()
     await screen.findByText('Oranexa 1357374054')

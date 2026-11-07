@@ -35,6 +35,7 @@ import { ChannelMutateDrawer } from '@/features/channels/components/drawers/chan
 import { channelsQueryKeys } from '@/features/channels/lib'
 import type { Channel } from '@/features/channels/types'
 import { UpstreamWalletCredential } from '@/features/dashboard/components/overview/upstream-wallet-credential'
+import { getLobeIcon } from '@/lib/lobe-icon'
 import {
   getServerErrorMessage,
   requireServerSuccess,
@@ -50,6 +51,11 @@ import {
   saveAccountPriority,
   type ModelAccount,
 } from './api'
+import {
+  accountModelProvider,
+  getProviderCatalog,
+  groupAccountModels,
+} from './providers'
 
 type Selection = { model: string; account: ModelAccount }
 const queryKey = ['model-accounts']
@@ -69,6 +75,12 @@ export function ModelAccountsContent() {
     queryFn: getModelAccounts,
     staleTime: 15_000,
   })
+  const providerQuery = useQuery({
+    queryKey: ['model-account-providers'],
+    queryFn: ({ signal }) => getProviderCatalog(signal).catch(() => null),
+    staleTime: 5 * 60_000,
+  })
+  const [provider, setProvider] = useState('all')
   const [search, setSearch] = useState('')
   const [expanded, setExpanded] = useState<string | null>(null)
   const [selection, setSelection] = useState<Selection | null>(null)
@@ -84,11 +96,22 @@ export function ModelAccountsContent() {
       accounts: orderedAccounts(item.accounts),
     }))
   const term = search.trim().toLowerCase()
-  const filtered = models.filter((item) =>
-    `${item.model} ${item.accounts.map((a) => `${a.name} ${a.provider} ${a.channels.map((c) => c.upstream_model).join(' ')}`).join(' ')}`
-      .toLowerCase()
-      .includes(term)
+  const providerGroups = groupAccountModels(models, providerQuery.data)
+  const selectedProvider = providerGroups.some(
+    (group) => group.name === provider
   )
+    ? provider
+    : 'all'
+  const filtered = models.filter((item) => {
+    const brand = accountModelProvider(item.model, providerQuery.data)
+    return (
+      (selectedProvider === 'all' || brand.name === selectedProvider) &&
+      `${brand.name} ${item.model} ${item.accounts.map((a) => `${a.name} ${a.provider} ${a.channels.map((c) => c.upstream_model).join(' ')}`).join(' ')}`
+        .toLowerCase()
+        .includes(term)
+    )
+  })
+  const visibleGroups = groupAccountModels(filtered, providerQuery.data)
   const current =
     selection &&
     models
@@ -145,24 +168,90 @@ export function ModelAccountsContent() {
           <Button
             variant='outline'
             size='sm'
-            disabled={query.isFetching}
-            onClick={() => void query.refetch()}
+            disabled={query.isFetching || providerQuery.isFetching}
+            onClick={() =>
+              void Promise.all([query.refetch(), providerQuery.refetch()])
+            }
           >
-            <RefreshCw className={query.isFetching ? 'animate-spin' : ''} />
+            <RefreshCw
+              className={
+                query.isFetching || providerQuery.isFetching
+                  ? 'animate-spin'
+                  : ''
+              }
+            />
             刷新
           </Button>
         </SectionPageLayout.Actions>
         <SectionPageLayout.Content>
           <div className='space-y-5'>
             <p className='text-muted-foreground text-sm'>
-              查看每个模型连接的上游账户、实际模型和渠道，按账户统一设置优先级。数值越大越优先，同级按渠道权重分流。
+              按提供商查看模型、上游账户与渠道，按账户统一设置优先级。数值越大越优先，同级按渠道权重分流。
             </p>
+            <div
+              role='group'
+              aria-label='提供商'
+              className='flex flex-wrap gap-2'
+            >
+              <Button
+                variant={selectedProvider === 'all' ? 'secondary' : 'outline'}
+                size='sm'
+                aria-pressed={selectedProvider === 'all'}
+                onClick={() => {
+                  setProvider('all')
+                  setExpanded(null)
+                }}
+              >
+                全部提供商{' '}
+                <span className='text-muted-foreground text-xs'>
+                  {models.length}
+                </span>
+              </Button>
+              {providerGroups.map((group) => (
+                <Button
+                  key={group.name}
+                  variant={
+                    selectedProvider === group.name ? 'secondary' : 'outline'
+                  }
+                  size='sm'
+                  aria-pressed={selectedProvider === group.name}
+                  aria-label={`${group.name}，${group.models.length} 个模型`}
+                  onClick={() => {
+                    setProvider(group.name)
+                    setExpanded(null)
+                  }}
+                >
+                  {group.icon && (
+                    <span aria-hidden='true'>
+                      {getLobeIcon(group.icon, 15)}
+                    </span>
+                  )}
+                  {group.name}
+                  <span className='text-muted-foreground text-xs'>
+                    {group.models.length}
+                  </span>
+                </Button>
+              ))}
+            </div>
+            {providerQuery.data === null && (
+              <div className='text-muted-foreground flex flex-wrap items-center gap-2 text-xs'>
+                <span>提供商资料暂时不可用，暂按模型名称归类。</span>
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  disabled={providerQuery.isFetching}
+                  onClick={() => void providerQuery.refetch()}
+                >
+                  重试提供商资料
+                </Button>
+              </div>
+            )}
             <div className='relative max-w-xl'>
               <Search className='text-muted-foreground absolute top-2.5 left-3 size-4' />
               <Input
                 className='pl-9'
                 aria-label='搜索模型或账户'
-                placeholder='搜索模型、账户或实际上游模型…'
+                placeholder='搜索提供商、模型、账户或实际上游模型…'
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -171,7 +260,7 @@ export function ModelAccountsContent() {
               <p className='mb-2'>
                 默认按优先级从高到低排列 · 余额为上游钱包账本估算
               </p>
-              共 {models.length} 个模型 ·{' '}
+              共 {models.length} 个模型 · {providerGroups.length} 个提供商 ·{' '}
               {
                 new Set(
                   models.flatMap((m) =>
@@ -180,6 +269,9 @@ export function ModelAccountsContent() {
                 ).size
               }{' '}
               个账户
+              {(selectedProvider !== 'all' || term) && (
+                <span className='ml-2'>当前显示 {filtered.length} 个模型</span>
+              )}
             </div>
             {query.isPending && (
               <p
@@ -203,110 +295,133 @@ export function ModelAccountsContent() {
               </p>
             )}
             <div className='space-y-3'>
-              {filtered.map((item) => {
-                const open =
-                  expanded === item.model ||
-                  (expanded === null && filtered.length === 1)
-                return (
-                  <section
-                    key={item.model}
-                    className='overflow-hidden rounded-xl border'
-                  >
-                    <button
-                      type='button'
-                      className='hover:bg-muted/40 flex w-full items-center gap-3 p-4 text-left'
-                      aria-expanded={open}
-                      onClick={() => setExpanded(open ? '' : item.model)}
-                    >
-                      <Layers3 className='text-primary size-5 shrink-0' />
-                      <span className='min-w-0 flex-1'>
-                        <span className='block font-semibold break-all'>
-                          {item.model}
-                        </span>
-                        <span className='text-muted-foreground text-xs'>
-                          {item.accounts.filter((a) => a.id > 0).length} 个账户
-                          · {item.enabled} / {item.channels} 条渠道启用
-                        </span>
+              {visibleGroups.map((group) => (
+                <section
+                  key={group.name}
+                  aria-label={`${group.name} 模型`}
+                  className='space-y-3'
+                >
+                  <h3 className='flex items-center gap-2 pt-2 font-semibold'>
+                    {group.icon && (
+                      <span aria-hidden='true'>
+                        {getLobeIcon(group.icon, 18)}
                       </span>
-                      {open ? (
-                        <ChevronDown className='size-4 shrink-0' />
-                      ) : (
-                        <ChevronRight className='size-4 shrink-0' />
-                      )}
-                    </button>
-                    {open && (
-                      <div className='divide-y border-t'>
-                        {item.accounts.map((account) => (
-                          <div
-                            key={account.id}
-                            className='flex flex-wrap items-center gap-3 p-4'
-                          >
-                            <button
-                              type='button'
-                              className='group min-w-0 flex-1 text-left'
-                              onClick={() =>
-                                setSelection({ model: item.model, account })
-                              }
-                            >
-                              <span className='group-hover:text-primary flex flex-wrap items-center gap-2 font-medium'>
-                                <span className='break-all'>
-                                  {account.name}
-                                </span>
-                                {account.id > 0 && (
+                    )}
+                    {group.name}
+                    <span className='text-muted-foreground text-xs font-normal'>
+                      {group.models.length} 个模型
+                    </span>
+                  </h3>
+                  {group.models.map((item) => {
+                    const open =
+                      expanded === item.model ||
+                      (expanded === null && filtered.length === 1)
+                    return (
+                      <section
+                        key={item.model}
+                        className='overflow-hidden rounded-xl border'
+                      >
+                        <button
+                          type='button'
+                          className='hover:bg-muted/40 flex w-full items-center gap-3 p-4 text-left'
+                          aria-expanded={open}
+                          onClick={() => setExpanded(open ? '' : item.model)}
+                        >
+                          <Layers3 className='text-primary size-5 shrink-0' />
+                          <span className='min-w-0 flex-1'>
+                            <span className='block font-semibold break-all'>
+                              {item.model}
+                            </span>
+                            <span className='text-muted-foreground text-xs'>
+                              {item.accounts.filter((a) => a.id > 0).length}{' '}
+                              个账户 · {item.enabled} / {item.channels}{' '}
+                              条渠道启用
+                            </span>
+                          </span>
+                          {open ? (
+                            <ChevronDown className='size-4 shrink-0' />
+                          ) : (
+                            <ChevronRight className='size-4 shrink-0' />
+                          )}
+                        </button>
+                        {open && (
+                          <div className='divide-y border-t'>
+                            {item.accounts.map((account) => (
+                              <div
+                                key={account.id}
+                                className='flex flex-wrap items-center gap-3 p-4'
+                              >
+                                <button
+                                  type='button'
+                                  className='group min-w-0 flex-1 text-left'
+                                  onClick={() =>
+                                    setSelection({ model: item.model, account })
+                                  }
+                                >
+                                  <span className='group-hover:text-primary flex flex-wrap items-center gap-2 font-medium'>
+                                    <span className='break-all'>
+                                      {account.name}
+                                    </span>
+                                    {account.id > 0 && (
+                                      <Badge
+                                        variant='outline'
+                                        className='max-w-full font-normal break-all whitespace-normal tabular-nums'
+                                        title={
+                                          account.pending > 0
+                                            ? `上游钱包账本余额，${account.pending} 笔请求待核算`
+                                            : '上游钱包账本余额'
+                                        }
+                                      >
+                                        {balanceLabel(account)}
+                                      </Badge>
+                                    )}
+                                    <ChevronRight className='size-4 shrink-0' />
+                                  </span>
+                                  <span className='text-muted-foreground mt-1 block text-xs break-all'>
+                                    {account.provider || '无账户绑定'} ·{' '}
+                                    {account.enabled} 启用 /{' '}
+                                    {account.channels.length - account.enabled}{' '}
+                                    停用 · 实际{' '}
+                                    {[
+                                      ...new Set(
+                                        account.channels.map(
+                                          (c) => c.upstream_model
+                                        )
+                                      ),
+                                    ].join('、')}
+                                  </span>
+                                </button>
+                                <div className='flex max-w-full flex-wrap items-center gap-2'>
                                   <Badge
                                     variant='outline'
-                                    className='max-w-full font-normal break-all whitespace-normal tabular-nums'
-                                    title={
-                                      account.pending > 0
-                                        ? `上游钱包账本余额，${account.pending} 笔请求待核算`
-                                        : '上游钱包账本余额'
+                                    className='max-w-full break-all whitespace-normal'
+                                  >
+                                    优先级 {priorityLabel(account)}
+                                  </Badge>
+                                  <Button
+                                    variant='outline'
+                                    size='sm'
+                                    disabled={account.id === 0}
+                                    onClick={() =>
+                                      editPriority({
+                                        model: item.model,
+                                        account,
+                                      })
                                     }
                                   >
-                                    {balanceLabel(account)}
-                                  </Badge>
-                                )}
-                                <ChevronRight className='size-4 shrink-0' />
-                              </span>
-                              <span className='text-muted-foreground mt-1 block text-xs break-all'>
-                                {account.provider || '无账户绑定'} ·{' '}
-                                {account.enabled} 启用 /{' '}
-                                {account.channels.length - account.enabled} 停用
-                                · 实际{' '}
-                                {[
-                                  ...new Set(
-                                    account.channels.map(
-                                      (c) => c.upstream_model
-                                    )
-                                  ),
-                                ].join('、')}
-                              </span>
-                            </button>
-                            <div className='flex max-w-full flex-wrap items-center gap-2'>
-                              <Badge
-                                variant='outline'
-                                className='max-w-full break-all whitespace-normal'
-                              >
-                                优先级 {priorityLabel(account)}
-                              </Badge>
-                              <Button
-                                variant='outline'
-                                size='sm'
-                                disabled={account.id === 0}
-                                onClick={() =>
-                                  editPriority({ model: item.model, account })
-                                }
-                              >
-                                <SlidersHorizontal />
-                                调优先级
-                              </Button>
-                            </div>
+                                    <SlidersHorizontal />
+                                    调优先级
+                                  </Button>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                    )}
-                  </section>
-                )
-              })}
+                        )}
+                      </section>
+                    )
+                  })}
+                </section>
+              ))}
             </div>
           </div>
         </SectionPageLayout.Content>
