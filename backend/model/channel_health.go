@@ -15,7 +15,12 @@ import (
 )
 
 const ChannelHealthConfigKey = "SkymoniChannelHealthConfig"
-const channelHealthLeaseSeconds = 1800 // 16 pools * 2 probes * 45 seconds, plus storage overhead.
+
+// Cover two 45-second probes per configured pool and storage overhead. Keep
+// the original floor so small configurations retain their existing lease.
+func channelHealthLeaseSeconds(poolCount int) int64 {
+	return max(1800, int64(poolCount)*2*45+120)
+}
 
 // Pool configuration contains no credentials. A signature pins the exact route
 // approved by the owner; editing a route removes it from automatic management.
@@ -97,8 +102,8 @@ func ReadChannelHealthState(id string) ChannelHealthState {
 }
 
 // Lease prevents two master processes from spending quota on the same round.
-func ClaimChannelHealthRound(now int64) bool {
-	return claimHealthRound("SkymoniChannelHealthLease", now, channelHealthLeaseSeconds)
+func ClaimChannelHealthRound(now int64, poolCount int) bool {
+	return claimHealthRound("SkymoniChannelHealthLease", now, channelHealthLeaseSeconds(poolCount))
 }
 
 func claimHealthRound(key string, now, leaseSeconds int64) bool {
@@ -114,8 +119,8 @@ func claimHealthRound(key string, now, leaseSeconds int64) bool {
 	return DB.Model(&Option{}).Where("key = ? AND value = ?", key, o.Value).Update("value", strconv.FormatInt(now+leaseSeconds, 10)).RowsAffected == 1
 }
 
-func ReleaseChannelHealthRound(now int64) {
-	releaseHealthRound("SkymoniChannelHealthLease", now, channelHealthLeaseSeconds)
+func ReleaseChannelHealthRound(now int64, poolCount int) {
+	releaseHealthRound("SkymoniChannelHealthLease", now, channelHealthLeaseSeconds(poolCount))
 }
 
 func releaseHealthRound(key string, now, leaseSeconds int64) {

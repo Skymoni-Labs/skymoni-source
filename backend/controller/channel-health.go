@@ -135,14 +135,14 @@ func InitChannelHealth() {
 
 func runChannelHealthRound() {
 	var config model.ChannelHealthConfig
-	if model.ReadChannelHealthJSON(model.ChannelHealthConfigKey, &config) != nil || !config.Enabled || len(config.Pools) == 0 || len(config.Pools) > 16 {
+	if model.ReadChannelHealthJSON(model.ChannelHealthConfigKey, &config) != nil || !config.Enabled || len(config.Pools) == 0 {
 		return
 	}
 	now := time.Now().Unix()
-	if !model.ClaimChannelHealthRound(now) {
+	if !model.ClaimChannelHealthRound(now, len(config.Pools)) {
 		return
 	}
-	defer model.ReleaseChannelHealthRound(now)
+	defer model.ReleaseChannelHealthRound(now, len(config.Pools))
 	userID, err := resolveChannelTestUserID(nil)
 	if err != nil {
 		return
