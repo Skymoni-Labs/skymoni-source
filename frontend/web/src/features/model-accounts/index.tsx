@@ -90,7 +90,10 @@ export function ModelAccountsContent() {
   const [channel, setChannel] = useState<Channel | null>(null)
   const [loadingChannel, setLoadingChannel] = useState<number | null>(null)
   const models = (query.data ?? [])
-    .filter((item) => item.accounts.some((account) => account.id > 0))
+    .filter(
+      (item) =>
+        item.enabled > 0 && item.accounts.some((account) => account.id > 0)
+    )
     .map((item) => ({
       ...item,
       accounts: orderedAccounts(item.accounts),
@@ -186,7 +189,7 @@ export function ModelAccountsContent() {
         <SectionPageLayout.Content>
           <div className='space-y-5'>
             <p className='text-muted-foreground text-sm'>
-              按提供商查看模型、上游账户与渠道，按账户统一设置优先级。数值越大越优先，同级按渠道权重分流。
+              仅显示当前有启用渠道且已绑定账户的模型。按提供商查看上游账户与渠道，按账户统一设置优先级。数值越大越优先，同级按渠道权重分流。
             </p>
             <div
               role='group'
@@ -291,7 +294,9 @@ export function ModelAccountsContent() {
             )}
             {!query.isPending && !query.isError && filtered.length === 0 && (
               <p className='text-muted-foreground rounded-xl border border-dashed p-12 text-center'>
-                {term ? '没有找到匹配的模型或账户' : '暂无已配置的模型渠道'}
+                {term
+                  ? '没有找到匹配的模型或账户'
+                  : '暂无已启用且绑定账户的模型'}
               </p>
             )}
             <div className='space-y-3'>
