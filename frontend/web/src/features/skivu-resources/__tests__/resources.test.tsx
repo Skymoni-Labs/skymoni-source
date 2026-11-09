@@ -138,3 +138,32 @@ test('compact navigation exposes all resource sections and relay-home link', asy
       .getAttribute('aria-expanded')
   ).toBe('false')
 })
+
+test('merged product preview switches content and colour without model calls', async () => {
+  show()
+  await userEvent.click(screen.getByRole('button', { name: '角色与陪伴' }))
+  expect(
+    screen.getByRole('heading', { name: '相处的方式，由你定义。' })
+  ).toBeTruthy()
+  expect(screen.getByText(/慢慢说，我在这里/)).toBeTruthy()
+  await userEvent.click(screen.getByRole('button', { name: '预览极光配色' }))
+  expect(
+    screen
+      .getByRole('button', { name: '预览极光配色' })
+      .getAttribute('aria-pressed')
+  ).toBe('true')
+  expect(screen.getByText('功能交互示意 · 不发起模型请求')).toBeTruthy()
+})
+
+test('brand film loads on request and unmounts when the dialog closes', async () => {
+  show()
+  expect(document.querySelector('iframe')).toBeNull()
+  await userEvent.click(
+    screen.getByRole('button', { name: '播放 Skivu 品牌短片' })
+  )
+  expect(screen.getByTitle('Skivu 品牌宣传片').getAttribute('src')).toBe(
+    '/skivu/film/index.html'
+  )
+  await userEvent.keyboard('{Escape}')
+  expect(document.querySelector('iframe')).toBeNull()
+})

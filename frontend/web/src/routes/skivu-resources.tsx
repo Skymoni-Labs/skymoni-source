@@ -1,7 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
-
-import { SkivuResources } from '@/features/skivu-resources'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/skivu-resources')({
-  component: SkivuResources,
+  beforeLoad: ({ location }) => {
+    throw redirect({
+      href: `/skivu/${location.searchStr}${location.hash ? `#${location.hash}` : ''}`,
+      replace: true,
+    })
+  },
 })

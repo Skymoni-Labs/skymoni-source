@@ -6,7 +6,7 @@ import {
   BookOpen,
   Check,
   Image,
-  Layers,
+  Play,
   Menu,
   Puzzle,
   RefreshCw,
@@ -36,6 +36,7 @@ import {
   loadSkivuRelease,
   type ResourceWallpaper,
 } from './catalog'
+import { SkivuExperience, SkivuStory } from './experience'
 
 import '@/styles/skivu-resources.css'
 
@@ -46,6 +47,7 @@ const categories = {
   'web-plugin': '互动插件',
 } as const
 const nav = [
+  ['探索体验', '#experience'],
   ['软件下载', '#download'],
   ['插件', '#plugins'],
   ['壁纸', '#wallpapers'],
@@ -113,28 +115,25 @@ export function SkivuResources() {
         .toLocaleLowerCase()
         .includes(q)
   )
-  const cover =
-    wallpapers.data?.find((item) => item.name === '月下海岸') ??
-    wallpapers.data?.[0]
 
   useEffect(() => {
     const previous = document.title
-    document.title = 'Skivu 资源空间 · 下载、插件与壁纸'
+    document.title = 'Skivu · 一个属于你的 AI 空间'
     return () => {
       document.title = previous
     }
   }, [])
 
   return (
-    <div className='sr-page'>
+    <div className='sr-page' id='home'>
       <a href='#sr-main' className='sr-skip'>
         跳到主要内容
       </a>
       <header className='sr-header'>
-        <a className='sr-brand' href='/skivu/' aria-label='Skivu 品牌首页'>
+        <a className='sr-brand' href='#home' aria-label='Skivu 首页'>
           <img src='/skivu/assets/skivu.png' alt='' width={36} height={36} />
           <strong>
-            Skivu<span>资源空间</span>
+            Skivu<span>你的 AI 空间</span>
           </strong>
         </a>
         <nav
@@ -165,82 +164,62 @@ export function SkivuResources() {
       </header>
       <main id='sr-main'>
         <section className='sr-hero' aria-labelledby='sr-title'>
+          <img
+            className='sr-hero-backdrop'
+            src='/skivu/assets/universe-hero-20261025.webp'
+            alt=''
+            fetchPriority='high'
+          />
           <div className='sr-hero-copy'>
             <p className='sr-eyebrow'>
               <span />
-              YOUR SPACE, YOUR POSSIBILITIES
+              YOUR UNIVERSE. YOUR RULES.
             </p>
             <h1 id='sr-title'>
-              你的 Skivu，
+              让想象，
               <br />
-              <em>从这里开始。</em>
+              <em>有自己的宇宙。</em>
             </h1>
             <p className='sr-lead'>
-              让想法自由生长。下载 App，探索开放插件，
-              <br className='sr-desktop-break' />
-              再为你的空间，选一片喜欢的风景。
+              一个属于你的 AI 空间。
+              <br />
+              自由选择模型，定义角色与外观，
+              <br />
+              让每一次对话，都走向新的可能。
             </p>
             <div className='sr-actions'>
               <a className='sr-button sr-primary' href='#download'>
-                <ArrowDownToLine size={19} />
+                <ArrowDownToLine size={18} />
                 下载 Skivu
+                <ArrowUpRight size={17} />
               </a>
-              <a className='sr-button sr-secondary' href='#plugins'>
-                探索资源
+              <a className='sr-button sr-secondary' href='#experience'>
+                探索你的空间
                 <ArrowRight size={18} />
               </a>
             </div>
-            <div className='sr-hero-notes'>
-              <span>
-                <Smartphone size={15} />
-                Android
-              </span>
-              <span>
-                <Puzzle size={15} />
-                开放插件生态
-              </span>
-              <span>
-                <Image size={15} />
-                云端壁纸
-              </span>
-            </div>
+            <a className='sr-hero-film' href='#film'>
+              <Play size={13} />
+              观看品牌短片<span>00:40</span>
+            </a>
           </div>
-          <div className='sr-hero-art'>
-            <div className='sr-orbit' aria-hidden />
-            <div className='sr-window'>
-              <img
-                className='sr-cover'
-                src={
-                  cover?.url ?? '/skivu/assets/stargate-panorama-20261026.webp'
-                }
-                alt=''
-              />
-              <div className='sr-art-caption'>
-                <span>
-                  <Sparkles size={14} />A SPACE THAT FEELS LIKE YOU
-                </span>
-                <strong>
-                  一个属于你的
-                  <br />
-                  AI 空间。
-                </strong>
-                <div>
-                  <span>{cover?.name ?? 'Skivu'}</span>
-                  <a href='#wallpapers' aria-label='探索云端壁纸'>
-                    <ArrowUpRight size={21} />
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className='sr-floating-tag'>
-              <Layers size={19} />
-              <div>
-                不止一种可能<small>由你定义每一次打开</small>
-              </div>
-            </div>
-            <span className='sr-art-number' aria-hidden>
-              01 / YOUR UNIVERSE
+          <div className='sr-hero-coordinate' aria-hidden>
+            <span>SKIVU / OPEN UNIVERSE</span>
+            <strong>
+              无限可能
+              <br />
+              由你定义
+            </strong>
+            <span>EXPLORE BEYOND THE ORDINARY ↗</span>
+          </div>
+          <div className='sr-hero-baseline'>
+            <span>SCROLL TO DISCOVER</span>
+            <span>
+              多模型对话 <i>✦</i> 角色与陪伴 <i>✦</i> 开放插件
             </span>
+            <a href='#experience' aria-label='向下探索 Skivu'>
+              <ArrowDownToLine size={17} />
+            </a>
           </div>
         </section>
         <div className='sr-quick-links' aria-label='资源快捷入口'>
@@ -289,13 +268,14 @@ export function SkivuResources() {
           ))}
         </div>
 
+        <SkivuExperience />
         <section
           className='sr-section sr-download'
           id='download'
           aria-labelledby='sr-download-title'
         >
           <div className='sr-download-copy'>
-            <p className='sr-eyebrow'>START WITH SKIVU</p>
+            <p className='sr-eyebrow'>02 / TAKE YOUR SPACE WITH YOU</p>
             <h2 id='sr-download-title'>
               把你的空间，
               <br />
@@ -321,7 +301,7 @@ export function SkivuResources() {
               </span>
               <span>
                 <Check />
-                手机 DSH
+                角色配置
               </span>
             </div>
           </div>
@@ -389,9 +369,10 @@ export function SkivuResources() {
           id='plugins'
           aria-labelledby='sr-plugins-title'
         >
+          <span className='sr-anchor' id='ecosystem' />
           <div className='sr-section-heading'>
             <div>
-              <p className='sr-eyebrow'>MAKE IT YOURS</p>
+              <p className='sr-eyebrow'>03 / AN OPEN UNIVERSE</p>
               <h2 id='sr-plugins-title'>给 Skivu，更多可能。</h2>
               <p>界面、技能、工具和互动体验，找到适合你的那一块。</p>
             </div>
@@ -486,7 +467,7 @@ export function SkivuResources() {
         >
           <div className='sr-section-heading'>
             <div>
-              <p className='sr-eyebrow'>A LITTLE CHANGE OF SCENERY</p>
+              <p className='sr-eyebrow'>04 / A CHANGE OF SCENERY</p>
               <h2 id='sr-wallpapers-title'>让每次打开，都像你。</h2>
               <p>同一片云端风景，在 Skivu 与 Skymoni 中各自选择。</p>
             </div>
@@ -544,6 +525,7 @@ export function SkivuResources() {
           </div>
         </section>
 
+        <SkivuStory />
         <section
           className='sr-section sr-guides'
           id='guide'
@@ -551,7 +533,7 @@ export function SkivuResources() {
         >
           <div className='sr-section-heading'>
             <div>
-              <p className='sr-eyebrow'>A GOOD PLACE TO START</p>
+              <p className='sr-eyebrow'>05 / YOUR NEXT STEP</p>
               <h2 id='sr-guides-title'>下一步，轻松一点。</h2>
             </div>
           </div>
@@ -602,10 +584,16 @@ export function SkivuResources() {
           中转站首页
           <ArrowUpRight size={16} />
         </a>
-        <a href='/software'>
-          软件中心
+        <a
+          href='https://github.com/skyjjgw/skivu'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          GitHub 开源
           <ArrowUpRight size={16} />
         </a>
+        <a href='/open-source.html'>开源许可</a>
+        <a href='/skivu/assets/sources.html'>素材声明</a>
       </footer>
 
       <Dialog

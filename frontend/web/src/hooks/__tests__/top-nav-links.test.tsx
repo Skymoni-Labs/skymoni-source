@@ -104,7 +104,7 @@ describe('store top navigation', () => {
       '/pricing',
       '/store',
       '/software',
-      '/skivu-resources',
+      '/skivu/',
       '/creators',
       '/rankings',
       '/app',
@@ -116,7 +116,7 @@ describe('store top navigation', () => {
   test('Skivu has a public resource destination independent of Software Center visibility', () => {
     const { result } = readLinks({ software: false })
     expect(
-      result.current.find((link) => link.href === '/skivu-resources')
+      result.current.find((link) => link.href === '/skivu/')
     ).toMatchObject({
       title: 'Skivu',
       requiresAuth: false,

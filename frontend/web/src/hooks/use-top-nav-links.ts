@@ -90,7 +90,7 @@ export function useTopNavLinks(): TopNavLink[] {
     })
   }
 
-  links.push({ title: 'Skivu', href: '/skivu-resources', requiresAuth: false })
+  links.push({ title: 'Skivu', href: '/skivu/', requiresAuth: false })
 
   links.push({
     title: t('skymoni Community'),
