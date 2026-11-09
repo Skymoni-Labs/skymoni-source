@@ -16,7 +16,7 @@ import {
   Sparkles,
   X,
 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import {
   Dialog,
@@ -83,6 +83,9 @@ function ResourceStatus({
 }
 
 export function SkivuResources() {
+  const initialHash = useRef(window.location.hash)
+  const initialAnchorHandled = useRef(false)
+  const visitorInteracted = useRef(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('all')
@@ -106,6 +109,48 @@ export function SkivuResources() {
     staleTime: 60000,
     retry: 1,
   })
+  useEffect(() => {
+    const onScrollIntent = () => {
+      visitorInteracted.current = true
+    }
+    window.addEventListener('wheel', onScrollIntent, { passive: true })
+    window.addEventListener('touchmove', onScrollIntent, { passive: true })
+    window.addEventListener('pointerdown', onScrollIntent, { passive: true })
+    window.addEventListener('keydown', onScrollIntent)
+    return () => {
+      window.removeEventListener('wheel', onScrollIntent)
+      window.removeEventListener('touchmove', onScrollIntent)
+      window.removeEventListener('pointerdown', onScrollIntent)
+      window.removeEventListener('keydown', onScrollIntent)
+    }
+  }, [])
+  useEffect(() => {
+    if (
+      initialAnchorHandled.current ||
+      !release.isFetched ||
+      !plugins.isFetched ||
+      !wallpapers.isFetched
+    )
+      return
+    initialAnchorHandled.current = true
+    // Restore a deep link after async catalogues have established page height.
+    // Leave manual browsing or a newer section choice where the visitor put it.
+    if (
+      !initialHash.current ||
+      visitorInteracted.current ||
+      window.location.hash !== initialHash.current
+    )
+      return
+    let id: string
+    try {
+      id = decodeURIComponent(initialHash.current.slice(1))
+    } catch {
+      return
+    }
+    document
+      .getElementById(id)
+      ?.scrollIntoView({ block: 'start', behavior: 'instant' })
+  }, [release.isFetched, plugins.isFetched, wallpapers.isFetched])
   const q = search.trim().toLocaleLowerCase()
   const filtered = (plugins.data?.items ?? []).filter(
     (item) =>

@@ -1,5 +1,12 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { cleanup, render, screen, within } from '@testing-library/react'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 
@@ -28,6 +35,11 @@ vi.mock('@/features/software-center/skivu-plugin-install', () => ({
 
 let client: QueryClient
 beforeEach(() => {
+  window.history.replaceState({}, '', '/')
+  Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', {
+    configurable: true,
+    value: vi.fn(),
+  })
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   vi.mocked(loadSkivuRelease).mockResolvedValue({
     version: '0.2.48',
@@ -69,6 +81,7 @@ afterEach(() => {
   client.clear()
   vi.restoreAllMocks()
   Reflect.deleteProperty(HTMLElement.prototype, 'getAnimations')
+  Reflect.deleteProperty(HTMLElement.prototype, 'scrollIntoView')
 })
 function show() {
   render(
@@ -167,3 +180,32 @@ test('brand film loads on request and unmounts when the dialog closes', async ()
   await userEvent.keyboard('{Escape}')
   expect(document.querySelector('iframe')).toBeNull()
 })
+
+test.each([false, true])(
+  'deep link waits for async catalogue layout and respects visitor scroll=%s',
+  async (visitorScrolls) => {
+    window.history.replaceState({}, '', '/skivu/?from=old#wallpapers')
+    let resolveCatalogue!: (
+      value: Awaited<ReturnType<typeof loadSkivuPlugins>>
+    ) => void
+    vi.mocked(loadSkivuPlugins).mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          resolveCatalogue = resolve
+        })
+    )
+    show()
+    await screen.findByRole('button', { name: '预览月下海岸' })
+    const scroll = vi.mocked(HTMLElement.prototype.scrollIntoView)
+    expect(scroll).not.toHaveBeenCalled()
+    if (visitorScrolls) fireEvent.wheel(window)
+    resolveCatalogue({ items: [], rejectedItems: 0, unavailableSources: [] })
+    await screen.findByText(/没有找到匹配的插件/)
+    if (visitorScrolls) expect(scroll).not.toHaveBeenCalled()
+    else
+      await waitFor(() => {
+        expect(scroll).toHaveBeenCalledTimes(1)
+        expect(scroll.mock.contexts[0]?.id).toBe('wallpapers')
+      })
+  }
+)
