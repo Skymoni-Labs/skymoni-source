@@ -1,12 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import {
   ArrowDownToLine,
-  ArrowRight,
   ArrowUpRight,
   BookOpen,
   Check,
   Image,
-  Play,
   Menu,
   Puzzle,
   RefreshCw,
@@ -31,14 +29,17 @@ import {
   type SkivuPluginEntry,
 } from '@/features/software-center/skivu-plugins'
 
+import { SkivuHero, SkivuBeta, SkivuTicker } from './art'
 import {
   loadResourceWallpapers,
   loadSkivuRelease,
   type ResourceWallpaper,
 } from './catalog'
 import { SkivuExperience, SkivuStory } from './experience'
+import { useSkivuArt } from './use-art-motion'
 
 import '@/styles/skivu-resources.css'
+import '@/styles/skivu-art.css'
 
 const categories = {
   'ui-preset': '界面包',
@@ -52,6 +53,7 @@ const nav = [
   ['插件', '#plugins'],
   ['壁纸', '#wallpapers'],
   ['使用指南', '#guide'],
+  ['内测计划', '#beta'],
 ]
 
 function ResourceStatus({
@@ -130,8 +132,9 @@ export function SkivuResources() {
       !release.isFetched ||
       !plugins.isFetched ||
       !wallpapers.isFetched
-    )
+    ) {
       return
+    }
     initialAnchorHandled.current = true
     // Restore a deep link after async catalogues have established page height.
     // Leave manual browsing or a newer section choice where the visitor put it.
@@ -139,18 +142,24 @@ export function SkivuResources() {
       !initialHash.current ||
       visitorInteracted.current ||
       window.location.hash !== initialHash.current
-    )
+    ) {
       return
+    }
     let id: string
     try {
       id = decodeURIComponent(initialHash.current.slice(1))
     } catch {
       return
     }
-    document
-      .getElementById(id)
+    ;[...document.querySelectorAll<HTMLElement>('[id]')]
+      .find((element) => element.id === id)
       ?.scrollIntoView({ block: 'start', behavior: 'instant' })
   }, [release.isFetched, plugins.isFetched, wallpapers.isFetched])
+  const { pageRef, paused, setPaused, reducedMotion } = useSkivuArt(
+    release.isFetched && plugins.isFetched && wallpapers.isFetched
+  )
+  let motionLabel = paused ? '开启动效' : '暂停动效'
+  if (reducedMotion) motionLabel = '系统已减少动态'
   const q = search.trim().toLocaleLowerCase()
   const filtered = (plugins.data?.items ?? []).filter(
     (item) =>
@@ -170,7 +179,13 @@ export function SkivuResources() {
   }, [])
 
   return (
-    <div className='sr-page' id='home'>
+    <div
+      className='sr-page'
+      id='home'
+      ref={pageRef}
+      data-motion-paused={paused}
+    >
+      <div className='sr-reading-progress' aria-hidden />
       <a href='#sr-main' className='sr-skip'>
         跳到主要内容
       </a>
@@ -187,7 +202,12 @@ export function SkivuResources() {
           aria-label='Skivu 资源导航'
         >
           {nav.map(([label, href]) => (
-            <a key={href} href={href} onClick={() => setMobileOpen(false)}>
+            <a
+              key={href}
+              href={href}
+              className={href === '#beta' ? 'sr-nav-beta' : undefined}
+              onClick={() => setMobileOpen(false)}
+            >
               {label}
             </a>
           ))}
@@ -196,6 +216,18 @@ export function SkivuResources() {
             <ArrowUpRight size={16} />
           </a>
         </nav>
+        <button
+          type='button'
+          className='sr-motion-toggle'
+          aria-label={motionLabel}
+          disabled={reducedMotion}
+          title={reducedMotion ? '遵循系统减少动态设置' : undefined}
+          aria-pressed={paused}
+          onClick={() => setPaused(!paused)}
+        >
+          <Sparkles size={15} />
+          <span>{paused ? '开启动效' : '暂停动效'}</span>
+        </button>
         <button
           type='button'
           className='sr-menu'
@@ -208,65 +240,8 @@ export function SkivuResources() {
         </button>
       </header>
       <main id='sr-main'>
-        <section className='sr-hero' aria-labelledby='sr-title'>
-          <img
-            className='sr-hero-backdrop'
-            src='/skivu/assets/universe-hero-20261025.webp'
-            alt=''
-            fetchPriority='high'
-          />
-          <div className='sr-hero-copy'>
-            <p className='sr-eyebrow'>
-              <span />
-              YOUR UNIVERSE. YOUR RULES.
-            </p>
-            <h1 id='sr-title'>
-              让想象，
-              <br />
-              <em>有自己的宇宙。</em>
-            </h1>
-            <p className='sr-lead'>
-              一个属于你的 AI 空间。
-              <br />
-              自由选择模型，定义角色与外观，
-              <br />
-              让每一次对话，都走向新的可能。
-            </p>
-            <div className='sr-actions'>
-              <a className='sr-button sr-primary' href='#download'>
-                <ArrowDownToLine size={18} />
-                下载 Skivu
-                <ArrowUpRight size={17} />
-              </a>
-              <a className='sr-button sr-secondary' href='#experience'>
-                探索你的空间
-                <ArrowRight size={18} />
-              </a>
-            </div>
-            <a className='sr-hero-film' href='#film'>
-              <Play size={13} />
-              观看品牌短片<span>00:40</span>
-            </a>
-          </div>
-          <div className='sr-hero-coordinate' aria-hidden>
-            <span>SKIVU / OPEN UNIVERSE</span>
-            <strong>
-              无限可能
-              <br />
-              由你定义
-            </strong>
-            <span>EXPLORE BEYOND THE ORDINARY ↗</span>
-          </div>
-          <div className='sr-hero-baseline'>
-            <span>SCROLL TO DISCOVER</span>
-            <span>
-              多模型对话 <i>✦</i> 角色与陪伴 <i>✦</i> 开放插件
-            </span>
-            <a href='#experience' aria-label='向下探索 Skivu'>
-              <ArrowDownToLine size={17} />
-            </a>
-          </div>
-        </section>
+        <SkivuHero paused={paused} />
+        <SkivuTicker />
         <div className='sr-quick-links' aria-label='资源快捷入口'>
           {[
             {
@@ -571,6 +546,7 @@ export function SkivuResources() {
         </section>
 
         <SkivuStory />
+        <SkivuBeta />
         <section
           className='sr-section sr-guides'
           id='guide'
@@ -619,6 +595,11 @@ export function SkivuResources() {
           </div>
         </section>
       </main>
+      <div className='sr-closing-wordmark' aria-hidden>
+        YOUR SPACE.
+        <br />
+        <span>YOUR SKIVU.</span>
+      </div>
       <footer className='sr-footer'>
         <a className='sr-brand' href='/skivu/'>
           <img src='/skivu/assets/skivu.png' alt='' width={30} height={30} />

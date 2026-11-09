@@ -35,6 +35,7 @@ vi.mock('@/features/software-center/skivu-plugin-install', () => ({
 
 let client: QueryClient
 beforeEach(() => {
+  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(null)
   window.history.replaceState({}, '', '/')
   Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', {
     configurable: true,
@@ -158,7 +159,11 @@ test('merged product preview switches content and colour without model calls', a
   expect(
     screen.getByRole('heading', { name: '相处的方式，由你定义。' })
   ).toBeTruthy()
-  expect(screen.getByText(/慢慢说，我在这里/)).toBeTruthy()
+  expect(
+    within(document.querySelector('.sr-demo') as HTMLElement).getByText(
+      /慢慢说，我在这里/
+    )
+  ).toBeTruthy()
   await userEvent.click(screen.getByRole('button', { name: '预览极光配色' }))
   expect(
     screen
@@ -166,6 +171,51 @@ test('merged product preview switches content and colour without model calls', a
       .getAttribute('aria-pressed')
   ).toBe('true')
   expect(screen.getByText('功能交互示意 · 不发起模型请求')).toBeTruthy()
+  fireEvent.change(screen.getByRole('slider', { name: /玻璃模糊/ }), {
+    target: { value: '20' },
+  })
+  expect(screen.getByText('20 px')).toBeTruthy()
+})
+
+test('beta entry is visible in navigation, hero and a dedicated section', async () => {
+  show()
+  expect(
+    screen.getByRole('link', { name: '内测计划' }).getAttribute('href')
+  ).toBe('#beta')
+  expect(
+    screen.getByRole('link', { name: '申请内测' }).getAttribute('href')
+  ).toBe('/creators/skivu-beta')
+  expect(
+    screen.getByRole('link', { name: '进入内测中心' }).getAttribute('href')
+  ).toBe('/creators/skivu-beta')
+  expect(screen.getByText(/内测资格由管理员审核/)).toBeTruthy()
+})
+
+test('visitor can pause decorative motion without changing saved App preferences', async () => {
+  const matchMedia = window.matchMedia
+  vi.spyOn(window, 'matchMedia').mockImplementation((query) => ({
+    ...matchMedia(query),
+    matches: false,
+  }))
+  const before = localStorage.length
+  show()
+  await userEvent.click(screen.getByRole('button', { name: '暂停动效' }))
+  expect(
+    document.querySelector('.sr-page')?.getAttribute('data-motion-paused')
+  ).toBe('true')
+  await userEvent.click(screen.getByRole('button', { name: '开启动效' }))
+  expect(
+    document.querySelector('.sr-page')?.getAttribute('data-motion-paused')
+  ).toBe('false')
+  expect(localStorage.length).toBe(before)
+})
+
+test('system reduced-motion preference keeps the scene static', () => {
+  show()
+  expect(screen.getByRole('button', { name: '系统已减少动态' })).toBeDisabled()
+  expect(
+    document.querySelector('.sr-page')?.getAttribute('data-motion-paused')
+  ).toBe('true')
 })
 
 test('brand film loads on request and unmounts when the dialog closes', async () => {
@@ -201,11 +251,15 @@ test.each([false, true])(
     if (visitorScrolls) fireEvent.wheel(window)
     resolveCatalogue({ items: [], rejectedItems: 0, unavailableSources: [] })
     await screen.findByText(/没有找到匹配的插件/)
-    if (visitorScrolls) expect(scroll).not.toHaveBeenCalled()
-    else
+    if (visitorScrolls) {
+      expect(scroll).not.toHaveBeenCalled()
+    } else {
       await waitFor(() => {
         expect(scroll).toHaveBeenCalledTimes(1)
-        expect(scroll.mock.contexts[0]?.id).toBe('wallpapers')
+        expect((scroll.mock.contexts[0] as HTMLElement | undefined)?.id).toBe(
+          'wallpapers'
+        )
       })
+    }
   }
 )

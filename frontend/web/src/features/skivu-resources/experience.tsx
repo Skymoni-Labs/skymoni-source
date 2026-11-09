@@ -52,6 +52,7 @@ const experiences = [
 
 export function SkivuExperience() {
   const [selected, setSelected] = useState(0)
+  const [blur, setBlur] = useState(12)
   const [theme, setTheme] = useState('nebula')
   const experience = experiences[selected]
   useEffect(() => {
@@ -96,13 +97,19 @@ export function SkivuExperience() {
                 aria-controls='sr-experience-panel'
                 onClick={() => setSelected(index)}
               >
+                <span className='sr-tab-number' aria-hidden>
+                  0{index + 1}
+                </span>
                 <item.icon size={18} />
                 {item.name}
                 <ArrowUpRight size={16} />
               </button>
             ))}
           </div>
-          <div id='sr-experience-panel' aria-live='polite'>
+          <div id='sr-experience-panel' aria-live='polite' key={experience.id}>
+            <span className='sr-feature-index' aria-hidden>
+              0{selected + 1}
+            </span>
             <h3>{experience.title}</h3>
             <p>{experience.text}</p>
           </div>
@@ -115,6 +122,7 @@ export function SkivuExperience() {
           </a>
         </div>
         <div className={`sr-demo sr-demo-${theme}`}>
+          <div className='sr-demo-moon' aria-hidden />
           <div className='sr-demo-bar'>
             <span>
               <Sparkles size={15} />
@@ -122,11 +130,14 @@ export function SkivuExperience() {
             </span>
             <span aria-hidden>•••</span>
           </div>
-          <div className='sr-demo-body'>
+          <div className='sr-demo-body' key={experience.id}>
             <span className='sr-demo-kicker'>A LITTLE MORE YOU</span>
             <p className='sr-demo-welcome'>此刻，想聊些什么？</p>
             <div className='sr-demo-user'>{experience.user}</div>
-            <div className='sr-demo-reply'>
+            <div
+              className='sr-demo-reply'
+              style={{ backdropFilter: `blur(${blur}px)` }}
+            >
               <img
                 src='/skivu/assets/skivu.png'
                 alt=''
@@ -135,6 +146,19 @@ export function SkivuExperience() {
               />
               <p>{experience.reply}</p>
             </div>
+          </div>
+          <div className='sr-demo-controls'>
+            <label htmlFor='sr-blur'>
+              玻璃模糊 <output>{blur} px</output>
+            </label>
+            <input
+              id='sr-blur'
+              type='range'
+              min={0}
+              max={24}
+              value={blur}
+              onChange={(event) => setBlur(Number(event.target.value))}
+            />
           </div>
           <div className='sr-demo-bottom'>
             <span>功能交互示意 · 不发起模型请求</span>

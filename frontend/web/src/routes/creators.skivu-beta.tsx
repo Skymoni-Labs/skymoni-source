@@ -33,12 +33,8 @@ function BetaCenter() {
             装进口袋。
           </h2>
           <p>使用同一社区账号登录 App，同步你的内测资格与额度。</p>
-          <a
-            className='skivu-download-link'
-            href='/skivu/download/latest.apk'
-            download
-          >
-            下载 Android 版 ↓
+          <a className='skivu-download-link' href='/skivu/#download'>
+            查看 Android 下载 ↓
           </a>
           <a
             className='skivu-download-link skivu-source-link'

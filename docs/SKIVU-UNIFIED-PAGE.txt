@@ -7,6 +7,20 @@ hero, interactive product preview, Android download, searchable plugin
 catalogue, wallpaper previews, on-demand brand film and usage guides.
 The main website navigation links to the canonical address.
 
+Final art direction uses midnight blue, ice blue and violet nebula light.
+The rotating planet, CSS orbital sculpture, floating functional links,
+pointer parallax and Canvas constellation form the opening scene. Section
+reveals, animated demo messages, a glass-blur slider, wallpaper gallery and
+an independent beta portal vary the visual rhythm. Navigation, hero and beta
+section all link to the existing application center. The beta center links
+back to the current public download section instead of the historical APK.
+There are no invented beta eligibility grants or automated applications.
+
+Motion can be paused. System reduced-motion settings make the scene static;
+Canvas frames stop while the page is hidden or the hero leaves the viewport.
+Initial bookmark scrolling waits for asynchronous catalogue layout and
+does not interrupt a visitor who has already started interacting.
+
 The resource page continues to use the current public release and existing
 validated public catalogues. It does not publish an App update, change
 wallpaper selections or initiate model requests. Plugin installation and
